@@ -1,0 +1,30 @@
+{
+  "name": "vc-di-ecdsa-test-suite",
+  "version": "0.0.1",
+  "description": "Test suite for ensuring the data integrity of ecdsa-2019 signatures.",
+  "main": "/tests",
+  "type": "module",
+  "directories": {
+    "tests": "tests"
+  },
+  "scripts": {
+    "test": "mocha tests/ --reporter @digitalbazaar/mocha-w3c-interop-reporter --reporter-options abstract=\"$PWD/abstract.hbs\",reportDir=\"$PWD/reports\",respec=\"$PWD/respecConfig.json\",title=\"Data Integrity ecdsa 2019 Interoperability Report 1.0\",suiteLog='./suite.log' --timeout 15000 --preserve-symlinks",
+    "lint": "eslint ."
+  },
+  "author": {
+    "name": "Digital Bazaar, Inc.",
+    "email": "support@digitalbazaar.com",
+    "url": "https://digitalbazaar.com/"
+  },
+  "engines": {
+    "node": ">= 18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/w3c-ccg/vc-di-ecdsa-test-suite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/w3c-ccg/vc-di-ecdsa-test-suite/issues"
+  },
+  "homepage": "https://github.com/w3c-ccg/vc-di-ecdsa-test-suite#readme"
+}
