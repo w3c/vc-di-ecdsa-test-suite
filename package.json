@@ -26,5 +26,11 @@
   "bugs": {
     "url": "https://github.com/w3c-ccg/vc-di-ecdsa-test-suite/issues"
   },
-  "homepage": "https://github.com/w3c-ccg/vc-di-ecdsa-test-suite#readme"
+  "homepage": "https://github.com/w3c-ccg/vc-di-ecdsa-test-suite#readme",
+  "devDependencies": {
+    "eslint": "^8.43.0",
+    "eslint-config-digitalbazaar": "^5.0.1",
+    "eslint-plugin-jsdoc": "^46.2.6",
+    "eslint-plugin-unicorn": "^47.0.0"
+  }
 }
