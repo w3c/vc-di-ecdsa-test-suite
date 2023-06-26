@@ -100,9 +100,8 @@ describe('ecdsa-2019 (P-256 create)', function() {
       });
       it('The "controller" of the verification method MUST exist and MUST be ' +
         'a valid URL.', async function() {
-        console.log(verificationMethodDocument);
         const {controller} = verificationMethodDocument;
-        should.exist(controller, 'Expected controller of the verification ' +
+        should.exist(controller, 'Expected "controller" of the verification ' +
           'method to exist.');
         let result;
         let err;
@@ -115,6 +114,24 @@ describe('ecdsa-2019 (P-256 create)', function() {
           'verification method to not error.');
         should.exist(result, 'Expected the controller of the verification ' +
           'method to be a valid URL');
+      });
+      it.skip('The "proofPurpose" property MUST match the verification ' +
+        'relationship expressed by the verification method controller.',
+      async function() {
+        const {controller} = verificationMethodDocument;
+        should.exist(controller, 'Expected "controller" of the verification ' +
+          'method to exist.');
+        const {proofPurpose} = proofs[0];
+        should.exist(proofPurpose, 'Expected "proofPurpose" of the proof ' +
+          'to exist.');
+      });
+      // eslint-disable-next-line max-len
+      it.skip('The "publicKeyMultibase" property of the verification method MUST ' +
+        'be public key encoded according to MULTICODEC and formatted ' +
+        'according to MULTIBASE.', async function() {
+        const {publicKeyMultibase} = verificationMethodDocument;
+        should.exist(publicKeyMultibase, 'Expected "publicKeyMultibase" of ' +
+          'the verification method to exist.');
       });
     }
   });
