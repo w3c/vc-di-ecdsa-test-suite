@@ -6,6 +6,7 @@ import {
   checkDataIntegrityProofFormat
 } from 'data-integrity-test-suite-assertion';
 import {createInitialVc} from './helpers.js';
+import {didResolver} from './didResolver.js';
 import {endpoints} from 'vc-api-test-suite-implementations';
 import {shouldBeBs58} from './assertions.js';
 import {validVc as vc} from './validVc.js';
@@ -36,12 +37,15 @@ describe('ecdsa-2019 (P-256 create)', function() {
         v => v.tags.has(tag));
       let issuedVc;
       let proofs;
+      let verificationMethodDocument;
       before(async function() {
         issuedVc = await createInitialVc({issuer, vc});
         proofs = Array.isArray(issuedVc?.proof) ?
           issuedVc.proof : [issuedVc?.proof];
+        const verificationMethod = issuedVc?.proof?.verificationMethod;
+        verificationMethodDocument = await didResolver(verificationMethod);
       });
-      it('MUST have property "cryptosuite"', function() {
+      it('MUST have property "cryptosuite".', function() {
         this.test.cell = {columnId, rowId: this.test.title};
         proofs.some(
           proof => typeof proof?.cryptosuite === 'string'
@@ -50,7 +54,7 @@ describe('ecdsa-2019 (P-256 create)', function() {
           'Expected at least one proof to have cryptosuite.'
         );
       });
-      it('The field "cryptosuite" MUST be `ecdsa-2019`', function() {
+      it('The field "cryptosuite" MUST be "ecdsa-2019".', function() {
         this.test.cell = {columnId, rowId: this.test.title};
         proofs.some(
           proof => proof?.cryptosuite === cryptosuite
@@ -60,7 +64,7 @@ describe('ecdsa-2019 (P-256 create)', function() {
         );
       });
       it('"proofValue" field MUST be a multibase-encoded base58-btc encoded ' +
-        'value', function() {
+        'value.', function() {
         this.test.cell = {columnId, rowId: this.test.title};
         const multibase = 'z';
         proofs.some(proof => {
@@ -87,6 +91,31 @@ describe('ecdsa-2019 (P-256 create)', function() {
             'be 400.');
           result.status.should.equal(200, 'Expected status code to be 200.');
         });
+      it('Dereferencing "verificationMethod" MUST result in an object ' +
+        'containing a type property with "Multikey" value.', async function() {
+        should.exist(verificationMethodDocument, 'Expected dereferencing ' +
+          '"verificationMethod" to return a document.');
+        verificationMethodDocument.type.should.equal('Multikey', 'Expected ' +
+          'verification method document type property value to be "Multikey".');
+      });
+      it('The "controller" of the verification method MUST exist and MUST be ' +
+        'a valid URL.', async function() {
+        console.log(verificationMethodDocument);
+        const {controller} = verificationMethodDocument;
+        should.exist(controller, 'Expected controller of the verification ' +
+          'method to exist.');
+        let result;
+        let err;
+        try {
+          result = new URL(controller);
+        } catch(e) {
+          err = e;
+        }
+        should.not.exist(err, 'Expected URL check of the "controller" of the ' +
+          'verification method to not error.');
+        should.exist(result, 'Expected the controller of the verification ' +
+          'method to be a valid URL');
+      });
     }
   });
 });

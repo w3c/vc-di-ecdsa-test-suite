@@ -28,6 +28,8 @@
   },
   "homepage": "https://github.com/w3c-ccg/vc-di-ecdsa-test-suite#readme",
   "dependencies": {
+    "@digitalbazaar/did-method-key": "^5.1.0",
+    "@digitalbazaar/ecdsa-multikey": "^1.1.3",
     "@digitalbazaar/mocha-w3c-interop-reporter": "^1.3.0",
     "chai": "^4.3.7",
     "data-integrity-test-suite-assertion": "github:w3c-ccg/data-integrity-test-suite-assertion#use-endpoint-class",
