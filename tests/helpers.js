@@ -16,3 +16,14 @@ export const createInitialVc = async ({issuer, vc}) => {
   }
   return data;
 };
+
+export const SUPPORTED_BASE58_ECDSA_MULTIKEY_HEADERS = new Map([
+  ['P-256', 'zDna'],
+  ['P-384', 'z82L']
+]);
+
+export const multibaseMultikeyHeaderP256 =
+  SUPPORTED_BASE58_ECDSA_MULTIKEY_HEADERS.get('P-256');
+
+export const multibaseMultikeyHeaderP384 =
+  SUPPORTED_BASE58_ECDSA_MULTIKEY_HEADERS.get('P-384');

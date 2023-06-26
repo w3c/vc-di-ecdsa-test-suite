@@ -1,14 +1,15 @@
 /*!
  * Copyright 2023 Digital Bazaar, Inc. All Rights Reserved
  */
+// eslint-disable-next-line no-unused-vars
+import {shouldBeBs58, shouldBeMulticodecEncoded} from './assertions.js';
 import chai from 'chai';
 import {
   checkDataIntegrityProofFormat
 } from 'data-integrity-test-suite-assertion';
 import {createInitialVc} from './helpers.js';
-import {didResolver} from './didResolver.js';
+import {documentLoader} from './documentLoader.js';
 import {endpoints} from 'vc-api-test-suite-implementations';
-import {shouldBeBs58} from './assertions.js';
 import {validVc as vc} from './validVc.js';
 
 const tag = 'ecdsa-2019';
@@ -43,7 +44,9 @@ describe('ecdsa-2019 (P-256 create)', function() {
         proofs = Array.isArray(issuedVc?.proof) ?
           issuedVc.proof : [issuedVc?.proof];
         const verificationMethod = issuedVc?.proof?.verificationMethod;
-        verificationMethodDocument = await didResolver(verificationMethod);
+        verificationMethodDocument = await documentLoader({
+          url: verificationMethod
+        });
       });
       it('MUST have property "cryptosuite".', function() {
         this.test.cell = {columnId, rowId: this.test.title};
@@ -63,8 +66,8 @@ describe('ecdsa-2019 (P-256 create)', function() {
           'Expected at least one proof to have "cryptosuite" `ecdsa-2019`.'
         );
       });
-      it('"proofValue" field MUST be a multibase-encoded base58-btc encoded ' +
-        'value.', function() {
+      it('The "proofValue" field MUST be a multibase-encoded base58-btc ' +
+        'encoded value.', function() {
         this.test.cell = {columnId, rowId: this.test.title};
         const multibase = 'z';
         proofs.some(proof => {
@@ -76,7 +79,7 @@ describe('ecdsa-2019 (P-256 create)', function() {
           'value.'
         );
       });
-      it('"proof" MUST verify when using a conformant verifier.',
+      it('The "proof" MUST verify when using a conformant verifier.',
         async function() {
           this.test.cell = {columnId, rowId: this.test.title};
           should.exist(verifier, 'Expected implementation to have a VC ' +
@@ -124,6 +127,7 @@ describe('ecdsa-2019 (P-256 create)', function() {
         const {proofPurpose} = proofs[0];
         should.exist(proofPurpose, 'Expected "proofPurpose" of the proof ' +
           'to exist.');
+        // FIXME: Move this test into the tests for verifier and fix it.
       });
       // eslint-disable-next-line max-len
       it.skip('The "publicKeyMultibase" property of the verification method MUST ' +
@@ -132,6 +136,18 @@ describe('ecdsa-2019 (P-256 create)', function() {
         const {publicKeyMultibase} = verificationMethodDocument;
         should.exist(publicKeyMultibase, 'Expected "publicKeyMultibase" of ' +
           'the verification method to exist.');
+        const multibase = 'z';
+        const isMutibaseFormatted = publicKeyMultibase.startsWith(multibase) &&
+          shouldBeBs58(publicKeyMultibase);
+        isMutibaseFormatted.should.equal(true, 'Expected publicKeyMultibase ' +
+          'to be MULTIBASE formatted.'
+        );
+        // FIXME: Add assertions to test if the publicKeyMultibase is multi
+        // codec encoded
+        // const isMulticodecEncoded = shouldBeMulticodecEncoded();
+        // isMutibaseFormatted.should.equal(true, 'Expected ' +
+        //   'publicKeyMultibase to be MULTICODEC encoded.'
+        // );
       });
     }
   });
