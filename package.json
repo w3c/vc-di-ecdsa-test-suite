@@ -30,9 +30,11 @@
   "dependencies": {
     "@digitalbazaar/did-method-key": "^5.1.0",
     "@digitalbazaar/ecdsa-multikey": "^1.1.3",
+    "@digitalbazaar/http-client": "^3.4.1",
     "@digitalbazaar/mocha-w3c-interop-reporter": "^1.3.0",
     "chai": "^4.3.7",
     "data-integrity-test-suite-assertion": "github:w3c-ccg/data-integrity-test-suite-assertion#use-endpoint-class",
+    "jsonld-document-loader": "^2.0.0",
     "klona": "^2.0.6",
     "mocha": "^10.2.0",
     "uuid": "^9.0.0",
