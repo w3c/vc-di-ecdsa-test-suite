@@ -5,6 +5,7 @@ import {
   multibaseMultikeyHeaderP256, multibaseMultikeyHeaderP384
 } from './helpers.js';
 import {decode} from 'base58-universal';
+import varint from 'varint';
 
 // RegExp with bs58 characters in it
 const bs58 =
@@ -15,6 +16,7 @@ export const shouldBeBs58 = s => bs58.test(s);
 export const shouldBeMulticodecEncoded = async s => {
   // check if it is multi codec encoded
   if(s.startsWith(multibaseMultikeyHeaderP256)) {
+    // example of a P-256 publicKeyMultibase -
     // zDnaepHgv4AU1btQ8dp6EYbvgJ6M1ovzKnSpXJUPU2hshXLvp
     const bytes = await decode(s.slice(1));
     bytes.length.should.equal(35);
@@ -25,16 +27,24 @@ export const shouldBeMulticodecEncoded = async s => {
     //    58, 124, 244, 202, 141, 161,  92,  55,
     //   122, 233, 205
     // ]
-    // FIXME: convert first two byte prefix to 0x1200 and add assertions
     // the multicodec encoding of a P-256 public key is the two-byte
     // prefix 0x1200 followed by the 33-byte compressed public key data.
+    const expectedPrefix = await varint.encode(0x1200);
+    // get the two-byte prefix
+    const prefix = Array.from(bytes.slice(0, 2));
+    prefix.should.eql(expectedPrefix);
   }
 
   if(s.startsWith(multibaseMultikeyHeaderP384)) {
     const bytes = await decode(s.slice(1));
     bytes.length.should.equal(51);
-    // FIXME: convert first two byte prefix to 0x1201 and add assertions
     // the multicodec encoding of a P-384 public key is the two-byte prefix
     // 0x1201 followed by the 49-byte compressed public key data.
+    const expectedPrefix = await varint.encode(0x1201);
+    // get the two-byte prefix
+    const prefix = Array.from(bytes.slice(0, 2));
+    prefix.should.eql(expectedPrefix);
+
   }
+  return true;
 };

@@ -1,7 +1,6 @@
 /*!
  * Copyright 2023 Digital Bazaar, Inc. All Rights Reserved
  */
-// eslint-disable-next-line no-unused-vars
 import {shouldBeBs58, shouldBeMulticodecEncoded} from './assertions.js';
 import chai from 'chai';
 import {
@@ -129,8 +128,7 @@ describe('ecdsa-2019 (P-256 create)', function() {
           'to exist.');
         // FIXME: Move this test into the tests for verifier and fix it.
       });
-      // eslint-disable-next-line max-len
-      it.skip('The "publicKeyMultibase" property of the verification method MUST ' +
+      it('The "publicKeyMultibase" property of the verification method MUST ' +
         'be public key encoded according to MULTICODEC and formatted ' +
         'according to MULTIBASE.', async function() {
         const {publicKeyMultibase} = verificationMethodDocument;
@@ -142,10 +140,8 @@ describe('ecdsa-2019 (P-256 create)', function() {
         isMutibaseFormatted.should.equal(true, 'Expected publicKeyMultibase ' +
           'to be MULTIBASE formatted.'
         );
-        // FIXME: Add assertions to test if the publicKeyMultibase is multi
-        // codec encoded in shouldBeMulticodecEncoded().
         const isMulticodecEncoded =
-          shouldBeMulticodecEncoded(publicKeyMultibase);
+          await shouldBeMulticodecEncoded(publicKeyMultibase);
         isMulticodecEncoded.should.equal(true, 'Expected ' +
           'publicKeyMultibase to be MULTICODEC encoded.'
         );
