@@ -126,7 +126,8 @@ describe('ecdsa-2019 (P-256 create)', function() {
         const {proofPurpose} = proofs[0];
         should.exist(proofPurpose, 'Expected "proofPurpose" of the proof ' +
           'to exist.');
-        // FIXME: Move this test into the tests for verifier and fix it.
+        // FIXME: Move this test into the tests for verifier and figure out how
+        // to test it
       });
       it('The "publicKeyMultibase" property of the verification method MUST ' +
         'be public key encoded according to MULTICODEC and formatted ' +
