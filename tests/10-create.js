@@ -144,10 +144,11 @@ describe('ecdsa-2019 (P-256 create)', function() {
         );
         // FIXME: Add assertions to test if the publicKeyMultibase is multi
         // codec encoded
-        // const isMulticodecEncoded = shouldBeMulticodecEncoded();
-        // isMutibaseFormatted.should.equal(true, 'Expected ' +
-        //   'publicKeyMultibase to be MULTICODEC encoded.'
-        // );
+        const isMulticodecEncoded =
+          shouldBeMulticodecEncoded(publicKeyMultibase);
+        isMulticodecEncoded.should.equal(true, 'Expected ' +
+          'publicKeyMultibase to be MULTICODEC encoded.'
+        );
       });
     }
   });
