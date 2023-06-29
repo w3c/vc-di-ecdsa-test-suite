@@ -37,33 +37,41 @@ describe('ecdsa-2019 (P-256 create)', function() {
         v => v.tags.has(tag));
       let issuedVc;
       let proofs;
-      let verificationMethodDocument;
+      let verificationMethodDocuments;
       before(async function() {
         issuedVc = await createInitialVc({issuer, vc});
         proofs = Array.isArray(issuedVc?.proof) ?
-          issuedVc.proof : [issuedVc?.proof];
-        const verificationMethod = issuedVc?.proof?.verificationMethod;
-        verificationMethodDocument = await documentLoader({
-          url: verificationMethod
-        });
+          issuedVc.proof.filter(proof => proof.cryptosuite === cryptosuite) :
+          [issuedVc?.proof];
+        proofs.should.not.eql([], 'Expected at least one proof to have ' +
+          'cryptosuite "ecdsa-2019".');
+        const verificationMethods = proofs.map(
+          proof => proof.verificationMethod);
+        verificationMethodDocuments = await Promise.all(
+          verificationMethods.map(async verificationMethod => {
+            const verificationMethodDocument = await documentLoader({
+              url: verificationMethod
+            });
+            return verificationMethodDocument;
+          }));
       });
-      it('MUST have property "cryptosuite".', function() {
+      it('MUST have property "cryptosuite" and be a string.', function() {
         this.test.cell = {columnId, rowId: this.test.title};
-        proofs.some(
-          proof => typeof proof?.cryptosuite === 'string'
-        ).should.equal(
-          true,
-          'Expected at least one proof to have cryptosuite.'
-        );
+        proofs.forEach(proof => {
+          should.exist(proof.cryptosuite, 'Expected proof to have ' +
+            '"cryptosuite" property.');
+          proof.cryptosuite.should.be.a('string', 'Expected "cryptosuite" ' +
+            'property to be a string.');
+        });
       });
       it('The field "cryptosuite" MUST be "ecdsa-2019".', function() {
         this.test.cell = {columnId, rowId: this.test.title};
-        proofs.some(
-          proof => proof?.cryptosuite === cryptosuite
-        ).should.equal(
-          true,
-          'Expected at least one proof to have "cryptosuite" `ecdsa-2019`.'
-        );
+        proofs.forEach(proof => {
+          should.exist(proof.cryptosuite, 'Expected proof to have ' +
+            '"cryptosuite" property.');
+          proof.cryptosuite.should.equal(cryptosuite, 'Expected ' +
+            '"cryptosuite" property to be "ecdsa-2019".');
+        });
       });
       it('The "proof" MUST verify when using a conformant verifier.',
         async function() {
@@ -82,57 +90,70 @@ describe('ecdsa-2019 (P-256 create)', function() {
         });
       it('Dereferencing "verificationMethod" MUST result in an object ' +
         'containing a type property with "Multikey" value.', async function() {
-        should.exist(verificationMethodDocument, 'Expected dereferencing ' +
-          '"verificationMethod" to return a document.');
-        verificationMethodDocument.type.should.equal('Multikey', 'Expected ' +
-          'verification method document type property value to be "Multikey".');
+        verificationMethodDocuments.should.not.eql([], 'Expected ' +
+          '"verificationMethodDocuments" to not be empty.');
+        verificationMethodDocuments.forEach(verificationMethodDocument => {
+          should.exist(verificationMethodDocument, 'Expected dereferencing ' +
+            '"verificationMethod" to return a document.');
+          verificationMethodDocument.type.should.equal('Multikey', 'Expected ' +
+            'verification method document type property value to be ' +
+            '"Multikey".');
+        });
       });
       it('The "controller" of the verification method MUST exist and MUST be ' +
         'a valid URL.', async function() {
-        const {controller} = verificationMethodDocument;
-        should.exist(controller, 'Expected "controller" of the verification ' +
-          'method to exist.');
-        let result;
-        let err;
-        try {
-          result = new URL(controller);
-        } catch(e) {
-          err = e;
-        }
-        should.not.exist(err, 'Expected URL check of the "controller" of the ' +
-          'verification method to not error.');
-        should.exist(result, 'Expected the controller of the verification ' +
-          'method to be a valid URL');
+        verificationMethodDocuments.should.not.eql(0, 'Expected ' +
+          '"verificationMethodDocuments" to not be empty.');
+        verificationMethodDocuments.forEach(verificationMethodDocument => {
+          should.exist(verificationMethodDocument, 'Expected dereferencing ' +
+            '"verificationMethod" to return a document.');
+          const {controller} = verificationMethodDocument;
+          should.exist(controller, 'Expected "controller" of the ' +
+            'verification method to exist.');
+          let result;
+          let err;
+          try {
+            result = new URL(controller);
+          } catch(e) {
+            err = e;
+          }
+          should.not.exist(err, 'Expected URL check of the "controller" of ' +
+            'the verification method to not error.');
+          should.exist(result, 'Expected the controller of the verification ' +
+            'method to be a valid URL.');
+        });
       });
-      it.skip('The "proofPurpose" property MUST match the verification ' +
-        'relationship expressed by the verification method controller.',
-      async function() {
-        const {controller} = verificationMethodDocument;
-        should.exist(controller, 'Expected "controller" of the verification ' +
-          'method to exist.');
-        const {proofPurpose} = proofs[0];
-        should.exist(proofPurpose, 'Expected "proofPurpose" of the proof ' +
-          'to exist.');
-        // FIXME: Move this test into the tests for verifier and figure out how
-        // to test it
+      it('The "proofValue" field MUST be a detached ECDSA.', function() {
+        this.test.cell = {columnId, rowId: this.test.title};
+        proofs.forEach(async proof => {
+          const value = proof?.proofValue;
+          const isMulticodecEncoded = await shouldBeMulticodecEncoded(value);
+          isMulticodecEncoded.should.equal(true, 'Expected "proofValue" ' +
+            'to be a detached ECDSA  value.');
+        });
       });
       it('The "publicKeyMultibase" property of the verification method MUST ' +
         'be public key encoded according to MULTICODEC and formatted ' +
         'according to MULTIBASE.', async function() {
-        const {publicKeyMultibase} = verificationMethodDocument;
-        should.exist(publicKeyMultibase, 'Expected "publicKeyMultibase" of ' +
-          'the verification method to exist.');
-        const multibase = 'z';
-        const isMutibaseFormatted = publicKeyMultibase.startsWith(multibase) &&
-          shouldBeBs58(publicKeyMultibase);
-        isMutibaseFormatted.should.equal(true, 'Expected publicKeyMultibase ' +
-          'to be MULTIBASE formatted.'
-        );
-        const isMulticodecEncoded =
-          await shouldBeMulticodecEncoded(publicKeyMultibase);
-        isMulticodecEncoded.should.equal(true, 'Expected ' +
-          'publicKeyMultibase to be MULTICODEC encoded.'
-        );
+        verificationMethodDocuments.should.not.eql([], 'Expected ' +
+          '"verificationMethodDocuments" to not be empty.');
+        verificationMethodDocuments.forEach(
+          async verificationMethodDocument => {
+            const {publicKeyMultibase} = verificationMethodDocument;
+            should.exist(publicKeyMultibase, 'Expected "publicKeyMultibase" ' +
+              'of the verification method to exist.');
+            const multibase = 'z';
+            const isMutibaseFormatted =
+              publicKeyMultibase.startsWith(multibase) &&
+              shouldBeBs58(publicKeyMultibase);
+            isMutibaseFormatted.should.equal(true, 'Expected ' +
+              '"publicKeyMultibase" to be MULTIBASE formatted.'
+            );
+            const isMulticodecEncoded =
+              await shouldBeMulticodecEncoded(publicKeyMultibase);
+            isMulticodecEncoded.should.equal(true, 'Expected ' +
+              '"publicKeyMultibase" to be MULTICODEC encoded.');
+          });
       });
     }
   });
