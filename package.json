@@ -34,7 +34,7 @@
     "@digitalbazaar/mocha-w3c-interop-reporter": "^1.3.0",
     "base58-universal": "^2.0.0",
     "chai": "^4.3.7",
-    "data-integrity-test-suite-assertion": "github:w3c-ccg/data-integrity-test-suite-assertion#use-endpoint-class",
+    "data-integrity-test-suite-assertion": "github:w3c-ccg/data-integrity-test-suite-assertion#add-general-tests",
     "jsonld-document-loader": "^2.0.0",
     "klona": "^2.0.6",
     "mocha": "^10.2.0",

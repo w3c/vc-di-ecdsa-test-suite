@@ -65,19 +65,6 @@ describe('ecdsa-2019 (P-256 create)', function() {
           'Expected at least one proof to have "cryptosuite" `ecdsa-2019`.'
         );
       });
-      it('The "proofValue" field MUST be a multibase-encoded base58-btc ' +
-        'encoded value.', function() {
-        this.test.cell = {columnId, rowId: this.test.title};
-        const multibase = 'z';
-        proofs.some(proof => {
-          const value = proof?.proofValue;
-          return value.startsWith(multibase) && shouldBeBs58(value);
-        }).should.equal(
-          true,
-          'Expected "proof.proofValue" to be multibase-encoded base58-btc ' +
-          'value.'
-        );
-      });
       it('The "proof" MUST verify when using a conformant verifier.',
         async function() {
           this.test.cell = {columnId, rowId: this.test.title};
