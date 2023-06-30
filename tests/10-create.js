@@ -19,12 +19,12 @@ const {match, nonMatch} = endpoints.filterByTag({
 });
 const should = chai.should();
 
-describe('ecdsa-2019 (P-256 create)', function() {
+describe('ecdsa-2019 (create)', function() {
   checkDataIntegrityProofFormat({
     implemented: match,
     notImplemented: nonMatch
   });
-  describe('ecdsa-2019 (P-256 issuer)', function() {
+  describe('ecdsa-2019 (issuer)', function() {
     this.matrix = true;
     this.report = true;
     this.implemented = [...match.keys()];
@@ -37,7 +37,7 @@ describe('ecdsa-2019 (P-256 create)', function() {
         v => v.tags.has(tag));
       let issuedVc;
       let proofs;
-      let verificationMethodDocuments;
+      const verificationMethodDocuments = [];
       before(async function() {
         issuedVc = await createInitialVc({issuer, vc});
         proofs = Array.isArray(issuedVc?.proof) ?
@@ -47,13 +47,12 @@ describe('ecdsa-2019 (P-256 create)', function() {
           'cryptosuite "ecdsa-2019".');
         const verificationMethods = proofs.map(
           proof => proof.verificationMethod);
-        verificationMethodDocuments = await Promise.all(
-          verificationMethods.map(async verificationMethod => {
-            const verificationMethodDocument = await documentLoader({
-              url: verificationMethod
-            });
-            return verificationMethodDocument;
-          }));
+        for(const verificationMethod of verificationMethods) {
+          const verificationMethodDocument = await documentLoader({
+            url: verificationMethod
+          });
+          verificationMethodDocuments.push(verificationMethodDocument);
+        }
       });
       it('MUST have property "cryptosuite" and be a string.', function() {
         this.test.cell = {columnId, rowId: this.test.title};
@@ -123,37 +122,38 @@ describe('ecdsa-2019 (P-256 create)', function() {
             'method to be a valid URL.');
         });
       });
-      it('The "proofValue" field MUST be a detached ECDSA.', function() {
-        this.test.cell = {columnId, rowId: this.test.title};
-        proofs.forEach(async proof => {
-          const value = proof?.proofValue;
-          const isMulticodecEncoded = await shouldBeMulticodecEncoded(value);
-          isMulticodecEncoded.should.equal(true, 'Expected "proofValue" ' +
-            'to be a detached ECDSA  value.');
+      it.skip('The "proofValue" field MUST be a detached ECDSA.',
+        async function() {
+          this.test.cell = {columnId, rowId: this.test.title};
+          // for(const proof of proofs) {
+          //   const value = proof?.proofValue;
+          //   // FIXME: check of the value is a detached ecdsa.
+          //   const isDetachedEcdsa = await shouldBeDetachedEcdsa(value);
+          //   isDetachedEcdsa.should.equal(true, 'Expected "proofValue" ' +
+          //   'to be a detached ECDSA  value.');
+          // }
         });
-      });
       it('The "publicKeyMultibase" property of the verification method MUST ' +
         'be public key encoded according to MULTICODEC and formatted ' +
         'according to MULTIBASE.', async function() {
         verificationMethodDocuments.should.not.eql([], 'Expected ' +
           '"verificationMethodDocuments" to not be empty.');
-        verificationMethodDocuments.forEach(
-          async verificationMethodDocument => {
-            const {publicKeyMultibase} = verificationMethodDocument;
-            should.exist(publicKeyMultibase, 'Expected "publicKeyMultibase" ' +
-              'of the verification method to exist.');
-            const multibase = 'z';
-            const isMutibaseFormatted =
-              publicKeyMultibase.startsWith(multibase) &&
-              shouldBeBs58(publicKeyMultibase);
-            isMutibaseFormatted.should.equal(true, 'Expected ' +
-              '"publicKeyMultibase" to be MULTIBASE formatted.'
-            );
-            const isMulticodecEncoded =
-              await shouldBeMulticodecEncoded(publicKeyMultibase);
-            isMulticodecEncoded.should.equal(true, 'Expected ' +
-              '"publicKeyMultibase" to be MULTICODEC encoded.');
-          });
+        for(const verificationMethodDocument of verificationMethodDocuments) {
+          const {publicKeyMultibase} = verificationMethodDocument;
+          should.exist(publicKeyMultibase, 'Expected "publicKeyMultibase" ' +
+            'of the verification method to exist.');
+          const multibase = 'z';
+          const isMutibaseFormatted =
+            publicKeyMultibase.startsWith(multibase) &&
+            shouldBeBs58(publicKeyMultibase);
+          isMutibaseFormatted.should.equal(true, 'Expected ' +
+            '"publicKeyMultibase" to be MULTIBASE formatted.'
+          );
+          const isMulticodecEncoded =
+            await shouldBeMulticodecEncoded(publicKeyMultibase);
+          isMulticodecEncoded.should.equal(true, 'Expected ' +
+            '"publicKeyMultibase" to be MULTICODEC encoded.');
+        }
       });
     }
   });
