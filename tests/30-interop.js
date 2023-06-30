@@ -17,7 +17,7 @@ const {
   match: verifierMatches
 } = endpoints.filterByTag({tags: [tag], property: 'verifiers'});
 
-describe('ecdsa-2019 (P-256 interop)', function() {
+describe('ecdsa-2019 (interop)', function() {
   // this will tell the report
   // to make an interop matrix with this suite
   this.matrix = true;
