@@ -32,7 +32,7 @@ export const shouldBeMulticodecEncoded = async s => {
     const expectedPrefix = await varint.encode(0x1200);
     // get the two-byte prefix
     const prefix = Array.from(bytes.slice(0, 2));
-    return prefix.every(i => expectedPrefix.includes(i));
+    return JSON.stringify(prefix) === JSON.stringify(expectedPrefix);
   }
 
   if(s.startsWith(multibaseMultikeyHeaderP384)) {
@@ -43,7 +43,7 @@ export const shouldBeMulticodecEncoded = async s => {
     const expectedPrefix = await varint.encode(0x1201);
     // get the two-byte prefix
     const prefix = Array.from(bytes.slice(0, 2));
-    return prefix.every(i => expectedPrefix.includes(i));
+    return JSON.stringify(prefix) === JSON.stringify(expectedPrefix);
   }
   // Unsupported key type, return false
   return false;
