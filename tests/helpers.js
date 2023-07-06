@@ -27,3 +27,7 @@ export const multibaseMultikeyHeaderP256 =
 
 export const multibaseMultikeyHeaderP384 =
   SUPPORTED_BASE58_ECDSA_MULTIKEY_HEADERS.get('P-384');
+
+export const expectedP256Prefix = [128, 36];
+
+export const expectedP384Prefix = [129, 36];

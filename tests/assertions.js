@@ -2,10 +2,10 @@
  * Copyright 2023 Digital Bazaar, Inc. All Rights Reserved
  */
 import {
-  multibaseMultikeyHeaderP256, multibaseMultikeyHeaderP384
+  expectedP256Prefix, expectedP384Prefix, multibaseMultikeyHeaderP256,
+  multibaseMultikeyHeaderP384,
 } from './helpers.js';
 import {decode} from 'base58-universal';
-import varint from 'varint';
 
 // RegExp with bs58 characters in it
 const bs58 =
@@ -27,23 +27,21 @@ export const shouldBeMulticodecEncoded = async s => {
     //    58, 124, 244, 202, 141, 161,  92,  55,
     //   122, 233, 205
     // ]
-    // the multicodec encoding of a P-256 public key is the two-byte
-    // prefix 0x1200 followed by the 33-byte compressed public key data.
-    const expectedPrefix = await varint.encode(0x1200);
     // get the two-byte prefix
     const prefix = Array.from(bytes.slice(0, 2));
-    return JSON.stringify(prefix) === JSON.stringify(expectedPrefix);
+    // the multicodec encoding of a P-256 public key is the two-byte
+    // prefix 0x1200 followed by the 33-byte compressed public key data.
+    return JSON.stringify(prefix) === JSON.stringify(expectedP256Prefix);
   }
 
   if(s.startsWith(multibaseMultikeyHeaderP384)) {
     const bytes = await decode(s.slice(1));
     bytes.length.should.equal(51);
-    // the multicodec encoding of a P-384 public key is the two-byte prefix
-    // 0x1201 followed by the 49-byte compressed public key data.
-    const expectedPrefix = await varint.encode(0x1201);
     // get the two-byte prefix
     const prefix = Array.from(bytes.slice(0, 2));
-    return JSON.stringify(prefix) === JSON.stringify(expectedPrefix);
+    // the multicodec encoding of a P-384 public key is the two-byte prefix
+    // 0x1201 followed by the 49-byte compressed public key data.
+    return JSON.stringify(prefix) === JSON.stringify(expectedP384Prefix);
   }
   // Unsupported key type, return false
   return false;
