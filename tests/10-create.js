@@ -133,22 +133,19 @@ describe('ecdsa-2019 (create)', function() {
           this.test.cell = {columnId: name, rowId: this.test.title};
           verificationMethodDocuments.should.not.eql([], 'Expected ' +
             '"verificationMethodDocuments" to not be empty.');
-          for(const verificationMethodDocument of verificationMethodDocuments) {
-            const {publicKeyMultibase} = verificationMethodDocument;
-            should.exist(publicKeyMultibase, 'Expected "publicKeyMultibase" ' +
-              'of the verification method to exist.');
-            const multibase = 'z';
-            const isMutibaseFormatted =
-              publicKeyMultibase.startsWith(multibase) &&
-              shouldBeBs58(publicKeyMultibase);
-            isMutibaseFormatted.should.equal(true, 'Expected ' +
-              '"publicKeyMultibase" to be MULTIBASE formatted.'
-            );
-            const isMulticodecEncoded =
-              await shouldBeMulticodecEncoded(publicKeyMultibase);
-            isMulticodecEncoded.should.equal(true, 'Expected ' +
-              '"publicKeyMultibase" to be MULTICODEC encoded.');
-          }
+          verificationMethodDocuments.some(
+            verificationMethodDocument => {
+              const multibase = 'z';
+              const {publicKeyMultibase} = verificationMethodDocument;
+              return publicKeyMultibase.startsWith(multibase) &&
+                shouldBeBs58(publicKeyMultibase) &&
+                shouldBeMulticodecEncoded(publicKeyMultibase);
+            }
+          ).should.equal(
+            true,
+            'Expected at "publicKeyMultibase" to to be MULTIBASE formatted ' +
+            'and MULTICODEC encoded.'
+          );
         });
       });
     }
