@@ -55,15 +55,6 @@ describe('ecdsa-2019 (create)', function() {
             verificationMethodDocuments.push(verificationMethodDocument);
           }
         });
-        it('MUST have property "cryptosuite" and be a string.', function() {
-          this.test.cell = {columnId: name, rowId: this.test.title};
-          proofs.forEach(proof => {
-            should.exist(proof.cryptosuite, 'Expected proof to have ' +
-              '"cryptosuite" property.');
-            proof.cryptosuite.should.be.a('string', 'Expected "cryptosuite" ' +
-              'property to be a string.');
-          });
-        });
         it('The field "cryptosuite" MUST be "ecdsa-2019".', function() {
           this.test.cell = {columnId: name, rowId: this.test.title};
           proofs.forEach(proof => {
