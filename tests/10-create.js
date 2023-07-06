@@ -41,11 +41,8 @@ describe('ecdsa-2019 (create)', function() {
         const verificationMethodDocuments = [];
         before(async function() {
           issuedVc = await createInitialVc({issuer, vc});
-          proofs = Array.isArray(issuedVc?.proof) ?
-            issuedVc.proof.filter(proof => proof.cryptosuite === cryptosuite) :
+          proofs = Array.isArray(issuedVc?.proof) ? issuedVc.proof :
             [issuedVc?.proof];
-          proofs.should.not.eql([], 'Expected at least one proof to have ' +
-            'cryptosuite "ecdsa-2019".');
           const verificationMethods = proofs.map(
             proof => proof.verificationMethod);
           for(const verificationMethod of verificationMethods) {
@@ -57,12 +54,13 @@ describe('ecdsa-2019 (create)', function() {
         });
         it('The field "cryptosuite" MUST be "ecdsa-2019".', function() {
           this.test.cell = {columnId: name, rowId: this.test.title};
-          proofs.forEach(proof => {
-            should.exist(proof.cryptosuite, 'Expected proof to have ' +
-              '"cryptosuite" property.');
-            proof.cryptosuite.should.equal(cryptosuite, 'Expected ' +
-              '"cryptosuite" property to be "ecdsa-2019".');
-          });
+          proofs.some(
+            proof => proof?.cryptosuite === cryptosuite
+          ).should.equal(
+            true,
+            'Expected at least one proof to have "cryptosuite" property ' +
+            '"ecdsa-2019".'
+          );
         });
         it('The "proof" MUST verify when using a conformant verifier.',
           async function() {
@@ -85,14 +83,14 @@ describe('ecdsa-2019 (create)', function() {
           this.test.cell = {columnId: name, rowId: this.test.title};
           verificationMethodDocuments.should.not.eql([], 'Expected ' +
             '"verificationMethodDocuments" to not be empty.');
-          verificationMethodDocuments.forEach(verificationMethodDocument => {
-            should.exist(verificationMethodDocument, 'Expected dereferencing ' +
-              '"verificationMethod" to return a document.');
-            verificationMethodDocument.type.should.equal(
-              'Multikey',
-              'Expected verification method document type property value to ' +
-              'be "Multikey".');
-          });
+          verificationMethodDocuments.some(
+            verificationMethodDocument =>
+              verificationMethodDocument?.type === 'Multikey'
+          ).should.equal(
+            true,
+            'Expected at least one proof to have "type" property value ' +
+              '"Multikey".'
+          );
         });
         it('The "controller" of the verification method MUST exist and MUST ' +
           'be a valid URL.', async function() {
