@@ -5,8 +5,11 @@ import {
   expectedP256Prefix, expectedP384Prefix, multibaseMultikeyHeaderP256,
   multibaseMultikeyHeaderP384,
 } from './helpers.js';
+import chai from 'chai';
 import {decode} from 'base58-universal';
 import varint from 'varint';
+
+const should = chai.should();
 
 // RegExp with bs58 characters in it
 const bs58 =
@@ -62,4 +65,35 @@ export const shouldBeDetachedEcdsa = async s => {
   const prefix = Array.from(bytes.slice(0, 2));
 
   return expectedPrefixes.includes(JSON.stringify(prefix));
+};
+
+export const verificationFail = async ({credential, verifier}) => {
+  const body = {
+    verifiableCredential: credential,
+    options: {
+      checks: ['proof']
+    }
+  };
+  const {result, error} = await verifier.post({json: body});
+  should.not.exist(result, 'Expected no result from verifier.');
+  should.exist(error, 'Expected verifier to error.');
+  should.exist(error.status, 'Expected verifier to return an HTTP Status code');
+};
+
+export const verificationSuccess = async ({credential, verifier}) => {
+  const body = {
+    verifiableCredential: credential,
+    options: {
+      checks: ['proof']
+    }
+  };
+  const {result, error} = await verifier.post({json: body});
+  should.exist(result, 'Expected a result from verifier.');
+  should.not.exist(error, 'Expected verifier to not error.');
+  should.exist(result.status,
+    'Expected verifier to return an HTTP Status code');
+  result.status.should.equal(
+    200,
+    'Expected HTTP Status code 200.'
+  );
 };
