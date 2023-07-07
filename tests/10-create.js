@@ -123,6 +123,9 @@ describe('ecdsa-2019 (create)', function() {
             this.test.cell = {columnId: name, rowId: this.test.title};
             proofs.some(proof => {
               const value = proof?.proofValue;
+              // FIXME: This might be testable at another time. Node Forge has
+              // an implementation of PKCS#7 -
+              // https://www.npmjs.com/package/node-forge#pkcs7
               return shouldBeDetachedEcdsa(value);
             }).should.equal(
               true,
