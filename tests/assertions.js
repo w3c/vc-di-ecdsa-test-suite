@@ -6,6 +6,7 @@ import {
   multibaseMultikeyHeaderP384,
 } from './helpers.js';
 import {decode} from 'base58-universal';
+import varint from 'varint';
 
 // RegExp with bs58 characters in it
 const bs58 =
@@ -45,4 +46,20 @@ export const shouldBeMulticodecEncoded = async s => {
   }
   // Unsupported key type, return false
   return false;
+};
+
+export const shouldBeDetachedEcdsa = async s => {
+  const bytes = await decode(s.slice(1));
+  const expectedPrefixes = [];
+  // These varint values are from ecdsa-multikey lib
+  // eslint-disable-next-line max-len
+  // https://github.com/digitalbazaar/ecdsa-multikey/blob/5c13147eff96ab4f6eda8484604f387fea0751d6/util/varint-conversions.js#L17-L22
+  const varints = ['0x1200', '0x1201', '0x1202', '0x1306', '0x1307', '0x1308'];
+  for(let i = 0; i < varints.length; i++) {
+    const expectedPrefix = await varint.encode(varints[i]);
+    expectedPrefixes.push(JSON.stringify(expectedPrefix));
+  }
+  const prefix = Array.from(bytes.slice(0, 2));
+
+  return expectedPrefixes.includes(JSON.stringify(prefix));
 };

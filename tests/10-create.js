@@ -1,7 +1,9 @@
 /*!
  * Copyright 2023 Digital Bazaar, Inc. All Rights Reserved
  */
-import {shouldBeBs58, shouldBeMulticodecEncoded} from './assertions.js';
+import {
+  shouldBeBs58, shouldBeDetachedEcdsa, shouldBeMulticodecEncoded
+} from './assertions.js';
 import chai from 'chai';
 import {
   checkDataIntegrityProofFormat
@@ -119,13 +121,13 @@ describe('ecdsa-2019 (create)', function() {
         it.skip('The "proofValue" field MUST be a detached ECDSA.',
           async function() {
             this.test.cell = {columnId: name, rowId: this.test.title};
-            // for(const proof of proofs) {
-            //   const value = proof?.proofValue;
-            //   // FIXME: check of the value is a detached ecdsa.
-            //   const isDetachedEcdsa = await shouldBeDetachedEcdsa(value);
-            //   isDetachedEcdsa.should.equal(true, 'Expected "proofValue" ' +
-            //   'to be a detached ECDSA  value.');
-            // }
+            proofs.some(proof => {
+              const value = proof?.proofValue;
+              return shouldBeDetachedEcdsa(value);
+            }).should.equal(
+              true,
+              'Expected "proofValue" to be a detached ECDSA  value.'
+            );
           });
         it('The "publicKeyMultibase" property of the verification method ' +
           'MUST be public key encoded according to MULTICODEC and formatted ' +
