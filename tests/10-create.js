@@ -1,9 +1,7 @@
 /*!
  * Copyright 2023 Digital Bazaar, Inc. All Rights Reserved
  */
-import {
-  shouldBeBs58, shouldBeDetachedEcdsa, shouldBeMulticodecEncoded
-} from './assertions.js';
+import {shouldBeBs58, shouldBeMulticodecEncoded} from './assertions.js';
 import chai from 'chai';
 import {
   checkDataIntegrityProofFormat
@@ -118,23 +116,6 @@ describe('ecdsa-2019 (create)', function() {
               'verification method to be a valid URL.');
           });
         });
-        it.skip('The "proofValue" field MUST be a detached ECDSA.',
-          async function() {
-            this.test.cell = {columnId: name, rowId: this.test.title};
-            const proofPromises = proofs.map(async proof => {
-              const value = proof?.proofValue;
-              // FIXME: This might be testable at another time. Node Forge has
-              // an implementation of PKCS#7 -
-              // https://www.npmjs.com/package/node-forge#pkcs7
-              return shouldBeDetachedEcdsa(value);
-            });
-            const results = await Promise.all(proofPromises);
-            const isDetachedEcdsa = results.some(result => result === true);
-            isDetachedEcdsa.should.equal(
-              true,
-              'Expected "proofValue" to be a detached ECDSA  value.'
-            );
-          });
         it('The "publicKeyMultibase" property of the verification method ' +
           'MUST be public key encoded according to MULTICODEC and formatted ' +
           'according to MULTIBASE.', async function() {
