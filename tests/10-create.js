@@ -1,7 +1,9 @@
 /*!
  * Copyright 2023 Digital Bazaar, Inc. All Rights Reserved
  */
-import {shouldBeBs58, shouldBeMulticodecEncoded} from './assertions.js';
+import {
+  shouldBeBs58, shouldBeMulticodecEncoded, verificationSuccess
+} from './assertions.js';
 import chai from 'chai';
 import {
   checkDataIntegrityProofFormat
@@ -67,15 +69,7 @@ describe('ecdsa-2019 (create)', function() {
             this.test.cell = {columnId: name, rowId: this.test.title};
             should.exist(verifier, 'Expected implementation to have a VC ' +
               'HTTP API compatible verifier.');
-            const {result, error} = await verifier.post({json: {
-              verifiableCredential: issuedVc,
-              options: {checks: ['proof']}
-            }});
-            should.not.exist(error, 'Expected verifier to not error.');
-            should.exist(result, 'Expected verifier to return a result.');
-            result.status.should.not.equal(400, 'Expected status code to not ' +
-              'be 400.');
-            result.status.should.equal(200, 'Expected status code to be 200.');
+            verificationSuccess({credential: issuedVc, verifier});
           });
         it('Dereferencing "verificationMethod" MUST result in an object ' +
           'containing a type property with "Multikey" value.',
