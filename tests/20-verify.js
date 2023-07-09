@@ -53,7 +53,7 @@ describe('ecdsa-2019 (verify)', function() {
             await verificationSuccess({credential, verifier});
           });
         it('If the "cryptosuite" field is not the string "ecdsa-2019", ' +
-          'an UNKNOWN_CRYPTOSUITE_TYPE error MUST be returned.',
+          'an "INVALID_PROOF_CONFIGURATION" error MUST be returned.',
         async function() {
           this.test.cell = {columnId, rowId: this.test.title};
           credential.cryptosuite = 'not-ecdsa-2019';
