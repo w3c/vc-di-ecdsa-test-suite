@@ -121,13 +121,16 @@ describe('ecdsa-2019 (create)', function() {
         it.skip('The "proofValue" field MUST be a detached ECDSA.',
           async function() {
             this.test.cell = {columnId: name, rowId: this.test.title};
-            proofs.some(proof => {
+            const proofPromises = proofs.map(async proof => {
               const value = proof?.proofValue;
               // FIXME: This might be testable at another time. Node Forge has
               // an implementation of PKCS#7 -
               // https://www.npmjs.com/package/node-forge#pkcs7
               return shouldBeDetachedEcdsa(value);
-            }).should.equal(
+            });
+            const results = await Promise.all(proofPromises);
+            const isDetachedEcdsa = results.some(result => result === true);
+            isDetachedEcdsa.should.equal(
               true,
               'Expected "proofValue" to be a detached ECDSA  value.'
             );
