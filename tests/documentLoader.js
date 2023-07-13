@@ -35,7 +35,7 @@ export async function documentLoader({url}) {
     return didResolver({url});
   }
   // use web loader if the URL is a HTTP URL
-  if(url.startsWith('http')) {
+  if(url.startsWith('https')) {
     return webLoader(url);
   }
 }
