@@ -1,5 +1,5 @@
 # vc-di-ecdsa-test-suite
 
-Interoperability Test Suite for Data Integrity of Ecdsa Signatures.
+Interoperability test suite for ECDSA Data Integrity cryptosuites.
 
 [Data Integrity Spec](https://w3c.github.io/vc-data-integrity/)
