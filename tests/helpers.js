@@ -18,10 +18,7 @@ export const createInitialVc = async ({issuer, vc}) => {
   credential.issuer = issuerId;
   credential.issuanceDate = ISOTimeStamp();
   const body = {credential, options};
-  const {data, error} = await issuer.post({json: body});
-  if(error) {
-    throw error;
-  }
+  const {data} = await issuer.post({json: body});
   return data;
 };
 
