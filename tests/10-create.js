@@ -15,7 +15,7 @@ import {validVc as vc} from './validVc.js';
 
 const tag = 'ecdsa-2019';
 const cryptosuite = 'ecdsa-2019';
-const {match, nonMatch} = endpoints.filterByTag({
+const {match} = endpoints.filterByTag({
   tags: [tag],
   property: 'issuers'
 });
@@ -23,14 +23,12 @@ const should = chai.should();
 
 describe('ecdsa-2019 (create)', function() {
   checkDataIntegrityProofFormat({
-    implemented: match,
-    notImplemented: nonMatch
+    implemented: match
   });
   describe('ecdsa-2019 (issuer)', function() {
     this.matrix = true;
     this.report = true;
     this.implemented = [...match.keys()];
-    this.notImplemented = [...nonMatch.keys()];
     this.rowLabel = 'Test Name';
     this.columnLabel = 'Implementation';
     for(const [name, {endpoints, implementation}] of match) {

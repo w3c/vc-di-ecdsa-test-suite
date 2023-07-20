@@ -12,7 +12,7 @@ import {validVc as vc} from './validVc.js';
 
 const tag = 'ecdsa-2019';
 // only use implementations with `ecdsa-2019` verifiers.
-const {match, nonMatch} = endpoints.filterByTag({
+const {match} = endpoints.filterByTag({
   tags: [tag],
   property: 'verifiers'
 });
@@ -30,8 +30,7 @@ describe('ecdsa-2019 (verify)', function() {
     credential = klona(issuedVc);
   });
   checkDataIntegrityProofVerifyErrors({
-    implemented: match,
-    notImplemented: nonMatch
+    implemented: match
   });
   describe('ecdsa-2019 cryptosuite (verifier)', function() {
     // this will tell the report
@@ -41,7 +40,6 @@ describe('ecdsa-2019 (verify)', function() {
     this.rowLabel = 'Test Name';
     this.columnLabel = 'Verifier';
     this.implemented = [...match.keys()];
-    this.notImplemented = [...nonMatch.keys()];
 
     for(const [columnId, {endpoints}] of match) {
       describe(columnId, function() {
