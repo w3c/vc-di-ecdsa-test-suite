@@ -30,7 +30,6 @@
   "dependencies": {
     "@digitalbazaar/did-method-key": "^5.1.0",
     "@digitalbazaar/ecdsa-multikey": "^1.1.3",
-    "@digitalbazaar/ed25519-verification-key-2020": "^4.1.0",
     "@digitalbazaar/http-client": "^3.4.1",
     "@digitalbazaar/mocha-w3c-interop-reporter": "digitalbazaar/mocha-w3c-interop-reporter",
     "base58-universal": "^2.0.0",
