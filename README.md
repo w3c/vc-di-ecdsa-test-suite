@@ -65,7 +65,7 @@ A simplified manifest would look like this:
 
 The example above represents an unauthenticated endpoint. You may add zcap or
 oauth authentication to your endpoints. You can find an example in the
-[README here](https://github.com/w3c-ccg/vc-api-test-suite-implementations#adding-a-new-implementation).
+[vc-api-test-suite-implementations README here](https://github.com/w3c-ccg/vc-api-test-suite-implementations#adding-a-new-implementation).
 
 To run the tests, some implementations may require client secrets that can be
 passed as env variables to the test script. To see which ones require client
@@ -75,8 +75,10 @@ secrets, please check the implementation manifest within the
 ### Docker Integration (TODO)
 
 We are presently working on implementing a new feature that will enable the
-utilization of Docker images (using the VC API mentioned above) instead of
-live endpoints.
+utilization of Docker images instead of live endpoints. The docker image that
+you provide will be started when the test suite is run. The image is expected
+to expose the API provided above, which will be utilized in the same way that
+live HTTP endpoints are used above.
 
 ## License
 
