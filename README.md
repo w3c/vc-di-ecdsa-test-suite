@@ -74,7 +74,7 @@ secrets, please check the implementation manifest within the
 We are presently working on implementing a new feature that will enable the
 use of Docker images instead of live endpoints. The Docker image that
 you provide will be started when the test suite is run. The image is expected
-to expose the API provided above, which will be utilized in the same way that
+to expose the API provided above, which will be used in the same way that
 live HTTP endpoints are used above.
 
 ## License
