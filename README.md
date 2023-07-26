@@ -1,5 +1,85 @@
 # vc-di-ecdsa-test-suite
 
-Interoperability test suite for ECDSA Data Integrity cryptosuites.
+> Test Suite for [ECDSA](https://www.w3.org/TR/vc-di-ecdsa/)
+  [Data Integrity](https://w3c.github.io/vc-data-integrity/) Cryptosuites.
 
-[Data Integrity Spec](https://w3c.github.io/vc-data-integrity/)
+## Table of Contents
+
+- [Background](#background)
+- [Install](#install)
+- [Usage](#usage)
+- [Implementation](#implementation)
+
+## Background
+Provides interoperability tests for verifiable credential processors
+(issuers/verifiers) that support [ECDSA](https://www.w3.org/TR/vc-di-ecdsa/)
+[Data Integrity](https://w3c.github.io/vc-data-integrity/) cryptosuites.
+
+## Install
+
+```js
+npm i
+```
+
+## Usage
+
+```
+npm test
+```
+
+## Implementation
+
+You will need an issuer and verifier that are compatible with [VC API](https://w3c-ccg.github.io/vc-api/)
+and are capable of handling issuance and verification of Verifiable Credentials
+with `DataIntegrityProof` proof type using the `ecdsa-2019` cryptosuite.
+
+To add your implementation to this test suite, you will need to add 2 endpoints
+to your implementation manifest.
+- A credentials issuer endpoint (/credentials/issue) in the `issuers` property.
+- A credentials verifier endpoint (/credentials/verify) in the `verifiers` property.
+
+All endpoints will need the tag `ecdsa-2019`.
+
+A simplified manifest would look like this:
+
+```js
+{
+  "name": "My Company",
+  "implementation": "My implementation",
+  "issuers": [{
+    "id": "",
+    "endpoint": "https://issuer.mycompany.com/credentials/issue",
+    "method": "POST",
+    "tags": ["ecdsa-2019"]
+  }],
+  "verifiers": [{
+    "id": "",
+    "endpoint": "https://verifier.mycompany.com/credentials/verify",
+    "method": "POST",
+    "tags": ["ecdsa-2019"]
+  }]
+}
+```
+
+The example above represents an unauthenticated endpoint. You may add zcap or
+oauth authentication to your endpoints. You can find an example in the
+[README here](https://github.com/w3c-ccg/vc-api-test-suite-implementations#adding-a-new-implementation).
+
+To run the tests, some implementations may require client secrets that can be
+passed as env variables to the test script. To see which ones require client
+secrets, please check the implementation manifest within the
+[vc-api-test-suite-implementations](https://github.com/w3c-ccg/vc-api-test-suite-implementations/tree/main/implementations) library.
+
+### Docker (TODO)
+
+We are currently adding a feature that would allow Docker images (using the VC API above) to be used instead of live endpoints.
+
+## License
+
+Copyright © 2023 [World Wide Web Consortium](http://www.w3.org/), ([MIT](http://www.csail.mit.edu/), [ERCIM](http://www.ercim.org/), [Keio](http://www.keio.ac.jp/), [Beihang](http://ev.buaa.edu.cn/)) and others. All Rights Reserved. <http://www.w3.org/Consortium/Legal/2008/04-testsuite-copyright.html>
+
+Distributed under both the [W3C Test Suite License](https://www.w3.org/Consortium/Legal/2008/04-testsuite-license) (SPDX: [LicenseRef-scancode-w3c-test-suite](https://scancode-licensedb.aboutcode.org/w3c-test-suite.html)) and the [W3C 3-clause BSD License](https://www.w3.org/Consortium/Legal/2008/03-bsd-license). To contribute to a W3C Test Suite, see the [policies and contribution forms](https://www.w3.org/2004/10/27-testcases).
+
+UNDER BOTH MUTUALLY EXCLUSIVE LICENSES, THIS DOCUMENT AND ALL DOCUMENTS, TESTS AND SOFTWARE THAT LINK THIS STATEMENT ARE PROVIDED "AS IS," AND COPYRIGHT HOLDERS MAKE NO REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, OR TITLE; THAT THE CONTENTS OF THE DOCUMENT ARE SUITABLE FOR ANY PURPOSE; NOR THAT THE IMPLEMENTATION OF SUCH CONTENTS WILL NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS OR OTHER RIGHTS.
+
+COPYRIGHT HOLDERS WILL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF ANY USE OF THE DOCUMENT OR THE PERFORMANCE OR IMPLEMENTATION OF THE CONTENTS THEREOF.
