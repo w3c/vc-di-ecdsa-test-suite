@@ -70,9 +70,11 @@ passed as env variables to the test script. To see which ones require client
 secrets, please check the implementation manifest within the
 [vc-api-test-suite-implementations](https://github.com/w3c-ccg/vc-api-test-suite-implementations/tree/main/implementations) library.
 
-### Docker (TODO)
+### Docker Integration (TODO)
 
-We are currently adding a feature that would allow Docker images (using the VC API above) to be used instead of live endpoints.
+We are presently working on implementing a new feature that will enable the
+utilization of Docker images (using the VC API mentioned above) instead of
+live endpoints.
 
 ## License
 
