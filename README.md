@@ -9,6 +9,8 @@
 - [Install](#install)
 - [Usage](#usage)
 - [Implementation](#implementation)
+- [Docker Integration](#docker-integration-todo)
+- [License](#license)
 
 ## Background
 Provides interoperability tests for verifiable credential processors
