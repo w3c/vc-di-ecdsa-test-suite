@@ -54,7 +54,7 @@ describe('ecdsa-2019 (verify)', function() {
           'an "INVALID_PROOF_CONFIGURATION" error MUST be returned.',
         async function() {
           this.test.cell = {columnId, rowId: this.test.title};
-          credential.cryptosuite = 'not-ecdsa-2019';
+          credential.proof.cryptosuite = 'not-ecdsa-2019';
           await verificationFail({credential, verifier});
         });
       });

@@ -61,6 +61,10 @@ export const verificationFail = async ({credential, verifier}) => {
   should.not.exist(result, 'Expected no result from verifier.');
   should.exist(error, 'Expected verifier to error.');
   should.exist(error.status, 'Expected verifier to return an HTTP Status code');
+  error.status.should.equal(
+    400,
+    'Expected HTTP Status code 400 invalid input!'
+  );
 };
 
 export const verificationSuccess = async ({credential, verifier}) => {
