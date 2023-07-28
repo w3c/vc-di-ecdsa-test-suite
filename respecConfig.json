@@ -1,7 +1,7 @@
 {
   "specStatus": "unofficial",
   "shortName": "vc-di-ecdsa-test-suite",
-  "subtitle": "Test suite for ensuring the data integrity of ecdsa-2019 signatures.",
+  "subtitle": "Interoperability test suite for ECDSA data integrity cryptosuites.",
   "github": "https://github.com/w3c-ccg/vc-di-ecdsa-test-suite",
   "edDraftURI": "https://w3c-ccg.github.io/vc-di-ecdsa-test-suite",
   "doJsonLd": true,
