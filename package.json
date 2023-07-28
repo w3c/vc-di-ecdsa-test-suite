@@ -1,7 +1,7 @@
 {
   "name": "vc-di-ecdsa-test-suite",
   "version": "0.0.1",
-  "description": "Test suite for ensuring the data integrity of ecdsa-2019 signatures.",
+  "description": "Interoperability test suite for ECDSA data integrity cryptosuites.",
   "main": "/tests",
   "type": "module",
   "directories": {
