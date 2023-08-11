@@ -1,18 +1,21 @@
-# Test Suite for [ECDSA](https://www.w3.org/TR/vc-di-ecdsa/) [Data Integrity](https://w3c.github.io/vc-data-integrity/) Cryptosuites
+# [ECDSA](https://www.w3.org/TR/vc-di-ecdsa/) Cryptosuite test suite
 
 ## Table of Contents
 
-- [Background](#background)
-- [Install](#install)
-- [Usage](#usage)
-- [Implementation](#implementation)
-- [Docker Integration](#docker-integration-todo)
-- [License](#license)
+- [ECDSA Cryptosuite test suite](#ecdsa-cryptosuite-test-suite)
+  - [Table of Contents](#table-of-contents)
+  - [Background](#background)
+  - [Install](#install)
+  - [Usage](#usage)
+  - [Implementation](#implementation)
+    - [Docker Integration (TODO)](#docker-integration-todo)
+  - [Contribute](#contribute)
+  - [License](#license)
 
 ## Background
 Provides interoperability tests for verifiable credential processors
 (issuers and verifiers) that support [ECDSA](https://www.w3.org/TR/vc-di-ecdsa/)
-[Data Integrity](https://w3c.github.io/vc-data-integrity/) cryptosuites.
+[Data Integrity](https://www.w3.org/TR/vc-data-integrity/) cryptosuites.
 
 ## Install
 
@@ -47,13 +50,13 @@ A simplified manifest would look like this:
   "implementation": "My implementation",
   "issuers": [{
     "id": "",
-    "endpoint": "https://issuer.mycompany.example/credentials/issue",
+    "endpoint": "https://mycompany.example/credentials/issue",
     "method": "POST",
     "tags": ["ecdsa-2019"]
   }],
   "verifiers": [{
     "id": "",
-    "endpoint": "https://verifier.mycompany.example/credentials/verify",
+    "endpoint": "https://mycompany.example/credentials/verify",
     "method": "POST",
     "tags": ["ecdsa-2019"]
   }]
@@ -61,13 +64,13 @@ A simplified manifest would look like this:
 ```
 
 The example above represents an unauthenticated endpoint. You may add ZCAP or
-OAuth authentication to your endpoints. You can find an example in the
-[vc-api-test-suite-implementations README](https://github.com/w3c-ccg/vc-api-test-suite-implementations#adding-a-new-implementation).
+OAuth2 authentication to your endpoints. You can find an example in the
+[vc-test-suite-implementations README](https://github.com/w3c/vc-test-suite-implementations#adding-a-new-implementation).
 
 To run the tests, some implementations may require client secrets that can be
 passed as environment variables to the test script. To see which implementations require client
 secrets, please check the implementation manifest within the
-[vc-api-test-suite-implementations](https://github.com/w3c-ccg/vc-api-test-suite-implementations/tree/main/implementations) library.
+[vc-test-suite-implementations](https://github.com/w3c/vc-test-suite-implementations/tree/main/implementations) library.
 
 ### Docker Integration (TODO)
 
@@ -77,12 +80,12 @@ you provide will be started when the test suite is run. The image is expected
 to expose the API provided above, which will be used in the same way that
 live HTTP endpoints are used above.
 
+## Contribute
+
+See [the CONTRIBUTING.md file](CONTRIBUTING.md).
+
+Pull Requests are welcome!
+
 ## License
 
-Copyright © 2023 [World Wide Web Consortium](http://www.w3.org/), ([MIT](http://www.csail.mit.edu/), [ERCIM](http://www.ercim.org/), [Keio](http://www.keio.ac.jp/), [Beihang](http://ev.buaa.edu.cn/)) and others. All Rights Reserved. <http://www.w3.org/Consortium/Legal/2008/04-testsuite-copyright.html>
-
-Distributed under both the [W3C Test Suite License](https://www.w3.org/Consortium/Legal/2008/04-testsuite-license) (SPDX: [LicenseRef-scancode-w3c-test-suite](https://scancode-licensedb.aboutcode.org/w3c-test-suite.html)) and the [W3C 3-clause BSD License](https://www.w3.org/Consortium/Legal/2008/03-bsd-license). To contribute to a W3C Test Suite, see the [policies and contribution forms](https://www.w3.org/2004/10/27-testcases).
-
-UNDER BOTH MUTUALLY EXCLUSIVE LICENSES, THIS DOCUMENT AND ALL DOCUMENTS, TESTS AND SOFTWARE THAT LINK THIS STATEMENT ARE PROVIDED "AS IS," AND COPYRIGHT HOLDERS MAKE NO REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, OR TITLE; THAT THE CONTENTS OF THE DOCUMENT ARE SUITABLE FOR ANY PURPOSE; NOR THAT THE IMPLEMENTATION OF SUCH CONTENTS WILL NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS OR OTHER RIGHTS.
-
-COPYRIGHT HOLDERS WILL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF ANY USE OF THE DOCUMENT OR THE PERFORMANCE OR IMPLEMENTATION OF THE CONTENTS THEREOF.
+See [the LICENSE.md file](LICENSE.md)
