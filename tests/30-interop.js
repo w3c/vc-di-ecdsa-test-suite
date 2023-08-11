@@ -3,7 +3,7 @@
  */
 import chai from 'chai';
 import {createInitialVc} from './helpers.js';
-import {endpoints} from 'vc-api-test-suite-implementations';
+import {endpoints} from 'vc-test-suite-implementations';
 import {validVc as vc} from './validVc.js';
 
 const should = chai.should();

@@ -6,7 +6,7 @@ import {
   checkDataIntegrityProofVerifyErrors
 } from 'data-integrity-test-suite-assertion';
 import {createInitialVc} from './helpers.js';
-import {endpoints} from 'vc-api-test-suite-implementations';
+import {endpoints} from 'vc-test-suite-implementations';
 import {klona} from 'klona';
 import {validVc as vc} from './validVc.js';
 
