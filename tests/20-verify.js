@@ -50,9 +50,8 @@ describe('ecdsa-2019 (verify)', function() {
             this.test.cell = {columnId, rowId: this.test.title};
             await verificationSuccess({credential, verifier});
           });
-        it('If the "cryptosuite" field is not the string "ecdsa-2019", ' +
-          'an error MUST be raised.',
-        async function() {
+        it('If the "cryptosuite" field is not the string "ecdsa-rdfc-2019" ' +
+          'or "ecdsa-jcs-2019", an error MUST be raised.', async function() {
           this.test.cell = {columnId, rowId: this.test.title};
           credential.proof.cryptosuite = 'not-ecdsa-2019';
           await verificationFail({credential, verifier});
