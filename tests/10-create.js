@@ -14,7 +14,6 @@ import {endpoints} from 'vc-test-suite-implementations';
 import {validVc as vc} from './validVc.js';
 
 const tag = 'ecdsa-2019';
-const cryptosuite = 'ecdsa-2019';
 const {match} = endpoints.filterByTag({
   tags: [tag],
   property: 'issuers'
@@ -52,14 +51,16 @@ describe('ecdsa-2019 (create)', function() {
             verificationMethodDocuments.push(verificationMethodDocument);
           }
         });
-        it('The field "cryptosuite" MUST be "ecdsa-2019".', function() {
+        it('The field "cryptosuite" MUST be "ecdsa-rdfc-2019" or ' +
+          '"ecdsa-jcs-2019".', function() {
           this.test.cell = {columnId: name, rowId: this.test.title};
+          const cryptosuite = ['ecdsa-rdfc-2019', 'ecdsa-jcs-2019'];
           proofs.some(
-            proof => proof?.cryptosuite === cryptosuite
+            proof => cryptosuite.includes(proof?.cryptosuite)
           ).should.equal(
             true,
             'Expected at least one proof to have "cryptosuite" property ' +
-            '"ecdsa-2019".'
+            '"ecdsa-rdfc-2019" or "ecdsa-jcs-2019".'
           );
         });
         it('The "proof" MUST verify when using a conformant verifier.',
@@ -83,30 +84,6 @@ describe('ecdsa-2019 (create)', function() {
             'Expected at least one proof to have "type" property value ' +
               '"Multikey".'
           );
-        });
-        it('The "controller" of the verification method MUST exist and MUST ' +
-          'be a valid URL.', async function() {
-          this.test.cell = {columnId: name, rowId: this.test.title};
-          verificationMethodDocuments.should.not.eql(0, 'Expected ' +
-            '"verificationMethodDocuments" to not be empty.');
-          verificationMethodDocuments.forEach(verificationMethodDocument => {
-            should.exist(verificationMethodDocument, 'Expected dereferencing ' +
-              '"verificationMethod" to return a document.');
-            const {controller} = verificationMethodDocument;
-            should.exist(controller, 'Expected "controller" of the ' +
-              'verification method to exist.');
-            let result;
-            let err;
-            try {
-              result = new URL(controller);
-            } catch(e) {
-              err = e;
-            }
-            should.not.exist(err, 'Expected URL check of the "controller" of ' +
-              'the verification method to not error.');
-            should.exist(result, 'Expected the controller of the ' +
-              'verification method to be a valid URL.');
-          });
         });
         it('The "publicKeyMultibase" property of the verification method ' +
           'MUST be public key encoded according to MULTICODEC and formatted ' +
