@@ -57,10 +57,8 @@ describe('ecdsa-2019 (create)', function() {
           const cryptosuite = ['ecdsa-rdfc-2019', 'ecdsa-jcs-2019'];
           proofs.some(
             proof => cryptosuite.includes(proof?.cryptosuite)
-          ).should.equal(
-            true,
-            'Expected at least one proof to have "cryptosuite" property ' +
-            '"ecdsa-rdfc-2019" or "ecdsa-jcs-2019".'
+          ).should.equal(true, 'Expected at least one proof to have ' +
+            '"cryptosuite" property "ecdsa-rdfc-2019" or "ecdsa-jcs-2019".'
           );
         });
         it('The "proof" MUST verify when using a conformant verifier.',
@@ -75,14 +73,12 @@ describe('ecdsa-2019 (create)', function() {
         async function() {
           this.test.cell = {columnId: name, rowId: this.test.title};
           verificationMethodDocuments.should.not.eql([], 'Expected ' +
-            '"verificationMethodDocuments" to not be empty.');
+            'at least one "verificationMethodDocument".');
           verificationMethodDocuments.some(
             verificationMethodDocument =>
               verificationMethodDocument?.type === 'Multikey'
-          ).should.equal(
-            true,
-            'Expected at least one proof to have "type" property value ' +
-              '"Multikey".'
+          ).should.equal(true, 'Expected at least one proof to have "type" ' +
+              'property value "Multikey".'
           );
         });
         it('The "publicKeyMultibase" property of the verification method ' +
@@ -99,11 +95,8 @@ describe('ecdsa-2019 (create)', function() {
                 shouldBeBs58(publicKeyMultibase) &&
                 shouldBeMulticodecEncoded(publicKeyMultibase);
             }
-          ).should.equal(
-            true,
-            'Expected at "publicKeyMultibase" to to be MULTIBASE formatted ' +
-            'and MULTICODEC encoded.'
-          );
+          ).should.equal(true, 'Expected at "publicKeyMultibase" to to be ' +
+            'MULTIBASE formatted and MULTICODEC encoded.');
         });
       });
     }
