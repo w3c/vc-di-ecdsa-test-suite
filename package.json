@@ -39,6 +39,7 @@
     "klona": "^2.0.6",
     "mocha": "^10.2.0",
     "uuid": "^9.0.0",
+    "varint": "^6.0.0",
     "vc-test-suite-implementations": "github:w3c/vc-test-suite-implementations"
   },
   "devDependencies": {

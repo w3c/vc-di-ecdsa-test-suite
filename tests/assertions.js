@@ -2,11 +2,11 @@
  * Copyright 2023 Digital Bazaar, Inc. All Rights Reserved
  */
 import {
-  expectedP256Prefix, expectedP384Prefix, multibaseMultikeyHeaderP256,
-  multibaseMultikeyHeaderP384,
+  multibaseMultikeyHeaderP256, multibaseMultikeyHeaderP384,
 } from './helpers.js';
 import chai from 'chai';
 import {decode} from 'base58-universal';
+import varint from 'varint';
 
 const should = chai.should();
 
@@ -34,6 +34,7 @@ export const shouldBeMulticodecEncoded = async s => {
     const prefix = Array.from(bytes.slice(0, 2));
     // the multicodec encoding of a P-256 public key is the two-byte
     // prefix 0x1200 followed by the 33-byte compressed public key data.
+    const expectedP256Prefix = await varint.encode(0x1200);
     return JSON.stringify(prefix) === JSON.stringify(expectedP256Prefix);
   }
 
@@ -44,6 +45,7 @@ export const shouldBeMulticodecEncoded = async s => {
     const prefix = Array.from(bytes.slice(0, 2));
     // the multicodec encoding of a P-384 public key is the two-byte prefix
     // 0x1201 followed by the 49-byte compressed public key data.
+    const expectedP384Prefix = await varint.encode(0x1201);
     return JSON.stringify(prefix) === JSON.stringify(expectedP384Prefix);
   }
   // Unsupported key type, return false
