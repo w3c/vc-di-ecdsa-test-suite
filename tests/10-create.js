@@ -68,6 +68,33 @@ describe('ecdsa-2019 (create)', function() {
               'HTTP API compatible verifier.');
             verificationSuccess({credential: issuedVc, verifier});
           });
+        it('The "proof.proofPurpose" field MUST match the verification ' +
+          'relationship expressed by the verification method controller.',
+        async function() {
+          this.test.cell = {columnId: name, rowId: this.test.title};
+          this.test.cell = {columnId: name, rowId: this.test.title};
+          verificationMethodDocuments.should.not.eql([], 'Expected ' +
+            'at least one "verificationMethodDocument".');
+          verificationMethodDocuments.some(
+            verificationMethodDocument =>
+              verificationMethodDocument?.type === 'Multikey'
+          ).should.equal(true, 'Expected at least one proof to have "type" ' +
+              'property value "Multikey".'
+          );
+          const controllerDocuments = [];
+          for(const verificationMethodDocument of verificationMethodDocuments) {
+            const controllerDocument = await documentLoader({
+              url: verificationMethodDocument.controller
+            });
+            controllerDocuments.push(controllerDocument);
+          }
+          proofs.some(
+            proof => controllerDocuments.some(controllerDocument =>
+              controllerDocument.hasOwnProperty(proof.proofPurpose))
+          ).should.equal(true, 'Expected "proof.proofPurpose" field ' +
+            'to match the verification method controller.'
+          );
+        });
         it('Dereferencing "verificationMethod" MUST result in an object ' +
           'containing a type property with "Multikey" value.',
         async function() {
