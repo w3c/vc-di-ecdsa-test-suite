@@ -75,7 +75,6 @@ describe('ecdsa-2019 (create)', function() {
           'relationship expressed by the verification method controller.',
         async function() {
           this.test.cell = {columnId: name, rowId: this.test.title};
-          this.test.cell = {columnId: name, rowId: this.test.title};
           verificationMethodDocuments.should.not.eql([], 'Expected ' +
             'at least one "verificationMethodDocument".');
           verificationMethodDocuments.some(
