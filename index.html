@@ -87,22 +87,22 @@
     <section class="informative" id="conformance-testing-results">
       <h2> Conformance Testing Results </h2>
       <p>
-      Tests passed 115/117 98%
+      Tests passed 115/120 95%
       </p>
       <p>
-      Tests failed 2/117 2%
+      Tests failed 5/120 5%
       </p>
       <p>
-      Failures 2
+      Failures 5
       </p>
       <p>
       Tests skipped 0
       </p>
       <p>
-      Total tests 117
+      Total tests 120
       </p>
       <p>
-        These tests were run on <time>29 October 2023 at 5:05 am UTC</time>
+        These tests were run on <time>5 November 2023 at 5:05 am UTC</time>
       </p>
       <section class="informative" id="Key">
         <h3>Key</h3>
@@ -495,10 +495,10 @@
               </tr>
               <tr>
                 <!--This is the name of the test-->
-                <td class="subtest">&quot;proof.type&quot; field MUST be &quot;DataIntegrityProof&quot;.</td>
+                <td class="subtest">&quot;proof.type&quot; field MUST be &quot;DataIntegrityProof&quot; and the associated document MUST include expected contexts.</td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
+                  <td class="failed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">❌</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -527,10 +527,17 @@
                          margin-left: 1rem;
                        }
                       </style>
+                      <span class="err hide no-space-around">
+                        <pre>{
+                      "name": "AssertionError",
+                      "message": "expected false to equal true",
+                      "stack": "AssertionError: expected false to equal true\n    at Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:109:42)\n    at process.processImmediate (node:internal/timers:478:21)"
+                    }</pre>
+                      </span>
                     </div>
                   </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
+                  <td class="failed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">❌</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -559,10 +566,17 @@
                          margin-left: 1rem;
                        }
                       </style>
+                      <span class="err hide no-space-around">
+                        <pre>{
+                      "name": "AssertionError",
+                      "message": "expected false to equal true",
+                      "stack": "AssertionError: expected false to equal true\n    at Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:109:42)\n    at process.processImmediate (node:internal/timers:478:21)"
+                    }</pre>
+                      </span>
                     </div>
                   </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
+                  <td class="failed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">❌</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -591,6 +605,13 @@
                          margin-left: 1rem;
                        }
                       </style>
+                      <span class="err hide no-space-around">
+                        <pre>{
+                      "name": "AssertionError",
+                      "message": "expected false to equal true",
+                      "stack": "AssertionError: expected false to equal true\n    at Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:109:42)\n    at process.processImmediate (node:internal/timers:478:21)"
+                    }</pre>
+                      </span>
                     </div>
                   </td>
               </tr>
@@ -1506,6 +1527,107 @@
               <tr>
                 <!--This is the name of the test-->
                 <td class="subtest">if &quot;proof.previousProof&quot; field exists, it MUST be a string.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">if &quot;proof.nonce&quot; field exists, it MUST be a string.</td>
                 <!--These contain if the test passed, failed, or was skipped-->
                   <td class="passed not-optional highlight-on-hover text-center">
                     <div class= "highlight-on-hover">✓</div>
@@ -3141,7 +3263,7 @@
                         <pre>{
                       "name": "AssertionError",
                       "message": "Expected no result from verifier.: expected Response{ data: { …(3) }, …(3) } to not exist",
-                      "stack": "AssertionError: Expected no result from verifier.: expected Response{ data: { …(3) }, …(3) } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:52:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:312:11)"
+                      "stack": "AssertionError: Expected no result from verifier.: expected Response{ data: { …(3) }, …(3) } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:52:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:341:11)"
                     }</pre>
                       </span>
                     </div>
@@ -3451,7 +3573,7 @@
                         <pre>{
                       "name": "AssertionError",
                       "message": "Expected no result from verifier.: expected Response{ data: { …(3) }, …(3) } to not exist",
-                      "stack": "AssertionError: Expected no result from verifier.: expected Response{ data: { …(3) }, …(3) } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:52:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:343:11)"
+                      "stack": "AssertionError: Expected no result from verifier.: expected Response{ data: { …(3) }, …(3) } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:52:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:372:11)"
                     }</pre>
                       </span>
                     </div>
