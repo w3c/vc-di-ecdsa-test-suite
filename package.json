@@ -8,7 +8,7 @@
     "tests": "tests"
   },
   "scripts": {
-    "test": "mocha tests/ --reporter @digitalbazaar/mocha-w3c-interop-reporter --reporter-options abstract=\"$PWD/abstract.hbs\",reportDir=\"$PWD/reports\",respec=\"$PWD/respecConfig.json\",title=\"Data Integrity ecdsa 2019 Interoperability Report 1.0\",suiteLog='./suite.log' --timeout 15000 --preserve-symlinks",
+    "test": "mocha tests/ --reporter @digitalbazaar/mocha-w3c-interop-reporter --reporter-options abstract=\"$PWD/abstract.hbs\",reportDir=\"$PWD/reports\",respec=\"$PWD/respecConfig.json\",suiteLog='./suite.log',templateData=\"$PWD/reports/index.json\",title=\"Data Integrity ecdsa 2019 Interoperability Report 1.0\" --timeout 15000 --preserve-symlinks",
     "lint": "eslint ."
   },
   "author": {
@@ -31,7 +31,7 @@
     "@digitalbazaar/did-method-key": "^5.1.0",
     "@digitalbazaar/ecdsa-multikey": "^1.1.3",
     "@digitalbazaar/http-client": "^3.4.1",
-    "@digitalbazaar/mocha-w3c-interop-reporter": "^1.4.0",
+    "@digitalbazaar/mocha-w3c-interop-reporter": "^1.5.0",
     "base58-universal": "^2.0.0",
     "chai": "^4.3.7",
     "data-integrity-test-suite-assertion": "github:w3c-ccg/data-integrity-test-suite-assertion",
