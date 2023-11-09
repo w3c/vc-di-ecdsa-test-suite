@@ -6,4 +6,4 @@
 - A new reporter option that outputs the json used to create the report.
 
 ### Changed
-- `@digitalbazaar/mocha-w3c-interop-reporter` is not version `^1.5.0`.
+- Use `@digitalbazaar/mocha-w3c-interop-reporter@1.5.0`.
