@@ -3,12 +3,12 @@
 ## 2.0.0 - 2023-11-16
 
 ### Added
-- Adds test to check if `proof.proofPurpose` field matches the verification
+- Adds test to check whether `proof.proofPurpose` field matches the verification
   relationship expressed by the verification method controller.
 
 ### Changed
 - **BREAKING**: The tests require the cryptosuite type value to be either
-  `ecdsa-rdfc-2019`, `ecdsa-jcs-2019` or `ecdsa-sd-2023`.
+  `ecdsa-rdfc-2019`, `ecdsa-jcs-2019`, or `ecdsa-sd-2023`.
 
 ### Removed
 - Removed unnecessary `verificationMethod.controller`. The normative statement
