@@ -9,10 +9,13 @@
 ### Changed
 - **BREAKING**: The tests require the cryptosuite type value to be either
   `ecdsa-rdfc-2019`, `ecdsa-jcs-2019`, or `ecdsa-sd-2023`.
+- **BREAKING**: The tags required for the test suite have been updated, shifting
+  from `ecdsa-2019` to `ecdsa-rdfc-2019`, `ecdsa-jcs-2019`, and/or
+  `ecdsa-sd-2023`.
 
 ### Removed
-- Removed unnecessary `verificationMethod.controller`. The normative statement
-  for that no longer exists in the spec.
+- Removed unnecessary `verificationMethod.controller` test. The normative
+  statement for that no longer exists in the spec.
 
 ## 1.0.0 - 2023-11-10
 
