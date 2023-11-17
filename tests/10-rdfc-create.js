@@ -22,33 +22,20 @@ const should = chai.should();
 
 describe('ecdsa-rdfc-2019 (create)', function() {
   checkDataIntegrityProofFormat({
-    implemented: match
+    implemented: match,
+    isEcdsaTests: true
   });
   describe('ecdsa-rdfc-2019 (issuer)', function() {
     this.matrix = true;
     this.report = true;
-    const names = [...match.keys()];
     this.implemented = [];
-    for(const name of names) {
-      const {endpoints} = match.get(name);
-      if(endpoints.length > 1) {
-        for(const endpoint of endpoints) {
-          const {tags} = endpoint.settings;
-          const keyType = getKeyType(tags);
-          this.implemented.push(`${name}: ${keyType}`);
-        }
-      } else {
-        const {tags} = endpoints[0].settings;
-        const keyType = getKeyType(tags);
-        this.implemented.push(`${name}: ${keyType}`);
-      }
-    }
     this.rowLabel = 'Test Name';
     this.columnLabel = 'Implementation';
     for(const [name, {endpoints, implementation}] of match) {
       for(const endpoint of endpoints) {
-        const tags = endpoint.settings.tags;
-        const keyType = getKeyType(tags);
+        const {supportedEcdsaKeyTypes} = endpoint.settings;
+        const keyType = getKeyType(supportedEcdsaKeyTypes);
+        this.implemented.push(`${name}: ${keyType}`);
         describe(`${name}: ${keyType}`, function() {
           const issuer = endpoint;
           const verifier = implementation.verifiers.find(
