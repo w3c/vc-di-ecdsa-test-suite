@@ -41,9 +41,11 @@ to your implementation manifest.
 - A credential issuer endpoint (/credentials/issue) in the `issuers` property.
 - A credential verifier endpoint (/credentials/verify) in the `verifiers` property.
 
-All endpoints will need one of the following cryptosuite tags `ecdsa-rdfc-2019`,
-`ecdsa-jcs-2019` and/or `ecdsa-sd-2023` along with the keyType `P-256` or `P-384`
-the implementation supports.
+All endpoints will require one of the following cryptosuite tags `ecdsa-rdfc-2019`,
+`ecdsa-jcs-2019`, and/or `ecdsa-sd-2023` specified along with
+the keyType `P-256` or `P-384` the implementation supports.
+
+NOTE: The tests for `ecdsa-jcs-2019` are TBA.
 
 A simplified manifest would look like this:
 
@@ -71,7 +73,9 @@ A simplified manifest would look like this:
     "id": "",
     "endpoint": "https://mycompany.example/credentials/verify",
     "method": "POST",
-    "tags": ["ecdsa-rdfc-2019", "ecdsa-jcs-2019", "ecdsa-sd-2023"]
+    "tags": [
+      "ecdsa-rdfc-2019", "ecdsa-jcs-2019", "ecdsa-sd-2023"
+    ]
   }]
 }
 ```

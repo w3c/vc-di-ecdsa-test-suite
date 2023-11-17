@@ -32,3 +32,13 @@ export const multibaseMultikeyHeaderP256 =
 
 export const multibaseMultikeyHeaderP384 =
   SUPPORTED_BASE58_ECDSA_MULTIKEY_HEADERS.get('P-384');
+
+export function getKeyType(tags) {
+  const supportedKeyTypes = ['P-256', 'P-384'];
+  for(const keyType of supportedKeyTypes) {
+    if(tags.includes(keyType)) {
+      return keyType;
+    }
+  }
+  return null;
+}
