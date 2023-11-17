@@ -27,7 +27,22 @@ describe('ecdsa-rdfc-2019 (create)', function() {
   describe('ecdsa-rdfc-2019 (issuer)', function() {
     this.matrix = true;
     this.report = true;
-    this.implemented = [...match.keys()];
+    const names = [...match.keys()];
+    this.implemented = [];
+    for(const name of names) {
+      const {endpoints} = match.get(name);
+      if(endpoints.length > 1) {
+        for(const endpoint of endpoints) {
+          const {tags} = endpoint.settings;
+          const keyType = getKeyType(tags);
+          this.implemented.push(`${name}: ${keyType}`);
+        }
+      } else {
+        const {tags} = endpoints[0].settings;
+        const keyType = getKeyType(tags);
+        this.implemented.push(`${name}: ${keyType}`);
+      }
+    }
     this.rowLabel = 'Test Name';
     this.columnLabel = 'Implementation';
     for(const [name, {endpoints, implementation}] of match) {
@@ -54,7 +69,7 @@ describe('ecdsa-rdfc-2019 (create)', function() {
               verificationMethodDocuments.push(verificationMethodDocument);
             }
           });
-          it.only('The field "cryptosuite" MUST be "ecdsa-rdfc-2019", ' +
+          it('The field "cryptosuite" MUST be "ecdsa-rdfc-2019", ' +
             '"ecdsa-jcs-2019" or "ecdsa-sd-2023".', function() {
             this.test.cell = {
               columnId: `${name}: ${keyType}`, rowId: this.test.title
