@@ -33,14 +33,17 @@ npm test
 
 You will need an issuer and verifier that are compatible with [VC API](https://w3c-ccg.github.io/vc-api/)
 and are capable of handling issuance and verification of Verifiable Credentials
-with `DataIntegrityProof` proof type using the `ecdsa-2019` cryptosuite.
+with `DataIntegrityProof` proof type using the `ecdsa-rdfc-2019`,
+`ecdsa-jcs-2019`, or `ecdsa-sd-2023` cryptosuites.
 
 To add your implementation to this test suite, you will need to add 2 endpoints
 to your implementation manifest.
 - A credential issuer endpoint (/credentials/issue) in the `issuers` property.
 - A credential verifier endpoint (/credentials/verify) in the `verifiers` property.
 
-All endpoints will need the tag `ecdsa-2019`.
+All endpoints will need one of the following cryptosuite tags `ecdsa-rdfc-2019`,
+`ecdsa-jcs-2019` and/or `ecdsa-sd-2023` along with the keyType `P-256` or `P-384`
+the implementation supports.
 
 A simplified manifest would look like this:
 
@@ -52,13 +55,23 @@ A simplified manifest would look like this:
     "id": "",
     "endpoint": "https://mycompany.example/credentials/issue",
     "method": "POST",
-    "tags": ["ecdsa-2019"]
+    "tags": ["ecdsa-rdfc-2019", "P-256"]
+  }, {
+    "id": "",
+    "endpoint": "https://mycompany.example/credentials/issue",
+    "method": "POST",
+    "tags": ["ecdsa-jcs-2019", "P-384"]
+  }, {
+    "id": "",
+    "endpoint": "https://mycompany.example/credentials/issue",
+    "method": "POST",
+    "tags": ["ecdsa-sd-2023", "P-256"]
   }],
   "verifiers": [{
     "id": "",
     "endpoint": "https://mycompany.example/credentials/verify",
     "method": "POST",
-    "tags": ["ecdsa-2019"]
+    "tags": ["ecdsa-rdfc-2019", "ecdsa-jcs-2019", "ecdsa-sd-2023"]
   }]
 }
 ```
