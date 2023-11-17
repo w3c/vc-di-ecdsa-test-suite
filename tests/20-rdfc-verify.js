@@ -10,14 +10,14 @@ import {endpoints} from 'vc-test-suite-implementations';
 import {klona} from 'klona';
 import {validVc as vc} from './validVc.js';
 
-const tag = 'ecdsa-2019';
-// only use implementations with `ecdsa-2019` verifiers.
+const tag = 'ecdsa-rdfc-2019';
+// only use implementations with `ecdsa-rdfc-2019` verifiers.
 const {match} = endpoints.filterByTag({
   tags: [tag],
   property: 'verifiers'
 });
 
-describe('ecdsa-2019 (verify)', function() {
+describe('ecdsa-rdfc-2019 (verify)', function() {
   let credential;
   beforeEach(async function() {
     const {match} = endpoints.filterByTag({
@@ -32,7 +32,7 @@ describe('ecdsa-2019 (verify)', function() {
   checkDataIntegrityProofVerifyErrors({
     implemented: match
   });
-  describe('ecdsa-2019 cryptosuite (verifier)', function() {
+  describe('ecdsa-rdfc-2019 cryptosuite (verifier)', function() {
     // this will tell the report
     // to make an interop matrix with this suite
     this.matrix = true;
@@ -45,7 +45,7 @@ describe('ecdsa-2019 (verify)', function() {
       describe(columnId, function() {
         // wrap the testApi config in an Implementation class
         const [verifier] = endpoints;
-        it('MUST verify a valid VC with an ecdsa-2019 proof',
+        it('MUST verify a valid VC with an ecdsa-rdfc-2019 proof',
           async function() {
             this.test.cell = {columnId, rowId: this.test.title};
             await verificationSuccess({credential, verifier});
