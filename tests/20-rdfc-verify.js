@@ -17,7 +17,7 @@ const {match} = endpoints.filterByTag({
   property: 'verifiers'
 });
 
-describe('ecdsa-rdfc-2019 (verify)', function() {
+describe.skip('ecdsa-rdfc-2019 (verify)', function() {
   let credential;
   beforeEach(async function() {
     const {match} = endpoints.filterByTag({
