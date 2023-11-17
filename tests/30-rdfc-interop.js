@@ -7,9 +7,9 @@ import {endpoints} from 'vc-test-suite-implementations';
 import {validVc as vc} from './validVc.js';
 
 const should = chai.should();
-const tag = 'ecdsa-2019';
+const tag = 'ecdsa-rdfc-2019';
 
-// only use implementations with `ecdsa-2019` issuers.
+// only use implementations with `ecdsa-rdfc-2019` issuers.
 const {
   match: issuerMatches
 } = endpoints.filterByTag({tags: [tag], property: 'issuers'});
@@ -17,7 +17,7 @@ const {
   match: verifierMatches
 } = endpoints.filterByTag({tags: [tag], property: 'verifiers'});
 
-describe('ecdsa-2019 (interop)', function() {
+describe('ecdsa-rdfc-2019 (interop)', function() {
   // this will tell the report
   // to make an interop matrix with this suite
   this.matrix = true;

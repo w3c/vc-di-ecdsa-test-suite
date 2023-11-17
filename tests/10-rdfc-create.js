@@ -13,18 +13,18 @@ import {documentLoader} from './documentLoader.js';
 import {endpoints} from 'vc-test-suite-implementations';
 import {validVc as vc} from './validVc.js';
 
-const tag = 'ecdsa-2019';
+const tag = 'ecdsa-rdfc-2019';
 const {match} = endpoints.filterByTag({
   tags: [tag],
   property: 'issuers'
 });
 const should = chai.should();
 
-describe('ecdsa-2019 (create)', function() {
+describe('ecdsa-rdfc-2019 (create)', function() {
   checkDataIntegrityProofFormat({
     implemented: match
   });
-  describe('ecdsa-2019 (issuer)', function() {
+  describe('ecdsa-rdfc-2019 (issuer)', function() {
     this.matrix = true;
     this.report = true;
     this.implemented = [...match.keys()];
