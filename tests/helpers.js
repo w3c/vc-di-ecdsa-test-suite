@@ -33,12 +33,10 @@ export const multibaseMultikeyHeaderP256 =
 export const multibaseMultikeyHeaderP384 =
   SUPPORTED_BASE58_ECDSA_MULTIKEY_HEADERS.get('P-384');
 
-export function getKeyType(supportedEcdsaKeyTypes) {
+export function checkKeyType(keyType) {
   const supportedKeyTypes = ['P-256', 'P-384'];
-  for(const keyType of supportedKeyTypes) {
-    if(supportedEcdsaKeyTypes.includes(keyType)) {
-      return keyType;
-    }
+  if(supportedKeyTypes.includes(keyType)) {
+    return keyType;
   }
-  return null;
+  throw new Error(`Unsupported ECDSA key type: ${keyType}.`);
 }
