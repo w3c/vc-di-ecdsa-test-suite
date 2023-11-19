@@ -7,7 +7,6 @@ import {
 } from 'data-integrity-test-suite-assertion';
 import {createInitialVc} from './helpers.js';
 import {endpoints} from 'vc-test-suite-implementations';
-import {klona} from 'klona';
 import {validVc as vc} from './validVc.js';
 
 const tag = 'ecdsa-rdfc-2019';
@@ -17,47 +16,76 @@ const {match} = endpoints.filterByTag({
   property: 'verifiers'
 });
 
-describe.skip('ecdsa-rdfc-2019 (verify)', function() {
-  let credential;
-  beforeEach(async function() {
-    const {match} = endpoints.filterByTag({
-      tags: [tag],
-      property: 'issuers'
-    });
-    // Use DB issuer to issue a verifiable credential for the verifier tests
-    const [issuer] = match.get('Digital Bazaar').endpoints;
-    const issuedVc = await createInitialVc({issuer, vc});
-    credential = klona(issuedVc);
-  });
+describe('ecdsa-rdfc-2019 (verify)', function() {
   checkDataIntegrityProofVerifyErrors({
-    implemented: match
+    implemented: match,
+    isEcdsaTests: true
   });
-  describe('ecdsa-rdfc-2019 cryptosuite (verifier)', function() {
+  describe('ecdsa-rdfc-2019 (verifier)', function() {
+    let issuers;
+    before(async function() {
+      const {match} = endpoints.filterByTag({
+        tags: [tag],
+        property: 'issuers'
+      });
+      // Use DB issuer to issue a verifiable credential for the verifier tests
+      issuers = match.get('Digital Bazaar').endpoints;
+    });
     // this will tell the report
     // to make an interop matrix with this suite
     this.matrix = true;
     this.report = true;
     this.rowLabel = 'Test Name';
     this.columnLabel = 'Verifier';
-    this.implemented = [...match.keys()];
-
-    for(const [columnId, {endpoints}] of match) {
-      describe(columnId, function() {
-        // wrap the testApi config in an Implementation class
-        const [verifier] = endpoints;
-        it('MUST verify a valid VC with an ecdsa-rdfc-2019 proof',
-          async function() {
-            this.test.cell = {columnId, rowId: this.test.title};
-            await verificationSuccess({credential, verifier});
+    this.implemented = [];
+    for(const [name, {endpoints}] of match) {
+      for(const endpoint of endpoints) {
+        const {
+          supportedEcdsaKeyTypes: verifierSupportedEcdsaKeyTypes
+        } = endpoint.settings;
+        const keyTypes = verifierSupportedEcdsaKeyTypes.join(', ');
+        const verifier = endpoint;
+        this.implemented.push(`${name}: ${keyTypes}`);
+        describe(`${name}: ${keyTypes}`, function() {
+          const credentials = [];
+          beforeEach(async function() {
+            for(const issuer of issuers) {
+              const {
+                supportedEcdsaKeyTypes: issuerSupportedEcdsaKeyTypes
+              } = issuer.settings;
+              for(const verifierSupportedEcdsaKeyType of
+                verifierSupportedEcdsaKeyTypes) {
+                if(issuerSupportedEcdsaKeyTypes.includes(
+                  verifierSupportedEcdsaKeyType)) {
+                  const issuedVc = await createInitialVc({issuer, vc});
+                  credentials.push(issuedVc);
+                }
+              }
+            }
           });
-        it('If the "cryptosuite" field is not the string "ecdsa-rdfc-2019" ' +
-          '"ecdsa-jcs-2019" or "ecdsa-sd-2023", an error MUST be raised.',
-        async function() {
-          this.test.cell = {columnId, rowId: this.test.title};
-          credential.proof.cryptosuite = 'invalid-cryptosuite';
-          await verificationFail({credential, verifier});
+          // wrap the testApi config in an Implementation class
+          it('MUST verify a valid VC with an ecdsa-rdfc-2019 proof.',
+            async function() {
+              this.test.cell = {
+                columnId: `${name}: ${keyTypes}`, rowId: this.test.title
+              };
+              for(const credential of credentials) {
+                await verificationSuccess({credential, verifier});
+              }
+            });
+          it('If the "cryptosuite" field is not the string ' +
+            '"ecdsa-rdfc-2019", "ecdsa-jcs-2019" or "ecdsa-sd-2023", an ' +
+            'error MUST be raised.', async function() {
+            this.test.cell = {
+              columnId: `${name}: ${keyTypes}`, rowId: this.test.title
+            };
+            for(const credential of credentials) {
+              credential.proof.cryptosuite = 'invalid-cryptosuite';
+              await verificationFail({credential, verifier});
+            }
+          });
         });
-      });
+      }
     }
   });
 });
