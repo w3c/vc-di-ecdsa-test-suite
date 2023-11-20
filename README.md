@@ -41,9 +41,8 @@ to your implementation manifest.
 - A credential issuer endpoint (/credentials/issue) in the `issuers` property.
 - A credential verifier endpoint (/credentials/verify) in the `verifiers` property.
 
-All endpoints will require one of the following cryptosuite tags `ecdsa-rdfc-2019`,
-`ecdsa-jcs-2019`, and/or `ecdsa-sd-2023` specified along with
-the keyType `P-256` or `P-384` the implementation supports.
+All endpoints will require a cryptosuite tag of `ecdsa-rdfc-2019`, `ecdsa-jcs-2019`, 
+and/or `ecdsa-sd-2023`, along with a keyType of `P-256` or `P-384`.
 
 NOTE: The tests for `ecdsa-jcs-2019` are TBA.
 
