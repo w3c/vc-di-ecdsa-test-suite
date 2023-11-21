@@ -58,19 +58,16 @@ describe('ecdsa-rdfc-2019 (create)', function() {
                 verificationMethodDocuments.push(verificationMethodDocument);
               }
             });
-            it('The field "cryptosuite" MUST be "ecdsa-rdfc-2019", ' +
-              '"ecdsa-jcs-2019" or "ecdsa-sd-2023".', function() {
+            it('The field "cryptosuite" MUST be "ecdsa-rdfc-2019" or ' +
+              '"ecdsa-jcs-2019".', function() {
               this.test.cell = {
                 columnId: `${name}: ${keyType}`, rowId: this.test.title
               };
-              const cryptosuite = [
-                'ecdsa-rdfc-2019', 'ecdsa-jcs-2019', 'ecdsa-sd-2023'
-              ];
+              const cryptosuite = ['ecdsa-rdfc-2019', 'ecdsa-jcs-2019'];
               proofs.some(
                 proof => cryptosuite.includes(proof?.cryptosuite)
               ).should.equal(true, 'Expected at least one proof to have ' +
-                '"cryptosuite" property "ecdsa-rdfc-2019", "ecdsa-jcs-2019" ' +
-                'or "ecdsa-sd-2023".'
+                '"cryptosuite" property "ecdsa-rdfc-2019" or "ecdsa-jcs-2019".'
               );
             });
             it('The "proof" MUST verify when using a conformant verifier.',
