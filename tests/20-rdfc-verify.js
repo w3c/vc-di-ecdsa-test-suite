@@ -74,8 +74,8 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
               }
             });
           it('If the "cryptosuite" field is not the string ' +
-            '"ecdsa-rdfc-2019", "ecdsa-jcs-2019" or "ecdsa-sd-2023", an ' +
-            'error MUST be raised.', async function() {
+            '"ecdsa-rdfc-2019" or "ecdsa-jcs-2019", an error MUST be ' +
+            'raised.', async function() {
             this.test.cell = {
               columnId: `${name}: ${keyTypes}`, rowId: this.test.title
             };
