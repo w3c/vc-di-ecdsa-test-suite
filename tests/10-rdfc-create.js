@@ -23,9 +23,10 @@ const should = chai.should();
 describe('ecdsa-rdfc-2019 (create)', function() {
   checkDataIntegrityProofFormat({
     implemented: match,
-    isEcdsaTests: true
+    isEcdsaTests: true,
+    testDescription: 'Data Integrity (ecdsa-rdfc-2019 issuers)'
   });
-  describe('ecdsa-rdfc-2019 (issuer)', function() {
+  describe('ecdsa-rdfc-2019 (issuers)', function() {
     this.matrix = true;
     this.report = true;
     this.implemented = [];

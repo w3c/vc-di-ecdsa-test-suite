@@ -23,9 +23,10 @@ const should = chai.should();
 describe('ecdsa-sd-2023 (create)', function() {
   checkDataIntegrityProofFormat({
     implemented: match,
-    isEcdsaTests: true
+    isEcdsaTests: true,
+    testDescription: 'Data Integrity (ecdsa-sd-2023 issuers)'
   });
-  describe('ecdsa-sd-2023 (issuer)', function() {
+  describe('ecdsa-sd-2023 (issuers)', function() {
     this.matrix = true;
     this.report = true;
     this.implemented = [];

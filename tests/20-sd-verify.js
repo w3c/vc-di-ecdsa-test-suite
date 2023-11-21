@@ -19,9 +19,10 @@ const {match} = endpoints.filterByTag({
 describe('ecdsa-sd-2023 (verify)', function() {
   checkDataIntegrityProofVerifyErrors({
     implemented: match,
-    isEcdsaTests: true
+    isEcdsaTests: true,
+    testDescription: 'Data Integrity (ecdsa-sd-2023 verifiers)'
   });
-  describe('ecdsa-sd-2023 (verifier)', function() {
+  describe('ecdsa-sd-2023 (verifiers)', function() {
     let issuers;
     before(async function() {
       const {match} = endpoints.filterByTag({
