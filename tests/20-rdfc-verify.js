@@ -19,9 +19,10 @@ const {match} = endpoints.filterByTag({
 describe('ecdsa-rdfc-2019 (verify)', function() {
   checkDataIntegrityProofVerifyErrors({
     implemented: match,
-    isEcdsaTests: true
+    isEcdsaTests: true,
+    testDescription: 'Data Integrity (ecdsa-rdfc-2019 verifiers)'
   });
-  describe('ecdsa-rdfc-2019 (verifier)', function() {
+  describe('ecdsa-rdfc-2019 (verifiers)', function() {
     let issuers;
     before(async function() {
       const {match} = endpoints.filterByTag({
