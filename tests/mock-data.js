@@ -77,8 +77,42 @@ export const dlCredentialNoIds = {
 
 export const achievementCredential = {
   '@context': [
-    'https://www.w3.org/ns/credentials/v2',
-    'https://www.w3.org/ns/credentials/examples/v2'
+    'https://www.w3.org/2018/credentials/v1',
+    {
+      '@protected': true,
+      name: 'https://schema.org/name',
+      ExampleAchievementCredential: 'urn:example:ExampleAchievementCredential',
+      WindsailingAchievement: {
+        '@id': 'urn:example:WindsailingAchievement',
+        '@context': {
+          '@protected': true,
+          id: '@id',
+          type: '@type',
+          sailNumber: 'urn:example:sailNumber',
+          sails: {
+            '@id': 'urn:example:sails',
+            '@context': {
+              '@protected': true,
+              sailName: 'urn:example:sailName',
+              size: 'urn:example:size',
+              year: 'urn:example:year'
+            }
+          },
+          boards: {
+            '@id': 'urn:example:boards',
+            '@context': {
+              boardName: 'urn:example:boardName',
+              brand: 'urn:example:brand',
+              year: 'urn:example:year'
+            }
+          }
+        }
+      },
+      achievements: {
+        '@id': 'urn:example:achievements',
+        '@type': '@id'
+      }
+    }
   ],
   type: ['VerifiableCredential', 'ExampleAchievementCredential'],
   credentialSubject: {
