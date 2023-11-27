@@ -33,7 +33,7 @@ export const createDisclosedVc = async ({
       verifiableCredential: signedCredential
     }
   });
-  return data;
+  return {disclosedCredential: data};
 };
 
 export const SUPPORTED_BASE58_ECDSA_MULTIKEY_HEADERS = new Map([
