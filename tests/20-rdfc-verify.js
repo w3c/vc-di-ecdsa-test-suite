@@ -7,7 +7,7 @@ import {
 } from 'data-integrity-test-suite-assertion';
 import {createInitialVc} from './helpers.js';
 import {endpoints} from 'vc-test-suite-implementations';
-import {validVc as vc} from './validVc.js';
+import {validVc as vc} from './mock-data.js';
 
 const tag = 'ecdsa-rdfc-2019';
 // only use implementations with `ecdsa-rdfc-2019` verifiers.

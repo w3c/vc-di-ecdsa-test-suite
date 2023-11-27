@@ -4,7 +4,7 @@
 import chai from 'chai';
 import {createInitialVc} from './helpers.js';
 import {endpoints} from 'vc-test-suite-implementations';
-import {validVc as vc} from './validVc.js';
+import {validVc as vc} from './mock-data.js';
 
 const should = chai.should();
 const tag = 'ecdsa-rdfc-2019';
