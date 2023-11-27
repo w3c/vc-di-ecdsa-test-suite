@@ -87,20 +87,18 @@ describe('ecdsa-sd-2023 (interop)', function() {
           vcHolder
         }));
       });
-      it(`'${verifierDisplayName}' should verify '${issuerDisplayName}'`,
+      it(`"${verifierDisplayName}" should verify "${issuerDisplayName}"`,
         async function() {
           this.test.cell = {
             rowId: issuerDisplayName,
             columnId: verifierDisplayName
           };
-
           const body = {
             verifiableCredential: disclosedCredential,
             options: {
               checks: ['proof']
             }
           };
-
           const {result, error} = await verifierEndpoint.post({json: body});
           should.not.exist(error, 'Expected verifier to not error.');
           should.exist(result, 'Expected result from verifier.');

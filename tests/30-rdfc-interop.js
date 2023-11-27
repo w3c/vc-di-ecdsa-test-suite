@@ -75,20 +75,18 @@ describe('ecdsa-rdfc-2019 (interop)', function() {
       before(async function() {
         issuedVc = await createInitialVc({issuer: issuerEndpoint, vc});
       });
-      it(`'${verifierDisplayName}' should verify '${issuerDisplayName}'`,
+      it(`"${verifierDisplayName}" should verify "${issuerDisplayName}"`,
         async function() {
           this.test.cell = {
             rowId: issuerDisplayName,
             columnId: verifierDisplayName
           };
-
           const body = {
             verifiableCredential: issuedVc,
             options: {
               checks: ['proof']
             }
           };
-
           const {result, error} = await verifierEndpoint.post({json: body});
           should.not.exist(error, 'Expected verifier to not error.');
           should.exist(result, 'Expected result from verifier.');
