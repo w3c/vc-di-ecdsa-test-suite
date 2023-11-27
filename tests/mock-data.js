@@ -101,6 +101,7 @@ export const achievementCredential = {
           boards: {
             '@id': 'urn:example:boards',
             '@context': {
+              '@protected': true,
               boardName: 'urn:example:boardName',
               brand: 'urn:example:brand',
               year: 'urn:example:year'
