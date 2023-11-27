@@ -1,11 +1,11 @@
 /*!
  * Copyright 2023 Digital Bazaar, Inc. All Rights Reserved
  */
+import {createDisclosedVc, createInitialVc} from './helpers.js';
 import {verificationFail, verificationSuccess} from './assertions.js';
 import {
   checkDataIntegrityProofVerifyErrors
 } from 'data-integrity-test-suite-assertion';
-import {createInitialVc} from './helpers.js';
 import {endpoints} from 'vc-test-suite-implementations';
 import {validVc as vc} from './validVc.js';
 
@@ -24,13 +24,20 @@ describe('ecdsa-sd-2023 (verify)', function() {
   });
   describe('ecdsa-sd-2023 (verifiers)', function() {
     let issuers;
+    let vcHolder;
     before(async function() {
-      const {match} = endpoints.filterByTag({
+      const {match: matchingIssuers} = endpoints.filterByTag({
         tags: [tag],
         property: 'issuers'
       });
+      const {match: matchingVcHolders} = endpoints.filterByTag({
+        tags: ['vcHolder'],
+        property: 'vcHolders'
+      });
       // Use DB issuer to issue a verifiable credential for the verifier tests
-      issuers = match.get('Digital Bazaar').endpoints;
+      issuers = matchingIssuers.get('Digital Bazaar').endpoints;
+      const vcHolders = matchingVcHolders.get('Digital Bazaar').endpoints;
+      vcHolder = vcHolders[0];
     });
     // this will tell the report
     // to make an interop matrix with this suite
@@ -48,7 +55,8 @@ describe('ecdsa-sd-2023 (verify)', function() {
         const verifier = endpoint;
         this.implemented.push(`${name}: ${keyTypes}`);
         describe(`${name}: ${keyTypes}`, function() {
-          const credentials = [];
+          const signedCredentials = [];
+          const disclosedCredentials = [];
           beforeEach(async function() {
             for(const issuer of issuers) {
               const {
@@ -58,8 +66,14 @@ describe('ecdsa-sd-2023 (verify)', function() {
                 verifierSupportedEcdsaKeyTypes) {
                 if(issuerSupportedEcdsaKeyTypes.includes(
                   verifierSupportedEcdsaKeyType)) {
-                  const issuedVc = await createInitialVc({issuer, vc});
-                  credentials.push(issuedVc);
+                  const signedVc = await createInitialVc({issuer, vc});
+                  signedCredentials.push(signedVc);
+                  const {data: disclosedCredential} = await createDisclosedVc({
+                    selectivePointers: ['/credentialSubject/id'],
+                    signedCredential: signedVc,
+                    vcHolder
+                  });
+                  disclosedCredentials.push(disclosedCredential);
                 }
               }
             }
@@ -70,7 +84,7 @@ describe('ecdsa-sd-2023 (verify)', function() {
               this.test.cell = {
                 columnId: `${name}: ${keyTypes}`, rowId: this.test.title
               };
-              for(const credential of credentials) {
+              for(const credential of disclosedCredentials) {
                 await verificationSuccess({credential, verifier});
               }
             });
@@ -79,7 +93,7 @@ describe('ecdsa-sd-2023 (verify)', function() {
             this.test.cell = {
               columnId: `${name}: ${keyTypes}`, rowId: this.test.title
             };
-            for(const credential of credentials) {
+            for(const credential of disclosedCredentials) {
               credential.proof.cryptosuite = 'invalid-cryptosuite';
               await verificationFail({credential, verifier});
             }
