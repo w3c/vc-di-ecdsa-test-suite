@@ -22,6 +22,20 @@ export const createInitialVc = async ({issuer, vc}) => {
   return data;
 };
 
+export const createDisclosedVc = async ({
+  selectivePointers = [], signedCredential, vcHolder
+}) => {
+  const {data} = await vcHolder.post({
+    json: {
+      options: {
+        selectivePointers
+      },
+      verifiableCredential: signedCredential
+    }
+  });
+  return data;
+};
+
 export const SUPPORTED_BASE58_ECDSA_MULTIKEY_HEADERS = new Map([
   ['P-256', 'zDna'],
   ['P-384', 'z82L']
