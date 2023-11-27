@@ -41,8 +41,11 @@ to your implementation manifest.
 - A credential issuer endpoint (/credentials/issue) in the `issuers` property.
 - A credential verifier endpoint (/credentials/verify) in the `verifiers` property.
 
-All endpoints will require a cryptosuite tag of `ecdsa-rdfc-2019`, `ecdsa-jcs-2019`, 
-and/or `ecdsa-sd-2023`, along with a keyType of `P-256` or `P-384`.
+All endpoints will require a cryptosuite tag of `ecdsa-rdfc-2019`, `ecdsa-jcs-2019`,
+and/or `ecdsa-sd-2023`, alongside this cryptosuite tag, you must also specify
+the `supportedEcdsaKeyTypes` property parallel to `tags` listing the ECDSA key
+types that your implementation issues or can verify. Currently, the test suite
+supports `P-256` and `P-384` ECDSA key types..
 
 NOTE: The tests for `ecdsa-jcs-2019` are TBA.
 
@@ -56,22 +59,26 @@ A simplified manifest would look like this:
     "id": "",
     "endpoint": "https://mycompany.example/credentials/issue",
     "method": "POST",
-    "tags": ["ecdsa-rdfc-2019", "P-256"]
+    "supportedEcdsaKeyTypes": ["P-256", "P-384"]
+    "tags": ["ecdsa-rdfc-2019"]
   }, {
     "id": "",
     "endpoint": "https://mycompany.example/credentials/issue",
     "method": "POST",
-    "tags": ["ecdsa-jcs-2019", "P-384"]
+    "supportedEcdsaKeyTypes": ["P-256"]
+    "tags": ["ecdsa-jcs-2019"]
   }, {
     "id": "",
     "endpoint": "https://mycompany.example/credentials/issue",
     "method": "POST",
-    "tags": ["ecdsa-sd-2023", "P-256"]
+    "supportedEcdsaKeyTypes": ["P-256"]
+    "tags": ["ecdsa-sd-2023"]
   }],
   "verifiers": [{
     "id": "",
     "endpoint": "https://mycompany.example/credentials/verify",
     "method": "POST",
+    "supportedEcdsaKeyTypes": ["P-256", "P-384"]
     "tags": [
       "ecdsa-rdfc-2019", "ecdsa-jcs-2019", "ecdsa-sd-2023"
     ]
