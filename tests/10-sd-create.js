@@ -69,6 +69,16 @@ describe('ecdsa-sd-2023 (create)', function() {
                 '"cryptosuite" property "ecdsa-sd-2023".'
               );
             });
+            it('The field "proofValue" MUST start with "u".', function() {
+              this.test.cell = {
+                columnId: `${name}: ${keyType}`, rowId: this.test.title
+              };
+              proofs.some(
+                proof => proof.proofValue.startsWith('u')
+              ).should.equal(true, 'Expected at least one proof to have ' +
+                '"proofValue" property that starts with "u".'
+              );
+            });
             it('The "proof" MUST verify when using a conformant verifier.',
               async function() {
                 this.test.cell = {
