@@ -1,6 +1,6 @@
 # w3c/vc-di-ecdsa-test-suite  ChangeLog
 
-## 2.0.0 - 2023-11-16
+## 2.0.0 - 2023-11-27
 
 ### Added
 - Adds test to check whether `proof.proofPurpose` field matches the verification
