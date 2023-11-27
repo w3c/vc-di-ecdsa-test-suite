@@ -38,14 +38,14 @@ with `DataIntegrityProof` proof type using the `ecdsa-rdfc-2019`,
 
 To add your implementation to this test suite, you will need to add 2 endpoints
 to your implementation manifest.
-- A credential issuer endpoint (/credentials/issue) in the `issuers` property.
-- A credential verifier endpoint (/credentials/verify) in the `verifiers` property.
+- A credential issuer endpoint (`/credentials/issue`) in the `issuers` property.
+- A credential verifier endpoint (`/credentials/verify`) in the `verifiers` property.
 
 All endpoints will require a cryptosuite tag of `ecdsa-rdfc-2019`, `ecdsa-jcs-2019`,
-and/or `ecdsa-sd-2023`, alongside this cryptosuite tag, you must also specify
-the `supportedEcdsaKeyTypes` property parallel to `tags` listing the ECDSA key
-types that your implementation issues or can verify. Currently, the test suite
-supports `P-256` and `P-384` ECDSA key types..
+and/or `ecdsa-sd-2023`. Alongside this cryptosuite tag, you must also specify
+the `supportedEcdsaKeyTypes` property, parallel to `tags` listing the ECDSA key
+types issuable or verifiable by your implementation. Currently, the test suite
+supports `P-256` and `P-384` ECDSA key types.
 
 NOTE: The tests for `ecdsa-jcs-2019` are TBA.
 
