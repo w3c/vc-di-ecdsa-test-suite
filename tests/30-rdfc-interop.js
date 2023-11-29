@@ -1,12 +1,11 @@
 /*!
  * Copyright (c) 2023 Digital Bazaar, Inc. All rights reserved.
  */
-import chai from 'chai';
 import {createInitialVc} from './helpers.js';
 import {endpoints} from 'vc-test-suite-implementations';
 import {validVc as vc} from './mock-data.js';
+import {verificationSuccess} from './assertions.js';
 
-const should = chai.should();
 const tag = 'ecdsa-rdfc-2019';
 
 // only use implementations with `ecdsa-rdfc-2019` issuers.
@@ -81,19 +80,9 @@ describe('ecdsa-rdfc-2019 (interop)', function() {
             rowId: issuerDisplayName,
             columnId: verifierDisplayName
           };
-          const body = {
-            verifiableCredential: issuedVc,
-            options: {
-              checks: ['proof']
-            }
-          };
-          const {result, error} = await verifierEndpoint.post({json: body});
-          should.not.exist(error, 'Expected verifier to not error.');
-          should.exist(result, 'Expected result from verifier.');
-          should.exist(result.status, 'Expected verifier to return an HTTP' +
-            'status code');
-          result.status.should.equal(
-            200, 'Expected HTTP status code to be 200.');
+          await verificationSuccess({
+            credential: issuedVc, verifier: verifierEndpoint
+          });
         });
     }
   }
