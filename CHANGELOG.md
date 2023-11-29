@@ -1,6 +1,6 @@
 # w3c/vc-di-ecdsa-test-suite  ChangeLog
 
-## 2.1.0 - 2023-11-28
+## 2.1.0 - 2023-11-29
 
 ### Added
 - Adds tests for `ecdsa-sd-2023` cryptosuite.
