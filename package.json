@@ -21,12 +21,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/w3c/vc-di-bbs-test-suite.git"
+    "url": "git+https://github.com/w3c-ccg/vc-di-bbs-test-suite.git"
   },
   "bugs": {
-    "url": "https://github.com/w3c/vc-di-bbs-test-suite/issues"
+    "url": "https://github.com/w3c-ccg/vc-di-bbs-test-suite/issues"
   },
-  "homepage": "https://github.com/w3c/vc-di-bbs-test-suite#readme",
+  "homepage": "https://github.com/w3c-ccg/vc-di-bbs-test-suite#readme",
   "dependencies": {
     "@digitalbazaar/did-method-key": "^5.1.0",
     "@digitalbazaar/ecdsa-multikey": "^1.6.0",
