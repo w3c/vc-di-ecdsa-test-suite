@@ -1,14 +1,14 @@
 {
-  "name": "vc-di-ecdsa-test-suite",
-  "version": "2.0.0",
-  "description": "Test suite for the ECDSA Data Integrity cryptosuites",
+  "name": "vc-di-bbs-test-suite",
+  "version": "1.0.0",
+  "description": "Test suite for the BBS Data Integrity cryptosuite",
   "main": "/tests",
   "type": "module",
   "directories": {
     "tests": "tests"
   },
   "scripts": {
-    "test": "mocha tests/ --reporter @digitalbazaar/mocha-w3c-interop-reporter --reporter-options abstract=\"$PWD/abstract.hbs\",reportDir=\"$PWD/reports\",respec=\"$PWD/respecConfig.json\",suiteLog='./suite.log',templateData=\"$PWD/reports/index.json\",title=\"Data Integrity ecdsa 2019 Interoperability Report 1.0\" --timeout 15000 --preserve-symlinks",
+    "test": "mocha tests/ --reporter @digitalbazaar/mocha-w3c-interop-reporter --reporter-options abstract=\"$PWD/abstract.hbs\",reportDir=\"$PWD/reports\",respec=\"$PWD/respecConfig.json\",suiteLog='./suite.log',templateData=\"$PWD/reports/index.json\",title=\"Data Integrity BBS Interoperability Report 1.0\" --timeout 15000 --preserve-symlinks",
     "lint": "eslint ."
   },
   "author": {
@@ -21,12 +21,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/w3c/vc-di-ecdsa-test-suite.git"
+    "url": "git+https://github.com/w3c/vc-di-bbs-test-suite.git"
   },
   "bugs": {
-    "url": "https://github.com/w3c/vc-di-ecdsa-test-suite/issues"
+    "url": "https://github.com/w3c/vc-di-bbs-test-suite/issues"
   },
-  "homepage": "https://github.com/w3c/vc-di-ecdsa-test-suite#readme",
+  "homepage": "https://github.com/w3c/vc-di-bbs-test-suite#readme",
   "dependencies": {
     "@digitalbazaar/did-method-key": "^5.1.0",
     "@digitalbazaar/ecdsa-multikey": "^1.6.0",
