@@ -8,23 +8,23 @@ import {verificationFail, verificationSuccess} from './assertions.js';
 import {
   checkDataIntegrityProofVerifyErrors
 } from 'data-integrity-test-suite-assertion';
-import {endpoints} from 'vc-test-suite-implementations';
+import {endpoints} from 'vc-api-test-suite-implementations';
 import {klona} from 'klona';
 
-const tag = 'ecdsa-sd-2023';
-// only use implementations with `ecdsa-sd-2023` verifiers.
+const tag = 'bbs-2023';
+// only use implementations with `bbs-2023` verifiers.
 const {match} = endpoints.filterByTag({
   tags: [tag],
   property: 'verifiers'
 });
 
-describe('ecdsa-sd-2023 (verify)', function() {
+describe('bbs-2023 (verify)', function() {
   checkDataIntegrityProofVerifyErrors({
     implemented: match,
     isEcdsaTests: true,
-    testDescription: 'Data Integrity (ecdsa-sd-2023 verifiers)'
+    testDescription: 'Data Integrity (bbs-2023 verifiers)'
   });
-  describe('ecdsa-sd-2023 (verifiers)', function() {
+  describe('bbs-2023 (verifiers)', function() {
     let issuers;
     let vcHolder;
     before(async function() {
@@ -178,7 +178,7 @@ describe('ecdsa-sd-2023 (verify)', function() {
               }
             }
           });
-          it('MUST verify a valid VC with an ecdsa-sd-2023 proof.',
+          it('MUST verify a valid VC with an bbs-2023 proof.',
             async function() {
               this.test.cell = {
                 columnId: `${name}: ${keyTypes}`, rowId: this.test.title
@@ -250,7 +250,7 @@ describe('ecdsa-sd-2023 (verify)', function() {
               });
             }
           });
-          it('If the "cryptosuite" field is not the string "ecdsa-sd-2023", ' +
+          it('If the "cryptosuite" field is not the string "bbs-2023", ' +
             'an error MUST be raised.', async function() {
             this.test.cell = {
               columnId: `${name}: ${keyTypes}`, rowId: this.test.title

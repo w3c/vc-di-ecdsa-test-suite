@@ -2,13 +2,13 @@
  * Copyright (c) 2023 Digital Bazaar, Inc. All rights reserved.
  */
 import {createDisclosedVc, createInitialVc} from './helpers.js';
-import {endpoints} from 'vc-test-suite-implementations';
+import {endpoints} from 'vc-api-test-suite-implementations';
 import {validVc as vc} from './mock-data.js';
 import {verificationSuccess} from './assertions.js';
 
-const tag = 'ecdsa-sd-2023';
+const tag = 'bbs-2023';
 
-// only use implementations with `ecdsa-sd-2023` issuers.
+// only use implementations with `bbs-2023` issuers.
 const {
   match: issuerMatches
 } = endpoints.filterByTag({tags: [tag], property: 'issuers'});
@@ -16,7 +16,7 @@ const {
   match: verifierMatches
 } = endpoints.filterByTag({tags: [tag], property: 'verifiers'});
 
-describe('ecdsa-sd-2023 (interop)', function() {
+describe('bbs-2023 (interop)', function() {
   // this will tell the report
   // to make an interop matrix with this suite
   this.matrix = true;

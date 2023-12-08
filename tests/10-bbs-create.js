@@ -10,23 +10,23 @@ import {
   checkDataIntegrityProofFormat
 } from 'data-integrity-test-suite-assertion';
 import {documentLoader} from './documentLoader.js';
-import {endpoints} from 'vc-test-suite-implementations';
+import {endpoints} from 'vc-api-test-suite-implementations';
 import {validVc as vc} from './mock-data.js';
 
-const tag = 'ecdsa-sd-2023';
+const tag = 'bbs-2023';
 const {match} = endpoints.filterByTag({
   tags: [tag],
   property: 'issuers'
 });
 const should = chai.should();
 
-describe('ecdsa-sd-2023 (create)', function() {
+describe('bbs-2023 (create)', function() {
   checkDataIntegrityProofFormat({
     implemented: match,
     isEcdsaTests: true,
-    testDescription: 'Data Integrity (ecdsa-sd-2023 issuers)'
+    testDescription: 'Data Integrity (bbs-2023 issuers)'
   });
-  describe('ecdsa-sd-2023 (issuers)', function() {
+  describe('bbs-2023 (issuers)', function() {
     this.matrix = true;
     this.report = true;
     this.implemented = [];
@@ -59,14 +59,14 @@ describe('ecdsa-sd-2023 (create)', function() {
                 verificationMethodDocuments.push(verificationMethodDocument);
               }
             });
-            it('The field "cryptosuite" MUST be "ecdsa-sd-2023".', function() {
+            it('The field "cryptosuite" MUST be "bbs-2023".', function() {
               this.test.cell = {
                 columnId: `${name}: ${keyType}`, rowId: this.test.title
               };
               proofs.some(
-                proof => proof.cryptosuite === 'ecdsa-sd-2023'
+                proof => proof.cryptosuite === 'bbs-2023'
               ).should.equal(true, 'Expected at least one proof to have ' +
-                '"cryptosuite" property "ecdsa-sd-2023".'
+                '"cryptosuite" property "bbs-2023".'
               );
             });
             it('The field "proofValue" MUST start with "u".', function() {
