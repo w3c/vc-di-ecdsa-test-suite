@@ -3,6 +3,7 @@
  */
 import {createDisclosedVc, createInitialVc} from './helpers.js';
 import {endpoints} from 'vc-test-suite-implementations';
+import {holderName} from './test-config.js';
 import {validVc as vc} from './mock-data.js';
 import {verificationSuccess} from './assertions.js';
 
@@ -77,8 +78,9 @@ describe('ecdsa-sd-2023 (interop)', function() {
           tags: ['vcHolder'],
           property: 'vcHolders'
         });
-        // Use DB vc holder to create disclosed credentials
-        const vcHolders = matchingVcHolders.get('Digital Bazaar').endpoints;
+        // Uses DB vc holder as default to create disclosed credentials for
+        // the tests.
+        const vcHolders = matchingVcHolders.get(holderName).endpoints;
         const vcHolder = vcHolders[0];
         ({disclosedCredential} = await createDisclosedVc({
           selectivePointers: ['/credentialSubject/id'],

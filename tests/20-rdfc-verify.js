@@ -7,6 +7,7 @@ import {
 } from 'data-integrity-test-suite-assertion';
 import {createInitialVc} from './helpers.js';
 import {endpoints} from 'vc-test-suite-implementations';
+import {issuerName} from './test-config.js';
 import {validVc as vc} from './mock-data.js';
 
 const tag = 'ecdsa-rdfc-2019';
@@ -29,8 +30,9 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
         tags: [tag],
         property: 'issuers'
       });
-      // Use DB issuer to issue a verifiable credential for the verifier tests
-      issuers = match.get('Digital Bazaar').endpoints;
+      // Uses DB issuer as default issuer to issue a verifiable credential for
+      // the verifier tests.
+      issuers = match.get(issuerName).endpoints;
     });
     // this will tell the report
     // to make an interop matrix with this suite

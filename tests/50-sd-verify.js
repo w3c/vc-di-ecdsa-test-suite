@@ -4,6 +4,7 @@
 import {achievementCredential, dlCredentialNoIds, validVc as vc} from
   './mock-data.js';
 import {createDisclosedVc, createInitialVc} from './helpers.js';
+import {holderName, issuerName} from './test-config.js';
 import {verificationFail, verificationSuccess} from './assertions.js';
 import {
   checkDataIntegrityProofVerifyErrors
@@ -36,9 +37,10 @@ describe('ecdsa-sd-2023 (verify)', function() {
         tags: ['vcHolder'],
         property: 'vcHolders'
       });
-      // Use DB issuer to issue a verifiable credential for the verifier tests
-      issuers = matchingIssuers.get('Digital Bazaar').endpoints;
-      const vcHolders = matchingVcHolders.get('Digital Bazaar').endpoints;
+      // Uses DB issuer as default issuer to issue a verifiable credential for
+      // the verifier tests.
+      issuers = matchingIssuers.get(issuerName).endpoints;
+      const vcHolders = matchingVcHolders.get(holderName).endpoints;
       vcHolder = vcHolders[0];
     });
     // this will tell the report
