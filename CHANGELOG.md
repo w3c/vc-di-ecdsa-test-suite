@@ -1,5 +1,11 @@
 # w3c/vc-di-ecdsa-test-suite  ChangeLog
 
+## 2.2.0 - 2023-12-21
+
+### Changed
+- Get issuer and vc holder used in test data generation from test
+  config. This will allow testers to specify the issuer and/or vc holder for generating the test data. The default value has been set to `Digital Bazaar`.
+
 ## 2.1.0 - 2023-11-29
 
 ### Added
