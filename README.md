@@ -25,8 +25,15 @@ npm i
 
 ## Usage
 
+To generate test data used in the test suite, testers are required to specify
+the issuer name using the environment variable `ISSUER_NAME`.
+
+Additionally, vc holder name may also be specified for generating disclosed
+test credentials for ecdsa sd tests using the environment variable
+`HOLDER_NAME`. If it is not specified, `Digital Bazaar` vc holder will be used.
+
 ```
-npm test
+ISSUER_NAME="IssuerName" HOLDER_NAME="HolderName" npm test
 ```
 
 ## Implementation
@@ -39,13 +46,14 @@ with `DataIntegrityProof` proof type using the `ecdsa-rdfc-2019`,
 To add your implementation to this test suite, you will need to add 2 endpoints
 to your implementation manifest.
 - A credential issuer endpoint (`/credentials/issue`) in the `issuers` property.
-- A credential verifier endpoint (`/credentials/verify`) in the `verifiers` property.
+- A credential verifier endpoint (`/credentials/verify`) in the `verifiers`
+property.
 
-All endpoints will require a cryptosuite tag of `ecdsa-rdfc-2019`, `ecdsa-jcs-2019`,
-and/or `ecdsa-sd-2023`. Alongside this cryptosuite tag, you must also specify
-the `supportedEcdsaKeyTypes` property, parallel to `tags` listing the ECDSA key
-types issuable or verifiable by your implementation. Currently, the test suite
-supports `P-256` and `P-384` ECDSA key types.
+All endpoints will require a cryptosuite tag of `ecdsa-rdfc-2019`,
+`ecdsa-jcs-2019`, and/or `ecdsa-sd-2023`. Alongside this cryptosuite tag, you
+must also specify the `supportedEcdsaKeyTypes` property, parallel to `tags`
+listing the ECDSA key types issuable or verifiable by your implementation.
+Currently, the test suite supports `P-256` and `P-384` ECDSA key types.
 
 NOTE: The tests for `ecdsa-jcs-2019` are TBA.
 
@@ -91,8 +99,8 @@ OAuth2 authentication to your endpoints. You can find an example in the
 [vc-test-suite-implementations README](https://github.com/w3c/vc-test-suite-implementations#adding-a-new-implementation).
 
 To run the tests, some implementations may require client secrets that can be
-passed as environment variables to the test script. To see which implementations require client
-secrets, please check the implementation manifest within the
+passed as environment variables to the test script. To see which implementations
+require client secrets, please check the implementation manifest within the
 [vc-test-suite-implementations](https://github.com/w3c/vc-test-suite-implementations/tree/main/implementations) library.
 
 ### Docker Integration (TODO)
