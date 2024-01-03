@@ -3,8 +3,8 @@
 ## 2.2.0 - 2024-01-03
 
 ### Changed
-- Get issuer and vc holder used in test data generation from test
-  config. This will allow testers to specify the issuer and/or vc holder for
+- Get issuer and VC holder used in test data generation from test
+  config. This will allow testers to specify the issuer and/or VC holder for
   generating the test data. The default values have been set to
   `Digital Bazaar`.
 
