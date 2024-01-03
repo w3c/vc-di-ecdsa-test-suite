@@ -37,8 +37,8 @@ describe('ecdsa-sd-2023 (verify)', function() {
         tags: ['vcHolder'],
         property: 'vcHolders'
       });
-      // Uses DB issuer as default issuer to issue a verifiable credential for
-      // the verifier tests.
+      // Uses 'Digital Bazaar' as default issuer to issue a verifiable
+      // credential for the verifier tests.
       issuers = matchingIssuers.get(issuerName).endpoints;
       const vcHolders = matchingVcHolders.get(holderName).endpoints;
       vcHolder = vcHolders[0];

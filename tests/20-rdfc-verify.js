@@ -30,8 +30,8 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
         tags: [tag],
         property: 'issuers'
       });
-      // Uses DB issuer as default issuer to issue a verifiable credential for
-      // the verifier tests.
+      // Uses 'Digital Bazaar' as default issuer to issue a verifiable
+      // credential for the verifier tests.
       issuers = match.get(issuerName).endpoints;
     });
     // this will tell the report
