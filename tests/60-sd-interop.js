@@ -78,8 +78,8 @@ describe('ecdsa-sd-2023 (interop)', function() {
           tags: ['vcHolder'],
           property: 'vcHolders'
         });
-        // Uses DB vc holder as default to create disclosed credentials for
-        // the tests.
+        // Uses 'Digital Bazaar' as default VC holder to create disclosed
+        // credentials for the tests.
         const vcHolders = matchingVcHolders.get(holderName).endpoints;
         const vcHolder = vcHolders[0];
         ({disclosedCredential} = await createDisclosedVc({
