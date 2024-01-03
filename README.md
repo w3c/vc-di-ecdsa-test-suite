@@ -28,9 +28,9 @@ npm i
 To generate test data used in the test suite, testers are required to specify
 the issuer name using the environment variable `ISSUER_NAME`.
 
-Additionally, vc holder name may also be specified for generating disclosed
-test credentials for ecdsa sd tests using the environment variable
-`HOLDER_NAME`. If it is not specified, `Digital Bazaar` vc holder will be used.
+In addition, VC holder name for generating disclosed test credentials for
+ECDSA-SD tests may be specified using the environment variable `HOLDER_NAME`.
+If `$HOLDER_NAME` is not specified, `Digital Bazaar` will be used.
 
 ```
 ISSUER_NAME="IssuerName" HOLDER_NAME="HolderName" npm test
