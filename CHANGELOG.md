@@ -1,6 +1,6 @@
 # w3c/vc-di-ecdsa-test-suite  ChangeLog
 
-## 2.2.0 - 2023-12-21
+## 2.2.0 - 2024-01-03
 
 ### Changed
 - Get issuer and vc holder used in test data generation from test
