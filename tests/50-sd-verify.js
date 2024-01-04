@@ -1,5 +1,6 @@
 /*!
- * Copyright 2023 Digital Bazaar, Inc. All Rights Reserved
+ * Copyright 2023 Digital Bazaar, Inc.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 import {achievementCredential, dlCredentialNoIds, validVc as vc} from
   './mock-data.js';
