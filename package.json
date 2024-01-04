@@ -11,11 +11,17 @@
     "test": "mocha tests/ --reporter @digitalbazaar/mocha-w3c-interop-reporter --reporter-options abstract=\"$PWD/abstract.hbs\",reportDir=\"$PWD/reports\",respec=\"$PWD/respecConfig.json\",suiteLog='./suite.log',templateData=\"$PWD/reports/index.json\",title=\"Data Integrity ecdsa 2019 Interoperability Report 1.0\" --timeout 15000 --preserve-symlinks",
     "lint": "eslint ."
   },
+  "license": "BSD-3-Clause",
   "author": {
-    "name": "W3C Verifiable Credentials Working Group",
+    "name": "W3C Verifiable Credentials Working Group Contributors",
     "email": "public-vc-wg@w3.org",
     "url": "https://www.w3.org/groups/wg/vc/"
   },
+  "contributors": [{
+    "name": "Digital Bazaar, Inc.",
+    "email": "support@digitalbazaar.com",
+    "url": "https://digitalbazaar.com/"
+  }],
   "engines": {
     "node": ">=18"
   },

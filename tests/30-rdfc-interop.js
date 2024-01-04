@@ -1,5 +1,6 @@
 /*!
- * Copyright (c) 2023 Digital Bazaar, Inc. All rights reserved.
+ * Copyright 2023 Digital Bazaar, Inc.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 import {createInitialVc} from './helpers.js';
 import {endpoints} from 'vc-test-suite-implementations';

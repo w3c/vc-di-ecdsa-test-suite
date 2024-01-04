@@ -1,3 +1,7 @@
+# Copyright 2023 Digital Bazaar, Inc.
+#
+# SPDX-License-Identifier: BSD-3-Clause
+
 *.sw[nop]
 *.py[co]
 *~
@@ -11,6 +15,7 @@ TAGS
 config.json
 node_modules/
 package-lock.json
+package-lock.json.license
 *.vswp
 config.json
 reports/**
