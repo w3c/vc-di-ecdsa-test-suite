@@ -1,3 +1,9 @@
+<!--
+Copyright 2023 Digital Bazaar, Inc.
+
+SPDX-License-Identifier: BSD-3-Clause
+-->
+
 # [ECDSA](https://www.w3.org/TR/vc-di-ecdsa/) Cryptosuite test suite
 
 ## Table of Contents

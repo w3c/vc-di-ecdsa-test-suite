@@ -1,3 +1,7 @@
+# Copyright 2023 Digital Bazaar, Inc.
+#
+# SPDX-License-Identifier: BSD-3-Clause
+
 *.sw[nop]
 *.py[co]
 *~
