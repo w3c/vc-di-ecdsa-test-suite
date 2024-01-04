@@ -15,6 +15,7 @@ TAGS
 config.json
 node_modules/
 package-lock.json
+package-lock.json.license
 *.vswp
 config.json
 reports/**
