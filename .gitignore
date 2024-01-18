@@ -23,3 +23,4 @@ reports/**
 credentials/*.json
 .vscode
 .localImplementationsConfig.cjs
+tests/input/**
