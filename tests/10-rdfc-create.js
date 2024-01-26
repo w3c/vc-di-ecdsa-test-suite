@@ -2,7 +2,7 @@
  * Copyright 2023 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
-import {checkKeyType, createInitialVc} from './helpers.js';
+import {checkKeyType, config, createInitialVc} from './helpers.js';
 import {
   shouldBeBs58, shouldBeMulticodecEncoded, verificationSuccess
 } from './assertions.js';
@@ -14,9 +14,9 @@ import {documentLoader} from './documentLoader.js';
 import {endpoints} from 'vc-test-suite-implementations';
 import {validVc as vc} from './mock-data.js';
 
-const tag = 'ecdsa-rdfc-2019';
+const {tags} = config.suites['ecdsa-rdfc-2019'];
 const {match} = endpoints.filterByTag({
-  tags: [tag],
+  tags: [...tags],
   property: 'issuers'
 });
 const should = chai.should();
@@ -42,8 +42,8 @@ describe('ecdsa-rdfc-2019 (create)', function() {
           describe(`${name}: ${keyType}`, function() {
             const issuer = endpoint;
             const verifier = implementation.verifiers.filter(
-              v => v.tags.has(tag) && v.settings.supportedEcdsaKeyTypes
-                .includes(keyType));
+              v => tags.every(tag => v.tags.has(tag)) &&
+                v.settings.supportedEcdsaKeyTypes.includes(keyType));
             let issuedVc;
             let proofs;
             const verificationMethodDocuments = [];

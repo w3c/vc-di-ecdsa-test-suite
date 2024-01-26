@@ -2,7 +2,7 @@
  * Copyright 2023 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
-import {createDisclosedVc, createInitialVc} from './helpers.js';
+import {config, createDisclosedVc, createInitialVc} from './helpers.js';
 import chai from 'chai';
 import {endpoints} from 'vc-test-suite-implementations';
 import {holderName} from './test-config.js';
@@ -10,15 +10,15 @@ import {validVc as vc} from './mock-data.js';
 import {verificationSuccess} from './assertions.js';
 
 const should = chai.should();
-const tag = 'ecdsa-sd-2023';
+const {tags} = config.suites['ecdsa-sd-2023'];
 
 // only use implementations with `ecdsa-sd-2023` issuers.
 const {
   match: issuerMatches
-} = endpoints.filterByTag({tags: [tag], property: 'issuers'});
+} = endpoints.filterByTag({tags: [...tags], property: 'issuers'});
 const {
   match: verifierMatches
-} = endpoints.filterByTag({tags: [tag], property: 'verifiers'});
+} = endpoints.filterByTag({tags: [...tags], property: 'verifiers'});
 
 describe('ecdsa-sd-2023 (interop)', function() {
   // this will tell the report

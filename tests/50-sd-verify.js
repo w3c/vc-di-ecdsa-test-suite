@@ -4,7 +4,7 @@
  */
 import {achievementCredential, dlCredentialNoIds, validVc as vc} from
   './mock-data.js';
-import {createDisclosedVc, createInitialVc} from './helpers.js';
+import {config, createDisclosedVc, createInitialVc} from './helpers.js';
 import {holderName, issuerName} from './test-config.js';
 import {verificationFail, verificationSuccess} from './assertions.js';
 import {
@@ -13,10 +13,11 @@ import {
 import {endpoints} from 'vc-test-suite-implementations';
 import {klona} from 'klona';
 
-const tag = 'ecdsa-sd-2023';
+const {tags, vcHolder: {tags: holderTags}} = config.suites['ecdsa-sd-2023'];
+
 // only use implementations with `ecdsa-sd-2023` verifiers.
 const {match} = endpoints.filterByTag({
-  tags: [tag],
+  tags: [...tags],
   property: 'verifiers'
 });
 
@@ -31,11 +32,11 @@ describe('ecdsa-sd-2023 (verify)', function() {
     let vcHolder;
     before(async function() {
       const {match: matchingIssuers} = endpoints.filterByTag({
-        tags: [tag],
+        tags: [...tags],
         property: 'issuers'
       });
       const {match: matchingVcHolders} = endpoints.filterByTag({
-        tags: ['vcHolder'],
+        tags: [...holderTags],
         property: 'vcHolders'
       });
       // Uses 'Digital Bazaar' as default issuer to issue a verifiable

@@ -2,19 +2,19 @@
  * Copyright 2023 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
+import {config, createInitialVc} from './helpers.js';
 import {verificationFail, verificationSuccess} from './assertions.js';
 import {
   checkDataIntegrityProofVerifyErrors
 } from 'data-integrity-test-suite-assertion';
-import {createInitialVc} from './helpers.js';
 import {endpoints} from 'vc-test-suite-implementations';
 import {issuerName} from './test-config.js';
 import {validVc as vc} from './mock-data.js';
 
-const tag = 'ecdsa-rdfc-2019';
+const {tags} = config.suites['ecdsa-rdfc-2019'];
 // only use implementations with `ecdsa-rdfc-2019` verifiers.
 const {match} = endpoints.filterByTag({
-  tags: [tag],
+  tags: [...tags],
   property: 'verifiers'
 });
 
@@ -28,7 +28,7 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
     let issuers;
     before(async function() {
       const {match} = endpoints.filterByTag({
-        tags: [tag],
+        tags: [...tags],
         property: 'issuers'
       });
       // Uses 'Digital Bazaar' as default issuer to issue a verifiable
