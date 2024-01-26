@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 import {klona} from 'klona';
+import {readFileSync} from 'fs';
 import {v4 as uuidv4} from 'uuid';
+
+export const config = JSON.parse(readFileSync('./config/runner.json'));
 
 // Javascript's default ISO timestamp contains milliseconds.
 // This lops off the MS part of the UTC RFC3339 TimeStamp and replaces

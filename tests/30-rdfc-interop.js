@@ -2,22 +2,22 @@
  * Copyright 2023 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
+import {config, createInitialVc} from './helpers.js';
 import chai from 'chai';
-import {createInitialVc} from './helpers.js';
 import {endpoints} from 'vc-test-suite-implementations';
 import {validVc as vc} from './mock-data.js';
 import {verificationSuccess} from './assertions.js';
 
 const should = chai.should();
-const tag = 'ecdsa-rdfc-2019';
+const {tags} = config.suites['ecdsa-rdfc-2019'];
 
 // only use implementations with `ecdsa-rdfc-2019` issuers.
 const {
   match: issuerMatches
-} = endpoints.filterByTag({tags: [tag], property: 'issuers'});
+} = endpoints.filterByTag({tags: [...tags], property: 'issuers'});
 const {
   match: verifierMatches
-} = endpoints.filterByTag({tags: [tag], property: 'verifiers'});
+} = endpoints.filterByTag({tags: [...tags], property: 'verifiers'});
 
 describe('ecdsa-rdfc-2019 (interop)', function() {
   // this will tell the report
