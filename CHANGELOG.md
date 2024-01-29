@@ -9,7 +9,7 @@ SPDX-License-Identifier: BSD-3-Clause
 ## 2.2.1 -
 
 ### Fixed
-- Interop tests throw if the issuer fails to issue a Vc.
+- Interop tests throw if the issuer fails to issue a VC.
 
 ## 2.2.0 - 2024-01-03
 
