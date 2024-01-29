@@ -2,11 +2,13 @@
  * Copyright 2023 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
+import chai from 'chai';
 import {createInitialVc} from './helpers.js';
 import {endpoints} from 'vc-test-suite-implementations';
 import {validVc as vc} from './mock-data.js';
 import {verificationSuccess} from './assertions.js';
 
+const should = chai.should();
 const tag = 'ecdsa-rdfc-2019';
 
 // only use implementations with `ecdsa-rdfc-2019` issuers.
@@ -81,6 +83,10 @@ describe('ecdsa-rdfc-2019 (interop)', function() {
             rowId: issuerDisplayName,
             columnId: verifierDisplayName
           };
+          should.exist(
+            issuedVc,
+            `Expected issuer ${issuerDisplayName} to issue a Vc.`
+          );
           await verificationSuccess({
             credential: issuedVc, verifier: verifierEndpoint
           });

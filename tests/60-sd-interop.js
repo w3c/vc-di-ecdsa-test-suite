@@ -3,11 +3,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 import {createDisclosedVc, createInitialVc} from './helpers.js';
+import chai from 'chai';
 import {endpoints} from 'vc-test-suite-implementations';
 import {holderName} from './test-config.js';
 import {validVc as vc} from './mock-data.js';
 import {verificationSuccess} from './assertions.js';
 
+const should = chai.should();
 const tag = 'ecdsa-sd-2023';
 
 // only use implementations with `ecdsa-sd-2023` issuers.
@@ -95,6 +97,10 @@ describe('ecdsa-sd-2023 (interop)', function() {
             rowId: issuerDisplayName,
             columnId: verifierDisplayName
           };
+          should.exist(
+            disclosedCredential,
+            `Expected issuer ${issuerDisplayName} to issue a disclosed Vc.`
+          );
           await verificationSuccess({
             credential: disclosedCredential, verifier: verifierEndpoint
           });
