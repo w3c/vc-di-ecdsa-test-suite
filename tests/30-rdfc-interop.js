@@ -85,7 +85,7 @@ describe('ecdsa-rdfc-2019 (interop)', function() {
           };
           should.exist(
             issuedVc,
-            `Expected issuer ${issuerDisplayName} to issue a Vc.`
+            `Expected issuer ${issuerDisplayName} to issue a VC.`
           );
           await verificationSuccess({
             credential: issuedVc, verifier: verifierEndpoint
