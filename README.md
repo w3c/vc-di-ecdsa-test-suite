@@ -45,7 +45,8 @@ ISSUER_NAME="IssuerName" HOLDER_NAME="HolderName" npm test
 
 ### Changing the Test Tag
 These test suites use tags to identify which implementation's endpoints are used in tests.
-If you need to change the tag the suites will run on you can change it in `./config/runner.json`.
+You can change the tag on which the suites will run in `./config/runner.json`,
+if desired.
 
 ## Implementation
 
