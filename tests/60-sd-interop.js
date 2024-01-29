@@ -99,7 +99,7 @@ describe('ecdsa-sd-2023 (interop)', function() {
           };
           should.exist(
             disclosedCredential,
-            `Expected issuer ${issuerDisplayName} to issue a disclosed Vc.`
+            `Expected issuer ${issuerDisplayName} to issue a disclosed VC.`
           );
           await verificationSuccess({
             credential: disclosedCredential, verifier: verifierEndpoint
