@@ -6,6 +6,11 @@ SPDX-License-Identifier: BSD-3-Clause
 
 # w3c/vc-di-ecdsa-test-suite  ChangeLog
 
+## 2.2.1 -
+
+### Fixed
+- Interop tests throw if the issuer fails to issue a Vc.
+
 ## 2.2.0 - 2024-01-03
 
 ### Changed
