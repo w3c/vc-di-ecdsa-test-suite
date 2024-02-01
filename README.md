@@ -13,6 +13,8 @@ SPDX-License-Identifier: BSD-3-Clause
   - [Background](#background)
   - [Install](#install)
   - [Usage](#usage)
+    - [Running Specific Tests](#Running-Specific-Tests)
+    - [Testing Locally](#testing-locally)
     - [Changing the Test Tag](#Changing-the-test-tag)
   - [Implementation](#implementation)
     - [Docker Integration (TODO)](#docker-integration-todo)
@@ -43,10 +45,62 @@ If `$HOLDER_NAME` is not specified, `Digital Bazaar` will be used.
 ISSUER_NAME="IssuerName" HOLDER_NAME="HolderName" npm test
 ```
 
+### Running Specific Tests
+This suite uses [mocha.js](https://mochajs.org) as the test runner.
+Mocha has [multiple options](https://mochajs.org/#command-line-usage) for filtering which tests run.
+
+For example, the snippet below uses grep to filter tests by name and only runs one of the test suites.
+```bash
+mocha --grep '"specificProperty" test name' ./tests/10-specific-test-suite.js
+```
+
+### Testing Locally
+If you want to test implementations or just endpoints running locally, you can
+copy `localImplementationsConfig.example.cjs` to `.localImplementationsConfig.cjs`
+in the root directory of the test suite.
+
+```bash
+cp localImplementationsConfig.example.cjs .localImplementationsConfig.cjs
+```
+
+Git is set to ignore `.localImplementationsConfig.cjs` by default.
+
+This file must be a CommonJS module that exports an array of implementations:
+
+```js
+// .localImplementationsConfig.cjs defining local implementations
+// you can specify a BASE_URL before running the tests such as:
+// BASE_URL=http://localhost:40443/zDdfsdfs npm test
+const baseUrl = process.env.BASE_URL || 'https://localhost:40443/id';
+module.exports = [{
+  name: 'My Company',
+  implementation: 'My Implementation Name',
+  issuers: [{
+    id: 'did:myMethod:implementation:issuer:id',
+    endpoint: `${baseUrl}/credentials/issue`,
+    tags: ['ecdsa-rdfc-2019', 'localhost']
+  }],
+  verifiers: [{
+    id: 'did:myMethod:implementation:verifier:id',
+    endpoint: `${baseUrl}/credentials/verify`,
+    tags: ['ecdsa-rdfc-2019', 'localhost']
+  }]
+}];
+```
+
+After adding the config file, both the localhost implementations and other
+implementations matching the test tag will be included in the test run.
+
+To specifically test only the localhost implementation, modify the test suite to
+filter implementations based on a specific tag in your local configuration file.
+
+For instance, if your `.localImplementationsConfig.cjs` config file looks like
+the config above, you can adjust the tag used in each test suite by modifying `./config/runner.json`
+to filter the implementations by `localhost` and other tags.
+
 ### Changing the Test Tag
 These test suites use tags to identify which implementation's endpoints are used in tests.
-You can change the tag on which the suites will run in `./config/runner.json`,
-if desired.
+You can change the tag on which the suites will run in `./config/runner.json`, if desired.
 
 ## Implementation
 
