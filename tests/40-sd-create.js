@@ -2,7 +2,7 @@
  * Copyright 2023 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
-import {checkKeyType, config, createInitialVc} from './helpers.js';
+import {checkKeyType, config, createInitialVc, require} from './helpers.js';
 import {
   shouldBeBs58, shouldBeMulticodecEncoded, verificationSuccess
 } from './assertions.js';
@@ -12,7 +12,10 @@ import {
 } from 'data-integrity-test-suite-assertion';
 import {documentLoader} from './documentLoader.js';
 import {endpoints} from 'vc-test-suite-implementations';
-import {validVc as vc} from './mock-data.js';
+
+// use test vectors from spec
+const vc = require(
+  './input/vc-di-ecdsa/TestVectors/ecdsa-sd-2023/windDoc.json');
 
 const {tags} = config.suites['ecdsa-sd-2023'];
 const {match} = endpoints.filterByTag({
