@@ -19,11 +19,13 @@
     "email": "public-vc-wg@w3.org",
     "url": "https://www.w3.org/groups/wg/vc/"
   },
-  "contributors": [{
-    "name": "Digital Bazaar, Inc.",
-    "email": "support@digitalbazaar.com",
-    "url": "https://digitalbazaar.com/"
-  }],
+  "contributors": [
+    {
+      "name": "Digital Bazaar, Inc.",
+      "email": "support@digitalbazaar.com",
+      "url": "https://digitalbazaar.com/"
+    }
+  ],
   "engines": {
     "node": ">=18"
   },
@@ -38,8 +40,11 @@
   "dependencies": {
     "@digitalbazaar/did-method-key": "^5.1.0",
     "@digitalbazaar/ecdsa-multikey": "^1.6.0",
+    "@digitalbazaar/ecdsa-rdfc-2019-cryptosuite": "^1.0.1",
+    "@digitalbazaar/ecdsa-sd-2023-cryptosuite": "^3.2.1",
     "@digitalbazaar/http-client": "^4.0.0",
     "@digitalbazaar/mocha-w3c-interop-reporter": "^1.6.0",
+    "@digitalbazaar/vc": "github:digitalbazaar/vc#vc-2.0-time-props",
     "base58-universal": "^2.0.0",
     "chai": "^4.3.7",
     "data-integrity-test-suite-assertion": "github:w3c-ccg/data-integrity-test-suite-assertion",
