@@ -118,7 +118,8 @@ property.
 - An optional `vcHolder` endpoint maybe added for `ecdsa-sd-2023` selective disclosure tests.
   - The vcHolder endpoint route should be `/credentials/derive`
   - The endpoint needs to accept a JSON object with 2 properties:
-    - `options.selectivePointers` with is an array of strings.
+    - `options` which is a JSON object.
+    - `options.selectivePointers` which is an array of strings.
     - `verifiableCredential` which is a previously signed JSON VC.
     - The endpoint needs to use `ecdsa-sd-2023` for the derived VC.
 
