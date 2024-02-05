@@ -94,8 +94,8 @@ implementations matching the test tag will be included in the test run.
 To specifically test only the localhost implementation, modify the test suite to
 filter implementations based on a specific tag in your local configuration file.
 
-For instance, if your `.localImplementationsConfig.cjs` config file looks like
-the config above, you can adjust the tag used in each test suite by modifying `./config/runner.json`
+For instance, if your `.localImplementationsConfig.cjs` configuration file looks like
+the one above, you can adjust the tag used in each test suite by modifying `./config/runner.json`
 to filter the implementations by `localhost` and other tags.
 
 ### Changing the Test Tag
