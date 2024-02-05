@@ -116,13 +116,13 @@ to your implementation manifest.
     in the tests.
 - A credential verifier endpoint (`/credentials/verify`) in the `verifiers`
 property.
-- An optional `vcHolder` endpoint maybe added for `ecdsa-sd-2023` selective disclosure tests.
-  - The vcHolder endpoint route should be `/credentials/derive`
-  - The endpoint needs to accept a JSON object with 2 properties:
+- An optional `vcHolder` endpoint can be added for `ecdsa-sd-2023` selective disclosure tests.
+  - The vcHolder endpoint route is meant to be `/credentials/derive`
+  - The endpoint is expected to accept a JSON object with 2 properties:
     - `options` which is a JSON object.
     - `options.selectivePointers` which is an array of strings.
-    - `verifiableCredential` which is a previously signed JSON VC.
-    - The endpoint needs to use `ecdsa-sd-2023` for the derived VC.
+    - `verifiableCredential` which is a previously signed JSON verifiable credential.
+    - The endpoint needs to use `ecdsa-sd-2023` for the derived verifiable credential.
 
 All endpoints will require a cryptosuite tag of `ecdsa-rdfc-2019`,
 `ecdsa-jcs-2019`, and/or `ecdsa-sd-2023`. Alongside this cryptosuite tag, you
