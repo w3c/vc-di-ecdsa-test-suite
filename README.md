@@ -46,7 +46,7 @@ ISSUER_NAME="IssuerName" HOLDER_NAME="HolderName" npm test
 ```
 
 ### Running Specific Tests
-This suite uses [mocha.js](https://mochajs.org) as the test runner.
+This suite uses [`mocha.js`](https://mochajs.org) as the test runner.
 Mocha has [multiple options](https://mochajs.org/#command-line-usage) for filtering which tests run.
 
 For example, the snippet below uses grep to filter tests by name and only runs one of the test suites.
