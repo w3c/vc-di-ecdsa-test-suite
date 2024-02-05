@@ -88,7 +88,7 @@ module.exports = [{
 }];
 ```
 
-After adding the config file, both the localhost implementations and other
+After adding the configuration file, both the localhost implementations and other
 implementations matching the test tag will be included in the test run.
 
 To specifically test only the localhost implementation, modify the test suite to
