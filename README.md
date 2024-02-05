@@ -126,7 +126,7 @@ property.
 
 All endpoints will require a cryptosuite tag of `ecdsa-rdfc-2019`,
 `ecdsa-jcs-2019`, and/or `ecdsa-sd-2023`. Alongside this cryptosuite tag, you
-must also specify the `supportedEcdsaKeyTypes` property, parallel to `tags`
+will need to specify the `supportedEcdsaKeyTypes` property, parallel to `tags`
 listing the ECDSA key types issuable or verifiable by your implementation.
 Currently, the test suite supports `P-256` and `P-384` ECDSA key types.
 A `vcHolder` tag is required for the `vcHolder` endpoints.
