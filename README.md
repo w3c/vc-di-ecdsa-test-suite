@@ -112,11 +112,15 @@ with `DataIntegrityProof` proof type using the `ecdsa-rdfc-2019`,
 To add your implementation to this test suite, you will need to add 2 endpoints
 to your implementation manifest.
 - A credential issuer endpoint (`/credentials/issue`) in the `issuers` property.
-  - The issuer id will be used as the issuer in VCs in the tests.
+  - The issuer id will be used as the issuer property on VCs in the tests.
 - A credential verifier endpoint (`/credentials/verify`) in the `verifiers`
 property.
 - An optional `vcHolder` endpoint maybe added for `ecdsa-sd-2023` selective disclosure tests.
-  - The hcHolder id will be used as the issuer in VCs in the tests.
+  - The vcHolder endpoint route should be `/credentials/derive`
+  - The endpoint needs to accept a JSON object with 2 properties:
+    - `options.selectivePointers` with is an array of strings.
+    - `verifiableCredential` which is a previously signed JSON VC.
+    - The endpoint needs to use `ecdsa-sd-2023` for the derived VC.
 
 All endpoints will require a cryptosuite tag of `ecdsa-rdfc-2019`,
 `ecdsa-jcs-2019`, and/or `ecdsa-sd-2023`. Alongside this cryptosuite tag, you
