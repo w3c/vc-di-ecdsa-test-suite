@@ -112,14 +112,18 @@ with `DataIntegrityProof` proof type using the `ecdsa-rdfc-2019`,
 To add your implementation to this test suite, you will need to add 2 endpoints
 to your implementation manifest.
 - A credential issuer endpoint (`/credentials/issue`) in the `issuers` property.
+  - The issuer id will be used as the issuer in VCs in the tests.
 - A credential verifier endpoint (`/credentials/verify`) in the `verifiers`
 property.
+- An optional `vcHolder` endpoint maybe added for `ecdsa-sd-2023` selective disclosure tests.
+  - The hcHolder id will be used as the issuer in VCs in the tests.
 
 All endpoints will require a cryptosuite tag of `ecdsa-rdfc-2019`,
 `ecdsa-jcs-2019`, and/or `ecdsa-sd-2023`. Alongside this cryptosuite tag, you
 must also specify the `supportedEcdsaKeyTypes` property, parallel to `tags`
 listing the ECDSA key types issuable or verifiable by your implementation.
 Currently, the test suite supports `P-256` and `P-384` ECDSA key types.
+A `vcHolder` tag is required for the `vcHolder` endpoints.
 
 NOTE: The tests for `ecdsa-jcs-2019` are TBA.
 
@@ -130,32 +134,37 @@ A simplified manifest would look like this:
   "name": "My Company",
   "implementation": "My implementation",
   "issuers": [{
-    "id": "",
+    "id": "did:key:myIssuer1",
     "endpoint": "https://mycompany.example/credentials/issue",
     "method": "POST",
     "supportedEcdsaKeyTypes": ["P-256", "P-384"]
     "tags": ["ecdsa-rdfc-2019"]
   }, {
-    "id": "",
+    "id": "did:key:myIssuer2",
     "endpoint": "https://mycompany.example/credentials/issue",
     "method": "POST",
     "supportedEcdsaKeyTypes": ["P-256"]
     "tags": ["ecdsa-jcs-2019"]
   }, {
-    "id": "",
+    "id": "did:key:myIssuer3",
     "endpoint": "https://mycompany.example/credentials/issue",
     "method": "POST",
     "supportedEcdsaKeyTypes": ["P-256"]
     "tags": ["ecdsa-sd-2023"]
   }],
   "verifiers": [{
-    "id": "",
+    "id": "did:key:myVerifier1",
     "endpoint": "https://mycompany.example/credentials/verify",
     "method": "POST",
     "supportedEcdsaKeyTypes": ["P-256", "P-384"]
     "tags": [
       "ecdsa-rdfc-2019", "ecdsa-jcs-2019", "ecdsa-sd-2023"
     ]
+  }],
+  "vcHolders": [{
+    "id": "did:key:myHolder1",
+    "endpoint": "https://mycompany.example/credentials/derive",
+    "tags": ["vcHolder"]
   }]
 }
 ```
