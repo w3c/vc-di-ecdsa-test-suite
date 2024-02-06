@@ -112,8 +112,11 @@ with `DataIntegrityProof` proof type using the `ecdsa-rdfc-2019`,
 To add your implementation to this test suite, you will need to add 2 endpoints
 to your implementation manifest.
 - A credential issuer endpoint (`/credentials/issue`) in the `issuers` property.
-  - The issuer id will be used as the issuer property on verifiable credentials
+  - An optional id property specifying the issuer can be set alongside the endpoint.
+  - If provided, the specified issuer id will be used as the issuer property on verifiable credentials
     in the tests.
+  - The issuer id should be easy for other implementers to dereference.
+    - It is recommended the issuer id be either `did:key` or `did:web`.
 - A credential verifier endpoint (`/credentials/verify`) in the `verifiers`
 property.
 - An optional `vcHolder` endpoint can be added for `ecdsa-sd-2023` selective disclosure tests.
@@ -140,13 +143,13 @@ A simplified manifest would look like this:
   "name": "My Company",
   "implementation": "My implementation",
   "issuers": [{
-    "id": "did:key:myIssuer1",
+    "id": "did:key:myIssuer1#keyFragment",
     "endpoint": "https://mycompany.example/credentials/issue",
     "method": "POST",
     "supportedEcdsaKeyTypes": ["P-256", "P-384"]
     "tags": ["ecdsa-rdfc-2019"]
   }, {
-    "id": "did:key:myIssuer2",
+    "id": "did:web:myIssuer.dev#issuer2",
     "endpoint": "https://mycompany.example/credentials/issue",
     "method": "POST",
     "supportedEcdsaKeyTypes": ["P-256"]
@@ -159,7 +162,6 @@ A simplified manifest would look like this:
     "tags": ["ecdsa-sd-2023"]
   }],
   "verifiers": [{
-    "id": "did:key:myVerifier1",
     "endpoint": "https://mycompany.example/credentials/verify",
     "method": "POST",
     "supportedEcdsaKeyTypes": ["P-256", "P-384"]
@@ -168,7 +170,7 @@ A simplified manifest would look like this:
     ]
   }],
   "vcHolders": [{
-    "id": "did:key:myHolder1",
+    "id": "did:key:myIssuer1#keyFragment",
     "endpoint": "https://mycompany.example/credentials/derive",
     "tags": ["vcHolder"]
   }]
