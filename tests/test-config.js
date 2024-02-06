@@ -10,13 +10,12 @@ export const holderName = process.env.HOLDER_NAME || 'Digital Bazaar';
 export const config = require('../config/runner.json');
 
 export const getSuiteConfig = suite => {
-  const suiteConfig = klona(config.suites[suite]);
+  const suiteConfig = config.suites[suite];
   if(!suiteConfig) {
     throw new Error(`Could not find config for suite ${suite}`);
   }
-  if(suiteConfig.issuerDocument) {
-    suiteConfig.issuerDocument = klona(require(suiteConfig.issuerDocument));
+  if(typeof suiteConfig.issuerDocument === 'string') {
+    suiteConfig.issuerDocument = require(suiteConfig.issuerDocument);
   }
-  return suiteConfig;
+  return klona(suiteConfig);
 };
-
