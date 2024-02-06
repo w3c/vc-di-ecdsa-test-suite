@@ -1,9 +1,12 @@
 {
   "suites": {
-    "ecdsa-rdfc-2019": {"tags": ["ecdsa-rdfc-2019"]},
+    "ecdsa-rdfc-2019": {
+      "tags": ["ecdsa-rdfc-2019"],
+      "issuerDocument": "./mocks/validVc.json"
+    },
     "ecdsa-sd-2023": {
       "tags": ["ecdsa-sd-2023"],
-      "issuerDocument": "./input/vc-di-ecdsa/TestVectors/ecdsa-sd-2023/windDoc.json",
+      "issuerDocument": "./mocks/validVc.json",
       "vcHolder": {
         "tags": ["vcHolder"]
       }

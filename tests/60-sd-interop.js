@@ -2,15 +2,16 @@
  * Copyright 2023 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
-import {config, createDisclosedVc, createInitialVc} from './helpers.js';
+import {createDisclosedVc, createInitialVc} from './helpers.js';
 import chai from 'chai';
 import {endpoints} from 'vc-test-suite-implementations';
+import {getSuiteConfig} from './test-config.js';
 import {holderName} from './test-config.js';
-import {validVc as vc} from './mock-data.js';
 import {verificationSuccess} from './assertions.js';
 
+const {tags, issuerDocument} = getSuiteConfig('ecdsa-sd-2023');
+
 const should = chai.should();
-const {tags} = config.suites['ecdsa-sd-2023'];
 
 // only use implementations with `ecdsa-sd-2023` issuers.
 const {
@@ -76,7 +77,10 @@ describe('ecdsa-sd-2023 (interop)', function() {
       }
       let disclosedCredential;
       before(async function() {
-        const issuedVc = await createInitialVc({issuer: issuerEndpoint, vc});
+        const issuedVc = await createInitialVc({
+          issuer: issuerEndpoint,
+          vc: issuerDocument
+        });
         const {match: matchingVcHolders} = endpoints.filterByTag({
           tags: ['vcHolder'],
           property: 'vcHolders'
