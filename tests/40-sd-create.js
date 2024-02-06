@@ -13,11 +13,9 @@ import {
 import {documentLoader} from './documentLoader.js';
 import {endpoints} from 'vc-test-suite-implementations';
 
-// use test vectors from spec
-const vc = require(
-  './input/vc-di-ecdsa/TestVectors/ecdsa-sd-2023/windDoc.json');
-
-const {tags} = config.suites['ecdsa-sd-2023'];
+const sdConfig = config.suites['ecdsa-sd-2023'];
+const vc = require(sdConfig.issuerDocument);
+const {tags} = sdConfig;
 const {match} = endpoints.filterByTag({
   tags: [...tags],
   property: 'issuers'
