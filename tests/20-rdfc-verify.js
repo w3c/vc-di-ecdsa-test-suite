@@ -2,16 +2,17 @@
  * Copyright 2023 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
-import {config, createInitialVc} from './helpers.js';
 import {verificationFail, verificationSuccess} from './assertions.js';
 import {
   checkDataIntegrityProofVerifyErrors
 } from 'data-integrity-test-suite-assertion';
+import {createInitialVc} from './helpers.js';
 import {endpoints} from 'vc-test-suite-implementations';
+import {getSuiteConfig} from './test-config.js';
 import {issuerName} from './test-config.js';
-import {validVc as vc} from './mock-data.js';
 
-const {tags} = config.suites['ecdsa-rdfc-2019'];
+const {tags, issuerDocument} = getSuiteConfig('ecdsa-rdfc-2019');
+
 // only use implementations with `ecdsa-rdfc-2019` verifiers.
 const {match} = endpoints.filterByTag({
   tags: [...tags],
@@ -63,8 +64,11 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
                 verifierSupportedEcdsaKeyTypes) {
                 if(issuerSupportedEcdsaKeyTypes.includes(
                   verifierSupportedEcdsaKeyType)) {
-                  const issuedVc = await createInitialVc({issuer, vc});
                   // add each vc to resulting test data
+                  const issuedVc = await createInitialVc({
+                    issuer,
+                    vc: issuerDocument
+                  });
                   credentials.push(issuedVc);
                 }
               }

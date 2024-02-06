@@ -2,7 +2,7 @@
  * Copyright 2023 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
-import {checkKeyType, config, createInitialVc} from './helpers.js';
+import {checkKeyType, createInitialVc} from './helpers.js';
 import {
   shouldBeBs58, shouldBeMulticodecEncoded, verificationSuccess
 } from './assertions.js';
@@ -12,9 +12,9 @@ import {
 } from 'data-integrity-test-suite-assertion';
 import {documentLoader} from './documentLoader.js';
 import {endpoints} from 'vc-test-suite-implementations';
-import {validVc as vc} from './mock-data.js';
+import {getSuiteConfig} from './test-config.js';
 
-const {tags} = config.suites['ecdsa-rdfc-2019'];
+const {tags, issuerDocument} = getSuiteConfig('ecdsa-rdfc-2019');
 const {match} = endpoints.filterByTag({
   tags: [...tags],
   property: 'issuers'
@@ -51,7 +51,10 @@ describe('ecdsa-rdfc-2019 (create)', function() {
             let proofs;
             const verificationMethodDocuments = [];
             before(async function() {
-              issuedVc = await createInitialVc({issuer, vc});
+              issuedVc = await createInitialVc({
+                issuer,
+                vc: issuerDocument
+              });
               // VCs can have multiple proofs so account for that
               proofs = Array.isArray(issuedVc?.proof) ? issuedVc.proof :
                 [issuedVc?.proof];

@@ -2,7 +2,7 @@
  * Copyright 2023 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
-import {checkKeyType, config, createInitialVc, require} from './helpers.js';
+import {checkKeyType, createInitialVc} from './helpers.js';
 import {
   shouldBeBs58, shouldBeMulticodecEncoded, verificationSuccess
 } from './assertions.js';
@@ -12,14 +12,14 @@ import {
 } from 'data-integrity-test-suite-assertion';
 import {documentLoader} from './documentLoader.js';
 import {endpoints} from 'vc-test-suite-implementations';
+import {getSuiteConfig} from './test-config.js';
 
-const sdConfig = config.suites['ecdsa-sd-2023'];
-const vc = require(sdConfig.issuerDocument);
-const {tags} = sdConfig;
+const {tags, issuerDocument} = getSuiteConfig('ecdsa-sd-2023');
 const {match} = endpoints.filterByTag({
   tags: [...tags],
   property: 'issuers'
 });
+
 const should = chai.should();
 
 describe('ecdsa-sd-2023 (create)', function() {
@@ -50,7 +50,7 @@ describe('ecdsa-sd-2023 (create)', function() {
             let proofs;
             const verificationMethodDocuments = [];
             before(async function() {
-              issuedVc = await createInitialVc({issuer, vc});
+              issuedVc = await createInitialVc({issuer, vc: issuerDocument});
               // Support multiple proofs
               proofs = Array.isArray(issuedVc?.proof) ? issuedVc.proof :
                 [issuedVc?.proof];

@@ -2,18 +2,25 @@
  * Copyright 2023 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
-import {achievementCredential, dlCredentialNoIds, validVc as vc} from
-  './mock-data.js';
-import {config, createDisclosedVc, createInitialVc} from './helpers.js';
+import {
+  achievementCredential,
+  dlCredentialNoIds
+} from './mock-data.js';
+import {createDisclosedVc, createInitialVc} from './helpers.js';
 import {holderName, issuerName} from './test-config.js';
 import {verificationFail, verificationSuccess} from './assertions.js';
 import {
   checkDataIntegrityProofVerifyErrors
 } from 'data-integrity-test-suite-assertion';
 import {endpoints} from 'vc-test-suite-implementations';
+import {getSuiteConfig} from './test-config.js';
 import {klona} from 'klona';
 
-const {tags, vcHolder: {tags: holderTags}} = config.suites['ecdsa-sd-2023'];
+const {
+  tags,
+  vcHolder: {tags: holderTags},
+  issuerDocument
+} = getSuiteConfig('ecdsa-sd-2023');
 
 // only use implementations with `ecdsa-sd-2023` verifiers.
 const {match} = endpoints.filterByTag({
@@ -76,7 +83,10 @@ describe('ecdsa-sd-2023 (verify)', function() {
                 verifierSupportedEcdsaKeyTypes) {
                 if(issuerSupportedEcdsaKeyTypes.includes(
                   verifierSupportedEcdsaKeyType)) {
-                  const signedVc = await createInitialVc({issuer, vc});
+                  const signedVc = await createInitialVc({
+                    issuer,
+                    vc: issuerDocument
+                  });
                   signedCredentials.push(signedVc);
                   const {disclosedCredential} = await createDisclosedVc({
                     selectivePointers: ['/credentialSubject/id'],
