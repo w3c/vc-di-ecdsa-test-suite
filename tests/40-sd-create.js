@@ -33,14 +33,15 @@ describe('ecdsa-sd-2023 (create)', function() {
     this.implemented = [];
     this.rowLabel = 'Test Name';
     this.columnLabel = 'Implementation';
-    for(const [name, {endpoints, implementation}] of match) {
-      for(const endpoint of endpoints) {
-        const {supportedEcdsaKeyTypes} = endpoint.settings;
+    for(const [name, {endpoints: issuers, implementation}] of match) {
+      for(const issuer of issuers) {
+        const {supportedEcdsaKeyTypes} = issuer.settings;
         for(const supportedEcdsaKeyType of supportedEcdsaKeyTypes) {
           const keyType = checkKeyType(supportedEcdsaKeyType);
+          // add implementation name and keyType to report
           this.implemented.push(`${name}: ${keyType}`);
           describe(`${name}: ${keyType}`, function() {
-            const issuer = endpoint;
+            // find matching verifier
             const verifier = implementation.verifiers.filter(
               v => tags.every(tag => v.tags.has(tag)) &&
                 v.settings.supportedEcdsaKeyTypes.includes(keyType));
@@ -49,6 +50,7 @@ describe('ecdsa-sd-2023 (create)', function() {
             const verificationMethodDocuments = [];
             before(async function() {
               issuedVc = await createInitialVc({issuer, vc});
+              // Support multiple proofs
               proofs = Array.isArray(issuedVc?.proof) ? issuedVc.proof :
                 [issuedVc?.proof];
               const verificationMethods = proofs.map(
