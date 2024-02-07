@@ -15,7 +15,7 @@ SPDX-License-Identifier: BSD-3-Clause
   - [Usage](#usage)
     - [Running Specific Tests](#Running-Specific-Tests)
     - [Testing Locally](#testing-locally)
-    - [Changing the Test Tag](#Changing-the-test-tag)
+    - [Configuring the Tests](#Configuring-the-tests)
   - [Implementation](#implementation)
     - [Docker Integration (TODO)](#docker-integration-todo)
   - [Contribute](#contribute)
@@ -97,9 +97,36 @@ For instance, if your `.localImplementationsConfig.cjs` configuration file looks
 the one above, you can adjust the tag used in each test suite by modifying `./config/runner.json`
 to filter the implementations by `localhost` and other tags.
 
-### Changing the Test Tag
-These test suites use tags to identify which implementation's endpoints are used in tests.
+### Configuring the Tests
+The suites call on a common config file stored at `./config/runner.json`.
+These test suites use tags matched to implementations' endpoint tags in the tests.
 You can change the tag on which the suites will run in `./config/runner.json`, if desired.
+
+For this suite the `runner.json` file looks like this:
+
+```js
+{
+  "suites": {
+    // these are the settings for the rdfc test suites
+    "ecdsa-rdfc-2019": {
+      // endpoints with these tags will be used in the suites
+      "tags": ["ecdsa-rdfc-2019"],
+      // this is the document that will be passed to each issuer
+      "issuerDocument": "./mocks/validVc.json"
+    },
+    // these are the settings for the sd suite
+    "ecdsa-sd-2023": {
+      "tags": ["ecdsa-sd-2023"],
+      "issuerDocument": "./mocks/validVc.json",
+      // the sd suite also tests holder endpoints
+      "vcHolder": {
+        // endpoints with these tags will be used as holders
+        "tags": ["vcHolder"]
+      }
+    }
+  }
+}
+```
 
 ## Implementation
 
