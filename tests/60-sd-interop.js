@@ -6,10 +6,13 @@ import {createDisclosedVc, createInitialVc} from './helpers.js';
 import chai from 'chai';
 import {endpoints} from 'vc-test-suite-implementations';
 import {getSuiteConfig} from './test-config.js';
-import {holderName} from './test-config.js';
 import {verificationSuccess} from './assertions.js';
 
-const {tags, issuerDocument} = getSuiteConfig('ecdsa-sd-2023');
+const {
+  tags,
+  issuerDocument,
+  vcHolder: {holderName}
+} = getSuiteConfig('ecdsa-sd-2023');
 
 const should = chai.should();
 

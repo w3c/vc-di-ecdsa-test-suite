@@ -7,7 +7,6 @@ import {
   dlCredentialNoIds
 } from './mock-data.js';
 import {createDisclosedVc, createInitialVc} from './helpers.js';
-import {holderName, issuerName} from './test-config.js';
 import {verificationFail, verificationSuccess} from './assertions.js';
 import {
   checkDataIntegrityProofVerifyErrors
@@ -18,8 +17,9 @@ import {klona} from 'klona';
 
 const {
   tags,
-  vcHolder: {tags: holderTags},
-  issuerDocument
+  vcHolder: {tags: holderTags, holderName},
+  issuerDocument,
+  issuerName
 } = getSuiteConfig('ecdsa-sd-2023');
 
 // only use implementations with `ecdsa-sd-2023` verifiers.
