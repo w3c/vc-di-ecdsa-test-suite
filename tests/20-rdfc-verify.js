@@ -9,9 +9,8 @@ import {
 import {createInitialVc} from './helpers.js';
 import {endpoints} from 'vc-test-suite-implementations';
 import {getSuiteConfig} from './test-config.js';
-import {issuerName} from './test-config.js';
 
-const {tags, issuerDocument} = getSuiteConfig('ecdsa-rdfc-2019');
+const {tags, issuerDocument, issuerName} = getSuiteConfig('ecdsa-rdfc-2019');
 
 // only use implementations with `ecdsa-rdfc-2019` verifiers.
 const {match} = endpoints.filterByTag({
