@@ -33,16 +33,18 @@ npm i
 ```
 
 ## Usage
-
 To generate test data used in the test suite, testers are required to specify
-the issuer name using the environment variable `ISSUER_NAME`.
+the issuer name using an environment variable or setting `issuerName` in `./config/runner.json`. 
 
-In addition, the environment variable `HOLDER_NAME` may be used to specify
-the VC holder name for generating disclosed test credentials for ECDSA-SD tests.
-If `$HOLDER_NAME` is not specified, `Digital Bazaar` will be used.
+For the `ecdsa-rdfc-2019` suite use `RDFC_ISSUER_NAME`.
+For the `ecdsa-sd-2023` suite use `SD_ISSUER_NAME`.
+
+In addition, the environment variable `SD_HOLDER_NAME` or the setting `holderName` in `./config/runner.json` 
+can be used to specify the VC holder name for generating disclosed test credentials for ECDSA-SD tests.
+If `$SD_HOLDER_NAME` or `holderName` is not specified, `Digital Bazaar` will be used.
 
 ```
-ISSUER_NAME="IssuerName" HOLDER_NAME="HolderName" npm test
+SD_ISSUER_NAME="IssuerName" SD_HOLDER_NAME="HolderName" npm test
 ```
 
 ### Running Specific Tests
