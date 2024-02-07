@@ -9,6 +9,10 @@
       "tags": ["ecdsa-sd-2023"],
       "issuerDocument": "./mocks/validVc.json",
       "issuerName": "Digital Bazaar",
+      "verifierDocuments": [{
+        "document": "./mocks/",
+        "selectivePointers": "./mocks"
+      }],
       "vcHolder": {
         "holderName": "Digital Bazaar",
         "tags": ["vcHolder"]
