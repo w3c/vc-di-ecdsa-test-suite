@@ -1,5 +1,6 @@
 /*!
  * Copyright 2023-2024 Digital Bazaar, Inc. All Rights Reserved
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 import {klona} from 'klona';
 import {require} from './helpers.js';
