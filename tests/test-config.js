@@ -7,7 +7,7 @@ import {require} from './helpers.js';
 
 const _config = require('../config/runner.json');
 
-const envVariables = new Map([
+const _envVariables = new Map([
   ['ecdsa-rdfc-2019', {
     issuerName: process.env.RDFC_ISSUER_NAME
   }],
@@ -26,11 +26,11 @@ export const getSuiteConfig = suite => {
     suiteConfig.issuerDocument = require(suiteConfig.issuerDocument);
   }
   // preserve the use of env variables for some settings
-  const {issuerName, holderName} = envVariables.get(suite);
+  const {issuerName, holderName} = _envVariables.get(suite);
   if(issuerName) {
     suiteConfig.issuerName = issuerName;
   }
-  if(suiteConfig.vcHolder) {
+  if(suiteConfig.vcHolder && holderName) {
     suiteConfig.vcHolder.holderName = holderName;
   }
   // return a deep copy to prevent test data mutation
