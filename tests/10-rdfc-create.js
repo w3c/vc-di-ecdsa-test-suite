@@ -33,14 +33,17 @@ describe('ecdsa-rdfc-2019 (create)', function() {
     this.implemented = [];
     this.rowLabel = 'Test Name';
     this.columnLabel = 'Implementation';
-    for(const [name, {endpoints, implementation}] of match) {
-      for(const endpoint of endpoints) {
-        const {supportedEcdsaKeyTypes} = endpoint.settings;
+    for(const [name, {endpoints: issuers, implementation}] of match) {
+      // loop through each issuer in suite
+      for(const issuer of issuers) {
+        const {supportedEcdsaKeyTypes} = issuer.settings;
+        // test for each support key type
         for(const supportedEcdsaKeyType of supportedEcdsaKeyTypes) {
           const keyType = checkKeyType(supportedEcdsaKeyType);
+          // add implementer name and keyType to test report
           this.implemented.push(`${name}: ${keyType}`);
           describe(`${name}: ${keyType}`, function() {
-            const issuer = endpoint;
+            // find matching verifier for test
             const verifier = implementation.verifiers.filter(
               v => tags.every(tag => v.tags.has(tag)) &&
                 v.settings.supportedEcdsaKeyTypes.includes(keyType));
@@ -49,6 +52,7 @@ describe('ecdsa-rdfc-2019 (create)', function() {
             const verificationMethodDocuments = [];
             before(async function() {
               issuedVc = await createInitialVc({issuer, vc});
+              // VCs can have multiple proofs so account for that
               proofs = Array.isArray(issuedVc?.proof) ? issuedVc.proof :
                 [issuedVc?.proof];
               const verificationMethods = proofs.map(
