@@ -15,6 +15,17 @@ export const ISOTimeStamp = ({date = new Date()} = {}) => {
   return date.toISOString().replace(/\.\d+Z$/, 'Z');
 };
 
+/**
+ * Creates an initial VC.
+ *
+ * @param {object} options - Options to use.
+ * @param {object} options.issuer - An endpoint with a post method.
+ * @param {object} options.vc - The credential to be issued.
+ * @param {Array<string>} [options.mandatoryPointers] - An optional
+ *   array of mandatory pointers.
+ *
+ * @returns {Promise<object>} The resulting issuance result.
+ */
 export const createInitialVc = async ({issuer, vc, mandatoryPointers}) => {
   const {settings: {id: issuerId, options}} = issuer;
   const credential = klona(vc);
@@ -22,7 +33,8 @@ export const createInitialVc = async ({issuer, vc, mandatoryPointers}) => {
   credential.issuer = issuerId;
   credential.issuanceDate = ISOTimeStamp();
   const body = {credential, options};
-  if(mandatoryPointers) {
+  // if there are mandatoryPointers for sd tests add them
+  if(Array.isArray(mandatoryPointers)) {
     options.mandatoryPointers = mandatoryPointers;
   }
   const {data} = await issuer.post({json: body});
