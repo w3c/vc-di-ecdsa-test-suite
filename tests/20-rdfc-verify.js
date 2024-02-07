@@ -42,26 +42,29 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
     this.rowLabel = 'Test Name';
     this.columnLabel = 'Verifier';
     this.implemented = [];
-    for(const [name, {endpoints}] of match) {
-      for(const endpoint of endpoints) {
+    for(const [name, {endpoints: verifiers}] of match) {
+      for(const verifier of verifiers) {
         const {
           supportedEcdsaKeyTypes: verifierSupportedEcdsaKeyTypes
-        } = endpoint.settings;
+        } = verifier.settings;
         const keyTypes = verifierSupportedEcdsaKeyTypes.join(', ');
-        const verifier = endpoint;
+        // add implementer name and keyTypes to test report
         this.implemented.push(`${name}: ${keyTypes}`);
         describe(`${name}: ${keyTypes}`, function() {
           const credentials = [];
           beforeEach(async function() {
+            // use each issuer to create test data for verify suite
             for(const issuer of issuers) {
               const {
                 supportedEcdsaKeyTypes: issuerSupportedEcdsaKeyTypes
               } = issuer.settings;
+              // issue vc for each supported key type
               for(const verifierSupportedEcdsaKeyType of
                 verifierSupportedEcdsaKeyTypes) {
                 if(issuerSupportedEcdsaKeyTypes.includes(
                   verifierSupportedEcdsaKeyType)) {
                   const issuedVc = await createInitialVc({issuer, vc});
+                  // add each vc to resulting test data
                   credentials.push(issuedVc);
                 }
               }
