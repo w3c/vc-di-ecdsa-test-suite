@@ -111,11 +111,10 @@ with `DataIntegrityProof` proof type using the `ecdsa-rdfc-2019`,
 To add your implementation to this test suite, you will need to add 2 endpoints
 to your implementation manifest.
 - A credential issuer endpoint (`/credentials/issue`) in the `issuers` property.
-  - An optional id property specifying the issuer can be set alongside the endpoint.
-  - If provided, the specified issuer id will be used as the issuer property on verifiable credentials
+  - An optional `id` property may be set alongside the `endpoint`.
+  - If provided, the specified `issuer.id` will be added to Verifiable Credentials
     in the tests.
-  - The issuer id should be easy for other implementers to dereference.
-    - It is recommended the issuer id be `did:key`.
+  - If present, the `issuer.id` MUST use the `did:key` method and MUST dereferenceable.
 - A credential verifier endpoint (`/credentials/verify`) in the `verifiers`
 property.
 - An optional `vcHolder` endpoint can be added for `ecdsa-sd-2023` selective disclosure tests.
