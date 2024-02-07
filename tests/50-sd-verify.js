@@ -59,12 +59,16 @@ describe('ecdsa-sd-2023 (verify)', function() {
     this.rowLabel = 'Test Name';
     this.columnLabel = 'Verifier';
     this.implemented = [];
+    // loop through implementers and test endpoints
     for(const [name, {endpoints: verifiers}] of match) {
       for(const verifier of verifiers) {
+        // get the keyTypes each verifier supports
         const {
           supportedEcdsaKeyTypes: verifierSupportedEcdsaKeyTypes
         } = verifier.settings;
+        // format keyTypes for test report
         const keyTypes = verifierSupportedEcdsaKeyTypes.join(', ');
+        // add name and keyTypes to test report
         this.implemented.push(`${name}: ${keyTypes}`);
         describe(`${name}: ${keyTypes}`, function() {
           const signedCredentials = [];
