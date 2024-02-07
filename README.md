@@ -112,9 +112,12 @@ To add your implementation to this test suite, you will need to add 2 endpoints
 to your implementation manifest.
 - A credential issuer endpoint (`/credentials/issue`) in the `issuers` property.
   - An optional `id` property may be set alongside the `endpoint`.
-  - If provided, the specified `issuer.id` will be added to Verifiable Credentials
-    in the tests.
-  - If present, the `issuer.id` MUST use the `did:key` method and MUST dereferenceable.
+    - If provided, the specified `issuer.id` will be added to Verifiable Credentials
+      in the tests.
+    - If present, the `issuer.id` MUST use the `did:key` method and MUST be dereferenceable.
+  - If the endpoint supports a selective disclosure suite
+    - The endpoint must accept `options.mandatoryPointers`.
+    - If present `options.mandatoryPointers` is an Array of strings.
 - A credential verifier endpoint (`/credentials/verify`) in the `verifiers`
 property.
 - An optional `vcHolder` endpoint can be added for `ecdsa-sd-2023` selective disclosure tests.
