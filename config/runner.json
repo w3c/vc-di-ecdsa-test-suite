@@ -2,17 +2,40 @@
   "suites": {
     "ecdsa-rdfc-2019": {
       "tags": ["ecdsa-rdfc-2019"],
-      "issuerDocument": "./mocks/validVc.json",
-      "issuerName": "Digital Bazaar"
+      "issuerName": "Digital Bazaar",
+      "credentials": {
+        "create": {"document": "./mocks/validVc.json"},
+        "verify": {"document": "./mocks/validVc.json"},
+        "interop": {"document": "./mocks/validVc.json"}
+      }
     },
     "ecdsa-sd-2023": {
       "tags": ["ecdsa-sd-2023"],
-      "issuerDocument": "./mocks/validVc.json",
       "issuerName": "Digital Bazaar",
-      "verifierDocuments": [{
-        "document": "./mocks/",
-        "selectivePointers": "./mocks"
-      }],
+      "credentials": {
+        "create": {
+          "document": "./mocks/validVc.json",
+          "mandatoryPointers": "./mocks/basicMandatoryPointers.json"
+        },
+        "verify": [{
+          "document": "./mocks/validVc.json",
+          "mandatoryPointers": "./mocks/basicMandatoryPointers.json",
+          "selectivePointers": "./mocks/allSelectivePointers.json"
+        }, {
+          "document": "./mocks/noIdVc.json",
+          "mandatoryPointers": "./mocks/basicMandatoryPointers.json",
+          "selectivePointers": "./mocks/allSelectivePointers.json"
+        }, {
+          "document": "./mocks/achievementVc.json",
+          "mandatoryPointers": "./mocks/basicMandatoryPointers.json",
+          "selectivePointers": "./mocks/allSelectivePointers.json"
+        }],
+        "interop": {
+          "document": "./mocks/validVc.json",
+          "mandatoryPointers": "./mocks/basicMandatoryPointers.json",
+          "selectivePointers": "./mocks/basicSelectivePointers.json"
+        }
+      },
       "vcHolder": {
         "holderName": "Digital Bazaar",
         "tags": ["vcHolder"]
