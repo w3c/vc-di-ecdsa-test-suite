@@ -55,6 +55,10 @@ export const createDisclosedVc = async ({
   return {disclosedCredential: data};
 };
 
+export const createMultipleVcs = async ({}) => {
+
+};
+
 export const SUPPORTED_BASE58_ECDSA_MULTIKEY_HEADERS = new Map([
   ['P-256', 'zDna'],
   ['P-384', 'z82L']

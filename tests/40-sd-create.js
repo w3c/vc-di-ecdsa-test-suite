@@ -14,7 +14,7 @@ import {documentLoader} from './documentLoader.js';
 import {endpoints} from 'vc-test-suite-implementations';
 import {getSuiteConfig} from './test-config.js';
 
-const {tags, issuerDocument} = getSuiteConfig('ecdsa-sd-2023');
+const {tags, credentials} = getSuiteConfig('ecdsa-sd-2023');
 const {match} = endpoints.filterByTag({
   tags: [...tags],
   property: 'issuers'
@@ -50,7 +50,11 @@ describe('ecdsa-sd-2023 (create)', function() {
             let proofs;
             const verificationMethodDocuments = [];
             before(async function() {
-              issuedVc = await createInitialVc({issuer, vc: issuerDocument});
+              issuedVc = await createInitialVc({
+                issuer,
+                vc: credentials.create.document
+                //mandatoryPointers: credentials.create.mandatoryPointers
+              });
               // Support multiple proofs
               proofs = Array.isArray(issuedVc?.proof) ? issuedVc.proof :
                 [issuedVc?.proof];

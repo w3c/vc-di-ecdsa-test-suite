@@ -6,7 +6,10 @@ import {klona} from 'klona';
 import {require} from './helpers.js';
 
 const _config = require('../config/runner.json');
+// cache is valid for a single test run
+const _cache = new Map();
 
+// gets the env variables for the suites
 const _envVariables = new Map([
   ['ecdsa-rdfc-2019', {
     issuerName: process.env.RDFC_ISSUER_NAME
@@ -17,13 +20,26 @@ const _envVariables = new Map([
   }]
 ]);
 
-export const getSuiteConfig = suite => {
-  const suiteConfig = _config.suites[suite];
+// assumes that property values are paths to files to be required
+const openFiles = suiteFiles => {
+  for(const property in suiteFiles) {
+    suiteFiles[property] = klona(require(suiteFiles[property]));
+  }
+  return suiteFiles;
+};
+
+const _createSuiteConfig = suite => {
+  // clone to prevent mutations of the require cache
+  const suiteConfig = klona(_config.suites[suite]);
   if(!suiteConfig) {
     throw new Error(`Could not find config for suite ${suite}`);
   }
-  if(typeof suiteConfig.issuerDocument === 'string') {
-    suiteConfig.issuerDocument = require(suiteConfig.issuerDocument);
+  // open test data in credentials section
+  if(suiteConfig.credentials) {
+    const {credentials} = suiteConfig;
+    for(const property in credentials) {
+      credentials[property] = openFiles(credentials[property]);
+    }
   }
   // preserve the use of env variables for some settings
   const {issuerName, holderName} = _envVariables.get(suite);
@@ -34,5 +50,18 @@ export const getSuiteConfig = suite => {
     suiteConfig.vcHolder.holderName = holderName;
   }
   // return a deep copy to prevent test data mutation
-  return klona(suiteConfig);
+  return suiteConfig;
+};
+
+export const getSuiteConfig = suite => {
+  // if cached config use it
+  if(_cache.get(suite)) {
+    // return a deep copy to prevent test data mutation
+    return klona(_cache.get(suite));
+  }
+  // create an initial config
+  const suiteConfig = _createSuiteConfig(suite);
+  // store in the cache
+  _cache.set(suite, suiteConfig);
+  return suiteConfig;
 };
