@@ -14,7 +14,7 @@ import {documentLoader} from './documentLoader.js';
 import {endpoints} from 'vc-test-suite-implementations';
 import {getSuiteConfig} from './test-config.js';
 
-const {tags, issuerDocument} = getSuiteConfig('ecdsa-rdfc-2019');
+const {tags, credentials} = getSuiteConfig('ecdsa-rdfc-2019');
 const {match} = endpoints.filterByTag({
   tags: [...tags],
   property: 'issuers'
@@ -53,7 +53,7 @@ describe('ecdsa-rdfc-2019 (create)', function() {
             before(async function() {
               issuedVc = await createInitialVc({
                 issuer,
-                vc: issuerDocument
+                vc: credentials.create.document
               });
               // VCs can have multiple proofs so account for that
               proofs = Array.isArray(issuedVc?.proof) ? issuedVc.proof :

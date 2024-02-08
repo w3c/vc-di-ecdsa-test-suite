@@ -8,7 +8,7 @@ import {endpoints} from 'vc-test-suite-implementations';
 import {getSuiteConfig} from './test-config.js';
 import {verificationSuccess} from './assertions.js';
 
-const {tags, issuerDocument} = getSuiteConfig('ecdsa-rdfc-2019');
+const {tags, credentials} = getSuiteConfig('ecdsa-rdfc-2019');
 
 const should = chai.should();
 
@@ -78,7 +78,7 @@ describe('ecdsa-rdfc-2019 (interop)', function() {
       before(async function() {
         issuedVc = await createInitialVc({
           issuer: issuerEndpoint,
-          vc: issuerDocument
+          vc: credentials.interop.document
         });
       });
       it(`"${verifierDisplayName}" should verify "${issuerDisplayName}"`,

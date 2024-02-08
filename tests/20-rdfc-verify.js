@@ -10,7 +10,11 @@ import {createInitialVc} from './helpers.js';
 import {endpoints} from 'vc-test-suite-implementations';
 import {getSuiteConfig} from './test-config.js';
 
-const {tags, issuerDocument, issuerName} = getSuiteConfig('ecdsa-rdfc-2019');
+const {
+  tags,
+  credentials: vcTestData,
+  issuerName
+} = getSuiteConfig('ecdsa-rdfc-2019');
 
 // only use implementations with `ecdsa-rdfc-2019` verifiers.
 const {match} = endpoints.filterByTag({
@@ -66,7 +70,7 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
                   // add each vc to resulting test data
                   const issuedVc = await createInitialVc({
                     issuer,
-                    vc: issuerDocument
+                    vc: vcTestData.verify.document
                   });
                   credentials.push(issuedVc);
                 }

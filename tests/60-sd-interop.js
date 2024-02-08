@@ -10,7 +10,7 @@ import {verificationSuccess} from './assertions.js';
 
 const {
   tags,
-  issuerDocument,
+  credentials,
   vcHolder: {holderName}
 } = getSuiteConfig('ecdsa-sd-2023');
 
@@ -82,7 +82,8 @@ describe('ecdsa-sd-2023 (interop)', function() {
       before(async function() {
         const issuedVc = await createInitialVc({
           issuer: issuerEndpoint,
-          vc: issuerDocument
+          vc: credentials.interop.document
+          // mandatoryPointers: credentials.interop.mandatoryPointers
         });
         const {match: matchingVcHolders} = endpoints.filterByTag({
           tags: ['vcHolder'],
