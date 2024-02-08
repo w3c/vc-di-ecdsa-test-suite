@@ -87,17 +87,20 @@ describe('ecdsa-sd-2023 (verify)', function() {
                 verifierSupportedEcdsaKeyTypes) {
                 if(issuerSupportedEcdsaKeyTypes.includes(
                   verifierSupportedEcdsaKeyType)) {
+                  // create initial signed Vc
                   const signedVc = await createInitialVc({
                     issuer,
                     vc: issuerDocument
                   });
                   signedCredentials.push(signedVc);
+                  // use initial VC for a basic selective disclosure test
                   const {disclosedCredential} = await createDisclosedVc({
                     selectivePointers: ['/credentialSubject/id'],
                     signedCredential: signedVc,
                     vcHolder
                   });
                   disclosedCredentials.push(disclosedCredential);
+                  // create initial nestedDisclosedCredential from signedVc
                   const {
                     disclosedCredential: nestedDisclosedCredential
                   } = await createDisclosedVc({
@@ -109,6 +112,7 @@ describe('ecdsa-sd-2023 (verify)', function() {
                     vcHolder
                   });
                   nestedDisclosedCredentials.push(nestedDisclosedCredential);
+                  // start second round test data creation w/ dlCredentialNoIds
                   const signedDlCredentialNoIds = await createInitialVc({
                     issuer, vc: dlCredentialNoIds
                   });
@@ -123,7 +127,8 @@ describe('ecdsa-sd-2023 (verify)', function() {
                     vcHolder
                   });
                   disclosedDlCredentialNoIds.push(disclosedDlCredentialNoId);
-
+                  // start third round test data creation w/
+                  // AchievementCredential
                   const signedAchievementCredential = await createInitialVc({
                     issuer, vc: achievementCredential
                   });
