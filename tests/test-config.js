@@ -20,17 +20,16 @@ const _envVariables = new Map([
   }]
 ]);
 
-// assumes that property values are paths to files to be required
 const openFiles = suiteFiles => {
-  // if we have an array of test data to open loop through it
-  if(Array.isArray(suiteFiles)) {
-    for(const index in suiteFiles) {
-      suiteFiles[index] = openFiles(suiteFiles[index]);
-    }
-    return suiteFiles;
-  }
   for(const property in suiteFiles) {
-    suiteFiles[property] = klona(require(suiteFiles[property]));
+    const value = suiteFiles[property];
+    // assume strings are paths to be opened
+    if(typeof value === 'string') {
+      suiteFiles[property] = klona(require(suiteFiles[property]));
+      continue;
+    }
+    // assume everything else recurs
+    suiteFiles[property] = openFiles(suiteFiles[property]);
   }
   return suiteFiles;
 };
