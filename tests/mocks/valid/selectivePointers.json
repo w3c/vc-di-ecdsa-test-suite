@@ -1,1 +1,6 @@
-[]
+[
+  "/credentialSubject/documentIdentifier",
+  "/credentialSubject/dateOfBirth",
+  "/credentialSubject/expirationDate",
+  "/credentialSubject/issuingAuthority"
+]
