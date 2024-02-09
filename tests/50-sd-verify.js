@@ -4,7 +4,6 @@
  */
 import {createDisclosedVc, createInitialVc} from './helpers.js';
 import {verificationFail, verificationSuccess} from './assertions.js';
-import {achievementCredential} from './mock-data.js';
 import {
   checkDataIntegrityProofVerifyErrors
 } from 'data-integrity-test-suite-assertion';
@@ -129,7 +128,7 @@ describe('ecdsa-sd-2023 (verify)', function() {
                   // start third round test data creation w/
                   // AchievementCredential
                   const signedAchievementCredential = await createInitialVc({
-                    issuer, vc: achievementCredential
+                    issuer, vc: credentials.verify[1].document
                   });
 
                   // select full arrays
