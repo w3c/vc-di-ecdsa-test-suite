@@ -2,12 +2,9 @@
  * Copyright 2023 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
-import {
-  achievementCredential,
-  dlCredentialNoIds
-} from './mock-data.js';
 import {createDisclosedVc, createInitialVc} from './helpers.js';
 import {verificationFail, verificationSuccess} from './assertions.js';
+import {achievementCredential} from './mock-data.js';
 import {
   checkDataIntegrityProofVerifyErrors
 } from 'data-integrity-test-suite-assertion';
@@ -18,7 +15,7 @@ import {klona} from 'klona';
 const {
   tags,
   vcHolder: {tags: holderTags, holderName},
-  issuerDocument,
+  credentials,
   issuerName
 } = getSuiteConfig('ecdsa-sd-2023');
 
@@ -90,7 +87,7 @@ describe('ecdsa-sd-2023 (verify)', function() {
                   // create initial signed VC
                   const signedVc = await createInitialVc({
                     issuer,
-                    vc: issuerDocument
+                    vc: credentials.verify[0].document
                   });
                   signedCredentials.push(signedVc);
                   // use initial VC for a basic selective disclosure test
@@ -112,9 +109,11 @@ describe('ecdsa-sd-2023 (verify)', function() {
                     vcHolder
                   });
                   nestedDisclosedCredentials.push(nestedDisclosedCredential);
+                  const noIdVc = klona(credentials.verify[0].document);
+                  delete noIdVc.id;
                   // start second round test data creation w/ dlCredentialNoIds
                   const signedDlCredentialNoIds = await createInitialVc({
-                    issuer, vc: dlCredentialNoIds
+                    issuer, vc: noIdVc
                   });
                   const {
                     disclosedCredential: disclosedDlCredentialNoId

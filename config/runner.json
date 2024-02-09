@@ -21,11 +21,7 @@
           "document": "./mocks/validVc.json",
           "mandatoryPointers": "./mocks/basicMandatoryPointers.json",
           "selectivePointers": "./mocks/allSelectivePointers.json"
-        }, {
-          "document": "./mocks/noIdVc.json",
-          "mandatoryPointers": "./mocks/basicMandatoryPointers.json",
-          "selectivePointers": "./mocks/allSelectivePointers.json"
-        }, {
+        },{
           "document": "./mocks/achievementVc.json",
           "mandatoryPointers": "./mocks/basicMandatoryPointers.json",
           "selectivePointers": "./mocks/allSelectivePointers.json"
