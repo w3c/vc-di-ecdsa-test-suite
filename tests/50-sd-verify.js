@@ -87,7 +87,7 @@ describe('ecdsa-sd-2023 (verify)', function() {
                 verifierSupportedEcdsaKeyTypes) {
                 if(issuerSupportedEcdsaKeyTypes.includes(
                   verifierSupportedEcdsaKeyType)) {
-                  // create initial signed Vc
+                  // create initial signed VC
                   const signedVc = await createInitialVc({
                     issuer,
                     vc: issuerDocument
