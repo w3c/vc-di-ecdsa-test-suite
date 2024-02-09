@@ -2,41 +2,6 @@
  * Copyright 2023 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
-export const dlCredentialNoIds = {
-  '@context': [
-    'https://www.w3.org/2018/credentials/v1',
-    {
-      '@protected': true,
-      DriverLicenseCredential: 'urn:example:DriverLicenseCredential',
-      DriverLicense: {
-        '@id': 'urn:example:DriverLicense',
-        '@context': {
-          '@protected': true,
-          id: '@id',
-          type: '@type',
-          documentIdentifier: 'urn:example:documentIdentifier',
-          dateOfBirth: 'urn:example:dateOfBirth',
-          expirationDate: 'urn:example:expiration',
-          issuingAuthority: 'urn:example:issuingAuthority'
-        }
-      },
-      driverLicense: {
-        '@id': 'urn:example:driverLicense',
-        '@type': '@id'
-      }
-    },
-  ],
-  type: ['VerifiableCredential', 'DriverLicenseCredential'],
-  credentialSubject: {
-    driverLicense: {
-      type: 'DriverLicense',
-      documentIdentifier: 'T21387yc328c7y32h23f23',
-      dateOfBirth: '01-01-1990',
-      expirationDate: '01-01-2030',
-      issuingAuthority: 'VA'
-    }
-  }
-};
 
 export const achievementCredential = {
   '@context': [
