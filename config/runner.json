@@ -4,9 +4,9 @@
       "tags": ["ecdsa-rdfc-2019"],
       "issuerName": "Digital Bazaar",
       "credentials": {
-        "create": {"document": "./mocks/validVc.json"},
-        "verify": {"document": "./mocks/validVc.json"},
-        "interop": {"document": "./mocks/validVc.json"}
+        "create": {"document": "./mocks/valid/document.json"},
+        "verify": {"document": "./mocks/valid/document.json"},
+        "interop": {"document": "./mocks/valid/document.json"}
       }
     },
     "ecdsa-sd-2023": {
@@ -14,22 +14,22 @@
       "issuerName": "Digital Bazaar",
       "credentials": {
         "create": {
-          "document": "./mocks/validVc.json",
-          "mandatoryPointers": "./mocks/basicMandatoryPointers.json"
+          "document": "./mocks/valid/document.json",
+          "mandatoryPointers": "./mocks/valid/mandatoryPointers.json"
         },
         "verify": [{
-          "document": "./mocks/validVc.json",
-          "mandatoryPointers": "./mocks/basicMandatoryPointers.json",
-          "selectivePointers": "./mocks/allSelectivePointers.json"
+          "document": "./mocks/valid/document.json",
+          "mandatoryPointers": "./mocks/valid/mandatoryPointers.json",
+          "selectivePointers": "./mocks/valid/selectivePointers.json"
         },{
-          "document": "./mocks/achievementVc.json",
-          "mandatoryPointers": "./mocks/basicMandatoryPointers.json",
-          "selectivePointers": "./mocks/allSelectivePointers.json"
+          "document": "./mocks/achievement/document.json",
+          "mandatoryPointers": "./mocks/achievement/mandatoryPointers.json",
+          "selectivePointers": "./mocks/achievement/selectivePointers.json"
         }],
         "interop": {
-          "document": "./mocks/validVc.json",
-          "mandatoryPointers": "./mocks/basicMandatoryPointers.json",
-          "selectivePointers": "./mocks/basicSelectivePointers.json"
+          "document": "./mocks/valid/document.json",
+          "mandatoryPointers": "./mocks/valid/mandatoryPointers.json",
+          "selectivePointers": "./mocks/valid/selectivePointers.json"
         }
       },
       "vcHolder": {
