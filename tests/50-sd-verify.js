@@ -86,7 +86,9 @@ describe('ecdsa-sd-2023 (verify)', function() {
                   // create initial signed VC
                   const signedVc = await createInitialVc({
                     issuer,
-                    vc: credentials.verify[0].document
+                    vc: credentials.verify[0].document,
+                    // mandatoryPointers:
+                    // credentials.verify[0].mandatoryPointers
                   });
                   signedCredentials.push(signedVc);
                   // use initial VC for a basic selective disclosure test
@@ -108,7 +110,9 @@ describe('ecdsa-sd-2023 (verify)', function() {
                     vcHolder
                   });
                   nestedDisclosedCredentials.push(nestedDisclosedCredential);
+                  // copy the first vc
                   const noIdVc = klona(credentials.verify[0].document);
+                  // delete the id
                   delete noIdVc.id;
                   // start second round test data creation w/ dlCredentialNoIds
                   const signedDlCredentialNoIds = await createInitialVc({
@@ -135,22 +139,8 @@ describe('ecdsa-sd-2023 (verify)', function() {
                   const {
                     disclosedCredential: revealedAchievementCredential1
                   } = await createDisclosedVc({
-                    selectivePointers: [
-                      '/credentialSubject/achievements/0/sailNumber',
-                      '/credentialSubject/achievements/0/sails/0',
-                      '/credentialSubject/achievements/0/sails/1',
-                      '/credentialSubject/achievements/0/sails/2',
-                      '/credentialSubject/achievements/0/sails/3',
-                      '/credentialSubject/achievements/0/boards/0',
-                      '/credentialSubject/achievements/0/boards/1',
-                      '/credentialSubject/achievements/1/sailNumber',
-                      '/credentialSubject/achievements/1/sails/0',
-                      '/credentialSubject/achievements/1/sails/1',
-                      '/credentialSubject/achievements/1/sails/2',
-                      '/credentialSubject/achievements/1/sails/3',
-                      '/credentialSubject/achievements/1/boards/0',
-                      '/credentialSubject/achievements/1/boards/1'
-                    ],
+                    selectivePointers:
+                      [...credentials.verify[1].selectivePointers],
                     signedCredential: signedAchievementCredential,
                     vcHolder
                   });
@@ -158,18 +148,12 @@ describe('ecdsa-sd-2023 (verify)', function() {
                     revealedAchievementCredential1);
 
                   // select less than full subarrays
+                  const pointers2 =
+                    credentials.verify[1].selectivePointers.slice(2, -1);
                   const {
                     disclosedCredential: revealedAchievementCredential2
                   } = await createDisclosedVc({
-                    selectivePointers: [
-                      '/credentialSubject/achievements/0/sails/1',
-                      '/credentialSubject/achievements/0/sails/3',
-                      '/credentialSubject/achievements/0/boards/0',
-                      '/credentialSubject/achievements/0/boards/1',
-                      '/credentialSubject/achievements/1/sails/0',
-                      '/credentialSubject/achievements/1/sails/2',
-                      '/credentialSubject/achievements/1/boards/1'
-                    ],
+                    selectivePointers: pointers2,
                     signedCredential: signedAchievementCredential,
                     vcHolder
                   });
@@ -177,18 +161,12 @@ describe('ecdsa-sd-2023 (verify)', function() {
                     revealedAchievementCredential2);
 
                   // select w/o first array element
+                  const pointers3 =
+                    credentials.verify[1].selectivePointers.slice(1);
                   const {
                     disclosedCredential: revealedAchievementCredential3
                   } = await createDisclosedVc({
-                    selectivePointers: [
-                      '/credentialSubject/achievements/0/sails/1',
-                      '/credentialSubject/achievements/0/sails/3',
-                      '/credentialSubject/achievements/0/boards/0',
-                      '/credentialSubject/achievements/0/boards/1',
-                      '/credentialSubject/achievements/1/sails/0',
-                      '/credentialSubject/achievements/1/sails/2',
-                      '/credentialSubject/achievements/1/boards/1'
-                    ],
+                    selectivePointers: pointers3,
                     signedCredential: signedAchievementCredential,
                     vcHolder
                   });
