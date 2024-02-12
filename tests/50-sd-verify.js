@@ -98,14 +98,13 @@ describe('ecdsa-sd-2023 (verify)', function() {
                     vcHolder
                   });
                   disclosedCredentials.push(disclosedCredential);
+                  const nestedPointers = credentials.verify[0].
+                    selectivePointers.slice(1, 3);
                   // create initial nestedDisclosedCredential from signedVc
                   const {
                     disclosedCredential: nestedDisclosedCredential
                   } = await createDisclosedVc({
-                    selectivePointers: [
-                      '/credentialSubject/driverLicense/dateOfBirth',
-                      '/credentialSubject/driverLicense/expirationDate'
-                    ],
+                    selectivePointers: [...nestedPointers],
                     signedCredential: signedVc,
                     vcHolder
                   });
@@ -121,10 +120,7 @@ describe('ecdsa-sd-2023 (verify)', function() {
                   const {
                     disclosedCredential: disclosedDlCredentialNoId
                   } = await createDisclosedVc({
-                    selectivePointers: [
-                      '/credentialSubject/driverLicense/dateOfBirth',
-                      '/credentialSubject/driverLicense/expirationDate'
-                    ],
+                    selectivePointers: [...nestedPointers],
                     signedCredential: signedDlCredentialNoIds,
                     vcHolder
                   });
