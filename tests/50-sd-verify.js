@@ -146,10 +146,9 @@ describe('ecdsa-sd-2023 (verify)', function() {
                   });
                   disclosedCredentialsWithFullArray.push(
                     revealedAchievementCredential1);
-
                   // select less than full subarrays
                   const pointers2 =
-                    credentials.verify[1].selectivePointers.slice(2, -1);
+                    credentials.verify[1].selectivePointers.slice(2, -4);
                   const {
                     disclosedCredential: revealedAchievementCredential2
                   } = await createDisclosedVc({
@@ -159,10 +158,9 @@ describe('ecdsa-sd-2023 (verify)', function() {
                   });
                   disclosedCredentialsWithLessThanFullSubArray.push(
                     revealedAchievementCredential2);
-
-                  // select w/o first array element
+                  // select w/o first 7 array element
                   const pointers3 =
-                    credentials.verify[1].selectivePointers.slice(1);
+                    credentials.verify[1].selectivePointers.slice(7);
                   const {
                     disclosedCredential: revealedAchievementCredential3
                   } = await createDisclosedVc({
