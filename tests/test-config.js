@@ -25,11 +25,11 @@ const openFiles = suiteFiles => {
     const value = suiteFiles[property];
     // assume strings are paths to be opened
     if(typeof value === 'string') {
-      suiteFiles[property] = klona(require(suiteFiles[property]));
+      suiteFiles[property] = klona(require(value));
       continue;
     }
     // assume everything else recurs
-    suiteFiles[property] = openFiles(suiteFiles[property]);
+    suiteFiles[property] = openFiles(value);
   }
   return suiteFiles;
 };
