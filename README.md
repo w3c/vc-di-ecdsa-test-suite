@@ -16,7 +16,7 @@ SPDX-License-Identifier: BSD-3-Clause
     - [Running Specific Tests](#Running-Specific-Tests)
     - [Testing Locally](#testing-locally)
     - [Configuring the Tests](#Configuring-the-tests)
-    - [Configuring the Test Data](#Configuring-test-test-data)
+    - [Configuring the Test Data](#Configuring-the-test-data)
   - [Implementation](#implementation)
     - [Docker Integration (TODO)](#docker-integration-todo)
   - [Contribute](#contribute)
@@ -131,10 +131,13 @@ For this suite the `runner.json` file looks like this:
 ### Configuring the Test Data
 The tests run a set of static test vectors.
 The vectors are configured in the `credentials` section of a suite.
-Credentials consists of 3 properties:
-- create for issuance or VC creation tests.
-- verify for VC verification tests.
-- interop for VC interoperability tests.
+
+Credentials configuration consists of 3 properties:
+- `create` for issuance or VC creation tests.
+- `verify` for VC verification tests.
+  - Some `verify` sections contain multiple credentials and pointers for test data.
+- `interop` for VC interoperability tests.
+
 The test vector configuration consists of 1-3 paths to json objects:
 - The property `document` is a path to an unsigned credential.
   - `document` is required by all tests.
@@ -149,7 +152,7 @@ properties must be fulfilled in that section in order for the tests to run.
 A minimal non-sd test vector configuration looks like this:
 ```js
 "verify": {
-  "document": "./test/input/vc-di-ecdsa/"
+  "document": "./test/input/vc-di-ecdsa/TestVectors/ecdsa-sd-2023/windDoc.json"
 }
 ```
 
