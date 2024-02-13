@@ -138,7 +138,7 @@ Credentials configuration consists of 3 properties:
   - Some `verify` sections contain multiple credentials and pointers for test data.
 - `interop` for VC interoperability tests.
 
-The test vector configuration consists of 1-3 paths to json objects:
+The test vector configuration consists of 1-3 paths to JSON objects:
 - The property `document` is a path to an unsigned credential.
   - `document` is required by all tests.
 - The property `mandatoryPointers` is a path to a JSON array of pointers.
