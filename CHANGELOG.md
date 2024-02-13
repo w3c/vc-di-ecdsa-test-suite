@@ -6,6 +6,13 @@ SPDX-License-Identifier: BSD-3-Clause
 
 # w3c/vc-di-ecdsa-test-suite  ChangeLog
 
+## 2.3.0 -
+
+### Added
+- A new `credentials` section in `runner.json` that allows configuring static test vectors.
+- A new script that clones the `vc-di-ecdsa` repo and `TestVectors` into the project.
+- A new dir `mocks` that contains static test vectors and respective pointers.
+
 ## 2.2.1 -
 
 ### Fixed
