@@ -12,6 +12,12 @@ SPDX-License-Identifier: BSD-3-Clause
 - A new `credentials` section in `runner.json` that allows configuring static test vectors.
 - A new script that clones the `vc-di-ecdsa` repo and `TestVectors` into the project.
 - A new dir `mocks` that contains static test vectors and respective pointers.
+- A new config property `issuerName` for configuring the issuer used to create test data.
+- A new config property `holderName` for configuring the holder used to create sd test data.
+
+### Changed
+- The env variables for specifying the issuer for the rdfc & sd tests are now separate.
+- The env variable for specifying the holder for the SD tests is now `SD_HOLDER_NAME`.
 
 ## 2.2.1 -
 
