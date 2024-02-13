@@ -16,6 +16,7 @@ SPDX-License-Identifier: BSD-3-Clause
     - [Running Specific Tests](#Running-Specific-Tests)
     - [Testing Locally](#testing-locally)
     - [Configuring the Tests](#Configuring-the-tests)
+    - [Configuring the Test Data](#Configuring-test-test-data)
   - [Implementation](#implementation)
     - [Docker Integration (TODO)](#docker-integration-todo)
   - [Contribute](#contribute)
@@ -109,22 +110,98 @@ For this suite the `runner.json` file looks like this:
 ```js
 {
   "suites": {
-    // these are the settings for the rdfc test suites
     "ecdsa-rdfc-2019": {
-      // endpoints with these tags will be used in the suites
       "tags": ["ecdsa-rdfc-2019"],
-      // this is the document that will be passed to each issuer
-      "issuerDocument": "./mocks/validVc.json"
+      "issuerName": "Digital Bazaar",
+      "credentials": {...}
     },
-    // these are the settings for the sd suite
     "ecdsa-sd-2023": {
       "tags": ["ecdsa-sd-2023"],
-      "issuerDocument": "./mocks/validVc.json",
-      // the sd suite also tests holder endpoints
+      "issuerName": "Digital Bazaar",
+      "credentials": {...},
       "vcHolder": {
-        // endpoints with these tags will be used as holders
+        "holderName": "Digital Bazaar",
         "tags": ["vcHolder"]
       }
+    }
+  }
+}
+```
+
+### Configuring the Test Data
+The tests run a set of static test vectors.
+The vectors are configured in the `credentials` section of a suite.
+Credentials consists of 3 properties:
+- create for issuance or VC creation tests.
+- verify for VC verification tests.
+- interop for VC interoperability tests.
+The test vector configuration consists of 1-3 paths to json objects:
+- The property `document` is a path to an unsigned credential.
+  - `document` is required by all tests.
+- The property `mandatoryPointers` is a path to a JSON array of pointers.
+  - `mandatoryPointers` are required only for selective disclosure tests.
+- The property `selectivePointers` is an array containing all pointers for a credential.
+  - Pointers used in the tests are deduced from the full set of pointers.
+  - `selectivePointers` are required only for selective disclosure tests.
+Some credentials sections might require multiple VCs. In this case multiple named
+properties must be fulfilled in that section in order for the tests to run.
+
+A minimal non-sd test vector configuration looks like this:
+```js
+"verify": {
+  "document": "./test/input/vc-di-ecdsa/"
+}
+```
+
+An sd test vector configuration looks like this:
+```js
+"create": {
+  "document": "./mocks/valid/document.json",
+  "mandatoryPointers": "./mocks/valid/mandatoryPointers.json",
+  "selectivePointers": "./mocks/valid/selectivePointers.json"
+}
+```
+
+The full runner.json file currently looks like this:
+```js
+{
+  "suites": {
+    "ecdsa-rdfc-2019": {
+      "tags": ["ecdsa-rdfc-2019"],
+      "issuerName": "Digital Bazaar",
+      "credentials": {
+        "create": {"document": "./mocks/valid/document.json"},
+        "verify": {"document": "./mocks/valid/document.json"},
+        "interop": {"document": "./mocks/valid/document.json"}
+      }
+    },
+    "ecdsa-sd-2023": {
+      "tags": ["ecdsa-sd-2023"],
+      "issuerName": "Digital Bazaar",
+      "credentials": {
+        "create": {
+          "document": "./mocks/valid/document.json",
+          "mandatoryPointers": "./mocks/valid/mandatoryPointers.json"
+        },
+        "verify": {
+          "subjectNestedObjects": {
+            "document": "./mocks/valid/document.json",
+            "mandatoryPointers": "./mocks/valid/mandatoryPointers.json",
+            "selectivePointers": "./mocks/valid/selectivePointers.json"
+          },
+          "subjectHasArrays": {
+            "document": "./mocks/achievement/document.json",
+            "mandatoryPointers": "./mocks/achievement/mandatoryPointers.json",
+            "selectivePointers": "./mocks/achievement/selectivePointers.json"
+          }
+        },
+        "interop": {
+          "document": "./mocks/valid/document.json",
+          "mandatoryPointers": "./mocks/valid/mandatoryPointers.json",
+          "selectivePointers": "./mocks/valid/selectivePointers.json"
+        }
+      },
+      "vcHolder": {...}
     }
   }
 }
