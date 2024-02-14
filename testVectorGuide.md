@@ -18,6 +18,7 @@ The suites call on a set of common config files stored at `./config/`.
 ### Configuring the Test Data
 The tests run a set of static test vectors configured by `./config/vectors.json.`.
 The vectors are configured for each suite and contain a credentials section.
+The initial ./config/vectors.json` is populated with defaults.
 
 Credentials configuration consists of 3 properties:
 - `create` for issuance or VC creation tests.
