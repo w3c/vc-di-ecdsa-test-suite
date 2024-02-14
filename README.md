@@ -149,7 +149,7 @@ The test vector configuration consists of 1-3 paths to JSON objects:
 Some credentials sections might require multiple VCs. In this case multiple named
 properties must be fulfilled in that section in order for the tests to run.
 
-A minimal non-sd test vector configuration looks like this:
+A minimal non-SD test vector configuration looks like this:
 ```js
 "verify": {
   "document": "./test/input/vc-di-ecdsa/TestVectors/ecdsa-sd-2023/windDoc.json"
