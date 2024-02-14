@@ -165,7 +165,7 @@ An sd test vector configuration looks like this:
 }
 ```
 
-The full runner.json file currently looks like this:
+The full `config/runner.json` file currently looks like this:
 ```js
 {
   "suites": {
