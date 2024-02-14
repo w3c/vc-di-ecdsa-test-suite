@@ -5,7 +5,9 @@
 import {klona} from 'klona';
 import {require} from './helpers.js';
 
-const _config = require('../config/runner.json');
+const _runner = require('../config/runner.json');
+const _vectors = require('../config/vectors.json');
+
 // cache is valid for a single test run
 const _cache = new Map();
 
@@ -20,32 +22,38 @@ const _envVariables = new Map([
   }]
 ]);
 
-const openFiles = suiteFiles => {
-  for(const property in suiteFiles) {
-    const value = suiteFiles[property];
+const openVectorFiles = vectorFiles => {
+  for(const property in vectorFiles) {
+    const value = vectorFiles[property];
     // assume strings are paths to be opened
     if(typeof value === 'string') {
-      suiteFiles[property] = klona(require(value));
+      vectorFiles[property] = klona(require(value));
       continue;
     }
     // assume everything else recurs
-    suiteFiles[property] = openFiles(value);
+    vectorFiles[property] = openVectorFiles(value);
   }
-  return suiteFiles;
+  return vectorFiles;
+};
+
+const _createVectorConfig = suite => {
+  // prevent mutation to require cache
+  const vectorConfig = klona(_vectors.suites[suite]);
+  // open test data in credentials section
+  if(vectorConfig.credentials) {
+    const {credentials} = vectorConfig;
+    for(const property in credentials) {
+      credentials[property] = openVectorFiles(credentials[property]);
+    }
+  }
+  return vectorConfig;
 };
 
 const _createSuiteConfig = suite => {
   // clone to prevent mutations of the require cache
-  const suiteConfig = klona(_config.suites[suite]);
+  const suiteConfig = klona(_runner.suites[suite]);
   if(!suiteConfig) {
     throw new Error(`Could not find config for suite ${suite}`);
-  }
-  // open test data in credentials section
-  if(suiteConfig.credentials) {
-    const {credentials} = suiteConfig;
-    for(const property in credentials) {
-      credentials[property] = openFiles(credentials[property]);
-    }
   }
   // preserve the use of env variables for some settings
   const {issuerName, holderName} = _envVariables.get(suite);
@@ -67,7 +75,9 @@ export const getSuiteConfig = suite => {
   }
   // create an initial config
   const suiteConfig = _createSuiteConfig(suite);
+  const {credentials = {}} = _createVectorConfig(suite);
+  const config = {...suiteConfig, credentials};
   // store in the cache
-  _cache.set(suite, suiteConfig);
-  return suiteConfig;
+  _cache.set(suite, config);
+  return config;
 };

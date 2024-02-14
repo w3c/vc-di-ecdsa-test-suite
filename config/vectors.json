@@ -1,0 +1,36 @@
+{
+  "suites": {
+    "ecdsa-rdfc-2019": {
+      "credentials": {
+        "create": {"document": "./mocks/valid/document.json"},
+        "verify": {"document": "./mocks/valid/document.json"},
+        "interop": {"document": "./mocks/valid/document.json"}
+      }
+    },
+    "ecdsa-sd-2023": {
+      "credentials": {
+        "create": {
+          "document": "./mocks/valid/document.json",
+          "mandatoryPointers": "./mocks/valid/mandatoryPointers.json"
+        },
+        "verify": {
+          "subjectNestedObjects": {
+            "document": "./mocks/valid/document.json",
+            "mandatoryPointers": "./mocks/valid/mandatoryPointers.json",
+            "selectivePointers": "./mocks/valid/selectivePointers.json"
+          },
+          "subjectHasArrays": {
+            "document": "./mocks/achievement/document.json",
+            "mandatoryPointers": "./mocks/achievement/mandatoryPointers.json",
+            "selectivePointers": "./mocks/achievement/selectivePointers.json"
+          }
+        },
+        "interop": {
+          "document": "./mocks/valid/document.json",
+          "mandatoryPointers": "./mocks/valid/mandatoryPointers.json",
+          "selectivePointers": "./mocks/valid/selectivePointers.json"
+        }
+      }
+    }
+  }
+}
