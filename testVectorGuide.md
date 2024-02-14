@@ -11,12 +11,13 @@ SPDX-License-Identifier: BSD-3-Clause
   - [Configuring Test Data Generation](#Configuring-test-data-generation)
 
 ## Usage
-The suites call on a common config file stored at `./config/runner.json`.
-The test vectors call on a common config file stored at `./config/vector.json`.
+The suites call on a set of common config files stored at `./config/`.
+- `./config/runner.json` is for test suite specific configuration.
+- `./config/vector.json` is for test vector specific configuration.
 
 ### Configuring the Test Data
-The tests run a set of static test vectors.
-The vectors are configured in the `credentials` section of a suite.
+The tests run a set of static test vectors configured by `./config/vectors.json.`.
+The vectors are configured for each suite and contain a credentials section.
 
 Credentials configuration consists of 3 properties:
 - `create` for issuance or VC creation tests.
@@ -108,4 +109,3 @@ If `$SD_HOLDER_NAME` or `holderName` is not specified, `Digital Bazaar` will be 
 ```
 SD_ISSUER_NAME="IssuerName" SD_HOLDER_NAME="HolderName" npm test
 ```
-
