@@ -114,7 +114,7 @@ For this suite the `runner.json` file looks like this:
 ```
 ### Configuring Test Vectors
 The tests use a configuration file `/config/vectors.json` to configure test vectors.
-[Test Vector configuration is documented in TESTVECTORS.md](/TESTVECTORS.MD)
+[Test Vector configuration is documented in testVectorGuide.md,](/testVectorGuide.md)
 
 ## Implementation
 
