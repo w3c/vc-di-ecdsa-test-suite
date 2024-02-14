@@ -146,24 +146,24 @@ describe('ecdsa-sd-2023 (verify)', function() {
                   disclosedCredentialsWithFullArray.push(
                     revealedAchievementCredential1);
                   // select less than full subarrays
-                  const pointers2 = credentialHasArrays.selectivePointers.slice(
-                    2, -4);
+                  const lessThanFullPointers = credentialHasArrays.
+                    selectivePointers.slice(2, -4);
                   const {
                     disclosedCredential: revealedAchievementCredential2
                   } = await createDisclosedVc({
-                    selectivePointers: pointers2,
+                    selectivePointers: lessThanFullPointers,
                     signedCredential: signedAchievementCredential,
                     vcHolder
                   });
                   disclosedCredentialsWithLessThanFullSubArray.push(
                     revealedAchievementCredential2);
                   // select w/o first 7 array element
-                  const pointers3 = credentialHasArrays.selectivePointers.slice(
-                    7);
+                  const removeFirst7Pointers = credentialHasArrays.
+                    selectivePointers.slice(7);
                   const {
                     disclosedCredential: revealedAchievementCredential3
                   } = await createDisclosedVc({
-                    selectivePointers: pointers3,
+                    selectivePointers: removeFirst7Pointers,
                     signedCredential: signedAchievementCredential,
                     vcHolder
                   });
