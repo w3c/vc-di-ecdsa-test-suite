@@ -156,7 +156,7 @@ A minimal non-SD test vector configuration looks like this:
 }
 ```
 
-An sd test vector configuration looks like this:
+An SD test vector configuration looks like this:
 ```js
 "create": {
   "document": "./mocks/valid/document.json",
