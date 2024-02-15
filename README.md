@@ -35,8 +35,8 @@ npm i
 
 ## Usage
 The suites call on a set of common config files stored at `./config/`.
-- `./config/runner.json` is for test suite specific configuration.
-- `./config/vector.json` is for test vector specific configuration.
+- `./config/runner.json` is for test suite specific configurations.
+- `./config/vector.json` is for test vector specific configurations.
 
 ### Running Specific Tests
 This suite uses [`mocha.js`](https://mochajs.org) as the test runner.
