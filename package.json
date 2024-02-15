@@ -38,6 +38,7 @@
   },
   "homepage": "https://github.com/w3c/vc-di-ecdsa-test-suite#readme",
   "dependencies": {
+    "@digitalbazaar/data-integrity": "^2.1.0",
     "@digitalbazaar/did-method-key": "^5.1.0",
     "@digitalbazaar/ecdsa-multikey": "^1.6.0",
     "@digitalbazaar/ecdsa-rdfc-2019-cryptosuite": "^1.0.1",
