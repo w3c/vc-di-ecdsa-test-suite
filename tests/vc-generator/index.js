@@ -3,46 +3,46 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 import * as vc from '@digitalbazaar/vc';
-import {config, require} from '../helpers.js';
 import {cryptosuites} from './cryptosuites.js';
 import {DataIntegrityProof} from '@digitalbazaar/data-integrity';
-import {getMultikey} from './key-gen.js';
+import {getMultikeys} from './key-gen.js';
 import klona from 'klona';
-import {validVc} from '../mock-data.js';
-
-// cache test data for a single run
-const vcCache = new Map([
-  ['validVc', klona(validVc)]
-]);
 
 /**
  * Calls the vc generators and then returns a Map
  * with the test data.
  *
+ * @param {object} options - Options to use.
+ * @param {object} options.credential - An unsigned VC.
+ * @param {string} options.suite - A cryptosuite id.
+ * @param {Array<string>} options.selectivePointers - An optional list of json
+ *   pointers.
+ * @param {Array<string>} options.mandatoryPointers - An optional list of
+ *   json pointers.
+ *
  * @returns {Promise<Map>} Returns a Map of test data.
  */
-export async function generateTestData() {
-  const serializedKeyPair = require(config.keyPair);
-  const {signer, issuer} = await getMultikey(serializedKeyPair);
-  const credential = klona(validVc);
-  credential.issuer = issuer;
-  for(const name in config.suites) {
-    const suite = new DataIntegrityProof({
+export async function generateTestData({
+  credential,
+  suite,
+  selectivePointers = [],
+  mandatoryPointers = []
+}) {
+  const results = [];
+  const keys = await getMultikeys();
+  const cryptosuite = cryptosuites.get(suite);
+  for(const {signer, issuer} of keys) {
+    const _credential = klona(credential);
+    _credential.issuer = issuer;
+    const suite = new DataIntegrityProof({signer, cryptosuite});
+    const _vc = await vc.issue({
+      selectivePointers,
+      mandatoryPointers,
+      suite,
       signer,
-      cryptosuite: cryptosuites.get(name)
+      credential: _credential
     });
-
+    results.push(_vc);
   }
-  for(const [id, generator] of vcGenerators) {
-    if(vcCache.get(id)) {
-      continue;
-    }
-    const testData = await generator({signer, credential});
-    vcCache.set(id, testData);
-  }
-  return {
-    clone(key) {
-      return klona(vcCache.get(key));
-    }
-  };
+  return results;
 }
