@@ -6,7 +6,7 @@ import * as vc from '@digitalbazaar/vc';
 import {cryptosuites} from './cryptosuites.js';
 import {DataIntegrityProof} from '@digitalbazaar/data-integrity';
 import {getMultikeys} from './key-gen.js';
-import klona from 'klona';
+import {klona} from 'klona';
 
 /**
  * Calls the vc generators and then returns a Map
@@ -31,7 +31,8 @@ export async function generateTestData({
   const results = [];
   const keys = await getMultikeys();
   const cryptosuite = cryptosuites.get(suite);
-  for(const {signer, issuer} of keys) {
+  for(const prop in keys) {
+    const {signer, issuer} = keys[prop];
     const _credential = klona(credential);
     _credential.issuer = issuer;
     const suite = new DataIntegrityProof({signer, cryptosuite});

@@ -3,9 +3,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 import * as EcdsaMultikey from '@digitalbazaar/ecdsa-multikey';
-import {require} from './helpers.js';
+import {createRequire} from 'node:module';
 
+const require = createRequire(import.meta.url);
 const keys = require('../../config/keys.json');
+
+// checks and adds missing properties to keys
 const formatKey = key => {
   if(key.privateKeyMultibase && !key.secretKeyMultibase) {
     key.secretKeyMultibase = key.privateKeyMultibase;
@@ -22,7 +25,7 @@ const formatKey = key => {
 export const getMultikeys = async () => {
   const _keys = {};
   for(const prop in keys) {
-    const serializedKeyPair = require(keys[prop]);
+    const serializedKeyPair = require(`../${keys[prop]}`);
     const formattedKey = formatKey(serializedKeyPair);
     const key = await EcdsaMultikey.from(formattedKey);
     const signer = key.signer();
