@@ -1,0 +1,4 @@
+{
+  "p256": "./input/vc-di-ecdsa/TestVectors/p256KeyPair.json",
+  "p384": "./input/vc-di-ecdsa/TestVectors/p384KeyPair.json"
+}
