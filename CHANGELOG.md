@@ -18,7 +18,7 @@ SPDX-License-Identifier: BSD-3-Clause
 ### Changed
 - The env variables for specifying the issuer for the RDFC & SD tests are now separate.
 - The env variable for specifying the holder for the SD tests is now `SD_HOLDER_NAME`.
-- Data Integrity tests are now separate in their own file and can be run separately.
+- Data Integrity tests are now in their own file and can be run separately.
 
 ## 2.2.1 -
 
