@@ -20,14 +20,17 @@ import {klona} from 'klona';
  *   pointers.
  * @param {Array<string>} options.mandatoryPointers - An optional list of
  *   json pointers.
+ * @param {string} [options.method = 'issue'] - The VC method to use.
  *
  * @returns {Promise<Map<string, object>>} Returns a Map of test data.
  */
 export async function generateTestData({
   credential,
+  verifiableCredential,
   suite,
   mandatoryPointers = [],
-  selectivePointers = []
+  method = 'issue',
+  selectivePointers = [],
 }) {
   const results = new Map();
   const keys = await getMultikeys();
@@ -35,9 +38,17 @@ export async function generateTestData({
   for(const [curve, {signer, issuer}] of keys) {
     const _credential = klona(credential);
     _credential.issuer = issuer;
-    const suite = new DataIntegrityProof({signer, cryptosuite});
-    const _vc = await vc.issue({
+    const suite = new DataIntegrityProof({
+      signer,
+      cryptosuite,
+      proofId: verifiableCredential?.proof?.id,
+      mandatoryPointers,
+      selectivePointers
+    });
+    const vcMethod = vc[method];
+    const _vc = await vcMethod({
       credential: _credential,
+      verifiableCredential,
       documentLoader,
       mandatoryPointers,
       selectivePointers,

@@ -44,11 +44,11 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
         // add implementer name and keyTypes to test report
         this.implemented.push(`${name}: ${keyTypes}`);
         describe(`${name}: ${keyTypes}`, function() {
-          let implementationVectors = [];
+          let supportedVectors = [];
           before(function() {
             // filter the test data to only include VC signed with curves the
             // verifier supports
-            implementationVectors = verifierKeyTypes.map(
+            supportedVectors = verifierKeyTypes.map(
               (curve = '') => testVectors.get(curve.toUpperCase()));
           });
           // wrap the testApi config in an Implementation class
@@ -57,7 +57,7 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
               this.test.cell = {
                 columnId: `${name}: ${keyTypes}`, rowId: this.test.title
               };
-              for(const vector of implementationVectors) {
+              for(const vector of supportedVectors) {
                 await verificationSuccess({credential: vector, verifier});
               }
             });
@@ -67,7 +67,7 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
             this.test.cell = {
               columnId: `${name}: ${keyTypes}`, rowId: this.test.title
             };
-            for(const vector of implementationVectors) {
+            for(const vector of supportedVectors) {
               const credential = klona(vector);
               //FIXME add invalid-cryptosuite as a valid cryptosuite name
               //locally so the signature is correct, but the cryptosuite
