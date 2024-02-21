@@ -9,7 +9,7 @@ import {getSuiteConfig} from './test-config.js';
 
 const {
   tags,
-  credentials: vcTestData,
+  credentials: vcTestData
 } = getSuiteConfig('ecdsa-rdfc-2019');
 
 // only use implementations with `ecdsa-rdfc-2019` verifiers.
@@ -30,9 +30,9 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
     for(const [name, {endpoints: verifiers}] of match) {
       for(const verifier of verifiers) {
         const {
-          supportedEcdsaKeyTypes: verifierSupportedEcdsaKeyTypes
+          supportedEcdsaKeyTypes: verifierKeyTypes
         } = verifier.settings;
-        const keyTypes = verifierSupportedEcdsaKeyTypes.join(', ');
+        const keyTypes = verifierKeyTypes.join(', ');
         // add implementer name and keyTypes to test report
         this.implemented.push(`${name}: ${keyTypes}`);
         describe(`${name}: ${keyTypes}`, function() {
