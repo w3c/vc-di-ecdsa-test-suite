@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 import {createDisclosedVc, createInitialVc} from './helpers.js';
+import {issueTestData, deriveTestData} from './vc-generator/index.js';
 import {verificationFail, verificationSuccess} from './assertions.js';
 import {endpoints} from 'vc-test-suite-implementations';
 import {getSuiteConfig} from './test-config.js';

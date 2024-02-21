@@ -10,27 +10,21 @@ import {getMultikeys} from './key-gen.js';
 import {klona} from 'klona';
 
 /**
- * Calls the vc generators and then returns a Map
+ * Issues test data locally and then returns a Map
  * with the test data.
  *
  * @param {object} options - Options to use.
  * @param {object} options.credential - An unsigned VC.
  * @param {string} options.suite - A cryptosuite id.
- * @param {Array<string>} options.selectivePointers - An optional list of json
- *   pointers.
  * @param {Array<string>} options.mandatoryPointers - An optional list of
  *   json pointers.
- * @param {string} [options.method = 'issue'] - The VC method to use.
  *
  * @returns {Promise<Map<string, object>>} Returns a Map of test data.
  */
-export async function generateTestData({
+export async function issueTestData({
   credential,
-  verifiableCredential,
   suite,
-  mandatoryPointers = [],
-  method = 'issue',
-  selectivePointers = [],
+  mandatoryPointers = []
 }) {
   const results = new Map();
   const keys = await getMultikeys();
@@ -41,16 +35,50 @@ export async function generateTestData({
     const suite = new DataIntegrityProof({
       signer,
       cryptosuite,
-      proofId: verifiableCredential?.proof?.id,
       mandatoryPointers,
-      selectivePointers
     });
-    const vcMethod = vc[method];
-    const _vc = await vcMethod({
+    const _vc = await vc.issue({
       credential: _credential,
-      verifiableCredential,
       documentLoader,
       mandatoryPointers,
+      suite,
+      signer,
+    });
+    results.set(curve, _vc);
+  }
+  return results;
+}
+
+/**
+ * Issues test data locally and then returns a Map
+ * with the test data.
+ *
+ * @param {object} options - Options to use.
+ * @param {object} options.verifiableCredential - A signed VC.
+ * @param {string} options.suite - A cryptosuite id.
+ * @param {Array<string>} options.selectivePointers - An optional list of json
+ *   pointers.
+ *
+ * @returns {Promise<Map<string, object>>} Returns a Map of test data.
+ */
+export async function deriveTestData({
+  verifiableCredential,
+  suite,
+  selectivePointers = []
+}) {
+  const results = new Map();
+  const keys = await getMultikeys();
+  const cryptosuite = cryptosuites.get(suite);
+  for(const [curve, {signer}] of keys) {
+    const suite = new DataIntegrityProof({
+      signer,
+      cryptosuite,
+      proofId: verifiableCredential?.proof?.id,
+      selectivePointers
+    });
+    const _vc = await vc.derive({
+      verifiableCredential,
+      documentLoader,
       selectivePointers,
       suite,
       signer,
