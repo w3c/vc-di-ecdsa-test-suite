@@ -5,6 +5,7 @@
 import * as vc from '@digitalbazaar/vc';
 import {cryptosuites} from './cryptosuites.js';
 import {DataIntegrityProof} from '@digitalbazaar/data-integrity';
+import {documentLoader} from './documentLoader.js';
 import {getMultikeys} from './key-gen.js';
 import {klona} from 'klona';
 
@@ -25,8 +26,8 @@ import {klona} from 'klona';
 export async function generateTestData({
   credential,
   suite,
-  selectivePointers = [],
-  mandatoryPointers = []
+  mandatoryPointers = [],
+  selectivePointers = []
 }) {
   const results = [];
   const keys = await getMultikeys();
@@ -37,11 +38,12 @@ export async function generateTestData({
     _credential.issuer = issuer;
     const suite = new DataIntegrityProof({signer, cryptosuite});
     const _vc = await vc.issue({
-      selectivePointers,
+      credential: _credential,
+      documentLoader,
       mandatoryPointers,
+      selectivePointers,
       suite,
       signer,
-      credential: _credential
     });
     results.push(_vc);
   }
