@@ -21,7 +21,7 @@ import {klona} from 'klona';
  * @param {Array<string>} options.mandatoryPointers - An optional list of
  *   json pointers.
  *
- * @returns {Promise<Map>} Returns a Map of test data.
+ * @returns {Promise<Map<string, object>>} Returns a Map of test data.
  */
 export async function generateTestData({
   credential,
@@ -29,11 +29,10 @@ export async function generateTestData({
   mandatoryPointers = [],
   selectivePointers = []
 }) {
-  const results = [];
+  const results = new Map();
   const keys = await getMultikeys();
   const cryptosuite = cryptosuites.get(suite);
-  for(const prop in keys) {
-    const {signer, issuer} = keys[prop];
+  for(const [curve, {signer, issuer}] of keys) {
     const _credential = klona(credential);
     _credential.issuer = issuer;
     const suite = new DataIntegrityProof({signer, cryptosuite});
@@ -45,7 +44,7 @@ export async function generateTestData({
       suite,
       signer,
     });
-    results.push(_vc);
+    results.set(curve, _vc);
   }
   return results;
 }
