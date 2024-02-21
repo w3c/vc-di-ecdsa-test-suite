@@ -23,7 +23,7 @@ const formatKey = key => {
 };
 
 export const getMultikeys = async () => {
-  const _keys = {};
+  const _keys = new Map();
   for(const prop in keys) {
     const serializedKeyPair = require(`../${keys[prop]}`);
     const formattedKey = formatKey(serializedKeyPair);
@@ -34,7 +34,7 @@ export const getMultikeys = async () => {
     // verificationMethod needs to be a fragment
     // this only works for did:key
     signer.id = `${issuer}#${key.publicKeyMultibase}`;
-    _keys[prop] = {signer, issuer, key};
+    _keys.set(prop, {signer, issuer, key});
   }
   return _keys;
 };

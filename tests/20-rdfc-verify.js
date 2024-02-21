@@ -28,7 +28,7 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
     this.rowLabel = 'Test Name';
     this.columnLabel = 'Verifier';
     this.implemented = [];
-    let testVectors = [];
+    let testVectors = new Map();
     before(async function() {
       testVectors = await generateTestData({
         credential: credentials.verify.document,
@@ -44,13 +44,20 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
         // add implementer name and keyTypes to test report
         this.implemented.push(`${name}: ${keyTypes}`);
         describe(`${name}: ${keyTypes}`, function() {
+          let implementationVectors = [];
+          before(function() {
+            // filter the test data to only include VC signed with curves the
+            // verifier supports
+            implementationVectors = verifierKeyTypes.map(
+              (curve = '') => testVectors.get(curve.toUpperCase()));
+          });
           // wrap the testApi config in an Implementation class
           it('MUST verify a valid VC with an ecdsa-rdfc-2019 proof.',
             async function() {
               this.test.cell = {
                 columnId: `${name}: ${keyTypes}`, rowId: this.test.title
               };
-              for(const vector of testVectors) {
+              for(const vector of implementationVectors) {
                 await verificationSuccess({credential: vector, verifier});
               }
             });
@@ -60,8 +67,11 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
             this.test.cell = {
               columnId: `${name}: ${keyTypes}`, rowId: this.test.title
             };
-            for(const vector of testVectors) {
+            for(const vector of implementationVectors) {
               const credential = klona(vector);
+              //FIXME add invalid-cryptosuite as a valid cryptosuite name
+              //locally so the signature is correct, but the cryptosuite
+              //name is incorrect
               credential.proof.cryptosuite = 'invalid-cryptosuite';
               await verificationFail({credential, verifier});
             }
