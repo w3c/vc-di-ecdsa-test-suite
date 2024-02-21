@@ -71,10 +71,12 @@ module.exports = [{
   issuers: [{
     id: 'did:key:zMyKey',
     endpoint: `${baseUrl}/credentials/issue`,
+    supportedEcdsaKeyTypes: ['P-256', 'P-384'],
     tags: ['ecdsa-rdfc-2019', 'localhost']
   }],
   verifiers: [{
     endpoint: `${baseUrl}/credentials/verify`,
+    supportedEcdsaKeyTypes: ['P-256', 'P-384'],
     tags: ['ecdsa-rdfc-2019', 'localhost']
   }]
 }];
