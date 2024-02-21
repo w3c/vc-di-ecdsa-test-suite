@@ -4,8 +4,8 @@
  */
 import {verificationFail, verificationSuccess} from './assertions.js';
 import {endpoints} from 'vc-test-suite-implementations';
-import {generateTestData} from './vc-generator/index.js';
 import {getSuiteConfig} from './test-config.js';
+import {issueTestData} from './vc-generator/index.js';
 import {klona} from 'klona';
 
 const {
@@ -30,7 +30,7 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
     this.implemented = [];
     let testVectors = new Map();
     before(async function() {
-      testVectors = await generateTestData({
+      testVectors = await issueTestData({
         credential: credentials.verify.document,
         suite: 'ecdsa-rdfc-2019'
       });
