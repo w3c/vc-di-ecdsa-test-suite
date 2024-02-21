@@ -8,11 +8,13 @@ module.exports = [{
   issuers: [{
     id: 'did:myMethod:implementation:issuer:id',
     endpoint: `${baseUrl}/credentials/issue`,
+    supportedEcdsaKeyTypes: ['P-256', 'P-384'],
     tags: ['ecdsa-rdfc-2019', 'localhost']
   }],
   verifiers: [{
     id: 'did:myMethod:implementation:verifier:id',
     endpoint: `${baseUrl}/credentials/verify`,
+    supportedEcdsaKeyTypes: ['P-256', 'P-384'],
     tags: ['ecdsa-rdfc-2019', 'localhost']
   }]
 }];
