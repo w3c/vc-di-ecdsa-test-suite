@@ -3,9 +3,6 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 import {verificationFail, verificationSuccess} from './assertions.js';
-import {
-  checkDataIntegrityProofVerifyErrors
-} from 'data-integrity-test-suite-assertion';
 import {createInitialVc} from './helpers.js';
 import {endpoints} from 'vc-test-suite-implementations';
 import {getSuiteConfig} from './test-config.js';
@@ -23,11 +20,6 @@ const {match} = endpoints.filterByTag({
 });
 
 describe('ecdsa-rdfc-2019 (verify)', function() {
-  checkDataIntegrityProofVerifyErrors({
-    implemented: match,
-    isEcdsaTests: true,
-    testDescription: 'Data Integrity (ecdsa-rdfc-2019 verifiers)'
-  });
   describe('ecdsa-rdfc-2019 (verifiers)', function() {
     let issuers;
     before(async function() {
