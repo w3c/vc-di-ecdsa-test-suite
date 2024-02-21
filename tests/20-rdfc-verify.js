@@ -6,6 +6,7 @@ import {verificationFail, verificationSuccess} from './assertions.js';
 import {endpoints} from 'vc-test-suite-implementations';
 import {generateTestData} from './vc-generator/index.js';
 import {getSuiteConfig} from './test-config.js';
+import {klona} from 'klona';
 
 const {
   tags,
@@ -27,6 +28,13 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
     this.rowLabel = 'Test Name';
     this.columnLabel = 'Verifier';
     this.implemented = [];
+    let testVectors = [];
+    before(async function() {
+      testVectors = await generateTestData({
+        credential: credentials.verify.document,
+        suite: 'ecdsa-rdfc-2019'
+      });
+    });
     for(const [name, {endpoints: verifiers}] of match) {
       for(const verifier of verifiers) {
         const {
@@ -36,21 +44,14 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
         // add implementer name and keyTypes to test report
         this.implemented.push(`${name}: ${keyTypes}`);
         describe(`${name}: ${keyTypes}`, function() {
-          let testInputs = [];
-          beforeEach(async function() {
-            testInputs = await generateTestData({
-              credential: credentials.verify.document,
-              suite: 'ecdsa-rdfc-2019'
-            });
-          });
           // wrap the testApi config in an Implementation class
           it('MUST verify a valid VC with an ecdsa-rdfc-2019 proof.',
             async function() {
               this.test.cell = {
                 columnId: `${name}: ${keyTypes}`, rowId: this.test.title
               };
-              for(const credential of testInputs) {
-                await verificationSuccess({credential, verifier});
+              for(const vector of testVectors) {
+                await verificationSuccess({credential: vector, verifier});
               }
             });
           it('If the "cryptosuite" field is not the string ' +
@@ -59,7 +60,8 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
             this.test.cell = {
               columnId: `${name}: ${keyTypes}`, rowId: this.test.title
             };
-            for(const credential of testInputs) {
+            for(const vector of testVectors) {
+              const credential = klona(vector);
               credential.proof.cryptosuite = 'invalid-cryptosuite';
               await verificationFail({credential, verifier});
             }
