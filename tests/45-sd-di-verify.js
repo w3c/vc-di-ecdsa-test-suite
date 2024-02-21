@@ -8,9 +8,9 @@ import {
 import {endpoints} from 'vc-test-suite-implementations';
 import {getSuiteConfig} from './test-config.js';
 
-const {tags} = getSuiteConfig('ecdsa-rdfc-2019');
+const {tags} = getSuiteConfig('ecdsa-sd-2023');
 
-// only use implementations with `ecdsa-rdfc-2019` verifiers.
+// only use implementations with `ecdsa-sd-2023` verifiers.
 const {match} = endpoints.filterByTag({
   tags: [...tags],
   property: 'verifiers'
@@ -19,5 +19,6 @@ const {match} = endpoints.filterByTag({
 checkDataIntegrityProofVerifyErrors({
   implemented: match,
   isEcdsaTests: true,
-  testDescription: 'Data Integrity (ecdsa-rdfc-2019 verifiers)'
+  testDescription: 'Data Integrity (ecdsa-sd-2023 verifiers)'
 });
+

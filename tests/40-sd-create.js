@@ -7,9 +7,6 @@ import {
   shouldBeBs58, shouldBeMulticodecEncoded, verificationSuccess
 } from './assertions.js';
 import chai from 'chai';
-import {
-  checkDataIntegrityProofFormat
-} from 'data-integrity-test-suite-assertion';
 import {documentLoader} from './documentLoader.js';
 import {endpoints} from 'vc-test-suite-implementations';
 import {getSuiteConfig} from './test-config.js';
@@ -23,11 +20,6 @@ const {match} = endpoints.filterByTag({
 const should = chai.should();
 
 describe('ecdsa-sd-2023 (create)', function() {
-  checkDataIntegrityProofFormat({
-    implemented: match,
-    isEcdsaTests: true,
-    testDescription: 'Data Integrity (ecdsa-sd-2023 issuers)'
-  });
   describe('ecdsa-sd-2023 (issuers)', function() {
     this.matrix = true;
     this.report = true;

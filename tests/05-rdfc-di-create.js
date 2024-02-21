@@ -15,10 +15,8 @@ const {match} = endpoints.filterByTag({
   property: 'issuers'
 });
 
-describe('ecdsa-rdfc-2019 Data Integrity (create)', function() {
-  checkDataIntegrityProofFormat({
-    implemented: match,
-    isEcdsaTests: true,
-    testDescription: 'Data Integrity (ecdsa-rdfc-2019 issuers)'
-  });
-})
+checkDataIntegrityProofFormat({
+  implemented: match,
+  isEcdsaTests: true,
+  testDescription: 'Data Integrity (ecdsa-rdfc-2019 issuers)'
+});
