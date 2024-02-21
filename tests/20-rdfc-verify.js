@@ -9,7 +9,7 @@ import {getSuiteConfig} from './test-config.js';
 
 const {
   tags,
-  credentials: vcTestData
+  credentials
 } = getSuiteConfig('ecdsa-rdfc-2019');
 
 // only use implementations with `ecdsa-rdfc-2019` verifiers.
@@ -36,10 +36,10 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
         // add implementer name and keyTypes to test report
         this.implemented.push(`${name}: ${keyTypes}`);
         describe(`${name}: ${keyTypes}`, function() {
-          let credentials = [];
+          let testInputs = [];
           beforeEach(async function() {
-            credentials = await generateTestData({
-              credential: vcTestData.verify.document,
+            testInputs = await generateTestData({
+              credential: credentials.verify.document,
               suite: 'ecdsa-rdfc-2019'
             });
           });
@@ -49,7 +49,7 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
               this.test.cell = {
                 columnId: `${name}: ${keyTypes}`, rowId: this.test.title
               };
-              for(const credential of credentials) {
+              for(const credential of testInputs) {
                 await verificationSuccess({credential, verifier});
               }
             });
@@ -59,7 +59,7 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
             this.test.cell = {
               columnId: `${name}: ${keyTypes}`, rowId: this.test.title
             };
-            for(const credential of credentials) {
+            for(const credential of testInputs) {
               credential.proof.cryptosuite = 'invalid-cryptosuite';
               await verificationFail({credential, verifier});
             }
