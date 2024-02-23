@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 import * as vc from '@digitalbazaar/vc';
-import {cryptosuites} from './cryptosuites.js';
+import {getSuite} from './cryptosuites.js';
 import {DataIntegrityProof} from '@digitalbazaar/data-integrity';
 import {documentLoader} from './documentLoader.js';
 import {getMultikeys} from './key-gen.js';
@@ -30,7 +30,7 @@ export async function issueTestData({
 }) {
   const results = new Map();
   const keys = await getMultikeys({keyTypes});
-  const cryptosuite = cryptosuites.get(suite);
+  const cryptosuite = getSuite({suite, mandatoryPointers});
   for(const [keyType, {signer, issuer}] of keys) {
     const _credential = klona(credential);
     _credential.issuer = issuer;
@@ -72,8 +72,8 @@ export async function deriveTestData({
 }) {
   const results = new Map();
   const keys = await getMultikeys({keyTypes});
-  const cryptosuite = cryptosuites.get(suite);
-  for(const [curve, {signer}] of keys) {
+  const cryptosuite = getSuite({suite, selectivePointers});
+  for(const [keyType, {signer}] of keys) {
     const suite = new DataIntegrityProof({
       signer,
       cryptosuite,
@@ -83,11 +83,10 @@ export async function deriveTestData({
     const _vc = await vc.derive({
       verifiableCredential,
       documentLoader,
-      selectivePointers,
       suite,
       signer,
     });
-    results.set(curve, _vc);
+    results.set(keyType, _vc);
   }
   return results;
 }
