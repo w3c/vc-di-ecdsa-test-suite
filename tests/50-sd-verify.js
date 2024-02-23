@@ -144,7 +144,7 @@ describe('ecdsa-sd-2023 (verify)', function() {
           let disclosedCredentialsWithLessThanFullSubArray = [];
           let disclosedCredentialsWithoutFirstArrayElement = [];
           before(function() {
-            // filter vectors so we don't test curves they don't support
+            // filter vectors so suite doesn't test unsupported keyTypes
             signedCredentials = supportedEcdsaKeyTypes.map(
               type => testVectors.signed.get(type));
             disclosedCredentials = supportedEcdsaKeyTypes.map(

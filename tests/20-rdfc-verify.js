@@ -48,10 +48,10 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
         describe(`${name}: ${keyTypes}`, function() {
           let supportedVectors = [];
           before(function() {
-            // filter the test data to only include VC signed with curves the
-            // verifier supports
+            // filter the test data to only include VC signed with
+            // keyTypes the verifier supports
             supportedVectors = verifierKeyTypes.map(
-              (curve = '') => testVectors.get(curve.toUpperCase()));
+              (keyType = '') => testVectors.get(keyType.toUpperCase()));
           });
           // wrap the testApi config in an Implementation class
           it('MUST verify a valid VC with an ecdsa-rdfc-2019 proof.',
