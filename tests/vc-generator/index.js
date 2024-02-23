@@ -34,17 +34,11 @@ export async function issueTestData({
   for(const [keyType, {signer, issuer}] of keys) {
     const _credential = klona(credential);
     _credential.issuer = issuer;
-    const suite = new DataIntegrityProof({
-      signer,
-      cryptosuite,
-      mandatoryPointers,
-    });
+    const suite = new DataIntegrityProof({signer, cryptosuite});
     const _vc = await vc.issue({
       credential: _credential,
       documentLoader,
-      mandatoryPointers,
       suite,
-      signer,
     });
     results.set(keyType, _vc);
   }
@@ -77,14 +71,11 @@ export async function deriveTestData({
     const suite = new DataIntegrityProof({
       signer,
       cryptosuite,
-      proofId: verifiableCredential?.proof?.id,
-      selectivePointers
     });
     const _vc = await vc.derive({
       verifiableCredential,
       documentLoader,
-      suite,
-      signer,
+      suite
     });
     results.set(keyType, _vc);
   }
