@@ -22,10 +22,16 @@ const formatKey = key => {
   return key;
 };
 
-export const getMultikeys = async () => {
+export const getMultikeys = async ({keyTypes}) => {
   const _keys = new Map();
-  for(const prop in keys) {
-    const serializedKeyPair = require(`../${keys[prop]}`);
+  for(const keyType in keys) {
+    // don't fetch keys not specified by keyTypes
+    if(!new Set(keyTypes).has(keyType)) {
+      continue;
+    }
+    // require the exported keyPair
+    const serializedKeyPair = require(`../${keys[keyType]}`);
+    // check format keyPair to ensure it's interoperable with multikey spec
     const formattedKey = formatKey(serializedKeyPair);
     const key = await EcdsaMultikey.from(formattedKey);
     const signer = key.signer();
@@ -34,7 +40,7 @@ export const getMultikeys = async () => {
     // verificationMethod needs to be a fragment
     // this only works for did:key
     signer.id = `${issuer}#${key.publicKeyMultibase}`;
-    _keys.set(prop, {signer, issuer, key});
+    _keys.set(keyType, {signer, issuer, key});
   }
   return _keys;
 };
