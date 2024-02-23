@@ -12,7 +12,8 @@ const {
   tags,
   credentials
 } = getSuiteConfig('ecdsa-rdfc-2019');
-
+// FIXME use keyTypes from getSuiteConfig
+const keyTypes = ['P-256', 'P-384'];
 // only use implementations with `ecdsa-rdfc-2019` verifiers.
 const {match} = endpoints.filterByTag({
   tags: [...tags],
@@ -32,7 +33,8 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
     before(async function() {
       testVectors = await issueTestData({
         credential: credentials.verify.document,
-        suite: 'ecdsa-rdfc-2019'
+        suite: 'ecdsa-rdfc-2019',
+        keyTypes
       });
     });
     for(const [name, {endpoints: verifiers}] of match) {

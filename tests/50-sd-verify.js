@@ -14,7 +14,8 @@ const {
   vcHolder: {tags: holderTags, holderName},
   credentials
 } = getSuiteConfig('ecdsa-sd-2023');
-
+// FIXME move this to vectors
+const keyTypes = ['P-256'];
 // only use implementations with `ecdsa-sd-2023` verifiers.
 const {match} = endpoints.filterByTag({
   tags: [...tags],
@@ -39,6 +40,109 @@ describe('ecdsa-sd-2023 (verify)', function() {
     this.rowLabel = 'Test Name';
     this.columnLabel = 'Verifier';
     this.implemented = [];
+    const testVectors = {
+      //signedCredentials
+      signed: [],
+      disclosed: {
+        //disclosedCredentials
+        base: [],
+        //nestedDisclosedCredentials
+        nested: [],
+        //disclosedDlCredentialNoIds
+        noIds: [],
+        array: {
+          //disclosedCredentialsWithFullArray
+          full: [],
+          //disclosedCredentialsWithLessThanFullSubArray
+          lessThanFull: [],
+          //disclosedCredentialsWithoutFirstArrayElement
+          missingElements: []
+        }
+      }
+    };
+    before(async function() {
+      const {subjectNestedObject, subjectHasArrays} = credentials.verify;
+      // create initial signed VCs
+      testVectors.signed = await issueTestData({
+        credential: subjectNestedObject.document,
+        suite: 'ecdsa-sd-2023',
+        keyTypes,
+        mandatoryPointers: subjectNestedObject.mandatoryPointers
+      });
+      const [signedVc] = testVectors.signed;
+      // use initial VCs for a basic selective disclosure test
+      testVectors.disclosed.base = await createDisclosedVc({
+        selectivePointers: ['/credentialSubject/id'],
+        signedCredential: signedVc,
+        vcHolder
+      });
+      // create initial nestedDisclosedCredential from signedVc
+      testVectors.disclosed.nested = await createDisclosedVc({
+        selectivePointers: subjectNestedObject.selectivePointers.slice(1, 3),
+        signedCredential: signedVc,
+        vcHolder
+      });
+      // copy the first vc
+      const noIdVc = klona(subjectNestedObject.document);
+      // delete the id
+      delete noIdVc.id;
+      // start second round test data creation w/ dlCredentialNoIds
+      const signedDlCredentialNoIds = await createInitialVc({
+        issuer, vc: noIdVc
+      });
+      const {
+        disclosedCredential: disclosedDlCredentialNoId
+      } = await createDisclosedVc({
+        selectivePointers: [...nestedPointers],
+        signedCredential: signedDlCredentialNoIds,
+        vcHolder
+      });
+      disclosedDlCredentialNoIds.push(disclosedDlCredentialNoId);
+      const credentialHasArrays = klona(
+        credentials.verify.subjectHasArrays);
+      // start third round test data creation w/
+      // AchievementCredential
+      const signedAchievementCredential = await createInitialVc({
+        issuer, vc: credentialHasArrays.document
+      });
+
+      // select full arrays
+      const {
+        disclosedCredential: revealedAchievementCredential1
+      } = await createDisclosedVc({
+        selectivePointers:
+          [...credentialHasArrays.selectivePointers],
+        signedCredential: signedAchievementCredential,
+        vcHolder
+      });
+      disclosedCredentialsWithFullArray.push(
+        revealedAchievementCredential1);
+      // select less than full subarrays
+      const lessThanFullPointers = credentialHasArrays.
+        selectivePointers.slice(2, -4);
+      const {
+        disclosedCredential: revealedAchievementCredential2
+      } = await createDisclosedVc({
+        selectivePointers: lessThanFullPointers,
+        signedCredential: signedAchievementCredential,
+        vcHolder
+      });
+      disclosedCredentialsWithLessThanFullSubArray.push(
+        revealedAchievementCredential2);
+      // select w/o first 7 array element
+      const removeFirst7Pointers = credentialHasArrays.
+        selectivePointers.slice(7);
+      const {
+        disclosedCredential: revealedAchievementCredential3
+      } = await createDisclosedVc({
+        selectivePointers: removeFirst7Pointers,
+        signedCredential: signedAchievementCredential,
+        vcHolder
+      });
+      disclosedCredentialsWithoutFirstArrayElement.push(
+        revealedAchievementCredential3);
+
+    });
     // loop through implementers and test endpoints
     for(const [name, {endpoints: verifiers}] of match) {
       for(const verifier of verifiers) {
@@ -51,101 +155,9 @@ describe('ecdsa-sd-2023 (verify)', function() {
         // add name and keyTypes to test report
         this.implemented.push(`${name}: ${keyTypes}`);
         describe(`${name}: ${keyTypes}`, function() {
-          const signedCredentials = [];
-          const disclosedCredentials = [];
-          const nestedDisclosedCredentials = [];
-          const disclosedDlCredentialNoIds = [];
-          const disclosedCredentialsWithFullArray = [];
-          const disclosedCredentialsWithLessThanFullSubArray = [];
-          const disclosedCredentialsWithoutFirstArrayElement = [];
+          let implementationVectors = {};
           before(async function() {
-            //verifierSupportedEcdsaKeyTypes
-            const nestedCredential = klona(
-              credentials.verify.subjectNestedObjects);
-            // create initial signed VC
-            const signedVc = await createInitialVc({
-              issuer,
-              vc: nestedCredential.document,
-              // mandatoryPointers: nestedCredential.mandatoryPointers
-            });
-            signedCredentials.push(signedVc);
-            // use initial VC for a basic selective disclosure test
-            const {disclosedCredential} = await createDisclosedVc({
-              selectivePointers: ['/credentialSubject/id'],
-              signedCredential: signedVc,
-              vcHolder
-            });
-            disclosedCredentials.push(disclosedCredential);
-            const nestedPointers = nestedCredential.
-              selectivePointers.slice(1, 3);
-            // create initial nestedDisclosedCredential from signedVc
-            const {
-              disclosedCredential: nestedDisclosedCredential
-            } = await createDisclosedVc({
-              selectivePointers: [...nestedPointers],
-              signedCredential: signedVc,
-              vcHolder
-            });
-            nestedDisclosedCredentials.push(nestedDisclosedCredential);
-            // copy the first vc
-            const noIdVc = klona(nestedCredential.document);
-            // delete the id
-            delete noIdVc.id;
-            // start second round test data creation w/ dlCredentialNoIds
-            const signedDlCredentialNoIds = await createInitialVc({
-              issuer, vc: noIdVc
-            });
-            const {
-              disclosedCredential: disclosedDlCredentialNoId
-            } = await createDisclosedVc({
-              selectivePointers: [...nestedPointers],
-              signedCredential: signedDlCredentialNoIds,
-              vcHolder
-            });
-            disclosedDlCredentialNoIds.push(disclosedDlCredentialNoId);
-            const credentialHasArrays = klona(
-              credentials.verify.subjectHasArrays);
-            // start third round test data creation w/
-            // AchievementCredential
-            const signedAchievementCredential = await createInitialVc({
-              issuer, vc: credentialHasArrays.document
-            });
-
-            // select full arrays
-            const {
-              disclosedCredential: revealedAchievementCredential1
-            } = await createDisclosedVc({
-              selectivePointers:
-                [...credentialHasArrays.selectivePointers],
-              signedCredential: signedAchievementCredential,
-              vcHolder
-            });
-            disclosedCredentialsWithFullArray.push(
-              revealedAchievementCredential1);
-            // select less than full subarrays
-            const lessThanFullPointers = credentialHasArrays.
-              selectivePointers.slice(2, -4);
-            const {
-              disclosedCredential: revealedAchievementCredential2
-            } = await createDisclosedVc({
-              selectivePointers: lessThanFullPointers,
-              signedCredential: signedAchievementCredential,
-              vcHolder
-            });
-            disclosedCredentialsWithLessThanFullSubArray.push(
-              revealedAchievementCredential2);
-            // select w/o first 7 array element
-            const removeFirst7Pointers = credentialHasArrays.
-              selectivePointers.slice(7);
-            const {
-              disclosedCredential: revealedAchievementCredential3
-            } = await createDisclosedVc({
-              selectivePointers: removeFirst7Pointers,
-              signedCredential: signedAchievementCredential,
-              vcHolder
-            });
-            disclosedCredentialsWithoutFirstArrayElement.push(
-              revealedAchievementCredential3);
+            // filter vectors so we don't test curves they don't support
           });
           it('MUST verify a valid VC with an ecdsa-sd-2023 proof.',
             async function() {

@@ -18,18 +18,20 @@ import {klona} from 'klona';
  * @param {string} options.suite - A cryptosuite id.
  * @param {Array<string>} options.mandatoryPointers - An optional list of
  *   json pointers.
+ * @param {Array<string>} options.keyTypes - A Set of keyTypes to issue with.
  *
  * @returns {Promise<Map<string, object>>} Returns a Map of test data.
  */
 export async function issueTestData({
   credential,
   suite,
-  mandatoryPointers = []
+  mandatoryPointers = [],
+  keyTypes = ['P-256', 'P-384']
 }) {
   const results = new Map();
-  const keys = await getMultikeys();
+  const keys = await getMultikeys({keyTypes});
   const cryptosuite = cryptosuites.get(suite);
-  for(const [curve, {signer, issuer}] of keys) {
+  for(const [keyType, {signer, issuer}] of keys) {
     const _credential = klona(credential);
     _credential.issuer = issuer;
     const suite = new DataIntegrityProof({
@@ -44,13 +46,13 @@ export async function issueTestData({
       suite,
       signer,
     });
-    results.set(curve, _vc);
+    results.set(keyType, _vc);
   }
   return results;
 }
 
 /**
- * Issues test data locally and then returns a Map
+ * Dervives test data locally and then returns a Map
  * with the test data.
  *
  * @param {object} options - Options to use.
@@ -58,16 +60,18 @@ export async function issueTestData({
  * @param {string} options.suite - A cryptosuite id.
  * @param {Array<string>} options.selectivePointers - An optional list of json
  *   pointers.
+ * @param {Array<string>} options.keyTypes - A list of key types.
  *
  * @returns {Promise<Map<string, object>>} Returns a Map of test data.
  */
 export async function deriveTestData({
   verifiableCredential,
   suite,
-  selectivePointers = []
+  selectivePointers = [],
+  keyTypes = ['P-256']
 }) {
   const results = new Map();
-  const keys = await getMultikeys();
+  const keys = await getMultikeys({keyTypes});
   const cryptosuite = cryptosuites.get(suite);
   for(const [curve, {signer}] of keys) {
     const suite = new DataIntegrityProof({
