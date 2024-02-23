@@ -51,13 +51,13 @@ describe('ecdsa-sd-2023 (verify)', function() {
       }
     };
     before(async function() {
-      const {subjectNestedObject, subjectHasArrays} = credentials.verify;
+      const {subjectNestedObjects, subjectHasArrays} = credentials.verify;
       // create initial signed VCs
       testVectors.signed = await issueTestData({
-        credential: subjectNestedObject.document,
+        credential: subjectNestedObjects.document,
         suite,
         keyTypes,
-        mandatoryPointers: subjectNestedObject.mandatoryPointers
+        mandatoryPointers: subjectNestedObjects.mandatoryPointers
       });
       const [signedVc] = testVectors.signed;
       // use initial VCs for a basic selective disclosure test
@@ -69,13 +69,13 @@ describe('ecdsa-sd-2023 (verify)', function() {
       });
       // create initial nestedDisclosedCredential from signedVc
       testVectors.disclosed.nested = await deriveTestData({
-        selectivePointers: subjectNestedObject.selectivePointers.slice(1, 3),
+        selectivePointers: subjectNestedObjects.selectivePointers.slice(1, 3),
         verifiableCredential: signedVc,
         keyTypes,
         suite
       });
       // copy the first vc
-      const noIdVc = klona(subjectNestedObject.document);
+      const noIdVc = klona(subjectNestedObjects.document);
       // delete the id
       delete noIdVc.id;
       // start second round test data creation w/ dlCredentialNoIds
@@ -85,7 +85,7 @@ describe('ecdsa-sd-2023 (verify)', function() {
         suite: 'ecdsa-sd-2023',
       });
       testVectors.disclosed.noIds = await deriveTestData({
-        selectivePointers: subjectNestedObject.selectivePointers.slice(1, 3),
+        selectivePointers: subjectNestedObjects.selectivePointers.slice(1, 3),
         verifiableCredential: signedDlCredentialNoIds,
         keyTypes,
         suite
@@ -130,16 +130,37 @@ describe('ecdsa-sd-2023 (verify)', function() {
     for(const [name, {endpoints: verifiers}] of match) {
       for(const verifier of verifiers) {
         // get the keyTypes each verifier supports
-        const {
-          supportedEcdsaKeyTypes: verifierSupportedEcdsaKeyTypes
-        } = verifier.settings;
+        const {supportedEcdsaKeyTypes} = verifier.settings;
         // format keyTypes for test report
-        const keyTypes = verifierSupportedEcdsaKeyTypes.join(', ');
+        const keyTypes = supportedEcdsaKeyTypes.join(', ');
         // add name and keyTypes to test report
         this.implemented.push(`${name}: ${keyTypes}`);
         describe(`${name}: ${keyTypes}`, function() {
+          let signedCredentials = [];
+          let disclosedCredentials = [];
+          let nestedDisclosedCredentials = [];
+          let disclosedDlCredentialNoIds = [];
+          let disclosedCredentialsWithFullArray = [];
+          let disclosedCredentialsWithLessThanFullSubArray = [];
+          let disclosedCredentialsWithoutFirstArrayElement = [];
           before(function() {
             // filter vectors so we don't test curves they don't support
+            signedCredentials = supportedEcdsaKeyTypes.map(
+              type => testVectors.signed.get(type));
+            disclosedCredentials = supportedEcdsaKeyTypes.map(
+              type => testVectors.disclosed.base.get(type));
+            nestedDisclosedCredentials = supportedEcdsaKeyTypes.map(
+              type => testVectors.disclosed.nested.get(type));
+            disclosedDlCredentialNoIds = supportedEcdsaKeyTypes.map(
+              type => testVectors.disclosed.noIds.get(type));
+            disclosedCredentialsWithFullArray = supportedEcdsaKeyTypes.map(
+              type => testVectors.disclosed.array.full.get(type));
+            disclosedCredentialsWithLessThanFullSubArray =
+              supportedEcdsaKeyTypes.map(type =>
+                testVectors.disclosed.array.lessThanFull.get(type));
+            disclosedCredentialsWithoutFirstArrayElement =
+              supportedEcdsaKeyTypes.map(type =>
+                testVectors.disclosed.array.missingElements.get(type));
           });
           it('MUST verify a valid VC with an ecdsa-sd-2023 proof.',
             async function() {
