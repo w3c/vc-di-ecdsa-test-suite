@@ -2,7 +2,6 @@
  * Copyright 2023 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
-import {createDisclosedVc, createInitialVc} from './helpers.js';
 import {deriveTestData, issueTestData} from './vc-generator/index.js';
 import {verificationFail, verificationSuccess} from './assertions.js';
 import {endpoints} from 'vc-test-suite-implementations';
@@ -100,7 +99,6 @@ describe('ecdsa-sd-2023 (verify)', function() {
         keyTypes,
         suite
       });
-
       // select full arrays
       testVectors.disclosed.array.full = await deriveTestData({
         selectivePointers:
