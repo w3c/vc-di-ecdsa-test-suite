@@ -26,7 +26,7 @@ export async function issueTestData({
   credential,
   suite,
   mandatoryPointers = [],
-  keyTypes = ['P-256', 'P-384']
+  keyTypes = ['P-256']
 }) {
   const results = new Map();
   const keys = await getMultikeys({keyTypes});

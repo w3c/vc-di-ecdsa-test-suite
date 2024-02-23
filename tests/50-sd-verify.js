@@ -3,17 +3,17 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 import {createDisclosedVc, createInitialVc} from './helpers.js';
-import {issueTestData, deriveTestData} from './vc-generator/index.js';
+import {deriveTestData, issueTestData} from './vc-generator/index.js';
 import {verificationFail, verificationSuccess} from './assertions.js';
 import {endpoints} from 'vc-test-suite-implementations';
 import {getSuiteConfig} from './test-config.js';
 import {klona} from 'klona';
 
+const suite = 'ecdsa-sd-2023';
 const {
   tags,
-  vcHolder: {tags: holderTags, holderName},
   credentials
-} = getSuiteConfig('ecdsa-sd-2023');
+} = getSuiteConfig(suite);
 // FIXME move this to vectors
 const keyTypes = ['P-256'];
 // only use implementations with `ecdsa-sd-2023` verifiers.
@@ -24,15 +24,6 @@ const {match} = endpoints.filterByTag({
 
 describe('ecdsa-sd-2023 (verify)', function() {
   describe('ecdsa-sd-2023 (verifiers)', function() {
-    let vcHolder;
-    before(async function() {
-      const {match: matchingVcHolders} = endpoints.filterByTag({
-        tags: [...holderTags],
-        property: 'vcHolders'
-      });
-      const vcHolders = matchingVcHolders.get(holderName).endpoints;
-      vcHolder = vcHolders[0];
-    });
     // this will tell the report
     // to make an interop matrix with this suite
     this.matrix = true;
@@ -65,83 +56,77 @@ describe('ecdsa-sd-2023 (verify)', function() {
       // create initial signed VCs
       testVectors.signed = await issueTestData({
         credential: subjectNestedObject.document,
-        suite: 'ecdsa-sd-2023',
+        suite,
         keyTypes,
         mandatoryPointers: subjectNestedObject.mandatoryPointers
       });
       const [signedVc] = testVectors.signed;
       // use initial VCs for a basic selective disclosure test
-      testVectors.disclosed.base = await createDisclosedVc({
+      testVectors.disclosed.base = await deriveTestData({
         selectivePointers: ['/credentialSubject/id'],
-        signedCredential: signedVc,
-        vcHolder
+        verifiableCredential: signedVc,
+        keyTypes,
+        suite
       });
       // create initial nestedDisclosedCredential from signedVc
-      testVectors.disclosed.nested = await createDisclosedVc({
+      testVectors.disclosed.nested = await deriveTestData({
         selectivePointers: subjectNestedObject.selectivePointers.slice(1, 3),
-        signedCredential: signedVc,
-        vcHolder
+        verifiableCredential: signedVc,
+        keyTypes,
+        suite
       });
       // copy the first vc
       const noIdVc = klona(subjectNestedObject.document);
       // delete the id
       delete noIdVc.id;
       // start second round test data creation w/ dlCredentialNoIds
-      const signedDlCredentialNoIds = await createInitialVc({
-        issuer, vc: noIdVc
+      const [signedDlCredentialNoIds] = await issueTestData({
+        credential: noIdVc,
+        keyTypes,
+        suite: 'ecdsa-sd-2023',
       });
-      const {
-        disclosedCredential: disclosedDlCredentialNoId
-      } = await createDisclosedVc({
-        selectivePointers: [...nestedPointers],
-        signedCredential: signedDlCredentialNoIds,
-        vcHolder
+      testVectors.disclosed.noIds = await deriveTestData({
+        selectivePointers: subjectNestedObject.selectivePointers.slice(1, 3),
+        verifiableCredential: signedDlCredentialNoIds,
+        keyTypes,
+        suite
       });
-      disclosedDlCredentialNoIds.push(disclosedDlCredentialNoId);
-      const credentialHasArrays = klona(
-        credentials.verify.subjectHasArrays);
+      const credentialHasArrays = klona(subjectHasArrays);
       // start third round test data creation w/
       // AchievementCredential
-      const signedAchievementCredential = await createInitialVc({
-        issuer, vc: credentialHasArrays.document
+      const [signedAchievementCredential] = await issueTestData({
+        credential: credentialHasArrays.document,
+        mandatoryPointers: credentialHasArrays.mandatoryPointers,
+        keyTypes,
+        suite
       });
 
       // select full arrays
-      const {
-        disclosedCredential: revealedAchievementCredential1
-      } = await createDisclosedVc({
+      testVectors.disclosed.array.full = await deriveTestData({
         selectivePointers:
           [...credentialHasArrays.selectivePointers],
-        signedCredential: signedAchievementCredential,
-        vcHolder
+        verifiableCredential: signedAchievementCredential,
+        suite,
+        keyTypes
       });
-      disclosedCredentialsWithFullArray.push(
-        revealedAchievementCredential1);
       // select less than full subarrays
       const lessThanFullPointers = credentialHasArrays.
         selectivePointers.slice(2, -4);
-      const {
-        disclosedCredential: revealedAchievementCredential2
-      } = await createDisclosedVc({
+      testVectors.disclosed.array.lessThanFull = await deriveTestData({
         selectivePointers: lessThanFullPointers,
-        signedCredential: signedAchievementCredential,
-        vcHolder
+        verifiableCredential: signedAchievementCredential,
+        suite,
+        keyTypes
       });
-      disclosedCredentialsWithLessThanFullSubArray.push(
-        revealedAchievementCredential2);
       // select w/o first 7 array element
       const removeFirst7Pointers = credentialHasArrays.
         selectivePointers.slice(7);
-      const {
-        disclosedCredential: revealedAchievementCredential3
-      } = await createDisclosedVc({
+      testVectors.disclosed.array.missingElements = await deriveTestData({
         selectivePointers: removeFirst7Pointers,
-        signedCredential: signedAchievementCredential,
-        vcHolder
+        verifiableCredential: signedAchievementCredential,
+        suite,
+        keyTypes
       });
-      disclosedCredentialsWithoutFirstArrayElement.push(
-        revealedAchievementCredential3);
-
     });
     // loop through implementers and test endpoints
     for(const [name, {endpoints: verifiers}] of match) {
@@ -155,8 +140,7 @@ describe('ecdsa-sd-2023 (verify)', function() {
         // add name and keyTypes to test report
         this.implemented.push(`${name}: ${keyTypes}`);
         describe(`${name}: ${keyTypes}`, function() {
-          let implementationVectors = {};
-          before(async function() {
+          before(function() {
             // filter vectors so we don't test curves they don't support
           });
           it('MUST verify a valid VC with an ecdsa-sd-2023 proof.',
