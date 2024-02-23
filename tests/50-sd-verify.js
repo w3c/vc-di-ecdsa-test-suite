@@ -59,7 +59,7 @@ describe('ecdsa-sd-2023 (verify)', function() {
         keyTypes,
         mandatoryPointers: subjectNestedObjects.mandatoryPointers
       });
-      const [signedVc] = testVectors.signed;
+      const signedVc = testVectors.signed.get(keyTypes[0]);
       // use initial VCs for a basic selective disclosure test
       testVectors.disclosed.base = await deriveTestData({
         selectivePointers: ['/credentialSubject/id'],
@@ -79,11 +79,12 @@ describe('ecdsa-sd-2023 (verify)', function() {
       // delete the id
       delete noIdVc.id;
       // start second round test data creation w/ dlCredentialNoIds
-      const [signedDlCredentialNoIds] = await issueTestData({
+      const noIdsVcs = await issueTestData({
         credential: noIdVc,
         keyTypes,
         suite: 'ecdsa-sd-2023',
       });
+      const signedDlCredentialNoIds = noIdsVcs.get(keyTypes[0]);
       testVectors.disclosed.noIds = await deriveTestData({
         selectivePointers: subjectNestedObjects.selectivePointers.slice(1, 3),
         verifiableCredential: signedDlCredentialNoIds,
@@ -93,12 +94,14 @@ describe('ecdsa-sd-2023 (verify)', function() {
       const credentialHasArrays = klona(subjectHasArrays);
       // start third round test data creation w/
       // AchievementCredential
-      const [signedAchievementCredential] = await issueTestData({
+      const achievementCredentials = await issueTestData({
         credential: credentialHasArrays.document,
         mandatoryPointers: credentialHasArrays.mandatoryPointers,
         keyTypes,
         suite
       });
+      const signedAchievementCredential = achievementCredentials.get(
+        keyTypes[0]);
       // select full arrays
       testVectors.disclosed.array.full = await deriveTestData({
         selectivePointers:
