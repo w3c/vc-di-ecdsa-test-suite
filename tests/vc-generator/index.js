@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 import * as vc from '@digitalbazaar/vc';
-import {getSuite} from './cryptosuites.js';
 import {DataIntegrityProof} from '@digitalbazaar/data-integrity';
 import {documentLoader} from './documentLoader.js';
 import {getMultikeys} from './key-gen.js';
+import {getSuite} from './cryptosuites.js';
 import {klona} from 'klona';
 
 /**
