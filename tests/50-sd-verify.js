@@ -83,6 +83,7 @@ describe('ecdsa-sd-2023 (verify)', function() {
         credential: noIdVc,
         keyTypes,
         suite: 'ecdsa-sd-2023',
+        mandatoryPointers: subjectNestedObjects.mandatoryPointers
       });
       const signedDlCredentialNoIds = noIdsVcs.get(keyTypes[0]);
       testVectors.disclosed.noIds = await deriveTestData({
