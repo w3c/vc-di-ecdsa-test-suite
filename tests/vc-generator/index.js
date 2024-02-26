@@ -25,28 +25,43 @@ import {klona} from 'klona';
 export async function issueTestData({
   credential,
   suite,
-  mandatoryPointers = [],
+  mandatoryPointers,
   keyTypes = ['P-256']
 }) {
   const results = new Map();
   const keys = await getMultikeys({keyTypes});
-  const cryptosuite = getSuite({suite, mandatoryPointers});
   for(const [keyType, {signer, issuer}] of keys) {
-    const _credential = klona(credential);
-    _credential.issuer = issuer;
-    const suite = new DataIntegrityProof({signer, cryptosuite});
-    const _vc = await vc.issue({
-      credential: _credential,
-      documentLoader,
+    const _vc = await issueCredential({
+      credential,
+      issuer,
+      signer,
       suite,
+      mandatoryPointers
     });
     results.set(keyType, _vc);
   }
   return results;
 }
 
+export async function issueCredential({
+  credential,
+  issuer,
+  signer,
+  suite,
+  mandatoryPointers = []
+}) {
+  const _credential = klona(credential);
+  _credential.issuer = issuer;
+  const cryptosuite = getSuite({suite, mandatoryPointers});
+  return vc.issue({
+    credential: _credential,
+    documentLoader,
+    suite: new DataIntegrityProof({signer, cryptosuite})
+  });
+}
+
 /**
- * Dervives test data locally and then returns a Map
+ * Derives test data locally and then returns a Map
  * with the test data.
  *
  * @param {object} options - Options to use.
@@ -66,18 +81,32 @@ export async function deriveTestData({
 }) {
   const results = new Map();
   const keys = await getMultikeys({keyTypes});
-  const cryptosuite = getSuite({suite, selectivePointers});
   for(const [keyType, {signer}] of keys) {
-    const suite = new DataIntegrityProof({
-      signer,
-      cryptosuite,
-    });
-    const _vc = await vc.derive({
+    const _vc = await deriveCredential({
       verifiableCredential,
       documentLoader,
-      suite
+      suite,
+      signer,
+      selectivePointers
     });
     results.set(keyType, _vc);
   }
   return results;
+}
+
+export async function deriveCredential({
+  verifiableCredential,
+  documentLoader,
+  suite,
+  signer,
+  selectivePointers = []
+}) {
+  return vc.derive({
+    verifiableCredential,
+    documentLoader,
+    suite: new DataIntegrityProof({
+      signer,
+      cryptosuite: getSuite({suite, selectivePointers})
+    })
+  });
 }
