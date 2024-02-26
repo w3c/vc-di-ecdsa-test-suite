@@ -148,22 +148,32 @@ describe('ecdsa-sd-2023 (verify)', function() {
           let disclosedCredentialsWithoutFirstArrayElement = [];
           before(function() {
             // filter vectors so suite doesn't test unsupported keyTypes
-            signedCredentials = supportedEcdsaKeyTypes.map(
-              type => testVectors.signed.get(type));
-            disclosedCredentials = supportedEcdsaKeyTypes.map(
-              type => testVectors.disclosed.base.get(type));
-            nestedDisclosedCredentials = supportedEcdsaKeyTypes.map(
-              type => testVectors.disclosed.nested.get(type));
-            disclosedDlCredentialNoIds = supportedEcdsaKeyTypes.map(
-              type => testVectors.disclosed.noIds.get(type));
-            disclosedCredentialsWithFullArray = supportedEcdsaKeyTypes.map(
-              type => testVectors.disclosed.array.full.get(type));
+            const getImplementationVectors = ({vectors}) =>
+              supportedEcdsaKeyTypes.map(type => vectors.get(type)).
+                filter(Boolean);
+            signedCredentials = getImplementationVectors({
+              vectors: testVectors.signed
+            });
+            disclosedCredentials = getImplementationVectors({
+              vectors: testVectors.disclosed.base
+            });
+            nestedDisclosedCredentials = getImplementationVectors({
+              vectors: testVectors.disclosed.nested
+            });
+            disclosedDlCredentialNoIds = getImplementationVectors({
+              vectors: testVectors.disclosed.noIds
+            });
+            disclosedCredentialsWithFullArray = getImplementationVectors({
+              vectors: testVectors.disclosed.array.full
+            });
             disclosedCredentialsWithLessThanFullSubArray =
-              supportedEcdsaKeyTypes.map(type =>
-                testVectors.disclosed.array.lessThanFull.get(type));
+              getImplementationVectors({
+                vectors: testVectors.disclosed.array.lessThanFull
+              });
             disclosedCredentialsWithoutFirstArrayElement =
-              supportedEcdsaKeyTypes.map(type =>
-                testVectors.disclosed.array.missingElements.get(type));
+              getImplementationVectors({
+                vectors: testVectors.disclosed.array.missingElements
+              });
           });
           it('MUST verify a valid VC with an ecdsa-sd-2023 proof.',
             async function() {
