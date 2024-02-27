@@ -34,8 +34,10 @@ The test vector configuration consists of 1-3 paths to JSON objects:
 - The property `selectivePointers` is an array containing all pointers for a credential.
   - Pointers used in the tests are deduced from the full set of pointers.
   - `selectivePointers` are required only for selective disclosure tests.
-Some credentials sections might require multiple VCs. In this case multiple named
-properties must be fulfilled in that section in order for the tests to run.
+
+Some credentials sections such as the sd verify tests might require multiple test vectors.
+If multiple vectors are required multiple named properties must be filled 
+in that section in order for the tests to run.
 
 A minimal non-SD test vector configuration looks like this:
 ```js
@@ -94,10 +96,10 @@ The full `config/runner.json` file currently looks like this:
 ```
 
 ### Configuring Test Data Generation
-To generate test data used in the test suite, testers may specify
+To generate interop test data used in the test suite, testers may specify
 the holder name using an the environment variable `SD_HOLDER_NAME` or the setting 
-`holderName` in the `ecdsa-sd-2023` section of ./config/runner.json` 
-can be used to specify the VC holder name for generating disclosed test credentials for ECDSA-SD tests.
+`holderName` in the `ecdsa-sd-2023` section of ./config/runner.json`  can be used
+to specify the VC holder name for generating disclosed test credentials for ECDSA-SD tests.
 If `$SD_HOLDER_NAME` or `holderName` is not specified, `Digital Bazaar` will be used.
 
 ```
