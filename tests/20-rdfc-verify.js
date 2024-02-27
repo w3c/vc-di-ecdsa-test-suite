@@ -10,10 +10,9 @@ import {klona} from 'klona';
 
 const {
   tags,
-  credentials
+  credentials,
+  keyTypes
 } = getSuiteConfig('ecdsa-rdfc-2019');
-// FIXME use keyTypes from getSuiteConfig
-const keyTypes = ['P-256', 'P-384'];
 // only use implementations with `ecdsa-rdfc-2019` verifiers.
 const {match} = endpoints.filterByTag({
   tags: [...tags],

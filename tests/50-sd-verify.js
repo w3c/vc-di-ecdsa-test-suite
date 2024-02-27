@@ -11,10 +11,9 @@ import {klona} from 'klona';
 const suite = 'ecdsa-sd-2023';
 const {
   tags,
-  credentials
+  credentials,
+  keyTypes
 } = getSuiteConfig(suite);
-// FIXME move this to vectors
-const keyTypes = ['P-256'];
 // only use implementations with `ecdsa-sd-2023` verifiers.
 const {match} = endpoints.filterByTag({
   tags: [...tags],
