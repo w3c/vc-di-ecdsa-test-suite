@@ -6,7 +6,14 @@ SPDX-License-Identifier: BSD-3-Clause
 
 # w3c/vc-di-ecdsa-test-suite  ChangeLog
 
-## 2.3.0 -
+## 3.0.0 -
+
+### Changed
+- **BREAKING**: Verify test suites generate data locally.
+- **BREAKING**: `issuerName` no longer used in test suites.
+- **BREAKING**: Env variables related to `issuerName` no longer used.
+
+## 2.3.0 - 2024-02-25
 
 ### Added
 - A new `credentials` section in `runner.json` that allows configuring static test vectors.
