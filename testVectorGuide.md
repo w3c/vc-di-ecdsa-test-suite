@@ -95,18 +95,11 @@ The full `config/runner.json` file currently looks like this:
 
 ### Configuring Test Data Generation
 To generate test data used in the test suite, testers may specify
-the issuer name using an environment variable or setting `issuerName` in a
-particular suite in `./config/runner.json`. 
-
-- For the `ecdsa-rdfc-2019` suite use `RDFC_ISSUER_NAME` set to an implementation name.
-- For the `ecdsa-sd-2023` suite use `SD_ISSUER_NAME` set to an implementation name.
-  - In both cases the issuer will default to `Digital Bazaar`.
-
-In addition, the environment variable `SD_HOLDER_NAME` or the setting 
+the holder name using an the environment variable `SD_HOLDER_NAME` or the setting 
 `holderName` in the `ecdsa-sd-2023` section of ./config/runner.json` 
 can be used to specify the VC holder name for generating disclosed test credentials for ECDSA-SD tests.
 If `$SD_HOLDER_NAME` or `holderName` is not specified, `Digital Bazaar` will be used.
 
 ```
-SD_ISSUER_NAME="IssuerName" SD_HOLDER_NAME="HolderName" npm test
+SD_HOLDER_NAME="HolderName" npm test
 ```

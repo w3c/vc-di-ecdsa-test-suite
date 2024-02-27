@@ -102,12 +102,10 @@ For this suite the `runner.json` file looks like this:
 {
   "suites": {
     "ecdsa-rdfc-2019": {
-      "tags": ["ecdsa-rdfc-2019"],
-      "issuerName": "Digital Bazaar",
+      "tags": ["ecdsa-rdfc-2019"]
     },
     "ecdsa-sd-2023": {
       "tags": ["ecdsa-sd-2023"],
-      "issuerName": "Digital Bazaar",
       "vcHolder": {
         "holderName": "Digital Bazaar",
         "tags": ["vcHolder"]
@@ -185,9 +183,12 @@ A simplified manifest would look like this:
     "endpoint": "https://mycompany.example/credentials/verify",
     "method": "POST",
     "supportedEcdsaKeyTypes": ["P-256", "P-384"]
-    "tags": [
-      "ecdsa-rdfc-2019", "ecdsa-jcs-2019", "ecdsa-sd-2023"
-    ]
+    "tags": ["ecdsa-rdfc-2019", "ecdsa-jcs-2019"]
+  }, {
+    "endpoint": "https://mycompany.example/credentials/verify",
+    "method": "POST",
+    "supportedEcdsaKeyTypes": ["P-256"]
+    "tags": ["ecdsa-sd-2023"]
   }],
   "vcHolders": [{
     "id": "did:key:myIssuer1#keyFragment",

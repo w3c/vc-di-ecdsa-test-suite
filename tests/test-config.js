@@ -11,17 +11,6 @@ const _vectors = require('../config/vectors.json');
 // cache is valid for a single test run
 const _cache = new Map();
 
-// gets the env variables for the suites
-const _envVariables = new Map([
-  ['ecdsa-rdfc-2019', {
-    issuerName: process.env.RDFC_ISSUER_NAME
-  }],
-  ['ecdsa-sd-2023', {
-    issuerName: process.env.SD_ISSUER_NAME,
-    holderName: process.env.SD_HOLDER_NAME
-  }]
-]);
-
 const openVectorFiles = vectorFiles => {
   for(const property in vectorFiles) {
     const value = vectorFiles[property];
@@ -54,14 +43,6 @@ const _createSuiteConfig = suite => {
   const suiteConfig = klona(_runner.suites[suite]);
   if(!suiteConfig) {
     throw new Error(`Could not find config for suite ${suite}`);
-  }
-  // preserve the use of env variables for some settings
-  const {issuerName, holderName} = _envVariables.get(suite);
-  if(issuerName) {
-    suiteConfig.issuerName = issuerName;
-  }
-  if(suiteConfig.vcHolder && holderName) {
-    suiteConfig.vcHolder.holderName = holderName;
   }
   // return a deep copy to prevent test data mutation
   return suiteConfig;
