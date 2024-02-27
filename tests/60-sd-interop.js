@@ -25,7 +25,7 @@ const {
   match: verifierMatches
 } = endpoints.filterByTag({tags: [...tags], property: 'verifiers'});
 
-// slip these tests if local true
+// skip these tests if local true
 (local ? describe.skip : describe)('ecdsa-sd-2023 (interop)', function() {
   // this will tell the report
   // to make an interop matrix with this suite
