@@ -14,7 +14,7 @@ SPDX-License-Identifier: BSD-3-Clause
 - **BREAKING**: Env variables related to `issuerName` no longer used.
 
 ### Added
-- **BREAKING**: new option local skips interop tests by default.
+- **BREAKING**: interop tests are now skipped by default; `LOCAL_ONLY` environment variable set to `false` reenables them.
 
 ## 2.3.0 - 2024-02-25
 
