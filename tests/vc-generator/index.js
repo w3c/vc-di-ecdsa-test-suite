@@ -20,7 +20,7 @@ import {klona} from 'klona';
  *   json pointers.
  * @param {Array<string>} options.keyTypes - A Set of keyTypes to issue with.
  *
- * @returns {Promise<Map<string, object>>} Returns a Map of test data.
+ * @returns {Promise<Map<string, object>>} Returns a Map <keyType, vc>.
  */
 export async function issueTestData({
   credential,
@@ -71,7 +71,7 @@ export async function issueCredential({
  *   pointers.
  * @param {Array<string>} options.keyTypes - A list of key types.
  *
- * @returns {Promise<Map<string, object>>} Returns a Map of test data.
+ * @returns {Promise<Map<string, object>>} Returns a Map <keyType, vc>.
  */
 export async function deriveTestData({
   verifiableCredential,
