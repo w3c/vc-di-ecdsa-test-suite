@@ -35,9 +35,14 @@ The test vector configuration consists of 1-3 paths to JSON objects:
   - Pointers used in the tests are deduced from the full set of pointers.
   - `selectivePointers` are required only for selective disclosure tests.
 
-Some credentials sections such as the sd verify tests might require multiple test vectors.
+Some credentials sections (such as the sd verify test)s might require multiple test vectors.
 If multiple vectors are required multiple named properties must be filled 
 in that section in order for the tests to run.
+
+Each vectors suite has an associated `keyTypes` property.
+That property contains an array of `keyTypes` used to create verification test data.
+Your implementation will only be tested against your `supportedEcdsaKeyTypes` specified
+in your implementation manifest.
 
 A minimal non-SD test vector configuration looks like this:
 ```js
@@ -60,6 +65,7 @@ The full `config/runner.json` file currently looks like this:
 {
   "suites": {
     "ecdsa-rdfc-2019": {
+      "keyTypes": ["P-256", "p-384"],
       "credentials": {
         "create": {"document": "./mocks/valid/document.json"},
         "verify": {"document": "./mocks/valid/document.json"},
@@ -67,6 +73,7 @@ The full `config/runner.json` file currently looks like this:
       }
     },
     "ecdsa-sd-2023": {
+      "keyTypes": ["P-256"],
       "credentials": {
         "create": {
           "document": "./mocks/valid/document.json",
