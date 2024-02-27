@@ -11,6 +11,18 @@ const _vectors = require('../config/vectors.json');
 // cache is valid for a single test run
 const _cache = new Map();
 
+// converts true values to true and everything else to false
+const convertToBoolean = envVariable => /^(1|true)$/i.test(envVariable);
+
+// gets the local value for test runs to determine
+// if interop tests should run
+const getLocal = () => {
+  if(process.env.LOCAL_ONLY != undefined) {
+    return convertToBoolean(process.env.LOCAL_ONLY);
+  }
+  return _runner.local;
+};
+
 const openVectorFiles = vectorFiles => {
   for(const property in vectorFiles) {
     const value = vectorFiles[property];
@@ -57,7 +69,12 @@ export const getSuiteConfig = suite => {
   // create an initial config
   const suiteConfig = _createSuiteConfig(suite);
   const {credentials = {}, keyTypes} = _createVectorConfig(suite);
-  const config = {...suiteConfig, credentials, keyTypes};
+  const config = {
+    ...suiteConfig,
+    credentials,
+    keyTypes,
+    local: getLocal()
+  };
   // store in the cache
   _cache.set(suite, config);
   return config;

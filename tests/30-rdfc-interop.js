@@ -8,7 +8,7 @@ import {endpoints} from 'vc-test-suite-implementations';
 import {getSuiteConfig} from './test-config.js';
 import {verificationSuccess} from './assertions.js';
 
-const {tags, credentials} = getSuiteConfig('ecdsa-rdfc-2019');
+const {tags, credentials, local} = getSuiteConfig('ecdsa-rdfc-2019');
 
 const should = chai.should();
 
@@ -20,7 +20,8 @@ const {
   match: verifierMatches
 } = endpoints.filterByTag({tags: [...tags], property: 'verifiers'});
 
-describe('ecdsa-rdfc-2019 (interop)', function() {
+// skip these tests if local true
+(local ? describe.skip : describe)('ecdsa-rdfc-2019 (interop)', function() {
   // this will tell the report
   // to make an interop matrix with this suite
   this.matrix = true;
@@ -28,7 +29,6 @@ describe('ecdsa-rdfc-2019 (interop)', function() {
   this.implemented = [];
   this.rowLabel = 'Issuer';
   this.columnLabel = 'Verifier';
-
   const issuers = [];
   for(const [issuerName, {endpoints}] of issuerMatches) {
     for(const issuerEndpoint of endpoints) {

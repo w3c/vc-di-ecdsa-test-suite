@@ -11,7 +11,8 @@ import {verificationSuccess} from './assertions.js';
 const {
   tags,
   credentials,
-  vcHolder: {holderName}
+  vcHolder: {holderName},
+  local
 } = getSuiteConfig('ecdsa-sd-2023');
 
 const should = chai.should();
@@ -24,7 +25,8 @@ const {
   match: verifierMatches
 } = endpoints.filterByTag({tags: [...tags], property: 'verifiers'});
 
-describe('ecdsa-sd-2023 (interop)', function() {
+// slip these tests if local true
+(local ? describe.skip : describe)('ecdsa-sd-2023 (interop)', function() {
   // this will tell the report
   // to make an interop matrix with this suite
   this.matrix = true;
