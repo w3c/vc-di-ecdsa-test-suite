@@ -35,7 +35,7 @@ The test vector configuration consists of 1-3 paths to JSON objects:
   - Pointers used in the tests are deduced from the full set of pointers.
   - `selectivePointers` are required only for selective disclosure tests.
 
-Some credentials sections (such as the sd verify test)s might require multiple test vectors.
+Some credentials sections (such as the sd verify test) might require multiple test vectors.
 If multiple vectors are required multiple named properties must be filled 
 in that section in order for the tests to run.
 
