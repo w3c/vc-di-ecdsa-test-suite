@@ -1,4 +1,5 @@
 {
+  "local": true,
   "suites": {
     "ecdsa-rdfc-2019": {
       "tags": ["ecdsa-rdfc-2019"]
