@@ -103,7 +103,7 @@
       Total tests 304
       </p>
       <p>
-        These tests were run on <time>25 February 2024 at 5:05 am UTC</time>
+        These tests were run on <time>27 February 2024 at 2:40 pm UTC</time>
       </p>
       <section class="informative" id="Key">
         <h3>Key</h3>
@@ -7185,8 +7185,8 @@
                 <!--This is the name of the test-->
                 <td class="subtest">SpruceID: P-256</td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
+                  <td class="failed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">❌</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -7215,6 +7215,13 @@
                          margin-left: 1rem;
                        }
                       </style>
+                      <span class="err hide no-space-around">
+                        <pre>{
+                      "name": "AssertionError",
+                      "message": "Expected a result from verifier.: expected undefined to exist",
+                      "stack": "AssertionError: Expected a result from verifier.: expected undefined to exist\n    at should.exist (node_modules/chai/lib/chai/interface/should.js:144:34)\n    at verificationSuccess (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/tests/assertions.js:81:10)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/tests/30-rdfc-interop.js:94:11)"
+                    }</pre>
+                      </span>
                     </div>
                   </td>
                   <td class="passed not-optional highlight-on-hover text-center">
@@ -9148,7 +9155,7 @@
                   <span>&#8659;</span><span>Test Name</span>
                   </div>
                 </th>
-                    <th class="no-wrap small-font text-center">Digital Bazaar: P-256, P-384</th>
+                    <th class="no-wrap small-font text-center">Digital Bazaar: P-256</th>
                     <th class="no-wrap small-font text-center">Grotto Networking: P-256</th>
                 </thead>
               <tbody>
@@ -10273,7 +10280,7 @@
                   <span>&#8659;</span><span>Test Name</span>
                   </div>
                 </th>
-                    <th class="no-wrap small-font text-center">Digital Bazaar: P-256, P-384</th>
+                    <th class="no-wrap small-font text-center">Digital Bazaar: P-256</th>
                     <th class="no-wrap small-font text-center">Grotto Networking: P-256</th>
                 </thead>
               <tbody>
@@ -10520,8 +10527,8 @@
                       </style>
                     </div>
                   </td>
-                  <td class="failed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">❌</div>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -10550,13 +10557,6 @@
                          margin-left: 1rem;
                        }
                       </style>
-                      <span class="err hide no-space-around">
-                        <pre>{
-                      "name": "AssertionError",
-                      "message": "Expected a result from verifier.: expected undefined to exist",
-                      "stack": "AssertionError: Expected a result from verifier.: expected undefined to exist\n    at should.exist (node_modules/chai/lib/chai/interface/should.js:144:34)\n    at verificationSuccess (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/tests/assertions.js:81:10)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/tests/50-sd-verify.js:201:17)"
-                    }</pre>
-                      </span>
                     </div>
                   </td>
               </tr>
@@ -11046,7 +11046,7 @@
                   <span>&#8659;</span><span>Issuer</span>
                   </div>
                 </th>
-                    <th class="no-wrap small-font text-center">Digital Bazaar: P-256, P-384</th>
+                    <th class="no-wrap small-font text-center">Digital Bazaar: P-256</th>
                     <th class="no-wrap small-font text-center">Grotto Networking: P-256</th>
                 </thead>
               <tbody>
@@ -11157,7 +11157,7 @@
                         <pre>{
                       "name": "AssertionError",
                       "message": "Expected issuer Grotto Networking: P-256 to issue a disclosed VC.: expected undefined to exist",
-                      "stack": "AssertionError: Expected issuer Grotto Networking: P-256 to issue a disclosed VC.: expected undefined to exist\n    at should.exist (node_modules/chai/lib/chai/interface/should.js:144:34)\n    at Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/tests/60-sd-interop.js:108:18)\n    at process.processImmediate (node:internal/timers:478:21)"
+                      "stack": "AssertionError: Expected issuer Grotto Networking: P-256 to issue a disclosed VC.: expected undefined to exist\n    at should.exist (node_modules/chai/lib/chai/interface/should.js:144:34)\n    at Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/tests/60-sd-interop.js:110:18)\n    at process.processImmediate (node:internal/timers:478:21)"
                     }</pre>
                       </span>
                     </div>
@@ -11196,7 +11196,7 @@
                         <pre>{
                       "name": "AssertionError",
                       "message": "Expected issuer Grotto Networking: P-256 to issue a disclosed VC.: expected undefined to exist",
-                      "stack": "AssertionError: Expected issuer Grotto Networking: P-256 to issue a disclosed VC.: expected undefined to exist\n    at should.exist (node_modules/chai/lib/chai/interface/should.js:144:34)\n    at Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/tests/60-sd-interop.js:108:18)\n    at process.processImmediate (node:internal/timers:478:21)"
+                      "stack": "AssertionError: Expected issuer Grotto Networking: P-256 to issue a disclosed VC.: expected undefined to exist\n    at should.exist (node_modules/chai/lib/chai/interface/should.js:144:34)\n    at Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/tests/60-sd-interop.js:110:18)\n    at process.processImmediate (node:internal/timers:478:21)"
                     }</pre>
                       </span>
                     </div>
