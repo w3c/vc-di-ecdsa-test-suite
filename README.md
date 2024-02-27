@@ -17,6 +17,7 @@ SPDX-License-Identifier: BSD-3-Clause
     - [Testing Locally](#testing-locally)
     - [Configuring the Tests](#Configuring-the-tests)
     - [Configuring Test Vectors](#Configuring-test-vectors)
+    - [Running Interoperability Tests](#Running-Interoperability-Tests)
   - [Implementation](#implementation)
     - [Docker Integration (TODO)](#docker-integration-todo)
   - [Contribute](#contribute)
@@ -117,6 +118,16 @@ For this suite the `runner.json` file looks like this:
 ### Configuring Test Vectors
 The tests use a configuration file `/config/vectors.json` to configure test vectors.
 [Test Vector configuration is documented in testVectorGuide.md,](/testVectorGuide.md)
+
+### Running Interoperability Tests
+Running Interoperability tests requires having authorization to multiple implementations'
+endpoints. Because most users of this suite will not have those authorization capabilities
+the interoperability suites are disabled by default. If you wish to try running the interoperability suites
+you may by setting `local: false` in `./config/runner.json` or using the ENV Variable `LOCAL_ONLY=false`.
+
+```
+LOCAL_ONLY=false npm test
+```
 
 ## Implementation
 
