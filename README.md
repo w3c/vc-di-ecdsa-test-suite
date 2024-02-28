@@ -49,14 +49,14 @@ mocha --grep '"specificProperty" test name' ./tests/10-specific-test-suite.js
 
 ### Testing Locally
 If you want to test implementations or just endpoints running locally, you can
-copy `localImplementationsConfig.example.cjs` to `.localImplementationsConfig.cjs`
+copy `localImplementationsConfig.example.cjs` to `localImplementationsConfig.cjs`
 in the root directory of the test suite.
 
 ```bash
-cp localImplementationsConfig.example.cjs .localImplementationsConfig.cjs
+cp localImplementationsConfig.example.cjs localImplementationsConfig.cjs
 ```
 
-Git is set to ignore `.localImplementationsConfig.cjs` by default.
+Git is set to ignore `localImplementationsConfig.cjs` & `.localImplementationsConfig.cjs` by default.
 
 This file must be a CommonJS module that exports an array of implementations:
 
@@ -68,6 +68,8 @@ const baseUrl = process.env.BASE_URL || 'https://localhost:40443/id';
 module.exports = [{
   name: 'My Company',
   implementation: 'My Implementation Name',
+  // only this implementation will be run in the suite
+  only: true,
   issuers: [{
     id: 'did:key:zMyKey',
     endpoint: `${baseUrl}/credentials/issue`,
@@ -84,13 +86,6 @@ module.exports = [{
 
 After adding the configuration file, both the localhost implementations and other
 implementations matching the test tag will be included in the test run.
-
-To specifically test only the localhost implementation, modify the test suite to
-filter implementations based on a specific tag in your local configuration file.
-
-For instance, if your `.localImplementationsConfig.cjs` configuration file looks like
-the one above, you can adjust the tag used in each test suite by modifying `./config/runner.json`
-to filter the implementations by `localhost` and other tags.
 
 ### Configuring the Tests
 These test suites use tags matched to implementations' endpoint tags in the tests.
