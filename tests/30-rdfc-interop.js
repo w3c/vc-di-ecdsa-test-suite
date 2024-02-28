@@ -20,7 +20,6 @@ const {
   match: verifierMatches
 } = endpoints.filterByTag({tags: [...tags], property: 'verifiers'});
 
-// skip these tests if local true
 (local ? describe.skip : describe)('ecdsa-rdfc-2019 (interop)', function() {
   // this will tell the report
   // to make an interop matrix with this suite
