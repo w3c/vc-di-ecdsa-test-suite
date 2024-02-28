@@ -5,6 +5,8 @@ const baseUrl = process.env.BASE_URL || 'https://localhost:40443/id';
 module.exports = [{
   name: 'My Company',
   implementation: 'My Implementation Name',
+  // only this implementation will be run in the suite
+  only: true,
   issuers: [{
     id: 'did:myMethod:implementation:issuer:id',
     endpoint: `${baseUrl}/credentials/issue`,
