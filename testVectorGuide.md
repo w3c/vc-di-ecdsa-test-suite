@@ -41,7 +41,7 @@ in that section, in order for the tests to run.
 
 Each vectors suite has an associated `keyTypes` property.
 That property contains an array of `keyTypes` used to create verification test data.
-Your implementation will only be tested against your `supportedEcdsaKeyTypes` specified
+Your implementation will only be tested against the `supportedEcdsaKeyTypes` specified
 in your implementation manifest.
 
 A minimal non-SD test vector configuration looks like this:
