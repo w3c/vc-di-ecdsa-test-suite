@@ -126,7 +126,7 @@ endpoints. Because most users of this suite will not have those authorization ca
 the interoperability suites are disabled by default. If you wish to try running the interoperability suites
 you may by setting `local: false` in `./config/runner.json` or using the ENV Variable `LOCAL_ONLY=false`.
 
-```
+```bash
 LOCAL_ONLY=false npm test
 ```
 
