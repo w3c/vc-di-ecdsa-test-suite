@@ -38,6 +38,7 @@
   },
   "homepage": "https://github.com/w3c/vc-di-ecdsa-test-suite#readme",
   "dependencies": {
+    "@digitalbazaar/credentials-v2-context": "github:digitalbazaar/credentials-v2-context",
     "@digitalbazaar/data-integrity": "^2.1.0",
     "@digitalbazaar/data-integrity-context": "^2.0.0",
     "@digitalbazaar/did-method-key": "^5.1.0",
