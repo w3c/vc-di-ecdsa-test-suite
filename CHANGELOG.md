@@ -15,6 +15,7 @@ SPDX-License-Identifier: BSD-3-Clause
 
 ### Added
 - **BREAKING**: interop tests are now skipped by default; `LOCAL_ONLY` environment variable set to `false` reenables them.
+- Support for issuing test data locally using VC 2.0 context.
 
 ## 2.3.0 - 2024-02-25
 
