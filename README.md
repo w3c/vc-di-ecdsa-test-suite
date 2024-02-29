@@ -121,8 +121,8 @@ The tests use a configuration file `/config/vectors.json` to configure test vect
 
 ### Running Interoperability Tests
 
-Running interoperability tests requires having authorization to multiple implementations'
-endpoints. Because most users of this suite will not have those authorization capabilities
+Running interoperability tests requires having authorization to the endpoints of multiple
+implementations. Because most users of this suite will not have those authorization capabilities
 the interoperability suites are disabled by default. If you wish to try running the interoperability suites
 you may by setting `local: false` in `./config/runner.json` or using the ENV Variable `LOCAL_ONLY=false`.
 
