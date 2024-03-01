@@ -2,35 +2,75 @@
   "suites": {
     "ecdsa-rdfc-2019": {
       "keyTypes": ["P-256", "P-384"],
+      "vcTypes": ["1.1", "2.0"],
       "credentials": {
-        "create": {"document": "./mocks/valid/document.json"},
-        "verify": {"document": "./mocks/valid/document.json"},
-        "interop": {"document": "./mocks/valid/document.json"}
+        "create": {
+          "1.1": {"document": "./mocks/valid/vc1.1/document.json"},
+          "2.0": {"document": "./mocks/valid/vc2.0/document.json"}
+        },
+        "verify": {
+          "1.1": {"document": "./mocks/valid/vc1.1/document.json"},
+          "2.0": {"document": "./mocks/valid/vc2.0/document.json"}
+        },
+        "interop": {
+          "1.1": {"document": "./mocks/valid/vc1.1/document.json"},
+          "2.0": {"document": "./mocks/valid/vc2.0/document.json"}
+        }
       }
     },
     "ecdsa-sd-2023": {
       "keyTypes": ["P-256"],
+      "vcTypes": ["1.1", "2.0"],
       "credentials": {
         "create": {
-          "document": "./mocks/valid/document.json",
-          "mandatoryPointers": "./mocks/valid/mandatoryPointers.json"
+          "1.1": {
+            "document": "./mocks/valid/vc1.1/document.json",
+            "mandatoryPointers": "./mocks/valid/vc1.1/mandatoryPointers.json",
+            "selectivePointers": "./mocks/valid/vc1.1/selectivePointers.json"
+          },
+          "2.0": {
+            "document": "./mocks/valid/vc2.0/document.json",
+            "mandatoryPointers": "./mocks/valid/vc2.0/mandatoryPointers.json",
+            "selectivePointers": "./mocks/valid/vc2.0/selectivePointers.json"
+          }
         },
         "verify": {
           "subjectNestedObjects": {
-            "document": "./mocks/valid/document.json",
-            "mandatoryPointers": "./mocks/valid/mandatoryPointers.json",
-            "selectivePointers": "./mocks/valid/selectivePointers.json"
+            "1.1": {
+              "document": "./mocks/valid/vc1.1/document.json",
+              "mandatoryPointers": "./mocks/valid/vc1.1/mandatoryPointers.json",
+              "selectivePointers": "./mocks/valid/vc1.1/selectivePointers.json"
+            },
+            "2.0": {
+              "document": "./mocks/valid/vc2.0/document.json",
+              "mandatoryPointers": "./mocks/valid/vc2.0/mandatoryPointers.json",
+              "selectivePointers": "./mocks/valid/vc2.0/selectivePointers.json"
+            }
           },
           "subjectHasArrays": {
-            "document": "./mocks/achievement/document.json",
-            "mandatoryPointers": "./mocks/achievement/mandatoryPointers.json",
-            "selectivePointers": "./mocks/achievement/selectivePointers.json"
+            "1.1": {
+              "document": "./mocks/achievement/vc1.1/document.json",
+              "mandatoryPointers": "./mocks/achievement/vc1.1/mandatoryPointers.json",
+              "selectivePointers": "./mocks/achievement/vc1.1/selectivePointers.json"
+            },
+            "2.0": {
+              "document": "./mocks/achievement/vc2.0/document.json",
+              "mandatoryPointers": "./mocks/achievement/vc2.0/mandatoryPointers.json",
+              "selectivePointers": "./mocks/achievement/vc2.0/selectivePointers.json"
+            }
           }
         },
         "interop": {
-          "document": "./mocks/valid/document.json",
-          "mandatoryPointers": "./mocks/valid/mandatoryPointers.json",
-          "selectivePointers": "./mocks/valid/selectivePointers.json"
+          "1.1": {
+            "document": "./mocks/valid/vc1.1/document.json",
+            "mandatoryPointers": "./mocks/valid/vc1.1/mandatoryPointers.json",
+            "selectivePointers": "./mocks/valid/vc1.1/selectivePointers.json"
+          },
+          "2.0": {
+            "document": "./mocks/valid/vc2.0/document.json",
+            "mandatoryPointers": "./mocks/valid/vc2.0/mandatoryPointers.json",
+            "selectivePointers": "./mocks/valid/vc2.0/selectivePointers.json"
+          }
         }
       }
     }
