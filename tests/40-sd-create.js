@@ -4,6 +4,7 @@
  */
 import * as ecdsaSd2023Cryptosuite
   from '@digitalbazaar/ecdsa-sd-2023-cryptosuite';
+import {createInitialVc, endpointCheck} from './helpers.js';
 import {
   shouldBeBs58,
   shouldBeBs64UrlNoPad,
@@ -11,7 +12,6 @@ import {
   shouldHaveHeaderBytes,
   verificationSuccess
 } from './assertions.js';
-import {createInitialVc} from './helpers.js';
 import {deriveCredential} from './vc-generator/index.js';
 import {documentLoader} from './documentLoader.js';
 import {endpoints} from 'vc-test-suite-implementations';
@@ -19,7 +19,7 @@ import {expect} from 'chai';
 import {getSuiteConfig} from './test-config.js';
 import {localVerifier} from './vc-verifier/index.js';
 
-const {tags, credentials, keyTypes} = getSuiteConfig('ecdsa-sd-2023');
+const {tags, credentials, vectors} = getSuiteConfig('ecdsa-sd-2023');
 const {match} = endpoints.filterByTag({
   tags: [...tags],
   property: 'issuers'
@@ -30,188 +30,193 @@ const verifier = localVerifier({
 });
 
 describe('ecdsa-sd-2023 (create)', function() {
-  describe('ecdsa-sd-2023 (issuers)', function() {
-    this.matrix = true;
-    this.report = true;
-    this.implemented = [];
-    this.rowLabel = 'Test Name';
-    this.columnLabel = 'Implementation';
-    for(const [name, {endpoints: issuers}] of match) {
-      for(const keyType of keyTypes) {
-        for(const issuer of issuers) {
-          const {supportedEcdsaKeyTypes} = issuer.settings;
-          // if an issuer does not support the current keyType skip it
-          if(!supportedEcdsaKeyTypes.includes(keyType)) {
-            continue;
-          }
-          // add implementation name and keyType to report
-          this.implemented.push(`${name}: ${keyType}`);
-          describe(`${name}: ${keyType}`, function() {
-            let issuedVc;
-            let proofs;
-            const verificationMethodDocuments = [];
-            before(async function() {
-              issuedVc = await createInitialVc({
-                issuer,
-                vc: credentials.create.document,
-                mandatoryPointers: credentials.create.mandatoryPointers
-              });
-              // Support multiple proofs
-              proofs = Array.isArray(issuedVc?.proof) ? issuedVc.proof :
-                [issuedVc?.proof];
-              const verificationMethods = proofs.map(
-                proof => proof.verificationMethod);
-              for(const verificationMethod of verificationMethods) {
-                const verificationMethodDocument = await documentLoader({
-                  url: verificationMethod
+  for(const vcVersion of vectors.vcTypes) {
+    describe(`ecdsa-sd-2023 (issuers) VC ${vcVersion}`, function() {
+      this.matrix = true;
+      this.report = true;
+      this.implemented = [];
+      this.rowLabel = 'Test Name';
+      this.columnLabel = 'Implementation';
+      for(const [name, {endpoints: issuers}] of match) {
+        for(const keyType of vectors.keyTypes) {
+          for(const issuer of issuers) {
+            // does the endpoint support this test?
+            if(!endpointCheck({endpoint: issuer, keyType, vcVersion})) {
+              continue;
+            }
+            // add implementation name and keyType to report
+            this.implemented.push(`${name}: ${keyType}`);
+            describe(`${name}: ${keyType}`, function() {
+              let issuedVc;
+              let proofs;
+              const verificationMethodDocuments = [];
+              before(async function() {
+                issuedVc = await createInitialVc({
+                  issuer,
+                  vc: credentials.create[vcVersion].document,
+                  mandatoryPointers:
+                    credentials.create[vcVersion].mandatoryPointers
                 });
-                verificationMethodDocuments.push(verificationMethodDocument);
-              }
-            });
-            it('The field "cryptosuite" MUST be "ecdsa-sd-2023".', function() {
-              this.test.cell = {
-                columnId: `${name}: ${keyType}`, rowId: this.test.title
-              };
-              proofs.some(
-                proof => proof.cryptosuite === 'ecdsa-sd-2023'
-              ).should.equal(true, 'Expected at least one proof to have ' +
-                '"cryptosuite" property "ecdsa-sd-2023".'
-              );
-            });
-            it('the signature value (proofValue) MUST be expressed according ' +
-            'to section 7 of [RFC4754] (sometimes referred to as the IEEE ' +
-            'P1363 format) and encoded according to the specific cryptosuite ' +
-            'proof generation algorithm.', async function() {
-              this.test.cell = {
-                columnId: `${name}: ${keyType}`, rowId: this.test.title
-              };
-              const _proof = proofs.find(p =>
-                p?.cryptosuite === 'ecdsa-sd-2023');
-              expect(
-                _proof,
-                `Expected VC from issuer ${name} to have an ' +
-                '"ecdsa-sd-2023" proof`).to.exist;
-              expect(
-                _proof.proofValue,
-                `Expected VC from issuer ${name} to have a ' +
-                '"proof.proofValue"`
-              ).to.exist;
-              expect(
-                _proof.proofValue,
-                `Expected VC "proof.proofValue" from issuer ${name} to be ` +
-                'a string.'
-              ).to.be.a.string;
-              //Ensure the proofValue string starts with u, indicating that it
-              //is a multibase-base64url-no-pad-encoded value, throwing an
-              //error if it does not.
-              expect(
-                _proof.proofValue.startsWith('u'),
-                `Expected "proof.proofValue" to start with u received ` +
-                `${_proof.proofValue[0]}`).to.be.true;
-              // now test the encoding which is bs64 url no pad for this suite
-              expect(
-                shouldBeBs64UrlNoPad(_proof.proofValue),
-                'Expected "proof.proofValue" to be bs64 url no pad encoded.'
-              ).to.be.true;
-              await shouldHaveHeaderBytes(
-                _proof.proofValue,
-                new Uint8Array([0xd9, 0x5d, 0x00])
-              );
-            });
-            it('The field "proofValue" MUST start with "u".', function() {
-              this.test.cell = {
-                columnId: `${name}: ${keyType}`, rowId: this.test.title
-              };
-              proofs.some(
-                proof => proof.proofValue.startsWith('u')
-              ).should.equal(true, 'Expected at least one proof to have ' +
-                '"proofValue" property that starts with "u".'
-              );
-            });
-            it('The "proof" MUST verify with a conformant verifier.',
+                // Support multiple proofs
+                proofs = Array.isArray(issuedVc?.proof) ? issuedVc.proof :
+                  [issuedVc?.proof];
+                // only look for verificationMethods if a valid proof is there
+                if(proofs.filter(Boolean).length) {
+                  const verificationMethods = proofs.map(
+                    proof => proof.verificationMethod);
+                  for(const verificationMethod of verificationMethods) {
+                    const verificationMethodDocument = await documentLoader({
+                      url: verificationMethod
+                    });
+                    verificationMethodDocuments.push(
+                      verificationMethodDocument);
+                  }
+                }
+              });
+              it('The field "cryptosuite" MUST be "ecdsa-sd-2023".',
+                function() {
+                  this.test.cell = {
+                    columnId: `${name}: ${keyType}`, rowId: this.test.title
+                  };
+                  proofs.some(
+                    proof => proof.cryptosuite === 'ecdsa-sd-2023'
+                  ).should.equal(true, 'Expected at least one proof to have ' +
+                    '"cryptosuite" property "ecdsa-sd-2023".'
+                  );
+                });
+              it('the signature value (proofValue) MUST be expressed ' +
+              'according to section 7 of [RFC4754] (sometimes referred to ' +
+              'as the IEEE P1363 format) and encoded according to the ' +
+              'specific cryptosuite proof generation algorithm.',
               async function() {
                 this.test.cell = {
                   columnId: `${name}: ${keyType}`, rowId: this.test.title
                 };
-                const derivedCredential = await deriveCredential({
-                  verifiableCredential: issuedVc,
-                  documentLoader,
-                  suite: 'ecdsa-sd-2023',
-                  selectivePointers: ['/credentialSubject/id']
-                });
-
-                await verificationSuccess({
-                  credential: derivedCredential,
-                  verifier
-                });
+                const _proof = proofs.find(p =>
+                  p?.cryptosuite === 'ecdsa-sd-2023');
+                expect(
+                  _proof,
+                  `Expected VC from issuer ${name} to have an ' +
+                  '"ecdsa-sd-2023" proof`).to.exist;
+                expect(
+                  _proof.proofValue,
+                  `Expected VC from issuer ${name} to have a ' +
+                  '"proof.proofValue"`
+                ).to.exist;
+                expect(
+                  _proof.proofValue,
+                  `Expected VC "proof.proofValue" from issuer ${name} to be ` +
+                  'a string.'
+                ).to.be.a.string;
+                //Ensure the proofValue string starts with u, indicating that it
+                //is a multibase-base64url-no-pad-encoded value, throwing an
+                //error if it does not.
+                expect(
+                  _proof.proofValue.startsWith('u'),
+                  `Expected "proof.proofValue" to start with u received ` +
+                  `${_proof.proofValue[0]}`).to.be.true;
+                // now test the encoding which is bs64 url no pad for this suite
+                expect(
+                  shouldBeBs64UrlNoPad(_proof.proofValue),
+                  'Expected "proof.proofValue" to be bs64 url no pad encoded.'
+                ).to.be.true;
+                await shouldHaveHeaderBytes(
+                  _proof.proofValue,
+                  new Uint8Array([0xd9, 0x5d, 0x00])
+                );
               });
-            it('The "proof.proofPurpose" field MUST match the verification ' +
-              'relationship expressed by the verification method controller.',
-            async function() {
-              this.test.cell = {
-                columnId: `${name}: ${keyType}`, rowId: this.test.title
-              };
-              verificationMethodDocuments.should.not.eql([], 'Expected ' +
-                'at least one "verificationMethodDocument".');
-              verificationMethodDocuments.some(
-                verificationMethodDocument =>
-                  verificationMethodDocument?.type === 'Multikey'
-              ).should.equal(true, 'Expected at least one proof to have ' +
-                '"type" property value "Multikey".'
-              );
-              const controllerDocuments = [];
-              for(
-                const verificationMethodDocument of verificationMethodDocuments
-              ) {
-                const controllerDocument = await documentLoader({
-                  url: verificationMethodDocument.controller
+              it('The field "proofValue" MUST start with "u".', function() {
+                this.test.cell = {
+                  columnId: `${name}: ${keyType}`, rowId: this.test.title
+                };
+                proofs.some(
+                  proof => proof.proofValue.startsWith('u')
+                ).should.equal(true, 'Expected at least one proof to have ' +
+                  '"proofValue" property that starts with "u".'
+                );
+              });
+              it('The "proof" MUST verify with a conformant verifier.',
+                async function() {
+                  this.test.cell = {
+                    columnId: `${name}: ${keyType}`, rowId: this.test.title
+                  };
+                  const derivedCredential = await deriveCredential({
+                    verifiableCredential: issuedVc,
+                    suite: 'ecdsa-sd-2023',
+                    selectivePointers: ['/credentialSubject/id']
+                  });
+                  await verificationSuccess({
+                    credential: derivedCredential,
+                    verifier
+                  });
                 });
-                controllerDocuments.push(controllerDocument);
-              }
-              proofs.some(
-                proof => controllerDocuments.some(controllerDocument =>
-                  controllerDocument.hasOwnProperty(proof.proofPurpose))
-              ).should.equal(true, 'Expected "proof.proofPurpose" field ' +
-                'to match the verification method controller.'
-              );
-            });
-            it('Dereferencing "verificationMethod" MUST result in an object ' +
-              'containing a type property with "Multikey" value.',
-            async function() {
-              this.test.cell = {
-                columnId: `${name}: ${keyType}`, rowId: this.test.title
-              };
-              verificationMethodDocuments.should.not.eql([], 'Expected ' +
-                'at least one "verificationMethodDocument".');
-              verificationMethodDocuments.some(
-                verificationMethodDocument =>
-                  verificationMethodDocument?.type === 'Multikey'
-              ).should.equal(true, 'Expected at least one proof to have ' +
-                '"type" property value "Multikey".'
-              );
-            });
-            it('The "publicKeyMultibase" property of the verification method ' +
-              'MUST be public key encoded according to MULTICODEC and ' +
-              'formatted according to MULTIBASE.', async function() {
-              this.test.cell = {
-                columnId: `${name}: ${keyType}`, rowId: this.test.title
-              };
-              verificationMethodDocuments.should.not.eql([], 'Expected ' +
-                '"verificationMethodDocuments" to not be empty.');
-              verificationMethodDocuments.some(
-                verificationMethodDocument => {
-                  const multibase = 'z';
-                  const {publicKeyMultibase} = verificationMethodDocument;
-                  return publicKeyMultibase.startsWith(multibase) &&
-                    shouldBeBs58(publicKeyMultibase) &&
-                    shouldBeMulticodecEncoded(publicKeyMultibase);
+              it('The "proof.proofPurpose" field MUST match the verification ' +
+                'relationship expressed by the verification method controller.',
+              async function() {
+                this.test.cell = {
+                  columnId: `${name}: ${keyType}`, rowId: this.test.title
+                };
+                verificationMethodDocuments.should.not.eql([], 'Expected ' +
+                  'at least one "verificationMethodDocument".');
+                verificationMethodDocuments.some(
+                  verificationMethodDocument =>
+                    verificationMethodDocument?.type === 'Multikey'
+                ).should.equal(true, 'Expected at least one proof to have ' +
+                  '"type" property value "Multikey".'
+                );
+                const controllerDocuments = [];
+                for(const verificationMethodDocument of
+                  verificationMethodDocuments) {
+                  const controllerDocument = await documentLoader({
+                    url: verificationMethodDocument.controller
+                  });
+                  controllerDocuments.push(controllerDocument);
                 }
-              ).should.equal(true, 'Expected at "publicKeyMultibase" to ' +
-                'be MULTIBASE formatted and MULTICODEC encoded.');
+                proofs.some(
+                  proof => controllerDocuments.some(controllerDocument =>
+                    controllerDocument.hasOwnProperty(proof.proofPurpose))
+                ).should.equal(true, 'Expected "proof.proofPurpose" field ' +
+                  'to match the verification method controller.'
+                );
+              });
+              it('Dereferencing "verificationMethod" MUST result in an ' +
+              'object containing a type property with "Multikey" value.',
+              async function() {
+                this.test.cell = {
+                  columnId: `${name}: ${keyType}`, rowId: this.test.title
+                };
+                verificationMethodDocuments.should.not.eql([], 'Expected ' +
+                  'at least one "verificationMethodDocument".');
+                verificationMethodDocuments.some(
+                  verificationMethodDocument =>
+                    verificationMethodDocument?.type === 'Multikey'
+                ).should.equal(true, 'Expected at least one proof to have ' +
+                  '"type" property value "Multikey".'
+                );
+              });
+              it('The "publicKeyMultibase" property of the verification ' +
+              'method MUST be public key encoded according to MULTICODEC and ' +
+                'formatted according to MULTIBASE.', async function() {
+                this.test.cell = {
+                  columnId: `${name}: ${keyType}`, rowId: this.test.title
+                };
+                verificationMethodDocuments.should.not.eql([], 'Expected ' +
+                  '"verificationMethodDocuments" to not be empty.');
+                verificationMethodDocuments.some(
+                  verificationMethodDocument => {
+                    const multibase = 'z';
+                    const {publicKeyMultibase} = verificationMethodDocument;
+                    return publicKeyMultibase.startsWith(multibase) &&
+                      shouldBeBs58(publicKeyMultibase) &&
+                      shouldBeMulticodecEncoded(publicKeyMultibase);
+                  }
+                ).should.equal(true, 'Expected at "publicKeyMultibase" to ' +
+                  'be MULTIBASE formatted and MULTICODEC encoded.');
+              });
             });
-          });
+          }
         }
       }
-    }
-  });
+    });
+  }
 });
