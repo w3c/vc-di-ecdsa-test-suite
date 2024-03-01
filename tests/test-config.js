@@ -71,12 +71,12 @@ export const getSuiteConfig = suite => {
   }
   // create an initial config
   const suiteConfig = _createSuiteConfig(suite);
-  const {credentials = {}, keyTypes} = _createVectorConfig(suite);
+  const {credentials = {}, ...vectorConfig} = _createVectorConfig(suite);
   const config = {
     ...suiteConfig,
     credentials,
-    keyTypes,
-    disableInterop: parseInteropOption()
+    disableInterop: parseInteropOption(),
+    vectors: {...vectorConfig},
   };
   // store in the cache
   _cache.set(suite, config);

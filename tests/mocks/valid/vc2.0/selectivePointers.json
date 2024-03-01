@@ -1,0 +1,6 @@
+[
+  "/credentialSubject/driverLicense/documentIdentifier",
+  "/credentialSubject/driverLicense/dateOfBirth",
+  "/credentialSubject/driverLicense/expirationDate",
+  "/credentialSubject/driverLicense/issuingAuthority"
+]

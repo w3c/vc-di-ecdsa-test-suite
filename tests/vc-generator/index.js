@@ -14,35 +14,37 @@ import {klona} from 'klona';
  * with the test data.
  *
  * @param {object} options - Options to use.
- * @param {object} options.credential - An unsigned VC.
+ * @param {Map<string, object>} options.credentials - Versioned unsigned
+ *   credentials.
  * @param {Function} [options.documentLoader = defaultLoader] - A
  * documentLoader(url).
  * @param {string} options.suite - A cryptosuite id.
- * @param {Array<string>} options.mandatoryPointers - An optional list of
- *   json pointers.
  * @param {Array<string>} options.keyTypes - A Set of keyTypes to issue with.
  *
  * @returns {Promise<Map<string, object>>} Returns a Map <keyType, vc>.
  */
-export async function issueTestData({
-  credential,
+export async function issueCredentials({
+  credentials,
   suite,
   documentLoader = defaultLoader,
-  mandatoryPointers,
   keyTypes = ['P-256']
 }) {
   const results = new Map();
   const keys = await getMultikeys({keyTypes});
   for(const [keyType, {signer, issuer}] of keys) {
-    const _vc = await issueCredential({
-      credential,
-      documentLoader,
-      issuer,
-      signer,
-      suite,
-      mandatoryPointers
-    });
-    results.set(keyType, _vc);
+    const versionedVcs = new Map();
+    for(const [vcVersion, {document, mandatoryPointers}] of credentials) {
+      const _vc = await issueCredential({
+        credential: document,
+        documentLoader,
+        issuer,
+        signer,
+        suite,
+        mandatoryPointers
+      });
+      versionedVcs.set(vcVersion, _vc);
+    }
+    results.set(keyType, versionedVcs);
   }
   return results;
 }
@@ -70,34 +72,43 @@ export async function issueCredential({
  * with the test data.
  *
  * @param {object} options - Options to use.
+ * @param {Map<string, object>} options.vectors - Version & VC creation options.
  * @param {Function} [options.documentLoader = defaultLoader] - A
  * documentLoader(url).
- * @param {object} options.verifiableCredential - A signed VC.
  * @param {string} options.suite - A cryptosuite id.
- * @param {Array<string>} options.selectivePointers - An optional list of json
- *   pointers.
  * @param {Array<string>} options.keyTypes - A list of key types.
  *
  * @returns {Promise<Map<string, object>>} Returns a Map <keyType, vc>.
  */
-export async function deriveTestData({
+export async function deriveCredentials({
+  vectors,
   documentLoader = defaultLoader,
-  verifiableCredential,
   suite,
-  selectivePointers = [],
   keyTypes = ['P-256']
 }) {
   const results = new Map();
   const keys = await getMultikeys({keyTypes});
-  for(const [keyType, {signer}] of keys) {
-    const _vc = await deriveCredential({
-      verifiableCredential,
-      documentLoader,
-      suite,
-      signer,
-      selectivePointers
-    });
-    results.set(keyType, _vc);
+  for(const [keyType, {signer, issuer}] of keys) {
+    const versionedVcs = new Map();
+    for(const [vcVersion, vector] of vectors) {
+      const {document, mandatoryPointers, selectivePointers} = vector;
+      const verifiableCredential = await issueCredential({
+        credential: document,
+        issuer,
+        signer,
+        suite,
+        mandatoryPointers
+      });
+      const derivedVc = await deriveCredential({
+        verifiableCredential,
+        documentLoader,
+        suite,
+        signer,
+        selectivePointers
+      });
+      versionedVcs.set(vcVersion, derivedVc);
+    }
+    results.set(keyType, versionedVcs);
   }
   return results;
 }
