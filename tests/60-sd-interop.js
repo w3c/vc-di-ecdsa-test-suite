@@ -84,8 +84,8 @@ const {
         before(async function() {
           const issuedVc = await createInitialVc({
             issuer: issuerEndpoint,
-            vc: credentials.interop.document,
-            mandatoryPointers: credentials.interop.mandatoryPointers
+            vc: credentials.interop['1.1'].document,
+            mandatoryPointers: credentials.interop['1.1'].mandatoryPointers
           });
           const {match: matchingVcHolders} = endpoints.filterByTag({
             tags: ['vcHolder'],

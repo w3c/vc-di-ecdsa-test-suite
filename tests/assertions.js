@@ -113,7 +113,6 @@ export const verificationSuccess = async ({credential, verifier}) => {
     }
   };
   const {result, error} = await verifier.post({json: body});
-
   should.not.exist(error, 'Expected verifier to not error.');
   should.exist(result, 'Expected a result from verifier.');
   should.exist(result.status,
