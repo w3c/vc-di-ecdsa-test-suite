@@ -2,20 +2,20 @@
   "specStatus": "base",
   "shortName": "vc-di-ecdsa-test-suite",
   "subtitle": "Interoperability test suite for ECDSA Data Integrity cryptosuites.",
-  "github": "https://github.com/w3c-ccg/vc-di-ecdsa-test-suite",
-  "edDraftURI": "https://w3c-ccg.github.io/vc-di-ecdsa-test-suite",
+  "github": "https://github.com/w3c/vc-di-ecdsa-test-suite",
+  "edDraftURI": "https://w3c.github.io/vc-di-ecdsa-test-suite",
   "doJsonLd": true,
   "includePermalinks": false,
   "editors": [{
     "name": "Tashi D. Gyeltshen", "url": "https://github.com/jsAssassin",
-    "company": "Digital Bazaar", "companyURL": "http://digitalbazaar.com/"
+    "company": "Digital Bazaar", "companyURL": "https://digitalbazaar.com/"
   }],
   "authors": [{
     "name": "Tashi D. Gyeltshen", "url": "https://github.com/jsAssassin",
-    "company": "Digital Bazaar", "companyURL": "http://digitalbazaar.com/"
+    "company": "Digital Bazaar", "companyURL": "https://digitalbazaar.com/"
   },
   {
-    "name": "Manu Sporny", "url": "http://manu.sporny.org/",
-    "company": "Digital Bazaar", "companyURL": "http://digitalbazaar.com/ "
+    "name": "Manu Sporny", "url": "https://manu.sporny.org/",
+    "company": "Digital Bazaar", "companyURL": "https://digitalbazaar.com/ "
   }]
 }
