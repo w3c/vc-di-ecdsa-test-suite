@@ -8,22 +8,21 @@ SPDX-License-Identifier: BSD-3-Clause
 
 ## Table of Contents
 
-- [ECDSA Cryptosuite test suite](#ecdsa-cryptosuite-test-suite)
-  - [Table of Contents](#table-of-contents)
-  - [Background](#background)
-  - [Install](#install)
-  - [Usage](#usage)
-    - [Running Specific Tests](#Running-Specific-Tests)
-    - [Testing Locally](#testing-locally)
-    - [Configuring the Tests](#Configuring-the-tests)
-    - [Configuring Test Vectors](#Configuring-test-vectors)
-    - [Running Interoperability Tests](#Running-Interoperability-Tests)
-  - [Implementation](#implementation)
-    - [Docker Integration (TODO)](#docker-integration-todo)
-  - [Contribute](#contribute)
-  - [License](#license)
+- [Background](#background)
+- [Install](#install)
+- [Usage](#usage)
+  - [Running Specific Tests](#Running-Specific-Tests)
+  - [Testing Locally](#testing-locally)
+  - [Configuring the Tests](#Configuring-the-tests)
+  - [Configuring Test Vectors](#Configuring-test-vectors)
+  - [Running Interoperability Tests](#Running-Interoperability-Tests)
+- [Implementation](#implementation)
+  - [Docker Integration (TODO)](#docker-integration-todo)
+- [Contribute](#contribute)
+- [License](#license)
 
 ## Background
+
 Provides interoperability tests for verifiable credential processors
 (issuers and verifiers) that support [ECDSA](https://www.w3.org/TR/vc-di-ecdsa/)
 [Data Integrity](https://www.w3.org/TR/vc-data-integrity/) cryptosuites.
@@ -35,20 +34,25 @@ npm i
 ```
 
 ## Usage
+
 The suites call on a set of common config files stored at `./config/`.
+
 - `./config/runner.json` is for test suite specific configurations.
 - `./config/vector.json` is for test vector specific configurations.
 
 ### Running Specific Tests
+
 This suite uses [`mocha.js`](https://mochajs.org) as the test runner.
 Mocha has [multiple options](https://mochajs.org/#command-line-usage) for filtering which tests run.
 
 For example, the snippet below uses `grep` to filter tests by name, and only runs one of the test suites.
+
 ```bash
 mocha --grep '"specificProperty" test name' ./tests/10-specific-test-suite.js
 ```
 
 ### Testing Locally
+
 If you want to test implementations or just endpoints running locally, you can
 copy `localImplementationsConfig.example.cjs` to `localImplementationsConfig.cjs`
 in the root directory of the test suite.
@@ -89,6 +93,7 @@ After adding the configuration file, both the localhost implementations and othe
 implementations matching the test tag will be included in the test run.
 
 ### Configuring the Tests
+
 These test suites use tags matched to implementations' endpoint tags in the tests.
 You can change the tag on which the suites will run in `./config/runner.json`, if desired.
 
@@ -110,7 +115,9 @@ For this suite the `runner.json` file looks like this:
   }
 }
 ```
+
 ### Configuring Test Vectors
+
 The tests use a configuration file `/config/vectors.json` to configure test vectors.
 [Test Vector configuration is documented in testVectorGuide.md,](/testVectorGuide.md)
 
@@ -134,6 +141,7 @@ with `DataIntegrityProof` proof type using the `ecdsa-rdfc-2019`,
 
 To add your implementation to this test suite, you will need to add 2 endpoints
 to your implementation manifest.
+
 - A credential issuer endpoint (`/credentials/issue`) in the `issuers` property.
   - An optional `id` property may be set alongside the `endpoint`.
     - If provided, the specified `issuer.id` will be added to Verifiable Credentials
