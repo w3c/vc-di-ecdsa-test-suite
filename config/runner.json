@@ -2,9 +2,11 @@
   "local": true,
   "suites": {
     "ecdsa-rdfc-2019": {
+      "supportedKeyTypes": ["P-256", "P-384"],
       "tags": ["ecdsa-rdfc-2019"]
     },
     "ecdsa-sd-2023": {
+      "supportedKeyTypes": ["P-256"],
       "tags": ["ecdsa-sd-2023"],
       "vcHolder": {
         "holderName": "Digital Bazaar",
