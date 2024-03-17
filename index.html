@@ -88,22 +88,22 @@
     <section class="informative" id="conformance-testing-results">
       <h2> Conformance Testing Results </h2>
       <p>
-      Tests passed 310/334 92%
+      Tests passed 331/355 93%
       </p>
       <p>
-      Tests failed 26/334 8%
+      Tests failed 24/355 7%
       </p>
       <p>
-      Failures 26
+      Failures 24
       </p>
       <p>
       Tests skipped 0
       </p>
       <p>
-      Total tests 334
+      Total tests 355
       </p>
       <p>
-        These tests were run on <time>10 March 2024 at 5:06 am UTC</time>
+        These tests were run on <time>17 March 2024 at 5:06 am UTC</time>
       </p>
       <section class="informative" id="Key">
         <h3>Key</h3>
@@ -951,7 +951,7 @@
                         <pre>{
                       "name": "AssertionError",
                       "message": "expected false to equal true",
-                      "stack": "AssertionError: expected false to equal true\n    at Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:146:38)\n    at process.processImmediate (node:internal/timers:478:21)"
+                      "stack": "AssertionError: expected false to equal true\n    at Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:147:38)\n    at process.processImmediate (node:internal/timers:478:21)"
                     }</pre>
                       </span>
                     </div>
@@ -2173,7 +2173,7 @@
               </tr>
               <tr>
                 <!--This is the name of the test-->
-                <td class="subtest">&quot;proof.proofValue&quot; MUST be a valid multibase-encoded value.</td>
+                <td class="subtest">&quot;proof.proofValue&quot; MUST be a valid multibase-encoded value according to the format required by &quot;proof.cryptosuite&quot;.</td>
                 <!--These contain if the test passed, failed, or was skipped-->
                   <td class="passed not-optional highlight-on-hover text-center">
                     <div class= "highlight-on-hover">✓</div>
@@ -5440,7 +5440,7 @@
                         <pre>{
                       "name": "AssertionError",
                       "message": "Expected no result from verifier.: expected Response{ data: { …(3) }, …(3) } to not exist",
-                      "stack": "AssertionError: Expected no result from verifier.: expected Response{ data: { …(3) }, …(3) } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:420:7)"
+                      "stack": "AssertionError: Expected no result from verifier.: expected Response{ data: { …(3) }, …(3) } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:419:7)"
                     }</pre>
                       </span>
                     </div>
@@ -5846,7 +5846,7 @@
                         <pre>{
                       "name": "AssertionError",
                       "message": "Expected no result from verifier.: expected Response{ data: { …(3) }, …(3) } to not exist",
-                      "stack": "AssertionError: Expected no result from verifier.: expected Response{ data: { …(3) }, …(3) } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:451:7)"
+                      "stack": "AssertionError: Expected no result from verifier.: expected Response{ data: { …(3) }, …(3) } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:450:7)"
                     }</pre>
                       </span>
                     </div>
@@ -5918,7 +5918,7 @@
               </tr>
               <tr>
                 <!--This is the name of the test-->
-                <td class="subtest">If the &quot;proof.proofValue&quot; field is not a multibase-encoded base58-btc value, an error MUST be raised.</td>
+                <td class="subtest">If the &quot;proof.proofValue&quot; field is not multibase-encoded, an error MUST be raised.</td>
                 <!--These contain if the test passed, failed, or was skipped-->
                   <td class="passed not-optional highlight-on-hover text-center">
                     <div class= "highlight-on-hover">✓</div>
@@ -7706,8 +7706,8 @@
                 <!--This is the name of the test-->
                 <td class="subtest">&quot;proof&quot; field MUST exist and MUST be either a single object or an unordered set of objects.</td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="pending not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">🚫</div>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -7736,11 +7736,6 @@
                          margin-left: 1rem;
                        }
                       </style>
-                      <span class="err hide no-space-around">
-                        <pre>{
-                      "message": "Test skipped."
-                    }</pre>
-                      </span>
                     </div>
                   </td>
                   <td class="passed not-optional highlight-on-hover text-center">
@@ -7812,8 +7807,8 @@
                 <!--This is the name of the test-->
                 <td class="subtest">if &quot;proof.id&quot; field exists, it MUST be a valid URL.</td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="pending not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">🚫</div>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -7842,11 +7837,6 @@
                          margin-left: 1rem;
                        }
                       </style>
-                      <span class="err hide no-space-around">
-                        <pre>{
-                      "message": "Test skipped."
-                    }</pre>
-                      </span>
                     </div>
                   </td>
                   <td class="passed not-optional highlight-on-hover text-center">
@@ -7918,8 +7908,8 @@
                 <!--This is the name of the test-->
                 <td class="subtest">&quot;proof.type&quot; field MUST exist and be a string.</td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="pending not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">🚫</div>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -7948,11 +7938,6 @@
                          margin-left: 1rem;
                        }
                       </style>
-                      <span class="err hide no-space-around">
-                        <pre>{
-                      "message": "Test skipped."
-                    }</pre>
-                      </span>
                     </div>
                   </td>
                   <td class="passed not-optional highlight-on-hover text-center">
@@ -8024,8 +8009,8 @@
                 <!--This is the name of the test-->
                 <td class="subtest">&quot;proof.type&quot; field MUST be &quot;DataIntegrityProof&quot; and the associated document MUST include expected contexts.</td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="pending not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">🚫</div>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -8054,11 +8039,6 @@
                          margin-left: 1rem;
                        }
                       </style>
-                      <span class="err hide no-space-around">
-                        <pre>{
-                      "message": "Test skipped."
-                    }</pre>
-                      </span>
                     </div>
                   </td>
                   <td class="passed not-optional highlight-on-hover text-center">
@@ -8130,8 +8110,8 @@
                 <!--This is the name of the test-->
                 <td class="subtest">&quot;proof.cryptosuite&quot; field MUST exist and be a string.</td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="pending not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">🚫</div>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -8160,11 +8140,6 @@
                          margin-left: 1rem;
                        }
                       </style>
-                      <span class="err hide no-space-around">
-                        <pre>{
-                      "message": "Test skipped."
-                    }</pre>
-                      </span>
                     </div>
                   </td>
                   <td class="passed not-optional highlight-on-hover text-center">
@@ -8236,8 +8211,8 @@
                 <!--This is the name of the test-->
                 <td class="subtest">if &quot;proof.created&quot; field exists, it MUST be a valid XMLSCHEMA-11 dateTimeStamp value.</td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="pending not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">🚫</div>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -8266,11 +8241,6 @@
                          margin-left: 1rem;
                        }
                       </style>
-                      <span class="err hide no-space-around">
-                        <pre>{
-                      "message": "Test skipped."
-                    }</pre>
-                      </span>
                     </div>
                   </td>
                   <td class="passed not-optional highlight-on-hover text-center">
@@ -8342,8 +8312,8 @@
                 <!--This is the name of the test-->
                 <td class="subtest">if &quot;proof.expires&quot; field exists, it MUST be a valid XMLSCHEMA-11 dateTimeStamp value.</td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="pending not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">🚫</div>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -8372,11 +8342,6 @@
                          margin-left: 1rem;
                        }
                       </style>
-                      <span class="err hide no-space-around">
-                        <pre>{
-                      "message": "Test skipped."
-                    }</pre>
-                      </span>
                     </div>
                   </td>
                   <td class="passed not-optional highlight-on-hover text-center">
@@ -8448,8 +8413,8 @@
                 <!--This is the name of the test-->
                 <td class="subtest">&quot;proof.verificationMethod&quot; field MUST exist and be a valid URL.</td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="pending not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">🚫</div>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -8478,11 +8443,6 @@
                          margin-left: 1rem;
                        }
                       </style>
-                      <span class="err hide no-space-around">
-                        <pre>{
-                      "message": "Test skipped."
-                    }</pre>
-                      </span>
                     </div>
                   </td>
                   <td class="passed not-optional highlight-on-hover text-center">
@@ -8554,8 +8514,8 @@
                 <!--This is the name of the test-->
                 <td class="subtest">&quot;proof.proofPurpose&quot; field MUST exist and be a string.</td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="pending not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">🚫</div>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -8584,11 +8544,6 @@
                          margin-left: 1rem;
                        }
                       </style>
-                      <span class="err hide no-space-around">
-                        <pre>{
-                      "message": "Test skipped."
-                    }</pre>
-                      </span>
                     </div>
                   </td>
                   <td class="passed not-optional highlight-on-hover text-center">
@@ -8660,8 +8615,8 @@
                 <!--This is the name of the test-->
                 <td class="subtest">&quot;proof.proofValue&quot; field MUST exist and be a string.</td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="pending not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">🚫</div>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -8690,11 +8645,6 @@
                          margin-left: 1rem;
                        }
                       </style>
-                      <span class="err hide no-space-around">
-                        <pre>{
-                      "message": "Test skipped."
-                    }</pre>
-                      </span>
                     </div>
                   </td>
                   <td class="passed not-optional highlight-on-hover text-center">
@@ -8764,10 +8714,10 @@
               </tr>
               <tr>
                 <!--This is the name of the test-->
-                <td class="subtest">&quot;proof.proofValue&quot; MUST be a valid multibase-encoded value.</td>
+                <td class="subtest">&quot;proof.proofValue&quot; MUST be a valid multibase-encoded value according to the format required by &quot;proof.cryptosuite&quot;.</td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="pending not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">🚫</div>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -8796,11 +8746,6 @@
                          margin-left: 1rem;
                        }
                       </style>
-                      <span class="err hide no-space-around">
-                        <pre>{
-                      "message": "Test skipped."
-                    }</pre>
-                      </span>
                     </div>
                   </td>
                   <td class="passed not-optional highlight-on-hover text-center">
@@ -8872,8 +8817,8 @@
                 <!--This is the name of the test-->
                 <td class="subtest">if &quot;proof.domain&quot; field exists, it MUST be either a string, or an unordered set of strings.</td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="pending not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">🚫</div>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -8902,11 +8847,6 @@
                          margin-left: 1rem;
                        }
                       </style>
-                      <span class="err hide no-space-around">
-                        <pre>{
-                      "message": "Test skipped."
-                    }</pre>
-                      </span>
                     </div>
                   </td>
                   <td class="passed not-optional highlight-on-hover text-center">
@@ -8978,8 +8918,8 @@
                 <!--This is the name of the test-->
                 <td class="subtest">if &quot;proof.challenge&quot; field exists, it MUST be a string.</td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="pending not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">🚫</div>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -9008,11 +8948,6 @@
                          margin-left: 1rem;
                        }
                       </style>
-                      <span class="err hide no-space-around">
-                        <pre>{
-                      "message": "Test skipped."
-                    }</pre>
-                      </span>
                     </div>
                   </td>
                   <td class="passed not-optional highlight-on-hover text-center">
@@ -9084,8 +9019,8 @@
                 <!--This is the name of the test-->
                 <td class="subtest">if &quot;proof.previousProof&quot; field exists, it MUST be a string.</td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="pending not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">🚫</div>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -9114,11 +9049,6 @@
                          margin-left: 1rem;
                        }
                       </style>
-                      <span class="err hide no-space-around">
-                        <pre>{
-                      "message": "Test skipped."
-                    }</pre>
-                      </span>
                     </div>
                   </td>
                   <td class="passed not-optional highlight-on-hover text-center">
@@ -9190,8 +9120,8 @@
                 <!--This is the name of the test-->
                 <td class="subtest">if &quot;proof.nonce&quot; field exists, it MUST be a string.</td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="pending not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">🚫</div>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -9220,11 +9150,6 @@
                          margin-left: 1rem;
                        }
                       </style>
-                      <span class="err hide no-space-around">
-                        <pre>{
-                      "message": "Test skipped."
-                    }</pre>
-                      </span>
                     </div>
                   </td>
                   <td class="passed not-optional highlight-on-hover text-center">
@@ -9373,8 +9298,8 @@
                 <!--This is the name of the test-->
                 <td class="subtest">The field &quot;cryptosuite&quot; MUST be &quot;ecdsa-sd-2023&quot;.</td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="pending not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">🚫</div>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -9403,11 +9328,6 @@
                          margin-left: 1rem;
                        }
                       </style>
-                      <span class="err hide no-space-around">
-                        <pre>{
-                      "message": "Test skipped."
-                    }</pre>
-                      </span>
                     </div>
                   </td>
                   <td class="passed not-optional highlight-on-hover text-center">
@@ -9479,8 +9399,8 @@
                 <!--This is the name of the test-->
                 <td class="subtest">The field &quot;proofValue&quot; MUST start with &quot;u&quot;.</td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="pending not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">🚫</div>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -9509,11 +9429,6 @@
                          margin-left: 1rem;
                        }
                       </style>
-                      <span class="err hide no-space-around">
-                        <pre>{
-                      "message": "Test skipped."
-                    }</pre>
-                      </span>
                     </div>
                   </td>
                   <td class="passed not-optional highlight-on-hover text-center">
@@ -9585,8 +9500,8 @@
                 <!--This is the name of the test-->
                 <td class="subtest">The &quot;proof&quot; MUST verify when using a conformant verifier.</td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="pending not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">🚫</div>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -9615,11 +9530,6 @@
                          margin-left: 1rem;
                        }
                       </style>
-                      <span class="err hide no-space-around">
-                        <pre>{
-                      "message": "Test skipped."
-                    }</pre>
-                      </span>
                     </div>
                   </td>
                   <td class="passed not-optional highlight-on-hover text-center">
@@ -9691,8 +9601,8 @@
                 <!--This is the name of the test-->
                 <td class="subtest">The &quot;proof.proofPurpose&quot; field MUST match the verification relationship expressed by the verification method controller.</td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="pending not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">🚫</div>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -9721,11 +9631,6 @@
                          margin-left: 1rem;
                        }
                       </style>
-                      <span class="err hide no-space-around">
-                        <pre>{
-                      "message": "Test skipped."
-                    }</pre>
-                      </span>
                     </div>
                   </td>
                   <td class="passed not-optional highlight-on-hover text-center">
@@ -9797,8 +9702,8 @@
                 <!--This is the name of the test-->
                 <td class="subtest">Dereferencing &quot;verificationMethod&quot; MUST result in an object containing a type property with &quot;Multikey&quot; value.</td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="pending not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">🚫</div>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -9827,11 +9732,6 @@
                          margin-left: 1rem;
                        }
                       </style>
-                      <span class="err hide no-space-around">
-                        <pre>{
-                      "message": "Test skipped."
-                    }</pre>
-                      </span>
                     </div>
                   </td>
                   <td class="passed not-optional highlight-on-hover text-center">
@@ -9903,8 +9803,8 @@
                 <!--This is the name of the test-->
                 <td class="subtest">The &quot;publicKeyMultibase&quot; property of the verification method MUST be public key encoded according to MULTICODEC and formatted according to MULTIBASE.</td>
                 <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="pending not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">🚫</div>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -9933,11 +9833,6 @@
                          margin-left: 1rem;
                        }
                       </style>
-                      <span class="err hide no-space-around">
-                        <pre>{
-                      "message": "Test skipped."
-                    }</pre>
-                      </span>
                     </div>
                   </td>
                   <td class="passed not-optional highlight-on-hover text-center">
@@ -10960,7 +10855,7 @@
                         <pre>{
                       "name": "AssertionError",
                       "message": "Expected no result from verifier.: expected Response{ data: { …(3) }, …(3) } to not exist",
-                      "stack": "AssertionError: Expected no result from verifier.: expected Response{ data: { …(3) }, …(3) } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:420:7)"
+                      "stack": "AssertionError: Expected no result from verifier.: expected Response{ data: { …(3) }, …(3) } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:419:7)"
                     }</pre>
                       </span>
                     </div>
@@ -11270,7 +11165,7 @@
                         <pre>{
                       "name": "AssertionError",
                       "message": "Expected no result from verifier.: expected Response{ data: { …(3) }, …(3) } to not exist",
-                      "stack": "AssertionError: Expected no result from verifier.: expected Response{ data: { …(3) }, …(3) } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:451:7)"
+                      "stack": "AssertionError: Expected no result from verifier.: expected Response{ data: { …(3) }, …(3) } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:450:7)"
                     }</pre>
                       </span>
                     </div>
@@ -11310,7 +11205,7 @@
               </tr>
               <tr>
                 <!--This is the name of the test-->
-                <td class="subtest">If the &quot;proof.proofValue&quot; field is not a multibase-encoded base58-btc value, an error MUST be raised.</td>
+                <td class="subtest">If the &quot;proof.proofValue&quot; field is not multibase-encoded, an error MUST be raised.</td>
                 <!--These contain if the test passed, failed, or was skipped-->
                   <td class="passed not-optional highlight-on-hover text-center">
                     <div class= "highlight-on-hover">✓</div>
