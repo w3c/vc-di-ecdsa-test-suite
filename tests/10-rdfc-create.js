@@ -11,7 +11,7 @@ import {documentLoader} from './documentLoader.js';
 import {endpoints} from 'vc-test-suite-implementations';
 import {getSuiteConfig} from './test-config.js';
 
-const {tags, credentials} = getSuiteConfig('ecdsa-rdfc-2019');
+const {tags, credentials, keyTypes} = getSuiteConfig('ecdsa-rdfc-2019');
 const {match} = endpoints.filterByTag({
   tags: [...tags],
   property: 'issuers'
@@ -31,7 +31,11 @@ describe('ecdsa-rdfc-2019 (create)', function() {
         const {supportedEcdsaKeyTypes} = issuer.settings;
         // test for each support key type
         for(const supportedEcdsaKeyType of supportedEcdsaKeyTypes) {
-          const keyType = checkKeyType(supportedEcdsaKeyType);
+          // throw if this suite doesn't support a keyType
+          const keyType = checkKeyType({
+            keyType: supportedEcdsaKeyType,
+            supportedKeyTypes: keyTypes
+          });
           // add implementer name and keyType to test report
           this.implemented.push(`${name}: ${keyType}`);
           describe(`${name}: ${keyType}`, function() {
