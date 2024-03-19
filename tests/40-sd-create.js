@@ -11,7 +11,7 @@ import {documentLoader} from './documentLoader.js';
 import {endpoints} from 'vc-test-suite-implementations';
 import {getSuiteConfig} from './test-config.js';
 
-const {tags, credentials} = getSuiteConfig('ecdsa-sd-2023');
+const {tags, credentials, keyTypes} = getSuiteConfig('ecdsa-sd-2023');
 const {match} = endpoints.filterByTag({
   tags: [...tags],
   property: 'issuers'
@@ -30,7 +30,11 @@ describe('ecdsa-sd-2023 (create)', function() {
       for(const issuer of issuers) {
         const {supportedEcdsaKeyTypes} = issuer.settings;
         for(const supportedEcdsaKeyType of supportedEcdsaKeyTypes) {
-          const keyType = checkKeyType(supportedEcdsaKeyType);
+          // throw if this suite doesn't support a keyType
+          const keyType = checkKeyType({
+            keyType: supportedEcdsaKeyType,
+            supportedKeyTypes: keyTypes
+          });
           // add implementation name and keyType to report
           this.implemented.push(`${name}: ${keyType}`);
           describe(`${name}: ${keyType}`, function() {
