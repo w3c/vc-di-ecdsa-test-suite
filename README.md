@@ -164,10 +164,10 @@ All endpoints will require a cryptosuite tag of `ecdsa-rdfc-2019`,
 `ecdsa-jcs-2019`, and/or `ecdsa-sd-2023`. Alongside this cryptosuite tag, you
 will need to specify the `supportedEcdsaKeyTypes` property, parallel to `tags`
 listing the ECDSA key types issuable or verifiable by your implementation.
-It is recommended to have one issuer per supported Ecdsa KeyType.
+It is recommended to have one issuer per supported ECDSA key type.
 Currently, the `ecdsa-rdfc-2019` test suite supports `P-256` and `P-384` ECDSA key types.
-The `ecdsa-sd-2023` test suite only supports `P-256`.
-Verifier endpoints should support multiple keyTypes and suites.
+The `ecdsa-sd-2023` test suite only supports the `P-256` ECDSA key type.
+Verifier endpoints can support multiple keys, key types, and suites.
 A `vcHolder` tag is required for the `vcHolder` endpoints.
 
 NOTE: The tests for `ecdsa-jcs-2019` are TBA.
