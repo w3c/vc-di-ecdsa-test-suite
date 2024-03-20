@@ -2,11 +2,11 @@
  * Copyright 2023 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
-import {checkKeyType, createInitialVc} from './helpers.js';
 import {
   shouldBeBs58, shouldBeMulticodecEncoded, verificationSuccess
 } from './assertions.js';
 import chai from 'chai';
+import {createInitialVc} from './helpers.js';
 import {documentLoader} from './documentLoader.js';
 import {endpoints} from 'vc-test-suite-implementations';
 import {getSuiteConfig} from './test-config.js';
@@ -27,14 +27,13 @@ describe('ecdsa-sd-2023 (create)', function() {
     this.rowLabel = 'Test Name';
     this.columnLabel = 'Implementation';
     for(const [name, {endpoints: issuers, implementation}] of match) {
-      for(const issuer of issuers) {
-        const {supportedEcdsaKeyTypes} = issuer.settings;
-        for(const supportedEcdsaKeyType of supportedEcdsaKeyTypes) {
-          // throw if this suite doesn't support a keyType
-          const keyType = checkKeyType({
-            keyType: supportedEcdsaKeyType,
-            supportedKeyTypes: keyTypes
-          });
+      for(const keyType of keyTypes) {
+        for(const issuer of issuers) {
+          const {supportedEcdsaKeyTypes} = issuer.settings;
+          // if an issuer does not support the current keyType skip it
+          if(!supportedEcdsaKeyTypes.includes(keyType)) {
+            continue;
+          }
           // add implementation name and keyType to report
           this.implemented.push(`${name}: ${keyType}`);
           describe(`${name}: ${keyType}`, function() {
