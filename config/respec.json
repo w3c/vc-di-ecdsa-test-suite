@@ -6,16 +6,32 @@
   "edDraftURI": "https://w3c.github.io/vc-di-ecdsa-test-suite",
   "doJsonLd": true,
   "includePermalinks": false,
-  "editors": [{
-    "name": "Tashi D. Gyeltshen", "url": "https://github.com/jsAssassin",
-    "company": "Digital Bazaar", "companyURL": "https://digitalbazaar.com/"
-  }],
-  "authors": [{
-    "name": "Tashi D. Gyeltshen", "url": "https://github.com/jsAssassin",
-    "company": "Digital Bazaar", "companyURL": "https://digitalbazaar.com/"
-  },
-  {
-    "name": "Manu Sporny", "url": "https://manu.sporny.org/",
-    "company": "Digital Bazaar", "companyURL": "https://digitalbazaar.com/ "
-  }]
+  "editors": [
+    {
+      "name": "Tashi D. Gyeltshen",
+      "url": "https://github.com/jsAssassin",
+      "company": "Digital Bazaar",
+      "companyURL": "https://digitalbazaar.com/"
+    },
+    {
+      "name": "Tyler Minard",
+      "url": "https://github.com/tminard",
+      "company": "Digital Bazaar",
+      "companyURL": "https://digitalbazaar.com/"
+    }
+  ],
+  "authors": [
+    {
+      "name": "Tashi D. Gyeltshen",
+      "url": "https://github.com/jsAssassin",
+      "company": "Digital Bazaar",
+      "companyURL": "https://digitalbazaar.com/"
+    },
+    {
+      "name": "Manu Sporny",
+      "url": "https://manu.sporny.org/",
+      "company": "Digital Bazaar",
+      "companyURL": "https://digitalbazaar.com/"
+    }
+  ]
 }
