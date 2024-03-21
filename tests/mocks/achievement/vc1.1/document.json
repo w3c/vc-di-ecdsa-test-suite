@@ -1,0 +1,120 @@
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    {
+      "@protected": true,
+      "name": "https://schema.org/name",
+      "ExampleAchievementCredential": "urn:example:ExampleAchievementCredential",
+      "WindsailingAchievement": {
+        "@id": "urn:example:WindsailingAchievement",
+        "@context": {
+          "@protected": true,
+          "id": "@id",
+          "type": "@type",
+          "sailNumber": "urn:example:sailNumber",
+          "sails": {
+            "@id": "urn:example:sails",
+            "@context": {
+              "@protected": true,
+              "sailName": "urn:example:sailName",
+              "size": "urn:example:size",
+              "year": "urn:example:year"
+            }
+          },
+          "boards": {
+            "@id": "urn:example:boards",
+            "@context": {
+              "@protected": true,
+              "boardName": "urn:example:boardName",
+              "brand": "urn:example:brand",
+              "year": "urn:example:year"
+            }
+          }
+        }
+      },
+      "achievements": {
+        "@id": "urn:example:achievements",
+        "@type": "@id"
+      }
+    }
+  ],
+  "type": ["VerifiableCredential", "ExampleAchievementCredential"],
+  "credentialSubject": {
+    "name": "Jane Doe",
+    "achievements": [{
+      "type": "WindsailingAchievement",
+      "sailNumber": "Earth101",
+      "sails": [
+        {
+          "size": 5.5,
+          "sailName": "Osprey",
+          "year": 2023
+        },
+        {
+          "size": 6.1,
+          "sailName": "Eagle-FR",
+          "year": 2023
+        },
+        {
+          "size": 7.0,
+          "sailName": "Eagle-FR",
+          "year": 2020
+        },
+        {
+          "size": 7.8,
+          "sailName": "Eagle-FR",
+          "year": 2023
+        }
+      ],
+      "boards": [
+        {
+          "boardName": "CompFoil170",
+          "brand": "Tillo",
+          "year": 2022
+        },
+        {
+          "boardName": "Tillo Custom",
+          "brand": "Tillo",
+          "year": 2019
+        }
+      ]
+    }, {
+      "type": "WindsailingAchievement",
+      "sailNumber": "Mars101",
+      "sails": [
+        {
+          "size": 5.9,
+          "sailName": "Chicken",
+          "year": 2022
+        },
+        {
+          "size": 4.9,
+          "sailName": "Vulture-FR",
+          "year": 2023
+        },
+        {
+          "size": 6.8,
+          "sailName": "Vulture-FR",
+          "year": 2020
+        },
+        {
+          "size": 7.7,
+          "sailName": "Vulture-FR",
+          "year": 2023
+        }
+      ],
+      "boards": [
+        {
+          "boardName": "Oak620",
+          "brand": "Excite",
+          "year": 2020
+        },
+        {
+          "boardName": "Excite Custom",
+          "brand": "Excite",
+          "year": 2018
+        }
+      ]
+    }]
+  }
+}
