@@ -5,18 +5,18 @@
 import {
   shouldBeBs58, shouldBeMulticodecEncoded, verificationSuccess
 } from './assertions.js';
-import chai from 'chai';
 import {createInitialVc} from './helpers.js';
 import {documentLoader} from './documentLoader.js';
 import {endpoints} from 'vc-test-suite-implementations';
+import {expect} from 'chai';
 import {getSuiteConfig} from './test-config.js';
+import {localVerifier} from './vc-verifier/index.js';
 
 const {tags, credentials, keyTypes} = getSuiteConfig('ecdsa-rdfc-2019');
 const {match} = endpoints.filterByTag({
   tags: [...tags],
   property: 'issuers'
 });
-const should = chai.should();
 
 describe('ecdsa-rdfc-2019 (create)', function() {
   describe('ecdsa-rdfc-2019 (issuers)', function() {
@@ -25,7 +25,7 @@ describe('ecdsa-rdfc-2019 (create)', function() {
     this.implemented = [];
     this.rowLabel = 'Test Name';
     this.columnLabel = 'Implementation';
-    for(const [name, {endpoints: issuers, implementation}] of match) {
+    for(const [name, {endpoints: issuers}] of match) {
       // test for each support key type
       for(const keyType of keyTypes) {
       // loop through each issuer in suite
@@ -38,10 +38,6 @@ describe('ecdsa-rdfc-2019 (create)', function() {
           // add implementer name and keyType to test report
           this.implemented.push(`${name}: ${keyType}`);
           describe(`${name}: ${keyType}`, function() {
-            // find matching verifier for test
-            const verifier = implementation.verifiers.filter(
-              v => tags.every(tag => v.tags.has(tag)) &&
-                v.settings.supportedEcdsaKeyTypes.includes(keyType));
             let issuedVc;
             let proofs;
             const verificationMethodDocuments = [];
@@ -68,20 +64,21 @@ describe('ecdsa-rdfc-2019 (create)', function() {
                 columnId: `${name}: ${keyType}`, rowId: this.test.title
               };
               const cryptosuite = ['ecdsa-rdfc-2019', 'ecdsa-jcs-2019'];
-              proofs.some(
-                proof => cryptosuite.includes(proof?.cryptosuite)
-              ).should.equal(true, 'Expected at least one proof to have ' +
-                '"cryptosuite" property "ecdsa-rdfc-2019" or "ecdsa-jcs-2019".'
-              );
+              expect(
+                proofs.map(proof => proof?.cryptosuite),
+                'Expected at least one proof to have ' +
+              '"cryptosuite" property "ecdsa-rdfc-2019" or "ecdsa-jcs-2019".')
+                .to.contain.oneOf(cryptosuite);
             });
-            it('The "proof" MUST verify when using a conformant verifier.',
+            it('The "proof" MUST verify with a conformant verifier.',
               async function() {
                 this.test.cell = {
                   columnId: `${name}: ${keyType}`, rowId: this.test.title
                 };
-                should.exist(verifier, 'Expected implementation to have a VC ' +
-                  'HTTP API compatible verifier.');
-                verificationSuccess({credential: issuedVc, verifier});
+                await verificationSuccess({
+                  credential: issuedVc,
+                  verifier: localVerifier
+                });
               });
             it('The "proof.proofPurpose" field MUST match the verification ' +
               'relationship expressed by the verification method controller.',

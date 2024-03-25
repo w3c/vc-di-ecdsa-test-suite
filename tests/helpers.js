@@ -37,7 +37,13 @@ export const createInitialVc = async ({issuer, vc, mandatoryPointers}) => {
   if(Array.isArray(mandatoryPointers)) {
     options.mandatoryPointers = mandatoryPointers;
   }
-  const {data} = await issuer.post({json: body});
+  const {data, result, error} = await issuer.post({json: body});
+  if(!result || !result.ok) {
+    throw new Error(
+      'Test setup failed: createInitialVC failed with error',
+      {cause: error.message}
+    );
+  }
   return data;
 };
 
@@ -57,7 +63,8 @@ export const createDisclosedVc = async ({
 
 export const SUPPORTED_BASE58_ECDSA_MULTIKEY_HEADERS = new Map([
   ['P-256', 'zDna'],
-  ['P-384', 'z82L']
+  ['P-384', 'z82L'],
+  ['Ed25519', 'z6Mk']
 ]);
 
 export const multibaseMultikeyHeaderP256 =
@@ -65,3 +72,6 @@ export const multibaseMultikeyHeaderP256 =
 
 export const multibaseMultikeyHeaderP384 =
   SUPPORTED_BASE58_ECDSA_MULTIKEY_HEADERS.get('P-384');
+
+export const multibaseMultikeyHeaderEd25519 =
+  SUPPORTED_BASE58_ECDSA_MULTIKEY_HEADERS.get('Ed25519');
