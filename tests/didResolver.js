@@ -5,8 +5,12 @@
 import * as didMethodKey from '@digitalbazaar/did-method-key';
 import * as EcdsaMultikey from '@digitalbazaar/ecdsa-multikey';
 import {
+  multibaseMultikeyHeaderEd25519,
   multibaseMultikeyHeaderP256, multibaseMultikeyHeaderP384
 } from './helpers.js';
+import {
+  Ed25519VerificationKey2020
+} from '@digitalbazaar/ed25519-verification-key-2020';
 
 const didKeyDriver = didMethodKey.driver();
 
@@ -18,6 +22,11 @@ didKeyDriver.use({
 didKeyDriver.use({
   multibaseMultikeyHeader: multibaseMultikeyHeaderP384,
   fromMultibase: EcdsaMultikey.from
+});
+
+didKeyDriver.use({
+  multibaseMultikeyHeader: multibaseMultikeyHeaderEd25519,
+  fromMultibase: Ed25519VerificationKey2020.from
 });
 
 export async function didResolver({url}) {

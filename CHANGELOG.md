@@ -6,7 +6,7 @@ SPDX-License-Identifier: BSD-3-Clause
 
 # w3c/vc-di-ecdsa-test-suite  ChangeLog
 
-## 3.0.0 -
+## 3.0.0 - yyyy-mm-dd
 
 ### Changed
 - **BREAKING**: Verify test suites generate data locally.
@@ -16,6 +16,7 @@ SPDX-License-Identifier: BSD-3-Clause
 ### Added
 - **BREAKING**: interop tests are now skipped by default; `LOCAL_ONLY` environment variable set to `false` reenables them.
 - Support for issuing test data locally using VC 2.0 context.
+- Support for running issuer-specific tests against an in-process verifier.
 
 ## 2.3.0 - 2024-02-25
 
