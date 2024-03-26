@@ -135,8 +135,8 @@ describe('ecdsa-rdfc-2019 (create)', function() {
                 );
               });
               it('The "publicKeyMultibase" property of the verification ' +
-              'method MUST be public key encoded according to MULTICODEC and ' +
-                'formatted according to MULTIBASE.', async function() {
+                'method MUST be public key encoded according to MULTICODEC ' +
+                'and formatted according to MULTIBASE.', async function() {
                 this.test.cell = {
                   columnId: `${name}: ${keyType}`, rowId: this.test.title
                 };
