@@ -40,8 +40,13 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
       for(const [name, {endpoints: verifiers}] of match) {
         for(const verifier of verifiers) {
           const {
-            supportedEcdsaKeyTypes: verifierKeyTypes
+            supportedEcdsaKeyTypes: verifierKeyTypes,
+            supports = {vc: ['1.1']}
           } = verifier.settings;
+          // do not run verifiers that don't declare support for vc version
+          if(!supports?.vc?.includes(vcVersion)) {
+            continue;
+          }
           const keyTypes = verifierKeyTypes.join(', ');
           // add implementer name and keyTypes to test report
           this.implemented.push(`${name}: ${keyTypes}`);
