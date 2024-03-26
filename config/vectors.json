@@ -2,6 +2,7 @@
   "suites": {
     "ecdsa-rdfc-2019": {
       "keyTypes": ["P-256", "P-384"],
+      "vcTypes": ["1.1", "2.0"],
       "credentials": {
         "create": {
           "1.1": {"document": "./mocks/valid/vc1.1/document.json"},
@@ -19,6 +20,7 @@
     },
     "ecdsa-sd-2023": {
       "keyTypes": ["P-256"],
+      "vcTypes": ["1.1", "2.0"],
       "credentials": {
         "create": {
           "1.1": { 
