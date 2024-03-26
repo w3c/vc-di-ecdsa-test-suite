@@ -39,10 +39,8 @@ export const createInitialVc = async ({issuer, vc, mandatoryPointers}) => {
   }
   const {data, result, error} = await issuer.post({json: body});
   if(!result || !result.ok) {
-    throw new Error(
-      'Test setup failed: createInitialVC failed with error',
-      {cause: error.message}
-    );
+    console.warn('initial vc creation failed', {issuer, data, error});
+    return null;
   }
   return data;
 };
