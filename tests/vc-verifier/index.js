@@ -54,8 +54,8 @@ async function localDocumentLoader(url) {
 /**
  * Local instance of a Verifier service that can be used to verify VCs locally.
  *
- * This is not intended to be a complete implementation but sufficient for local
- * testing only.
+ * This is not intended to be a complete implementation but sufficient only for
+ * local testing.
  */
 export const localVerifier = {
   post: async ({
