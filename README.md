@@ -14,7 +14,6 @@ SPDX-License-Identifier: BSD-3-Clause
   - [Running Specific Tests](#running-specific-tests)
   - [Testing Locally](#testing-locally)
   - [Running Interoperability Tests](#running-interoperability-tests)
-  - [Docker Integration (TODO)](#docker-integration-todo)
 - [Development](#development)
   - [Configuring the Tests](#configuring-the-tests)
   - [Configuring Test Vectors](#configuring-test-vectors)
@@ -191,14 +190,6 @@ you may by setting `local: false` in `./config/runner.json` or using the ENV Var
 ```bash
 LOCAL_ONLY=false npm test
 ```
-
-### Docker Integration (TODO)
-
-We are presently working on implementing a new feature that will enable the
-use of Docker images instead of live endpoints. The Docker image that
-you provide will be started when the test suite is run. The image is expected
-to expose the API provided above, which will be used in the same way that
-live HTTP endpoints are used above.
 
 ## Development
 
