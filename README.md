@@ -53,17 +53,17 @@ mocha --grep '"specificProperty" test name' ./tests/10-specific-test-suite.js
 
 ### Testing Locally
 
-If you want to test implementations or just endpoints running locally, you can
-copy `localImplementationsConfig.example.cjs` to `localImplementationsConfig.cjs`
+If you want to test a single implementation or endpoints running locally, you can
+copy `localImplementationsConfig.example.cjs` to `.localImplementationsConfig.cjs`
 in the root directory of the test suite.
 
 ```bash
-cp localImplementationsConfig.example.cjs localImplementationsConfig.cjs
+cp localImplementationsConfig.example.cjs .localImplementationsConfig.cjs
 ```
 
-Git is set to ignore `localImplementationsConfig.cjs` & `.localImplementationsConfig.cjs` by default.
-
-This file must be a CommonJS module that exports an array of implementations:
+This file must be a CommonJS module that exports an array of implementations
+(the format is identical to the on defined in
+[VC Test Suite Implementations](https://github.com/w3c/vc-test-suite-implementations?tab=readme-ov-file#usage)):
 
 ```js
 // .localImplementationsConfig.cjs defining local implementations
@@ -74,23 +74,19 @@ module.exports = [{
   name: 'My Company',
   implementation: 'My Implementation Name',
   // only this implementation will be run in the suite
-  only: true,
   issuers: [{
     id: 'did:key:zMyKey',
     endpoint: `${baseUrl}/credentials/issue`,
     supportedEcdsaKeyTypes: ['P-256', 'P-384'],
-    tags: ['ecdsa-rdfc-2019', 'localhost']
+    tags: ['ecdsa-rdfc-2019']
   }],
   verifiers: [{
     endpoint: `${baseUrl}/credentials/verify`,
     supportedEcdsaKeyTypes: ['P-256', 'P-384'],
-    tags: ['ecdsa-rdfc-2019', 'localhost']
+    tags: ['ecdsa-rdfc-2019']
   }]
 }];
 ```
-
-After adding the configuration file, both the localhost implementations and other
-implementations matching the test tag will be included in the test run.
 
 ### Configuring the Tests
 
