@@ -12,7 +12,7 @@ const suite = 'ecdsa-sd-2023';
 const {
   tags,
   credentials,
-  keyTypes
+  vectors
 } = getSuiteConfig(suite);
 // only use implementations with `ecdsa-sd-2023` verifiers.
 const {match} = endpoints.filterByTag({
@@ -51,6 +51,7 @@ describe('ecdsa-sd-2023 (verify)', function() {
     };
     before(async function() {
       const {subjectNestedObjects, subjectHasArrays} = credentials.verify;
+      const {keyTypes} = vectors;
       // create initial signed VCs
       testVectors.signed = await issueTestData({
         credential: subjectNestedObjects.document,
