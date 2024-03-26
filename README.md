@@ -9,15 +9,15 @@ SPDX-License-Identifier: BSD-3-Clause
 ## Table of Contents
 
 - [Background](#background)
-- [Install](#install)
-- [Usage](#usage)
-  - [Running Specific Tests](#Running-Specific-Tests)
-  - [Testing Locally](#testing-locally)
-  - [Configuring the Tests](#Configuring-the-tests)
-  - [Configuring Test Vectors](#Configuring-test-vectors)
-  - [Running Interoperability Tests](#Running-Interoperability-Tests)
 - [Implementation](#implementation)
+- [Usage](#usage)
+  - [Running Specific Tests](#running-specific-tests)
+  - [Testing Locally](#testing-locally)
+  - [Running Interoperability Tests](#running-interoperability-tests)
   - [Docker Integration (TODO)](#docker-integration-todo)
+- [Development](#development)
+  - [Configuring the Tests](#configuring-the-tests)
+  - [Configuring Test Vectors](#configuring-test-vectors)
 - [Contribute](#contribute)
 - [License](#license)
 
@@ -26,112 +26,6 @@ SPDX-License-Identifier: BSD-3-Clause
 Provides interoperability tests for verifiable credential processors
 (issuers and verifiers) that support [ECDSA](https://www.w3.org/TR/vc-di-ecdsa/)
 [Data Integrity](https://www.w3.org/TR/vc-data-integrity/) cryptosuites.
-
-## Install
-
-```js
-npm i
-```
-
-## Usage
-
-The suites call on a set of common config files stored at `./config/`.
-
-- `./config/runner.json` is for test suite specific configurations.
-- `./config/vector.json` is for test vector specific configurations.
-
-### Running Specific Tests
-
-This suite uses [`mocha.js`](https://mochajs.org) as the test runner.
-Mocha has [multiple options](https://mochajs.org/#command-line-usage) for filtering which tests run.
-
-For example, the snippet below uses `grep` to filter tests by name, and only runs one of the test suites.
-
-```bash
-mocha --grep '"specificProperty" test name' ./tests/10-specific-test-suite.js
-```
-
-### Testing Locally
-
-If you want to test a single implementation or endpoints running locally, you can
-copy `localImplementationsConfig.example.cjs` to `.localImplementationsConfig.cjs`
-in the root directory of the test suite.
-
-```bash
-cp localImplementationsConfig.example.cjs .localImplementationsConfig.cjs
-```
-
-This file must be a CommonJS module that exports an array of implementations
-(the format is identical to the on defined in
-[VC Test Suite Implementations](https://github.com/w3c/vc-test-suite-implementations?tab=readme-ov-file#usage)):
-
-```js
-// .localImplementationsConfig.cjs defining local implementations
-// you can specify a BASE_URL before running the tests such as:
-// BASE_URL=http://localhost:40443/zDdfsdfs npm test
-const baseUrl = process.env.BASE_URL || 'https://localhost:40443/id';
-module.exports = [{
-  name: 'My Company',
-  implementation: 'My Implementation Name',
-  // only this implementation will be run in the suite
-  issuers: [{
-    id: 'did:key:zDna',
-    endpoint: `${baseUrl}/credentials/issue`,
-    supportedEcdsaKeyTypes: ['P-256'],
-    tags: ['ecdsa-rdfc-2019']
-  }, {
-    id: 'did:key:z82L',
-    endpoint: `${baseUrl}/credentials/issue`,
-    supportedEcdsaKeyTypes: ['P-256', 'P-384'],
-    tags: ['ecdsa-rdfc-2019']
-  }],
-  verifiers: [{
-    endpoint: `${baseUrl}/credentials/verify`,
-    supportedEcdsaKeyTypes: ['P-256', 'P-384'],
-    tags: ['ecdsa-rdfc-2019']
-  }]
-}];
-```
-
-### Configuring the Tests
-
-These test suites use tags matched to implementations' endpoint tags in the tests.
-You can change the tag on which the suites will run in `./config/runner.json`, if desired.
-
-For this suite the `runner.json` file looks like this:
-
-```js
-{
-  "suites": {
-    "ecdsa-rdfc-2019": {
-      "tags": ["ecdsa-rdfc-2019"]
-    },
-    "ecdsa-sd-2023": {
-      "tags": ["ecdsa-sd-2023"],
-      "vcHolder": {
-        "holderName": "Digital Bazaar",
-        "tags": ["vcHolder"]
-      }
-    }
-  }
-}
-```
-
-### Configuring Test Vectors
-
-The tests use a configuration file `/config/vectors.json` to configure test vectors.
-[Test Vector configuration is documented in testVectorGuide.md,](/testVectorGuide.md)
-
-### Running Interoperability Tests
-
-Running interoperability tests requires having authorization to the endpoints of multiple
-implementations. Because most users of this suite will not have those authorization capabilities
-the interoperability suites are disabled by default. If you wish to try running the interoperability suites
-you can set `DISABLE_INTEROP=false` in your environment variables.
-
-```bash
-LOCAL_ONLY=false npm test
-```
 
 ## Implementation
 
@@ -232,6 +126,72 @@ passed as environment variables to the test script. To see which implementations
 require client secrets, please check the implementation manifest within the
 [vc-test-suite-implementations](https://github.com/w3c/vc-test-suite-implementations/tree/main/implementations) library.
 
+
+## Usage
+
+```js
+npm i
+```
+
+### Running Specific Tests
+
+This suite uses [`mocha.js`](https://mochajs.org) as the test runner.
+Mocha has [multiple options](https://mochajs.org/#command-line-usage) for filtering which tests run.
+
+For example, the snippet below uses `grep` to filter tests by name, and only runs one of the test suites.
+
+```bash
+mocha --grep '"specificProperty" test name' ./tests/10-specific-test-suite.js
+```
+
+### Testing Locally
+
+If you want to test a single implementation or endpoints running locally, you can
+copy `localImplementationsConfig.example.cjs` to `.localImplementationsConfig.cjs`
+in the root directory of the test suite.
+
+```bash
+cp localImplementationsConfig.example.cjs .localImplementationsConfig.cjs
+```
+
+This file must be a CommonJS module that exports an array of implementations
+(the format is identical to the on defined in
+[VC Test Suite Implementations](https://github.com/w3c/vc-test-suite-implementations?tab=readme-ov-file#usage)):
+
+```js
+// .localImplementationsConfig.cjs defining local implementations
+// you can specify a BASE_URL before running the tests such as:
+// BASE_URL=http://localhost:40443/zDdfsdfs npm test
+const baseUrl = process.env.BASE_URL || 'https://localhost:40443/id';
+module.exports = [{
+  name: 'My Company',
+  implementation: 'My Implementation Name',
+  // only this implementation will be run in the suite
+  issuers: [{
+    id: 'did:key:zMyKey',
+    endpoint: `${baseUrl}/credentials/issue`,
+    supportedEcdsaKeyTypes: ['P-256', 'P-384'],
+    tags: ['ecdsa-rdfc-2019']
+  }],
+  verifiers: [{
+    endpoint: `${baseUrl}/credentials/verify`,
+    supportedEcdsaKeyTypes: ['P-256', 'P-384'],
+    tags: ['ecdsa-rdfc-2019']
+  }]
+}];
+```
+
+### Running Interoperability Tests
+
+Running interoperability tests requires having authorization to the endpoints of multiple
+implementations. Because most users of this suite will not have those authorization capabilities
+the interoperability suites are disabled by default. If you wish to try running the interoperability suites
+you may by setting `local: false` in `./config/runner.json` or using the ENV Variable `LOCAL_ONLY=false`.
+
+```bash
+LOCAL_ONLY=false npm test
+```
+
 ### Docker Integration (TODO)
 
 We are presently working on implementing a new feature that will enable the
@@ -239,6 +199,42 @@ use of Docker images instead of live endpoints. The Docker image that
 you provide will be started when the test suite is run. The image is expected
 to expose the API provided above, which will be used in the same way that
 live HTTP endpoints are used above.
+
+## Development
+
+### Configuring the Tests
+
+The suites call on a set of common config files stored at `./config/`.
+
+- `./config/runner.json` is for test suite specific configurations.
+- `./config/vector.json` is for test vector specific configurations.
+
+These test suites use tags matched to implementations' endpoint tags in the tests.
+You can change the tag on which the suites will run in `./config/runner.json`, if desired.
+
+For this suite the `runner.json` file looks like this:
+
+```js
+{
+  "suites": {
+    "ecdsa-rdfc-2019": {
+      "tags": ["ecdsa-rdfc-2019"]
+    },
+    "ecdsa-sd-2023": {
+      "tags": ["ecdsa-sd-2023"],
+      "vcHolder": {
+        "holderName": "Digital Bazaar",
+        "tags": ["vcHolder"]
+      }
+    }
+  }
+}
+```
+
+### Configuring Test Vectors
+
+The tests use a configuration file `/config/vectors.json` to configure test vectors.
+[Test Vector configuration is documented in testVectorGuide.md,](/testVectorGuide.md)
 
 ## Contribute
 
