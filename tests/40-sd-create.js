@@ -67,16 +67,17 @@ describe('ecdsa-sd-2023 (create)', function() {
                   }
                 }
               });
-              it('The field "cryptosuite" MUST be "ecdsa-sd-2023".', function() {
-                this.test.cell = {
-                  columnId: `${name}: ${keyType}`, rowId: this.test.title
-                };
-                proofs.some(
-                  proof => proof.cryptosuite === 'ecdsa-sd-2023'
-                ).should.equal(true, 'Expected at least one proof to have ' +
-                  '"cryptosuite" property "ecdsa-sd-2023".'
-                );
-              });
+              it('The field "cryptosuite" MUST be "ecdsa-sd-2023".',
+                function() {
+                  this.test.cell = {
+                    columnId: `${name}: ${keyType}`, rowId: this.test.title
+                  };
+                  proofs.some(
+                    proof => proof.cryptosuite === 'ecdsa-sd-2023'
+                  ).should.equal(true, 'Expected at least one proof to have ' +
+                    '"cryptosuite" property "ecdsa-sd-2023".'
+                  );
+                });
               it('The field "proofValue" MUST start with "u".', function() {
                 this.test.cell = {
                   columnId: `${name}: ${keyType}`, rowId: this.test.title
@@ -92,8 +93,8 @@ describe('ecdsa-sd-2023 (create)', function() {
                   this.test.cell = {
                     columnId: `${name}: ${keyType}`, rowId: this.test.title
                   };
-                  should.exist(verifier, 'Expected implementation to have a VC ' +
-                    'HTTP API compatible verifier.');
+                  should.exist(verifier, 'Expected implementation to have ' +
+                  'a VC HTTP API compatible verifier.');
                   await verificationSuccess({credential: issuedVc, verifier});
                 });
               it('The "proof.proofPurpose" field MUST match the verification ' +
@@ -111,9 +112,8 @@ describe('ecdsa-sd-2023 (create)', function() {
                   '"type" property value "Multikey".'
                 );
                 const controllerDocuments = [];
-                for(
-                  const verificationMethodDocument of verificationMethodDocuments
-                ) {
+                for(const verificationMethodDocument of
+                  verificationMethodDocuments) {
                   const controllerDocument = await documentLoader({
                     url: verificationMethodDocument.controller
                   });
@@ -126,8 +126,8 @@ describe('ecdsa-sd-2023 (create)', function() {
                   'to match the verification method controller.'
                 );
               });
-              it('Dereferencing "verificationMethod" MUST result in an object ' +
-                'containing a type property with "Multikey" value.',
+              it('Dereferencing "verificationMethod" MUST result in an ' +
+              'object containing a type property with "Multikey" value.',
               async function() {
                 this.test.cell = {
                   columnId: `${name}: ${keyType}`, rowId: this.test.title
@@ -141,8 +141,8 @@ describe('ecdsa-sd-2023 (create)', function() {
                   '"type" property value "Multikey".'
                 );
               });
-              it('The "publicKeyMultibase" property of the verification method ' +
-                'MUST be public key encoded according to MULTICODEC and ' +
+              it('The "publicKeyMultibase" property of the verification ' +
+              'method MUST be public key encoded according to MULTICODEC and ' +
                 'formatted according to MULTIBASE.', async function() {
                 this.test.cell = {
                   columnId: `${name}: ${keyType}`, rowId: this.test.title
