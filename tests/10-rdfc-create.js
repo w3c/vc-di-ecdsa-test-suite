@@ -31,9 +31,18 @@ describe('ecdsa-rdfc-2019 (create)', function() {
         for(const keyType of vectors.keyTypes) {
         // loop through each issuer in suite
           for(const issuer of issuers) {
-            const {supportedEcdsaKeyTypes} = issuer.settings;
+            const {
+              supportedEcdsaKeyTypes,
+              // assume issuers support vc 1.1
+              supports = {vc: ['1.1']}
+            } = issuer.settings;
             // if an issuer does not support the current keyType skip it
-            if(!supportedEcdsaKeyTypes.includes(keyType)) {
+            const keyTypes = supportedEcdsaKeyTypes || supports?.keyTypes;
+            if(!keyTypes?.includes(keyType)) {
+              continue;
+            }
+            // check to make sure the issuer supports the vc type
+            if(!supports?.vc?.includes(vcVersion)) {
               continue;
             }
             // add implementer name and keyType to test report
