@@ -6,6 +6,11 @@ SPDX-License-Identifier: BSD-3-Clause
 
 # w3c/vc-di-ecdsa-test-suite  ChangeLog
 
+## 3.0.1 -
+
+### Fixed
+- `ecdsa-sd-2023` issuer tests now await verification result.
+
 ## 3.0.0 - yyyy-mm-dd
 
 ### Changed

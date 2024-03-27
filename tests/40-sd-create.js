@@ -38,7 +38,7 @@ describe('ecdsa-sd-2023 (create)', function() {
           this.implemented.push(`${name}: ${keyType}`);
           describe(`${name}: ${keyType}`, function() {
             // find matching verifier
-            const verifier = implementation.verifiers.filter(
+            const verifier = implementation.verifiers.find(
               v => tags.every(tag => v.tags.has(tag)) &&
                 v.settings.supportedEcdsaKeyTypes.includes(keyType));
             let issuedVc;
@@ -89,7 +89,7 @@ describe('ecdsa-sd-2023 (create)', function() {
                 };
                 should.exist(verifier, 'Expected implementation to have a VC ' +
                   'HTTP API compatible verifier.');
-                verificationSuccess({credential: issuedVc, verifier});
+                await verificationSuccess({credential: issuedVc, verifier});
               });
             it('The "proof.proofPurpose" field MUST match the verification ' +
               'relationship expressed by the verification method controller.',
