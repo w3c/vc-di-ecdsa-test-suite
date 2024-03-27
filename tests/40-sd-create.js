@@ -38,7 +38,7 @@ describe('ecdsa-sd-2023 (create)', function() {
             this.implemented.push(`${name}: ${keyType}`);
             describe(`${name}: ${keyType}`, function() {
               // find matching verifier
-              const verifier = implementation.verifiers.filter(
+              const [verifier] = implementation.verifiers.filter(
                 v => tags.every(tag => v.tags.has(tag)) &&
                   v.settings.supportedEcdsaKeyTypes.includes(keyType));
               let issuedVc;
