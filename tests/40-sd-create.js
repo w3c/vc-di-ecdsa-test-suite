@@ -2,11 +2,11 @@
  * Copyright 2023 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
+import {createInitialVc, endpointCheck} from './helpers.js';
 import {
   shouldBeBs58, shouldBeMulticodecEncoded, verificationSuccess
 } from './assertions.js';
 import chai from 'chai';
-import {createInitialVc} from './helpers.js';
 import {documentLoader} from './documentLoader.js';
 import {endpoints} from 'vc-test-suite-implementations';
 import {getSuiteConfig} from './test-config.js';
@@ -30,9 +30,8 @@ describe('ecdsa-sd-2023 (create)', function() {
       for(const [name, {endpoints: issuers, implementation}] of match) {
         for(const keyType of vectors.keyTypes) {
           for(const issuer of issuers) {
-            const {supportedEcdsaKeyTypes} = issuer.settings;
-            // if an issuer does not support the current keyType skip it
-            if(!supportedEcdsaKeyTypes.includes(keyType)) {
+            // does the endpoint support this test?
+            if(!endpointCheck({endpoint: issuer, keyType, vcVersion})) {
               continue;
             }
             // add implementation name and keyType to report

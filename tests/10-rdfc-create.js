@@ -2,10 +2,10 @@
  * Copyright 2023 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
+import {createInitialVc, endpointCheck} from './helpers.js';
 import {
   shouldBeBs58, shouldBeMulticodecEncoded, verificationSuccess
 } from './assertions.js';
-import {createInitialVc} from './helpers.js';
 import {documentLoader} from './documentLoader.js';
 import {endpoints} from 'vc-test-suite-implementations';
 import {expect} from 'chai';
@@ -31,18 +31,8 @@ describe('ecdsa-rdfc-2019 (create)', function() {
         for(const keyType of vectors.keyTypes) {
         // loop through each issuer in suite
           for(const issuer of issuers) {
-            const {
-              supportedEcdsaKeyTypes,
-              // assume issuers support vc 1.1
-              supports = {vc: ['1.1']}
-            } = issuer.settings;
-            // if an issuer does not support the current keyType skip it
-            const keyTypes = supportedEcdsaKeyTypes || supports?.keyTypes;
-            if(!keyTypes?.includes(keyType)) {
-              continue;
-            }
-            // check to make sure the issuer supports the vc type
-            if(!supports?.vc?.includes(vcVersion)) {
+            // does the endpoint support this test?
+            if(!endpointCheck({endpoint: issuer, keyType, vcVersion})) {
               continue;
             }
             // add implementer name and keyType to test report

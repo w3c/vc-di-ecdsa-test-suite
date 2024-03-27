@@ -59,6 +59,24 @@ export const createDisclosedVc = async ({
   return {disclosedCredential: data};
 };
 
+export const endpointCheck = ({endpoint, keyType, vcVersion}) => {
+  const {
+    supportedEcdsaKeyTypes,
+    // assume issuers support vc 1.1
+    supports = {vc: ['1.1']}
+  } = endpoint.settings;
+  // if an issuer does not support the current keyType skip it
+  const keyTypes = supportedEcdsaKeyTypes || supports?.keyTypes;
+  if(!keyTypes?.includes(keyType)) {
+    return false;
+  }
+  // check to make sure the issuer supports the vc type
+  if(!supports?.vc?.includes(vcVersion)) {
+    return false;
+  }
+  return true;
+};
+
 export const SUPPORTED_BASE58_ECDSA_MULTIKEY_HEADERS = new Map([
   ['P-256', 'zDna'],
   ['P-384', 'z82L'],
