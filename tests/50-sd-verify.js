@@ -2,11 +2,11 @@
  * Copyright 2023 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
-import {deriveTestData, issueTestData} from './vc-generator/index.js';
 import {verificationFail, verificationSuccess} from './assertions.js';
 import {endpoints} from 'vc-test-suite-implementations';
 import {getSuiteConfig} from './test-config.js';
 import {klona} from 'klona';
+import {sdVerifySetup} from './setup.js';
 
 const suite = 'ecdsa-sd-2023';
 const {
@@ -21,6 +21,10 @@ const {match} = endpoints.filterByTag({
 });
 
 describe('ecdsa-sd-2023 (verify)', function() {
+  let testVectors = new Map();
+  before(async function() {
+    testVectors = await sdVerifySetup({credentials, vectors});
+  });
   describe('ecdsa-sd-2023 (verifiers)', function() {
     // this will tell the report
     // to make an interop matrix with this suite
@@ -29,107 +33,6 @@ describe('ecdsa-sd-2023 (verify)', function() {
     this.rowLabel = 'Test Name';
     this.columnLabel = 'Verifier';
     this.implemented = [];
-    const testVectors = {
-      //signedCredentials
-      signed: [],
-      disclosed: {
-        //disclosedCredentials
-        base: [],
-        //nestedDisclosedCredentials
-        nested: [],
-        //disclosedDlCredentialNoIds
-        noIds: [],
-        array: {
-          //disclosedCredentialsWithFullArray
-          full: [],
-          //disclosedCredentialsWithLessThanFullSubArray
-          lessThanFull: [],
-          //disclosedCredentialsWithoutFirstArrayElement
-          missingElements: []
-        }
-      }
-    };
-    before(async function() {
-      const {subjectNestedObjects, subjectHasArrays} = credentials.verify;
-      const {keyTypes} = vectors;
-      // create initial signed VCs
-      testVectors.signed = await issueTestData({
-        credential: subjectNestedObjects.document,
-        suite,
-        keyTypes,
-        mandatoryPointers: subjectNestedObjects.mandatoryPointers
-      });
-      const signedVc = testVectors.signed.get(keyTypes[0]);
-      // use initial VCs for a basic selective disclosure test
-      testVectors.disclosed.base = await deriveTestData({
-        selectivePointers: ['/credentialSubject/id'],
-        verifiableCredential: signedVc,
-        keyTypes,
-        suite
-      });
-      // create initial nestedDisclosedCredential from signedVc
-      testVectors.disclosed.nested = await deriveTestData({
-        selectivePointers: subjectNestedObjects.selectivePointers.slice(1, 3),
-        verifiableCredential: signedVc,
-        keyTypes,
-        suite
-      });
-      // copy the first vc
-      const noIdVc = klona(subjectNestedObjects.document);
-      // delete the id
-      delete noIdVc.id;
-      // start second round test data creation w/ dlCredentialNoIds
-      const noIdsVcs = await issueTestData({
-        credential: noIdVc,
-        keyTypes,
-        suite: 'ecdsa-sd-2023',
-        mandatoryPointers: subjectNestedObjects.mandatoryPointers
-      });
-      const signedDlCredentialNoIds = noIdsVcs.get(keyTypes[0]);
-      testVectors.disclosed.noIds = await deriveTestData({
-        selectivePointers: subjectNestedObjects.selectivePointers.slice(1, 3),
-        verifiableCredential: signedDlCredentialNoIds,
-        keyTypes,
-        suite
-      });
-      const credentialHasArrays = klona(subjectHasArrays);
-      // start third round test data creation w/
-      // AchievementCredential
-      const achievementCredentials = await issueTestData({
-        credential: credentialHasArrays.document,
-        mandatoryPointers: credentialHasArrays.mandatoryPointers,
-        keyTypes,
-        suite
-      });
-      const signedAchievementCredential = achievementCredentials.get(
-        keyTypes[0]);
-      // select full arrays
-      testVectors.disclosed.array.full = await deriveTestData({
-        selectivePointers:
-          [...credentialHasArrays.selectivePointers],
-        verifiableCredential: signedAchievementCredential,
-        suite,
-        keyTypes
-      });
-      // select less than full subarrays
-      const lessThanFullPointers = credentialHasArrays.
-        selectivePointers.slice(2, -4);
-      testVectors.disclosed.array.lessThanFull = await deriveTestData({
-        selectivePointers: lessThanFullPointers,
-        verifiableCredential: signedAchievementCredential,
-        suite,
-        keyTypes
-      });
-      // select w/o first 7 array element
-      const removeFirst7Pointers = credentialHasArrays.
-        selectivePointers.slice(7);
-      testVectors.disclosed.array.missingElements = await deriveTestData({
-        selectivePointers: removeFirst7Pointers,
-        verifiableCredential: signedAchievementCredential,
-        suite,
-        keyTypes
-      });
-    });
     // loop through implementers and test endpoints
     for(const [name, {endpoints: verifiers}] of match) {
       for(const verifier of verifiers) {
