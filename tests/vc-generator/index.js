@@ -75,7 +75,7 @@ export async function issueCredential({
  *
  * @returns {Promise<Map<string, object>>} Returns a Map <keyType, vc>.
  */
-export async function deriveTestData({
+export async function deriveCredentials({
   verifiableCredential,
   suite,
   selectivePointers = [],

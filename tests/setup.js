@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 import {
-  deriveTestData,
+  deriveCredentials,
   issueCredential,
   issueCredentials
 } from './vc-generator/index.js';
@@ -12,21 +12,21 @@ import {klona} from 'klona';
 export async function sdVerifySetup({credentials, vectors}) {
   const testVectors = {
     //signedCredentials
-    signed: [],
+    signed: new Map(),
     disclosed: {
       //disclosedCredentials
-      base: [],
+      base: new Map(),
       //nestedDisclosedCredentials
-      nested: [],
+      nested: new Map(),
       //disclosedDlCredentialNoIds
-      noIds: [],
+      noIds: new Map(),
       array: {
         //disclosedCredentialsWithFullArray
-        full: [],
+        full: new Map(),
         //disclosedCredentialsWithLessThanFullSubArray
-        lessThanFull: [],
+        lessThanFull: new Map(),
         //disclosedCredentialsWithoutFirstArrayElement
-        missingElements: []
+        missingElements: new Map()
       }
     }
   };
@@ -40,14 +40,14 @@ export async function sdVerifySetup({credentials, vectors}) {
   });
   const signedVc = testVectors.signed.get(keyTypes[0]);
   // use initial VCs for a basic selective disclosure test
-  testVectors.disclosed.base = await deriveTestData({
+  testVectors.disclosed.base = await deriveCredentials({
     selectivePointers: ['/credentialSubject/id'],
     verifiableCredential: signedVc,
     keyTypes,
     suite
   });
   // create initial nestedDisclosedCredential from signedVc
-  testVectors.disclosed.nested = await deriveTestData({
+  testVectors.disclosed.nested = await deriveCredentials({
     selectivePointers: subjectNestedObjects.selectivePointers.slice(1, 3),
     verifiableCredential: signedVc,
     keyTypes,
@@ -65,7 +65,7 @@ export async function sdVerifySetup({credentials, vectors}) {
     mandatoryPointers: subjectNestedObjects.mandatoryPointers
   });
   const signedDlCredentialNoIds = noIdsVcs.get(keyTypes[0]);
-  testVectors.disclosed.noIds = await deriveTestData({
+  testVectors.disclosed.noIds = await deriveCredentials({
     selectivePointers: subjectNestedObjects.selectivePointers.slice(1, 3),
     verifiableCredential: signedDlCredentialNoIds,
     keyTypes,
@@ -82,7 +82,7 @@ export async function sdVerifySetup({credentials, vectors}) {
   const signedAchievementCredential = achievementCredentials.get(
     keyTypes[0]);
   // select full arrays
-  testVectors.disclosed.array.full = await deriveTestData({
+  testVectors.disclosed.array.full = await deriveCredentials({
     selectivePointers:
       [...credentialHasArrays.selectivePointers],
     verifiableCredential: signedAchievementCredential,
@@ -92,7 +92,7 @@ export async function sdVerifySetup({credentials, vectors}) {
   // select less than full subarrays
   const lessThanFullPointers = credentialHasArrays.
     selectivePointers.slice(2, -4);
-  testVectors.disclosed.array.lessThanFull = await deriveTestData({
+  testVectors.disclosed.array.lessThanFull = await deriveCredentials({
     selectivePointers: lessThanFullPointers,
     verifiableCredential: signedAchievementCredential,
     suite,
@@ -101,7 +101,7 @@ export async function sdVerifySetup({credentials, vectors}) {
   // select w/o first 7 array element
   const removeFirst7Pointers = credentialHasArrays.
     selectivePointers.slice(7);
-  testVectors.disclosed.array.missingElements = await deriveTestData({
+  testVectors.disclosed.array.missingElements = await deriveCredentials({
     selectivePointers: removeFirst7Pointers,
     verifiableCredential: signedAchievementCredential,
     suite,
