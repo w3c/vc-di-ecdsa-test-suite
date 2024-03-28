@@ -49,7 +49,7 @@ jobs:
         env:
           CLIENT_SECRET_DB: ${{ secrets.CLIENT_SECRET_DB }}
           KEY_SEED_DB: ${{ secrets.KEY_SEED_DB }}
-          LOCAL_ONLY: false
+          DISABLE_INTEROP: false
         run: npm run test
         continue-on-error: true
       - name: Deploy to Github Pages

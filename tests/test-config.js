@@ -16,9 +16,9 @@ const convertToBoolean = envVariable => /^(1|true)$/i.test(envVariable);
 
 // gets the local value for test runs to determine
 // if interop tests should run
-const getLocal = () => {
-  if(process.env.LOCAL_ONLY != undefined) {
-    return convertToBoolean(process.env.LOCAL_ONLY);
+const parseInteropOption = () => {
+  if(process.env.DISABLE_INTEROP != undefined) {
+    return convertToBoolean(process.env.DISABLE_INTEROP);
   }
   return _runner.local;
 };
@@ -73,7 +73,7 @@ export const getSuiteConfig = suite => {
     ...suiteConfig,
     credentials,
     keyTypes,
-    local: getLocal()
+    disableInterop: parseInteropOption()
   };
   // store in the cache
   _cache.set(suite, config);
