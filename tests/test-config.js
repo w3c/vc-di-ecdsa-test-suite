@@ -68,11 +68,11 @@ export const getSuiteConfig = suite => {
   }
   // create an initial config
   const suiteConfig = _createSuiteConfig(suite);
-  const {credentials = {}, keyTypes} = _createVectorConfig(suite);
+  const {credentials = {}, ...vectorConfig} = _createVectorConfig(suite);
   const config = {
     ...suiteConfig,
     credentials,
-    keyTypes,
+    vectors: {...vectorConfig},
     local: getLocal()
   };
   // store in the cache
