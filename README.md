@@ -146,38 +146,49 @@ mocha --grep '"specificProperty" test name' ./tests/10-specific-test-suite.js
 ### Testing Locally
 
 If you want to test a single implementation or endpoints running locally, you can
-copy `localImplementationsConfig.example.cjs` to `.localImplementationsConfig.cjs`
+copy `localConfig.example.cjs` to `localConfig.cjs`
 in the root directory of the test suite.
 
 ```bash
-cp localImplementationsConfig.example.cjs .localImplementationsConfig.cjs
+cp localConfig.example.cjs localConfig.cjs
 ```
 
-This file must be a CommonJS module that exports an array of implementations
-(the format is identical to the on defined in
-[VC Test Suite Implementations](https://github.com/w3c/vc-test-suite-implementations?tab=readme-ov-file#usage)):
+This file must be a CommonJS module that exports an object containing a
+`settings` object (for configuring the test suite code itself) and an
+`implementations` array (for configuring the implementation(s) to test against).
+
+The format of the object contained in the `implementations` array is
+identical to the on defined in
+[VC Test Suite Implementations](https://github.com/w3c/vc-test-suite-implementations?tab=readme-ov-file#usage)).
+The `implementations` array may contain more than one implementation object for
+testing multiple implementations at once.
 
 ```js
-// .localImplementationsConfig.cjs defining local implementations
+// .localConfig.cjs defining local implementations
 // you can specify a BASE_URL before running the tests such as:
 // BASE_URL=http://localhost:40443/zDdfsdfs npm test
 const baseUrl = process.env.BASE_URL || 'https://localhost:40443/id';
-module.exports = [{
-  name: 'My Company',
-  implementation: 'My Implementation Name',
-  // only this implementation will be run in the suite
-  issuers: [{
-    id: 'did:key:zMyKey',
-    endpoint: `${baseUrl}/credentials/issue`,
-    supportedEcdsaKeyTypes: ['P-256', 'P-384'],
-    tags: ['ecdsa-rdfc-2019']
-  }],
-  verifiers: [{
-    endpoint: `${baseUrl}/credentials/verify`,
-    supportedEcdsaKeyTypes: ['P-256', 'P-384'],
-    tags: ['ecdsa-rdfc-2019']
-  }]
-}];
+module.exports = {
+  settings: {
+    interop_tests: false,
+    local_implementations_only: true
+  },
+  implementations: [{
+    name: 'My Company',
+    implementation: 'My Implementation Name',
+    // only this implementation will be run in the suite
+    issuers: [{
+      id: 'did:key:zMyKey',
+      endpoint: `${baseUrl}/credentials/issue`,
+      supportedEcdsaKeyTypes: ['P-256', 'P-384'],
+      tags: ['ecdsa-rdfc-2019']
+    }],
+    verifiers: [{
+      endpoint: `${baseUrl}/credentials/verify`,
+      supportedEcdsaKeyTypes: ['P-256', 'P-384'],
+      tags: ['ecdsa-rdfc-2019']
+    }]
+  }];
 ```
 
 ### Running Interoperability Tests
