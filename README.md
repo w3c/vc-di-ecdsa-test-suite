@@ -131,7 +131,7 @@ The tests use a configuration file `/config/vectors.json` to configure test vect
 Running interoperability tests requires having authorization to the endpoints of multiple
 implementations. Because most users of this suite will not have those authorization capabilities
 the interoperability suites are disabled by default. If you wish to try running the interoperability suites
-you may by setting `disableInteropTests: false` in `./config/runner.json` or using the ENV Variable `DISABLE_INTEROP=false`.
+you can set `DISABLE_INTEROP=false` in your environment variables.
 
 ```bash
 LOCAL_ONLY=false npm test
