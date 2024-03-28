@@ -20,6 +20,14 @@ const {match} = endpoints.filterByTag({
 });
 
 describe('ecdsa-rdfc-2019 (verify)', function() {
+  let testVectors = new Map();
+  before(async function() {
+    testVectors = await issueCredentials({
+      credentials: Object.entries(credentials.verify),
+      suite: 'ecdsa-rdfc-2019',
+      keyTypes: vectors.keyTypes
+    });
+  });
   for(const vcVersion of vectors.vcTypes) {
     describe(`ecdsa-rdfc-2019 (verifiers) VC ${vcVersion}`, function() {
       // this will tell the report
@@ -29,14 +37,6 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
       this.rowLabel = 'Test Name';
       this.columnLabel = 'Verifier';
       this.implemented = [];
-      let testVectors = new Map();
-      before(async function() {
-        testVectors = await issueCredentials({
-          credentials: Object.entries(credentials.verify),
-          suite: 'ecdsa-rdfc-2019',
-          keyTypes: vectors.keyTypes
-        });
-      });
       for(const [name, {endpoints: verifiers}] of match) {
         for(const verifier of verifiers) {
           const {
@@ -56,7 +56,8 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
               // filter the test data to only include VC signed with
               // keyTypes the verifier supports
               supportedVectors = verifierKeyTypes.map(
-                (keyType = '') => testVectors.get(keyType.toUpperCase()));
+                (keyType = '') => testVectors.get(keyType.toUpperCase()).
+                  get(vcVersion));
             });
             // wrap the testApi config in an Implementation class
             it('MUST verify a valid VC with an ecdsa-rdfc-2019 proof.',
