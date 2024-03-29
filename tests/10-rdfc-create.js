@@ -58,8 +58,8 @@ describe('ecdsa-rdfc-2019 (create)', function() {
                 verificationMethodDocuments.push(verificationMethodDocument);
               }
             });
-            it('The field "cryptosuite" MUST be "ecdsa-rdfc-2019" or ' +
-              '"ecdsa-jcs-2019".', function() {
+            it('The cryptosuite property of the proof MUST be ' +
+            'ecdsa-rdfc-2019 or ecdsa-jcs-2019.', function() {
               this.test.cell = {
                 columnId: `${name}: ${keyType}`, rowId: this.test.title
               };
