@@ -38,19 +38,16 @@ export async function sdVerifySetup({credentials, vectors}) {
     suite,
     keyTypes
   });
-  const signedVc = testVectors.signed.get(keyTypes[0]);
   // use initial VCs for a basic selective disclosure test
   testVectors.disclosed.base = await deriveCredentials({
     selectivePointers: ['/credentialSubject/id'],
-    verifiableCredential: signedVc,
-    keyTypes,
+    verifiableCredentials: testVectors.signed,
     suite
   });
   // create initial nestedDisclosedCredential from signedVc
   testVectors.disclosed.nested = await deriveCredentials({
     selectivePointers: subjectNestedObjects.selectivePointers.slice(1, 3),
-    verifiableCredential: signedVc,
-    keyTypes,
+    verifiableCredential: testVectors.signed,
     suite
   });
   // copy the first vc
@@ -83,8 +80,7 @@ export async function sdVerifySetup({credentials, vectors}) {
     keyTypes[0]);
   // select full arrays
   testVectors.disclosed.array.full = await deriveCredentials({
-    selectivePointers:
-      [...credentialHasArrays.selectivePointers],
+    selectivePointers: [...credentialHasArrays.selectivePointers],
     verifiableCredential: signedAchievementCredential,
     suite,
     keyTypes

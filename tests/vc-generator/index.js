@@ -67,7 +67,8 @@ export async function issueCredential({
  * with the test data.
  *
  * @param {object} options - Options to use.
- * @param {object} options.verifiableCredential - A signed VC.
+ * @param {Map<string, Map<string, object>>} options.verifiableCredentials -
+ *   Signed VCs.
  * @param {string} options.suite - A cryptosuite id.
  * @param {Array<string>} options.selectivePointers - An optional list of json
  *   pointers.
@@ -76,7 +77,7 @@ export async function issueCredential({
  * @returns {Promise<Map<string, object>>} Returns a Map <keyType, vc>.
  */
 export async function deriveCredentials({
-  verifiableCredential,
+  verifiableCredentials,
   suite,
   selectivePointers = [],
   keyTypes = ['P-256']
