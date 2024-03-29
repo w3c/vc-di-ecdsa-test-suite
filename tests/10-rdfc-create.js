@@ -66,6 +66,22 @@ describe('ecdsa-rdfc-2019 (create)', function() {
                 verificationMethodDocuments.push(verificationMethodDocument);
               }
             });
+            it('The type property of the proof MUST be DataIntegrityProof.',
+              function() {
+                this.test.cell = {
+                  columnId: `${name}: ${keyType}`, rowId: this.test.title
+                };
+                proofs.map(p => p?.type).should.contain(
+                  'DataIntegrityProof',
+                  'Expected at least one proof to have type ' +
+                  'DataIntegrityProof');
+              });
+            /*
+             * @link https://w3c.github.io/vc-di-ecdsa/
+             #verify-derived-proof-ecdsa-sd-2023:~:text=
+             The%20cryptosuite%20property%20MUST%20be%20ecdsa%2Drdfc%2D2019%
+             2C%20ecdsa%2Djcs%2D2019%2C%20or%20ecdsa%2Dsd%2D2023.
+             */
             it('The cryptosuite property of the proof MUST be ' +
             'ecdsa-rdfc-2019 or ecdsa-jcs-2019.', function() {
               this.test.cell = {
