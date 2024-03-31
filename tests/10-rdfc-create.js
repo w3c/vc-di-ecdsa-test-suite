@@ -1,5 +1,5 @@
 /*!
- * Copyright 2023 Digital Bazaar, Inc.
+ * Copyright 2023-2024 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
 import {
@@ -69,6 +69,33 @@ describe('ecdsa-rdfc-2019 (create)', function() {
                 'Expected at least one proof to have ' +
               '"cryptosuite" property "ecdsa-rdfc-2019" or "ecdsa-jcs-2019".')
                 .to.contain.oneOf(cryptosuite);
+            });
+            it('The value of the proofValue property of the proof MUST be an ' +
+            'ECDSA signature produced according to [FIPS-186-5] using the ' +
+            'curves and hashes as specified in section 3. Algorithms, ' +
+            'encoded according to section 7 of [RFC4754] (sometimes referred ' +
+            'to as the IEEE P1363 format), and encoded using the base-58-btc ' +
+            'header and alphabet as described in the Multibase section of ' +
+            '[VC-DATA-INTEGRITY].', function() {
+              this.test.cell = {
+                columnId: `${name}: ${keyType}`, rowId: this.test.title
+              };
+              const _proof = proofs.find(p =>
+                p?.cryptosuite === 'ecdsa-rdfc-2019');
+              expect(
+                _proof,
+                `Expected VC from issuer ${name} to have an ' +
+                '"ecdsa-rdfc-2019" proof`).to.exist;
+              expect(
+                _proof.proofValue,
+                `Expected VC from issuer ${name} to have a ' +
+                '"proof.proofValue"`
+              ).to.exist;
+              expect(
+                _proof.proofValue,
+                `Expected VC "proof.proofValue" from issuer ${name} to be ` +
+                'a string.'
+              ).to.be.a.string;
             });
             it('The "proof" MUST verify with a conformant verifier.',
               async function() {
