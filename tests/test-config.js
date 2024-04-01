@@ -8,6 +8,9 @@ import {require} from './helpers.js';
 const _runner = require('../config/runner.json');
 const _vectors = require('../config/vectors.json');
 
+// load `localConfig` settings for controlling interop tests
+import {localSettings} from 'vc-test-suite-implementations';
+
 // cache is valid for a single test run
 const _cache = new Map();
 
@@ -20,7 +23,7 @@ const parseInteropOption = () => {
   if(process.env.DISABLE_INTEROP != undefined) {
     return convertToBoolean(process.env.DISABLE_INTEROP);
   }
-  return _runner.local;
+  return !localSettings.enableInteropTests;
 };
 
 const openVectorFiles = vectorFiles => {
