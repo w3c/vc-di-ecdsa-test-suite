@@ -2,8 +2,9 @@
  * Copyright 2023 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
+import * as bs58 from 'base58-universal';
+import * as bs64 from 'base64url-universal';
 import {createRequire} from 'node:module';
-import {decode} from 'base58-universal';
 import {klona} from 'klona';
 import {v4 as uuidv4} from 'uuid';
 
@@ -11,7 +12,8 @@ export const require = createRequire(import.meta.url);
 
 // takes a multibase string starting with z lops the z off
 // and gets the bytes
-export const getMultibaseBytes = async s => decode(s.slice(1));
+export const getBs58Bytes = async s => bs58.decode(s.slice(1));
+export const getBs64UrlBytes = async s => bs64.decode(s.slice(1));
 
 // Javascript's default ISO timestamp contains milliseconds.
 // This lops off the MS part of the UTC RFC3339 TimeStamp and replaces

@@ -3,12 +3,17 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 import {
-  shouldBeBs58, shouldBeMulticodecEncoded, verificationSuccess
+  shouldBeBs58,
+  shouldBeBs64UrlNoPad,
+  shouldBeMulticodecEncoded,
+  shouldHaveHeaderBytes,
+  verificationSuccess
 } from './assertions.js';
 import chai from 'chai';
 import {createInitialVc} from './helpers.js';
 import {documentLoader} from './documentLoader.js';
 import {endpoints} from 'vc-test-suite-implementations';
+import {expect} from 'chai';
 import {getSuiteConfig} from './test-config.js';
 
 const {tags, credentials, keyTypes} = getSuiteConfig('ecdsa-sd-2023');
@@ -70,6 +75,46 @@ describe('ecdsa-sd-2023 (create)', function() {
                 proof => proof.cryptosuite === 'ecdsa-sd-2023'
               ).should.equal(true, 'Expected at least one proof to have ' +
                 '"cryptosuite" property "ecdsa-sd-2023".'
+              );
+            });
+            it('the signature value (proofValue) MUST be expressed according ' +
+            'to section 7 of [RFC4754] (sometimes referred to as the IEEE ' +
+            'P1363 format) and encoded according to the specific cryptosuite ' +
+            'proof generation algorithm.', async function() {
+              this.test.cell = {
+                columnId: `${name}: ${keyType}`, rowId: this.test.title
+              };
+              const _proof = proofs.find(p =>
+                p?.cryptosuite === 'ecdsa-sd-2023');
+              expect(
+                _proof,
+                `Expected VC from issuer ${name} to have an ' +
+                '"ecdsa-sd-2023" proof`).to.exist;
+              expect(
+                _proof.proofValue,
+                `Expected VC from issuer ${name} to have a ' +
+                '"proof.proofValue"`
+              ).to.exist;
+              expect(
+                _proof.proofValue,
+                `Expected VC "proof.proofValue" from issuer ${name} to be ` +
+                'a string.'
+              ).to.be.a.string;
+              //Ensure the proofValue string starts with u, indicating that it
+              //is a multibase-base64url-no-pad-encoded value, throwing an
+              //error if it does not.
+              expect(
+                _proof.proofValue.startsWith('u'),
+                `Expected "proof.proofValue" to start with u received ` +
+                `${_proof.proofValue[0]}`).to.be.true;
+              // now test the encoding which is bs64 url no pad for this suite
+              expect(
+                shouldBeBs64UrlNoPad(_proof.proofValue),
+                'Expected "proof.proofValue" to be bs64 url no pad encoded.'
+              ).to.be.true;
+              await shouldHaveHeaderBytes(
+                _proof.proofValue,
+                new Uint8Array([0xd9, 0x5d, 0x00])
               );
             });
             it('The field "proofValue" MUST start with "u".', function() {

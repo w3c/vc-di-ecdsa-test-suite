@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 import {
-  getMultibaseBytes, multibaseMultikeyHeaderP256, multibaseMultikeyHeaderP384,
+  getBs58Bytes,
+  getBs64UrlBytes,
+  multibaseMultikeyHeaderP256,
+  multibaseMultikeyHeaderP384,
 } from './helpers.js';
 import chai from 'chai';
 import {klona} from 'klona';
@@ -21,6 +24,9 @@ const bs58 =
 // assert something is entirely bs58 encoded
 export const shouldBeBs58 = s => bs58.test(s);
 
+const bs64UrlNoPad = /^[A-Za-z0-9\-_]+$/;
+export const shouldBeBs64UrlNoPad = s => bs64UrlNoPad.test(s);
+
 // size of ecdsa-rdfc-2019 proofValues per keyType
 export const proofBytes = {
   'P-256': 64,
@@ -31,10 +37,19 @@ export const shouldHaveByteLength = async (
   multibaseString,
   expectedByteLength
 ) => {
-  const bytes = await getMultibaseBytes(multibaseString);
+  const bytes = await getBs58Bytes(multibaseString);
   bytes.length.should.eql(
     expectedByteLength,
     `Expected byteLength of ${expectedByteLength} received ${bytes.length}.`);
+};
+
+export const shouldHaveHeaderBytes = async (multibaseString, headerBytes) => {
+  const bytes = await getBs64UrlBytes(multibaseString);
+  const actualHeaderBytes = Array.from(bytes.slice(0, headerBytes.length));
+  actualHeaderBytes.should.eql(
+    Array.from(headerBytes),
+    'Actual header bytes did not match expected header bytes.'
+  );
 };
 
 export const shouldBeMulticodecEncoded = async s => {
@@ -42,7 +57,7 @@ export const shouldBeMulticodecEncoded = async s => {
   if(s.startsWith(multibaseMultikeyHeaderP256)) {
     // example of a P-256 publicKeyMultibase -
     // zDnaepHgv4AU1btQ8dp6EYbvgJ6M1ovzKnSpXJUPU2hshXLvp
-    const bytes = await getMultibaseBytes(s);
+    const bytes = await getBs58Bytes(s);
     bytes.length.should.equal(35);
     // bytes example => Uint8Array(35) [
     //   128,  36,   3,  98, 121, 153, 205, 199,
@@ -60,7 +75,7 @@ export const shouldBeMulticodecEncoded = async s => {
   }
 
   if(s.startsWith(multibaseMultikeyHeaderP384)) {
-    const bytes = await getMultibaseBytes(s);
+    const bytes = await getBs58Bytes(s);
     bytes.length.should.equal(51);
     // get the two-byte prefix
     const prefix = Array.from(bytes.slice(0, 2));
