@@ -2,9 +2,9 @@
  * Copyright 2023 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
 import {
-  verificationFail, verificationSuccess
+  itMustVerifyValidVC,
+  itRejectsInvalidCryptosuite
 } from './assertions.js';
 import {
   endpoints as registeredImplementations
@@ -12,67 +12,11 @@ import {
 
 import {getSuiteConfig} from './test-config.js';
 
-import {expect} from 'chai';
 import {issueTestData} from './vc-generator/index.js';
-import {klona} from 'klona';
 
-/**
- * Builds a result cell for the test reporter with the expected parameters.
- *
- * This is used to annotate the test results with the implementation name and
- * test name.
- *
- * @param {object} object - The object to use for building the result cell.
- * @param {string} object.name - The name of the implementation.
- * @param {string} object.keyType - The `keyType` being tested (e.g., `P-256`).
- * @param {string} object.testTitle - The title of the test.
- * @returns {object} The result cell object.
- */
-const buildResultCell = ({name, keyType, testTitle}) => ({
-  columnId: `${name}: ${keyType}`, rowId: testTitle
-});
-
-function annotateReportableTest(testContext, {
-  implementationName, keyType
-}) {
-  testContext.test.cell = buildResultCell({
-    name: implementationName,
-    keyType,
-    testTitle: testContext.test.title
-  });
-}
-
-/**
- * Asserts that an implementation supports a `keyType` required by the test
- * suite's cryptosuite.
- *
- * Implementations may support many key types, but they must
- * support at least the required key types.
- *
- * @param {object} options - The options to use for assertion.
- * @param {object|null} options.testVector - The test vector object to be
- * validated for the associated keyType. NULL if the keyType is not supported
- * by the implementation as specified in `supportedEcdsaKeyTypes`.
- * @param {string} options.keyType - The type of ECDSA key to check for within
- * the test vector. This specifies the exact key type that the implementation
- * is expected to support.
- */
-function expectImplementationTestVector({testVector, keyType}) {
-  expect(
-    testVector,
-    `Implementation not marked as supporting required "${keyType}"! ` +
-    'Is keyType missing from `supportedEcdsaKeyTypes`?'
-  ).to.exist;
-}
-
-function setupReportableTestSuite(runnerContext, name) {
-  runnerContext.matrix = true;
-  runnerContext.report = true;
-  runnerContext.rowLabel = 'Test Name';
-  runnerContext.columnLabel = name;
-
-  runnerContext.implemented = [];
-}
+import {
+  setupReportableTestSuite
+} from './helpers.js';
 
 const SUITE = 'ecdsa-rdfc-2019';
 
@@ -132,6 +76,7 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
 
           const args = {
             implementationName: name,
+            suiteName: SUITE,
             keyType,
             verifier,
             testVector,
@@ -139,45 +84,10 @@ describe('ecdsa-rdfc-2019 (verify)', function() {
 
           describe(implementationTitle, function() {
             itMustVerifyValidVC(args);
-            itRejectsInvalidCryptosuite(args);
+            itRejectsInvalidCryptosuite([SUITE, 'ecdsa-jcs-2019'], args);
           });
         }
       }
     }
   });
 });
-
-function itMustVerifyValidVC({
-  implementationName, keyType,
-  verifier, testVector
-}) {
-  return it('MUST verify a valid VC with an ecdsa-rdfc-2019 proof.',
-    async function() {
-      annotateReportableTest(this, {implementationName, keyType});
-
-      expectImplementationTestVector({testVector, keyType});
-
-      await verificationSuccess({credential: testVector, verifier});
-    });
-}
-
-function itRejectsInvalidCryptosuite({
-  implementationName, keyType,
-  verifier, testVector
-}) {
-  return it('If the "cryptosuite" field is not either the string ' +
-            '"ecdsa-rdfc-2019" or the string "ecdsa-jcs-2019", ' +
-            'an error MUST be raised.',
-  async function() {
-    annotateReportableTest(this, {implementationName, keyType});
-
-    expectImplementationTestVector({testVector, keyType});
-
-    const credential = klona(testVector);
-    // FIXME add invalid-cryptosuite as a locally valid cryptosuite
-    // name, so the signature is correct, but the cryptosuite
-    // name is incorrect
-    credential.proof.cryptosuite = 'invalid-cryptosuite';
-    await verificationFail({credential, verifier});
-  });
-}
