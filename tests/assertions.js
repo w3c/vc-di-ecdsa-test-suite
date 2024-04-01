@@ -7,7 +7,12 @@ import {
 } from './helpers.js';
 import chai from 'chai';
 import {decode} from 'base58-universal';
+import {klona} from 'klona';
 import varint from 'varint';
+
+import {
+  annotateReportableTest
+} from './helpers.js';
 
 const should = chai.should();
 
@@ -88,3 +93,65 @@ export const verificationSuccess = async ({credential, verifier}) => {
     'Expected HTTP Status code 200.'
   );
 };
+
+/**
+ * Asserts that an implementation supports a `keyType` required by the test
+ * suite's cryptosuite.
+ *
+ * Implementations may support many key types, but they must
+ * support at least the required key types.
+ *
+ * @param {object} options - The options to use for assertion.
+ * @param {object|null} options.testVector - The test vector object to be
+ * validated for the associated keyType. NULL if the keyType is not supported
+ * by the implementation as specified in `supportedEcdsaKeyTypes`.
+ * @param {string} options.keyType - The type of ECDSA key to check for within
+ * the test vector. This specifies the exact key type that the implementation
+ * is expected to support.
+ */
+export function expectImplementationTestVector({testVector, keyType}) {
+  chai.expect(
+    testVector,
+    `Implementation not marked as supporting required "${keyType}"! ` +
+    'Is keyType missing from `supportedEcdsaKeyTypes`?'
+  ).to.exist;
+}
+
+export function itMustVerifyValidVC({
+  implementationName, keyType,
+  suiteName,
+  verifier, testVector
+}) {
+  return it(`MUST verify a valid VC with an ${suiteName} proof.`,
+    async function() {
+      annotateReportableTest(this, {implementationName, keyType});
+
+      expectImplementationTestVector({testVector, keyType});
+
+      await verificationSuccess({credential: testVector, verifier});
+    });
+}
+
+export function itRejectsInvalidCryptosuite(expectedValidSuites, {
+  implementationName, keyType,
+  verifier, testVector
+}) {
+  const validDescription = expectedValidSuites
+    .map(suite => `the string "${suite}"`)
+    .join(' or ');
+
+  return it('If the "cryptosuite" field is not ' + validDescription +
+  ', an error MUST be raised.',
+  async function() {
+    annotateReportableTest(this, {implementationName, keyType});
+
+    expectImplementationTestVector({testVector, keyType});
+
+    const credential = klona(testVector);
+    // FIXME add invalid-cryptosuite as a locally valid cryptosuite
+    // name, so the signature is correct, but the cryptosuite
+    // name is incorrect
+    credential.proof.cryptosuite = 'invalid-cryptosuite';
+    await verificationFail({credential, verifier});
+  });
+}

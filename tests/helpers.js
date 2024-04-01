@@ -75,3 +75,38 @@ export const multibaseMultikeyHeaderP384 =
 
 export const multibaseMultikeyHeaderEd25519 =
   SUPPORTED_BASE58_ECDSA_MULTIKEY_HEADERS.get('Ed25519');
+
+/**
+ * Builds a result cell for the test reporter with the expected parameters.
+ *
+ * This is used to annotate the test results with the implementation name and
+ * test name.
+ *
+ * @param {object} object - The object to use for building the result cell.
+ * @param {string} object.name - The name of the implementation.
+ * @param {string} object.keyType - The `keyType` being tested (e.g., `P-256`).
+ * @param {string} object.testTitle - The title of the test.
+ * @returns {object} The result cell object.
+ */
+export const buildResultCell = ({name, keyType, testTitle}) => ({
+  columnId: `${name}: ${keyType}`, rowId: testTitle
+});
+
+export function annotateReportableTest(testContext, {
+  implementationName, keyType
+}) {
+  testContext.test.cell = buildResultCell({
+    name: implementationName,
+    keyType,
+    testTitle: testContext.test.title
+  });
+}
+
+export function setupReportableTestSuite(runnerContext, name) {
+  runnerContext.matrix = true;
+  runnerContext.report = true;
+  runnerContext.rowLabel = 'Test Name';
+  runnerContext.columnLabel = name;
+
+  runnerContext.implemented = [];
+}
