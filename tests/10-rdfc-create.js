@@ -15,7 +15,12 @@ import {expect} from 'chai';
 import {getSuiteConfig} from './test-config.js';
 import {localVerifier} from './vc-verifier/index.js';
 
-const {tags, credentials, keyTypes, proofLengths} = getSuiteConfig('ecdsa-rdfc-2019');
+const {
+  tags,
+  credentials,
+  keyTypes,
+  proofLengths
+} = getSuiteConfig('ecdsa-rdfc-2019');
 const {match} = endpoints.filterByTag({
   tags: [...tags],
   property: 'issuers'
@@ -73,7 +78,7 @@ describe('ecdsa-rdfc-2019 (create)', function() {
               '"cryptosuite" property "ecdsa-rdfc-2019" or "ecdsa-jcs-2019".')
                 .to.contain.oneOf(cryptosuite);
             });
-            it.only('the signature value (proofValue) MUST be expressed according ' +
+            it('the signature value (proofValue) MUST be expressed according ' +
             'to section 7 of [RFC4754] (sometimes referred to as the IEEE ' +
             'P1363 format) and encoded according to the specific cryptosuite ' +
             'proof generation algorithm.', async function() {
