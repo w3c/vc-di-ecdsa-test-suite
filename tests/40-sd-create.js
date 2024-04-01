@@ -52,8 +52,8 @@ describe('ecdsa-sd-2023 (create)', function() {
             before(async function() {
               issuedVc = await createInitialVc({
                 issuer,
-                vc: credentials.create.document
-                //mandatoryPointers: credentials.create.mandatoryPointers
+                vc: credentials.create.document,
+                mandatoryPointers: credentials.create.mandatoryPointers
               });
               // Support multiple proofs
               proofs = Array.isArray(issuedVc?.proof) ? issuedVc.proof :
