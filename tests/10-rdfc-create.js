@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 import {
-  shouldBeBs58, shouldBeMulticodecEncoded, verificationSuccess
+  shouldBeBs58,
+  shouldBeMulticodecEncoded,
+  shouldHaveByteLength,
+  verificationSuccess
 } from './assertions.js';
 import {createInitialVc} from './helpers.js';
 import {documentLoader} from './documentLoader.js';
@@ -12,7 +15,7 @@ import {expect} from 'chai';
 import {getSuiteConfig} from './test-config.js';
 import {localVerifier} from './vc-verifier/index.js';
 
-const {tags, credentials, keyTypes} = getSuiteConfig('ecdsa-rdfc-2019');
+const {tags, credentials, keyTypes, proofLengths} = getSuiteConfig('ecdsa-rdfc-2019');
 const {match} = endpoints.filterByTag({
   tags: [...tags],
   property: 'issuers'
@@ -70,13 +73,10 @@ describe('ecdsa-rdfc-2019 (create)', function() {
               '"cryptosuite" property "ecdsa-rdfc-2019" or "ecdsa-jcs-2019".')
                 .to.contain.oneOf(cryptosuite);
             });
-            it('The value of the proofValue property of the proof MUST be an ' +
-            'ECDSA signature produced according to [FIPS-186-5] using the ' +
-            'curves and hashes as specified in section 3. Algorithms, ' +
-            'encoded according to section 7 of [RFC4754] (sometimes referred ' +
-            'to as the IEEE P1363 format), and encoded using the base-58-btc ' +
-            'header and alphabet as described in the Multibase section of ' +
-            '[VC-DATA-INTEGRITY].', function() {
+            it.only('the signature value (proofValue) MUST be expressed according ' +
+            'to section 7 of [RFC4754] (sometimes referred to as the IEEE ' +
+            'P1363 format) and encoded according to the specific cryptosuite ' +
+            'proof generation algorithm.', async function() {
               this.test.cell = {
                 columnId: `${name}: ${keyType}`, rowId: this.test.title
               };
@@ -96,6 +96,15 @@ describe('ecdsa-rdfc-2019 (create)', function() {
                 `Expected VC "proof.proofValue" from issuer ${name} to be ` +
                 'a string.'
               ).to.be.a.string;
+              // now test the encoding which is bs58 for this suite
+              expect(
+                shouldBeBs58(_proof.proofValue),
+                'Expected "proof.proofValue" to be bs58 encoded.'
+              ).to.be.true;
+              // proofBytes will be exactly 64 bytes in size for a P-256 key,
+              // and 96 bytes in size for a P-384 key.
+              const expectedLength = proofLengths[keyType];
+              await shouldHaveByteLength(_proof.proofValue, expectedLength);
             });
             it('The "proof" MUST verify with a conformant verifier.',
               async function() {

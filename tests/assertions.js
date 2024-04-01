@@ -3,10 +3,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 import {
-  multibaseMultikeyHeaderP256, multibaseMultikeyHeaderP384,
+  getMultibaseBytes, multibaseMultikeyHeaderP256, multibaseMultikeyHeaderP384,
 } from './helpers.js';
 import chai from 'chai';
-import {decode} from 'base58-universal';
 import {klona} from 'klona';
 import varint from 'varint';
 
@@ -22,12 +21,28 @@ const bs58 =
 // assert something is entirely bs58 encoded
 export const shouldBeBs58 = s => bs58.test(s);
 
+// size of ecdsa-rdfc-2019 proofValues per keyType
+export const proofBytes = {
+  'P-256': 64,
+  'P-384': 96
+};
+
+export const shouldHaveByteLength = async (
+  multibaseString,
+  expectedByteLength
+) => {
+  const bytes = await getMultibaseBytes(multibaseString);
+  bytes.length.should.eql(
+    expectedByteLength,
+    `Expected byteLength of ${expectedByteLength} received ${bytes.length}.`);
+};
+
 export const shouldBeMulticodecEncoded = async s => {
   // check if it is multi codec encoded
   if(s.startsWith(multibaseMultikeyHeaderP256)) {
     // example of a P-256 publicKeyMultibase -
     // zDnaepHgv4AU1btQ8dp6EYbvgJ6M1ovzKnSpXJUPU2hshXLvp
-    const bytes = await decode(s.slice(1));
+    const bytes = await getMultibaseBytes(s);
     bytes.length.should.equal(35);
     // bytes example => Uint8Array(35) [
     //   128,  36,   3,  98, 121, 153, 205, 199,
@@ -45,7 +60,7 @@ export const shouldBeMulticodecEncoded = async s => {
   }
 
   if(s.startsWith(multibaseMultikeyHeaderP384)) {
-    const bytes = await decode(s.slice(1));
+    const bytes = await getMultibaseBytes(s);
     bytes.length.should.equal(51);
     // get the two-byte prefix
     const prefix = Array.from(bytes.slice(0, 2));
