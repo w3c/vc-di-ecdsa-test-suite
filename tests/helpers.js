@@ -34,7 +34,7 @@ export const ISOTimeStamp = ({date = new Date()} = {}) => {
  * @returns {Promise<object>} The resulting issuance result.
  */
 export const createInitialVc = async ({issuer, vc, mandatoryPointers}) => {
-  const {settings: {id: issuerId, options}} = issuer;
+  const {settings: {id: issuerId, options = {}}} = issuer;
   const credential = klona(vc);
   credential.id = `urn:uuid:${uuidv4()}`;
   credential.issuer = issuerId;
