@@ -14,12 +14,15 @@ SPDX-License-Identifier: BSD-3-Clause
 - **BREAKING**: Env variables related to `issuerName` no longer used.
 
 ### Added
-- **BREAKING**: interop tests are now skipped by default; `LOCAL_ONLY` environment variable set to `false` reenables them.
+- **BREAKING**: interop tests are now skipped by default; `DISABLE_INTEROP_TESTS`
+environment variable set to `false` reenables them.
 - Support for issuing test data locally using VC 2.0 context.
 - Support for running issuer-specific tests against an in-process verifier.
 - RDFC verify tests now assert against required `keyType`s rather
 than only testing what is marked by `supportedEcdsaKeyTypes` as
 supported by integration.
+- Support for a new `localConfig.cjs` feature.
+  - Adds options for test suite config and local implementation endpoint configuration.
 
 ## 2.3.0 - 2024-02-25
 
