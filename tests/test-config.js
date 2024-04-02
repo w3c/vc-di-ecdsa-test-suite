@@ -8,7 +8,7 @@ import {require} from './helpers.js';
 const _runner = require('../config/runner.json');
 const _vectors = require('../config/vectors.json');
 
-// load `localConfig` settings for controlling interop tests
+// load `localConfig` settings to control interop tests
 import {localSettings} from 'vc-test-suite-implementations';
 
 // cache is valid for a single test run
