@@ -2,6 +2,8 @@
  * Copyright 2023 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
+import * as ecdsaSd2023Cryptosuite
+  from '@digitalbazaar/ecdsa-sd-2023-cryptosuite';
 import {
   shouldBeBs58,
   shouldBeBs64UrlNoPad,
@@ -9,12 +11,13 @@ import {
   shouldHaveHeaderBytes,
   verificationSuccess
 } from './assertions.js';
-import chai from 'chai';
 import {createInitialVc} from './helpers.js';
+import {deriveCredential} from './vc-generator/index.js';
 import {documentLoader} from './documentLoader.js';
 import {endpoints} from 'vc-test-suite-implementations';
 import {expect} from 'chai';
 import {getSuiteConfig} from './test-config.js';
+import {localVerifier} from './vc-verifier/index.js';
 
 const {tags, credentials, keyTypes} = getSuiteConfig('ecdsa-sd-2023');
 const {match} = endpoints.filterByTag({
@@ -22,7 +25,9 @@ const {match} = endpoints.filterByTag({
   property: 'issuers'
 });
 
-const should = chai.should();
+const verifier = localVerifier({
+  cryptosuite: ecdsaSd2023Cryptosuite.createVerifyCryptosuite()
+});
 
 describe('ecdsa-sd-2023 (create)', function() {
   describe('ecdsa-sd-2023 (issuers)', function() {
@@ -31,7 +36,7 @@ describe('ecdsa-sd-2023 (create)', function() {
     this.implemented = [];
     this.rowLabel = 'Test Name';
     this.columnLabel = 'Implementation';
-    for(const [name, {endpoints: issuers, implementation}] of match) {
+    for(const [name, {endpoints: issuers}] of match) {
       for(const keyType of keyTypes) {
         for(const issuer of issuers) {
           const {supportedEcdsaKeyTypes} = issuer.settings;
@@ -42,10 +47,6 @@ describe('ecdsa-sd-2023 (create)', function() {
           // add implementation name and keyType to report
           this.implemented.push(`${name}: ${keyType}`);
           describe(`${name}: ${keyType}`, function() {
-            // find matching verifier
-            const verifier = implementation.verifiers.filter(
-              v => tags.every(tag => v.tags.has(tag)) &&
-                v.settings.supportedEcdsaKeyTypes.includes(keyType));
             let issuedVc;
             let proofs;
             const verificationMethodDocuments = [];
@@ -127,14 +128,22 @@ describe('ecdsa-sd-2023 (create)', function() {
                 '"proofValue" property that starts with "u".'
               );
             });
-            it('The "proof" MUST verify when using a conformant verifier.',
+            it('The "proof" MUST verify with a conformant verifier.',
               async function() {
                 this.test.cell = {
                   columnId: `${name}: ${keyType}`, rowId: this.test.title
                 };
-                should.exist(verifier, 'Expected implementation to have a VC ' +
-                  'HTTP API compatible verifier.');
-                verificationSuccess({credential: issuedVc, verifier});
+                const derivedCredential = await deriveCredential({
+                  verifiableCredential: issuedVc,
+                  documentLoader,
+                  suite: 'ecdsa-sd-2023',
+                  selectivePointers: ['/credentialSubject/id']
+                });
+
+                await verificationSuccess({
+                  credential: derivedCredential,
+                  verifier
+                });
               });
             it('The "proof.proofPurpose" field MUST match the verification ' +
               'relationship expressed by the verification method controller.',
