@@ -145,7 +145,7 @@ mocha --grep '"specificProperty" test name' ./tests/10-specific-test-suite.js
 
 ### Testing Locally
 
-If you want to test a single implementation or endpoints running locally, you can
+To test a single implementation or endpoint running locally, you can
 copy `localConfig.example.cjs` to `localConfig.cjs`
 in the root directory of the test suite.
 
@@ -158,10 +158,10 @@ This file must be a CommonJS module that exports an object containing a
 `implementations` array (for configuring the implementation(s) to test against).
 
 The format of the object contained in the `implementations` array is
-identical to the on defined in
+identical to the one defined in
 [VC Test Suite Implementations](https://github.com/w3c/vc-test-suite-implementations?tab=readme-ov-file#usage)).
-The `implementations` array may contain more than one implementation object for
-testing multiple implementations at once.
+The `implementations` array may contain more than one implementation object, to
+test multiple implementations in one run.
 
 ```js
 // .localConfig.cjs defining local implementations
@@ -194,9 +194,9 @@ module.exports = {
 ### Running Interoperability Tests
 
 Running interoperability tests requires having authorization to the endpoints of multiple
-implementations. Because most users of this suite will not have those authorization capabilities
-the interoperability suites are disabled by default. If you wish to try running the interoperability suites
-you may by setting `local: false` in `./config/runner.json` or using the ENV Variable `LOCAL_ONLY=false`.
+implementations. Because most users of this suite will not have those authorization capabilities,
+the interoperability suites are disabled by default. You can try running the interoperability suites
+by setting `local: false` in `./config/runner.json` or by setting the Environment Variable `LOCAL_ONLY=false`.
 
 ```bash
 LOCAL_ONLY=false npm test
@@ -211,10 +211,10 @@ The suites call on a set of common config files stored at `./config/`.
 - `./config/runner.json` is for test suite specific configurations.
 - `./config/vector.json` is for test vector specific configurations.
 
-These test suites use tags matched to implementations' endpoint tags in the tests.
+These test suites use tags matched to implementation endpoint tags in the tests.
 You can change the tag on which the suites will run in `./config/runner.json`, if desired.
 
-For this suite the `runner.json` file looks like this:
+For this suite, the `runner.json` file looks like this:
 
 ```js
 {
