@@ -11,7 +11,6 @@ SPDX-License-Identifier: BSD-3-Clause
 - [Background](#background)
 - [Implementation](#implementation)
 - [Usage](#usage)
-  - [Running Specific Tests](#running-specific-tests)
   - [Testing Locally](#testing-locally)
   - [Running Interoperability Tests](#running-interoperability-tests)
 - [Development](#development)
@@ -130,17 +129,6 @@ require client secrets, please check the implementation manifest within the
 
 ```js
 npm i
-```
-
-### Running Specific Tests
-
-This suite uses [`mocha.js`](https://mochajs.org) as the test runner.
-Mocha has [multiple options](https://mochajs.org/#command-line-usage) for filtering which tests run.
-
-For example, the snippet below uses `grep` to filter tests by name, and only runs one of the test suites.
-
-```bash
-mocha --grep '"specificProperty" test name' ./tests/10-specific-test-suite.js
 ```
 
 ### Testing Locally
