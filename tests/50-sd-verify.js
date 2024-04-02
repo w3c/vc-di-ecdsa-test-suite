@@ -23,7 +23,11 @@ const {match} = endpoints.filterByTag({
 describe('ecdsa-sd-2023 (verify)', function() {
   let testVectors = new Map();
   before(async function() {
-    testVectors = await sdVerifySetup({credentials, vectors});
+    testVectors = await sdVerifySetup({
+      credentials,
+      keyTypes: vectors.keyTypes,
+      suite
+    });
   });
   for(const vcVersion of vectors.vcTypes) {
     describe('ecdsa-sd-2023 (verifiers)', function() {

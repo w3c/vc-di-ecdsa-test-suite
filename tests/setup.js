@@ -4,12 +4,11 @@
  */
 import {
   deriveCredentials,
-  issueCredential,
   issueCredentials
 } from './vc-generator/index.js';
 import {klona} from 'klona';
 
-export async function sdVerifySetup({credentials, vectors}) {
+export async function sdVerifySetup({credentials, keyTypes, suite}) {
   const testVectors = {
     //signedCredentials
     signed: new Map(),
@@ -31,75 +30,87 @@ export async function sdVerifySetup({credentials, vectors}) {
     }
   };
   const {subjectNestedObjects, subjectHasArrays} = credentials.verify;
-  const {keyTypes} = vectors;
   // create initial signed VCs
   testVectors.signed = await issueCredentials({
     credentials: Object.entries(subjectNestedObjects),
     suite,
     keyTypes
   });
+  // takes an object with keys versions values vector and
+  // transforms the vectors
+  const transformVectors = (obj, func) => Object.entries(obj).map(input => {
+    const [vcVersion, vector] = input;
+    return [vcVersion, func(klona(vector))];
+  });
+  const disclosedBaseVectors = transformVectors(
+    subjectNestedObjects,
+    vector => {
+      vector.selectivePointers = ['/credentialSubject/id'];
+      return vector;
+    });
   // use initial VCs for a basic selective disclosure test
   testVectors.disclosed.base = await deriveCredentials({
-    selectivePointers: ['/credentialSubject/id'],
-    verifiableCredentials: testVectors.signed,
-    suite
+    vectors: disclosedBaseVectors,
+    suite,
+    keyTypes
   });
+  const disclosedNestedVectors = transformVectors(
+    subjectNestedObjects,
+    vector => {
+      vector.selectivePointers = vector.selectivePointers.slice(1, 3);
+      return vector;
+    }
+  );
   // create initial nestedDisclosedCredential from signedVc
   testVectors.disclosed.nested = await deriveCredentials({
-    selectivePointers: subjectNestedObjects.selectivePointers.slice(1, 3),
-    verifiableCredential: testVectors.signed,
-    suite
+    vectors: disclosedNestedVectors,
+    suite,
+    keyTypes
   });
-  // copy the first vc
-  const noIdVc = klona(subjectNestedObjects.document);
-  // delete the id
-  delete noIdVc.id;
-  // start second round test data creation w/ dlCredentialNoIds
-  const noIdsVcs = await issueCredential({
-    credential: noIdVc,
-    keyTypes,
-    suite: 'ecdsa-sd-2023',
-    mandatoryPointers: subjectNestedObjects.mandatoryPointers
-  });
-  const signedDlCredentialNoIds = noIdsVcs.get(keyTypes[0]);
+  const disclosedNoIdVectors = transformVectors(
+    subjectNestedObjects,
+    vector => {
+      // delete the vc id
+      delete vector.document.id;
+      // no idea why, but we reduce the pointers to?
+      vector.selectivePointers = vector.selectivePointers.slice(1, 3);
+      return vector;
+    }
+  );
   testVectors.disclosed.noIds = await deriveCredentials({
-    selectivePointers: subjectNestedObjects.selectivePointers.slice(1, 3),
-    verifiableCredential: signedDlCredentialNoIds,
+    vectors: disclosedNoIdVectors,
     keyTypes,
     suite
   });
-  const credentialHasArrays = klona(subjectHasArrays);
-  // start third round test data creation w/
-  // AchievementCredential
-  const achievementCredentials = await issueCredentials({
-    credential: Object.entries(credentialHasArrays),
-    keyTypes,
-    suite
-  });
-  const signedAchievementCredential = achievementCredentials.get(
-    keyTypes[0]);
   // select full arrays
   testVectors.disclosed.array.full = await deriveCredentials({
-    selectivePointers: [...credentialHasArrays.selectivePointers],
-    verifiableCredential: signedAchievementCredential,
+    vectors: Object.entries(klona(subjectHasArrays)),
     suite,
     keyTypes
   });
-  // select less than full subarrays
-  const lessThanFullPointers = credentialHasArrays.
-    selectivePointers.slice(2, -4);
+  const lessThanFullVectors = transformVectors(
+    subjectHasArrays,
+    vector => {
+      // select less than full subarrays
+      vector.selectivePointers = vector.selectivePointers.slice(2, -4);
+      return vector;
+    }
+  );
   testVectors.disclosed.array.lessThanFull = await deriveCredentials({
-    selectivePointers: lessThanFullPointers,
-    verifiableCredential: signedAchievementCredential,
+    vectors: lessThanFullVectors,
     suite,
     keyTypes
   });
-  // select w/o first 7 array element
-  const removeFirst7Pointers = credentialHasArrays.
-    selectivePointers.slice(7);
+  const removeFirst7Vectors = transformVectors(
+    subjectHasArrays,
+    vector => {
+      // select w/o first 7 array element
+      vector.selectivePointers = vector.selectivePointers.slice(7);
+      return vector;
+    }
+  );
   testVectors.disclosed.array.missingElements = await deriveCredentials({
-    selectivePointers: removeFirst7Pointers,
-    verifiableCredential: signedAchievementCredential,
+    vectors: removeFirst7Vectors,
     suite,
     keyTypes
   });
