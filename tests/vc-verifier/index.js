@@ -8,7 +8,6 @@ import * as vc from '@digitalbazaar/vc';
 
 import {didIo} from '@bedrock/did-io';
 
-import {cryptosuite} from '@digitalbazaar/ecdsa-rdfc-2019-cryptosuite';
 import {DataIntegrityProof} from '@digitalbazaar/data-integrity';
 import {documentLoader} from '../vc-generator/documentLoader.js';
 import {
@@ -56,8 +55,12 @@ async function localDocumentLoader(url) {
  *
  * This is not intended to be a complete implementation but sufficient only for
  * local testing.
+ *
+ * @param {object} options - The options to use for the verifier.
+ * @param {string} options.cryptosuite - Cryptosuite to use for verification.
+ * @returns {object} A Verifier service for the given cryptosuite.
  */
-export const localVerifier = {
+export const localVerifier = ({cryptosuite}) => ({
   post: async ({
     json: {verifiableCredential: credential, options: {checks}}}) => {
     const suite = new DataIntegrityProof({cryptosuite});
@@ -98,7 +101,9 @@ export const localVerifier = {
           error: {
             name: 'VerificationError',
             message: 'Verification error (local).',
-            errors: result.error.errors.map(({message}) => message),
+            errors: result.error.errors?.map(({message}) => message) ??
+              [result.error.message],
+            causes: result.error.errors?.map(({cause}) => cause?.message) ?? [],
             credential: JSON.stringify(credential),
           },
           verified: false, status: 400
@@ -112,4 +117,4 @@ export const localVerifier = {
       };
     }
   }
-};
+});

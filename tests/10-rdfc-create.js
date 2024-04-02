@@ -9,6 +9,7 @@ import {
   verificationSuccess
 } from './assertions.js';
 import {createInitialVc} from './helpers.js';
+import {cryptosuite} from '@digitalbazaar/ecdsa-rdfc-2019-cryptosuite';
 import {documentLoader} from './documentLoader.js';
 import {endpoints} from 'vc-test-suite-implementations';
 import {expect} from 'chai';
@@ -25,6 +26,8 @@ const {match} = endpoints.filterByTag({
   tags: [...tags],
   property: 'issuers'
 });
+
+const verifier = localVerifier({cryptosuite});
 
 describe('ecdsa-rdfc-2019 (create)', function() {
   describe('ecdsa-rdfc-2019 (issuers)', function() {
@@ -139,7 +142,7 @@ describe('ecdsa-rdfc-2019 (create)', function() {
                 };
                 await verificationSuccess({
                   credential: issuedVc,
-                  verifier: localVerifier
+                  verifier
                 });
               });
             it('The "proof.proofPurpose" field MUST match the verification ' +
