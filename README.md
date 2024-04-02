@@ -158,8 +158,8 @@ test multiple implementations in one run.
 const baseUrl = process.env.BASE_URL || 'https://localhost:40443/id';
 module.exports = {
   settings: {
-    interop_tests: false,
-    local_implementations_only: true
+    enableInteropTests: false, // default
+    testAllImplementations: false // default
   },
   implementations: [{
     name: 'My Company',
@@ -168,12 +168,12 @@ module.exports = {
     issuers: [{
       id: 'did:key:zMyKey',
       endpoint: `${baseUrl}/credentials/issue`,
-      supportedEcdsaKeyTypes: ['P-256', 'P-384'],
+      supportedEcdsaKeyTypes: ['P-256'],
       tags: ['ecdsa-rdfc-2019']
     }],
     verifiers: [{
       endpoint: `${baseUrl}/credentials/verify`,
-      supportedEcdsaKeyTypes: ['P-256', 'P-384'],
+      supportedEcdsaKeyTypes: ['P-256'],
       tags: ['ecdsa-rdfc-2019']
     }]
   }];
