@@ -184,11 +184,7 @@ module.exports = {
 Running interoperability tests requires having authorization to the endpoints of multiple
 implementations. Because most users of this suite will not have those authorization capabilities,
 the interoperability suites are disabled by default. You can try running the interoperability suites
-by setting `local: false` in `./config/runner.json` or by setting the Environment Variable `LOCAL_ONLY=false`.
-
-```bash
-LOCAL_ONLY=false npm test
-```
+by adding `enableInteropTests: true` to your `localConfig.cjs` file.
 
 ## Development
 
