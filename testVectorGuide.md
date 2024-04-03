@@ -26,7 +26,7 @@ Credentials configuration consists of 3 properties:
   - Some `verify` sections contain multiple credentials and pointers for test data.
 - `interop` for VC interoperability tests.
 
-The test vector configuration consists of 1-3 paths to JSON objects:
+The test vector configuration consists of a version (either 1.1 or 2.0) and 1-3 paths to JSON objects:
 - The property `document` is a path to an unsigned credential.
   - `document` is required by all tests.
 - The property `mandatoryPointers` is a path to a JSON array of pointers.
@@ -47,60 +47,28 @@ in your implementation manifest.
 A minimal non-SD test vector configuration looks like this:
 ```js
 "verify": {
-  "document": "./test/input/vc-di-ecdsa/TestVectors/ecdsa-sd-2023/windDoc.json"
+  "1.1": {"document": "./test/input/vc-di-ecdsa/TestVectors/1.1/ecdsa-sd-2023/windDoc.json"},
+  "2.0": {"document": "./test/input/vc-di-ecdsa/TestVectors/2.0/ecdsa-sd-2023/windDoc.json"}
 }
 ```
 
 An SD test vector configuration looks like this:
 ```js
 "create": {
-  "document": "./mocks/valid/document.json",
-  "mandatoryPointers": "./mocks/valid/mandatoryPointers.json",
-  "selectivePointers": "./mocks/valid/selectivePointers.json"
-}
-```
-
-The full `config/runner.json` file currently looks like this:
-```js
-{
-  "suites": {
-    "ecdsa-rdfc-2019": {
-      "keyTypes": ["P-256", "p-384"],
-      "credentials": {
-        "create": {"document": "./mocks/valid/document.json"},
-        "verify": {"document": "./mocks/valid/document.json"},
-        "interop": {"document": "./mocks/valid/document.json"}
-      }
-    },
-    "ecdsa-sd-2023": {
-      "keyTypes": ["P-256"],
-      "credentials": {
-        "create": {
-          "document": "./mocks/valid/document.json",
-          "mandatoryPointers": "./mocks/valid/mandatoryPointers.json"
-        },
-        "verify": {
-          "subjectNestedObjects": {
-            "document": "./mocks/valid/document.json",
-            "mandatoryPointers": "./mocks/valid/mandatoryPointers.json",
-            "selectivePointers": "./mocks/valid/selectivePointers.json"
-          },
-          "subjectHasArrays": {
-            "document": "./mocks/achievement/document.json",
-            "mandatoryPointers": "./mocks/achievement/mandatoryPointers.json",
-            "selectivePointers": "./mocks/achievement/selectivePointers.json"
-          }
-        },
-        "interop": {
-          "document": "./mocks/valid/document.json",
-          "mandatoryPointers": "./mocks/valid/mandatoryPointers.json",
-          "selectivePointers": "./mocks/valid/selectivePointers.json"
-        }
-      }
-    }
+  "1.1": {
+    "document": "./mocks/valid/1.1/document.json",
+    "mandatoryPointers": "./mocks/valid/1.1/mandatoryPointers.json",
+    "selectivePointers": "./mocks/valid/1.1/selectivePointers.json"
+  },
+  "2.0": {
+    "document": "./mocks/valid/2.0/document.json",
+    "mandatoryPointers": "./mocks/valid/2.0/mandatoryPointers.json",
+    "selectivePointers": "./mocks/valid/2.0/selectivePointers.json"
   }
 }
 ```
+
+You can see the full `config/vectors.json` [here](/config/vectors.json);
 
 ### Configuring Test Data Generation
 To generate interop test data used in the test suite, testers may specify
