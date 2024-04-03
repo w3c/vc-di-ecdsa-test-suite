@@ -68,7 +68,7 @@ An SD test vector configuration looks like this:
 }
 ```
 
-You can see the full `config/vectors.json` [here](/config/vectors.json);
+You can see the full `config/vectors.json` [here](/config/vectors.json)
 
 ### Configuring Test Data Generation
 To generate interop test data used in the test suite, testers may specify
