@@ -39,7 +39,7 @@ to your implementation manifest.
   - An optional `id` property may be set alongside the `endpoint`.
     - If provided, the specified `issuer.id` will be added to Verifiable Credentials
       in the tests.
-    - If present, the `issuer.id` MUST use the `did:key` method and MUST be dereferenceable.
+    - If present, the `issuer.id` MUST use the `did:key` method.
   - If the endpoint supports a selective disclosure suite
     - The endpoint must accept `options.mandatoryPointers`.
     - If present, `options.mandatoryPointers` is an array of strings.
@@ -58,6 +58,9 @@ All endpoints will require a cryptosuite tag of `ecdsa-rdfc-2019`,
 will need to specify the `supportedEcdsaKeyTypes` property, parallel to `tags`
 listing the ECDSA key types issuable or verifiable by your implementation.
 It is recommended to have one issuer per supported ECDSA key type.
+Issuers and Verifiers may support more than one VC version.
+Use the property `supports.vc` with the values "1.1" and/or "2.0" to signal
+support for versions of Verifiable Credentials on your endpoints.
 Currently, the `ecdsa-rdfc-2019` test suite supports `P-256` and `P-384` ECDSA key types.
 The `ecdsa-sd-2023` test suite only supports the `P-256` ECDSA key type.
 Verifier endpoints can support multiple keys, key types, and suites.
@@ -76,36 +79,46 @@ A simplified manifest would look like this:
     "endpoint": "https://mycompany.example/issuer/p256/credentials/issue",
     "method": "POST",
     "supportedEcdsaKeyTypes": ["P-256"],
+    "supports": {
+      "vc": ["1.1", "2.0"]
+    },
     "tags": ["ecdsa-rdfc-2019"]
   },{
     "id": "did:key:myIssuer1#p384",
     "endpoint": "https://mycompany.example/issuer/p384/credentials/issue",
     "method": "POST",
     "supportedEcdsaKeyTypes": ["P-384"],
+    "supports": {
+      "vc": ["1.1", "2.0"]
+    },
     "tags": ["ecdsa-rdfc-2019"]
   }, {
     "id": "did:key:myIssuer#issuer2",
     "endpoint": "https://mycompany.example/credentials/issue",
     "method": "POST",
     "supportedEcdsaKeyTypes": ["P-256"],
+    "supports": {
+      "vc": ["1.1", "2.0"]
+    },
     "tags": ["ecdsa-jcs-2019"]
   }, {
     "id": "did:key:myIssuer3",
     "endpoint": "https://mycompany.example/credentials/issue",
     "method": "POST",
     "supportedEcdsaKeyTypes": ["P-256"],
+    "supports": {
+      "vc": ["1.1", "2.0"]
+    },
     "tags": ["ecdsa-sd-2023"]
   }],
   "verifiers": [{
     "endpoint": "https://mycompany.example/credentials/verify",
     "method": "POST",
     "supportedEcdsaKeyTypes": ["P-256", "P-384"],
-    "tags": ["ecdsa-rdfc-2019", "ecdsa-jcs-2019"]
-  }, {
-    "endpoint": "https://mycompany.example/credentials/verify",
-    "method": "POST",
-    "supportedEcdsaKeyTypes": ["P-256"],
-    "tags": ["ecdsa-sd-2023"]
+    "supports": {
+      "vc": ["1.1", "2.0"]
+    },
+    "tags": ["ecdsa-rdfc-2019", "ecdsa-jcs-2019", "ecdsa-sd-2023"]
   }],
   "vcHolders": [{
     "id": "did:key:myIssuer1#keyFragment",
