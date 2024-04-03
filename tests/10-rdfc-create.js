@@ -67,8 +67,10 @@ describe('ecdsa-rdfc-2019 (create)', function() {
               }
             });
             /*
-             * @link https://w3c.github.io/vc-di-ecdsa/#verify-derived-proof-ecdsa-sd-2023:~:text=The%20type%20property%20MUST%20be%20DataIntegrityProof
-             */
+            @link https://w3c.github.io/vc-di-ecdsa/
+            #verify-derived-proof-ecdsa-sd-2023:~:text=
+            The%20type%20property%20MUST%20be%20DataIntegrityProof
+            */
             it('The type property of the proof MUST be DataIntegrityProof.',
               function() {
                 this.test.cell = {
