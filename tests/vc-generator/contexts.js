@@ -11,13 +11,11 @@ import multikeyCtx from '@digitalbazaar/multikey-context';
 
 const contextMap = new Map();
 
-const _dataIntegrityCtx = klona(dataIntegrityCtx.CONTEXT);
-
 // add contexts for the documentLoader
 contextMap.set(multikeyCtx.constants.CONTEXT_URL, multikeyCtx.CONTEXT);
 contextMap.set(
   dataIntegrityCtx.constants.CONTEXT_URL,
-  _dataIntegrityCtx
+  dataIntegrityCtx.CONTEXT
 );
 contextMap.set(
   didCtx.constants.DID_CONTEXT_URL,
