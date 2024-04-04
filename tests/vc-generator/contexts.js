@@ -15,23 +15,23 @@ const contextMap = new Map();
 contextMap.set(multikeyCtx.constants.CONTEXT_URL, multikeyCtx.CONTEXT);
 contextMap.set(
   dataIntegrityCtx.constants.CONTEXT_URL,
-  dataIntegrityCtx.CONTEXT
+  klona(dataIntegrityCtx.CONTEXT)
 );
 contextMap.set(
   didCtx.constants.DID_CONTEXT_URL,
-  didCtx.contexts.get(
-    didCtx.constants.DID_CONTEXT_URL)
+  klona(didCtx.contexts.get(
+    didCtx.constants.DID_CONTEXT_URL))
 );
 contextMap.set(
   credentialsCtx.constants.CONTEXT_URL,
-  credentialsCtx.contexts.get(
-    credentialsCtx.constants.CONTEXT_URL)
+  klona(credentialsCtx.contexts.get(
+    credentialsCtx.constants.CONTEXT_URL))
 );
 
 contextMap.set(
   credentialsV2Context.constants.CONTEXT_URL,
-  credentialsV2Context.contexts.get(
-    credentialsV2Context.constants.CONTEXT_URL)
+  klona(credentialsV2Context.contexts.get(
+    credentialsV2Context.constants.CONTEXT_URL))
 );
 
 export {contextMap};
