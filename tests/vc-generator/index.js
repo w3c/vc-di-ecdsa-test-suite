@@ -4,7 +4,7 @@
  */
 import * as vc from '@digitalbazaar/vc';
 import {DataIntegrityProof} from '@digitalbazaar/data-integrity';
-import {documentLoader} from './documentLoader.js';
+import {documentLoader as defaultLoader} from './documentLoader.js';
 import {getMultikeys} from './key-gen.js';
 import {getSuite} from './cryptosuites.js';
 import {klona} from 'klona';
@@ -15,6 +15,8 @@ import {klona} from 'klona';
  *
  * @param {object} options - Options to use.
  * @param {object} options.credential - An unsigned VC.
+ * @param {Function} [options.documentLoader = defaultLoader] - A
+ * documentLoader(url).
  * @param {string} options.suite - A cryptosuite id.
  * @param {Array<string>} options.mandatoryPointers - An optional list of
  *   json pointers.
@@ -25,6 +27,7 @@ import {klona} from 'klona';
 export async function issueTestData({
   credential,
   suite,
+  documentLoader = defaultLoader,
   mandatoryPointers,
   keyTypes = ['P-256']
 }) {
@@ -33,6 +36,7 @@ export async function issueTestData({
   for(const [keyType, {signer, issuer}] of keys) {
     const _vc = await issueCredential({
       credential,
+      documentLoader,
       issuer,
       signer,
       suite,
@@ -45,6 +49,7 @@ export async function issueTestData({
 
 export async function issueCredential({
   credential,
+  documentLoader = defaultLoader,
   issuer,
   signer,
   suite,
@@ -65,6 +70,8 @@ export async function issueCredential({
  * with the test data.
  *
  * @param {object} options - Options to use.
+ * @param {Function} [options.documentLoader = defaultLoader] - A
+ * documentLoader(url).
  * @param {object} options.verifiableCredential - A signed VC.
  * @param {string} options.suite - A cryptosuite id.
  * @param {Array<string>} options.selectivePointers - An optional list of json
@@ -74,6 +81,7 @@ export async function issueCredential({
  * @returns {Promise<Map<string, object>>} Returns a Map <keyType, vc>.
  */
 export async function deriveTestData({
+  documentLoader = defaultLoader,
   verifiableCredential,
   suite,
   selectivePointers = [],
@@ -95,8 +103,8 @@ export async function deriveTestData({
 }
 
 export async function deriveCredential({
+  documentLoader = defaultLoader,
   verifiableCredential,
-  documentLoader,
   suite,
   signer,
   selectivePointers = []
