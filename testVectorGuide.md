@@ -72,12 +72,7 @@ You can see the full `config/vectors.json` [here](/config/vectors.json)
 
 ### Configuring Test Data Generation
 To generate interop test data used in the test suite, testers may specify
-the holder name using either the environment variable `SD_HOLDER_NAME` or the setting 
-`holderName` in the `ecdsa-sd-2023` section of `./config/runner.json`. This holder
-name will be used as the VC holder name when generating disclosed test credentials
-for ECDSA-SD tests.
-If `$SD_HOLDER_NAME` or `holderName` is not specified, `Digital Bazaar` will be used.
-
-```
-SD_HOLDER_NAME="HolderName" npm test
-```
+the holder name using the setting  `holderName` in the `ecdsa-sd-2023` section 
+of `./config/runner.json`. This holder name will be used as the implementation name 
+when generating disclosed test credentials for interop ECDSA-SD tests.
+If `holderName` is not specified, `Digital Bazaar` will be used.
