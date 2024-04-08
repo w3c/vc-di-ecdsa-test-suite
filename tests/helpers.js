@@ -66,7 +66,7 @@ export const createDisclosedVc = async ({
   return {disclosedCredential: data};
 };
 
-export const endpointCheck = ({endpoint, keyType, vcVersion}) => {
+export const endpointCheck = ({endpoint, vcVersion, keyType}) => {
   const {
     supportedEcdsaKeyTypes,
     // assume support for vc 1.1
@@ -74,7 +74,7 @@ export const endpointCheck = ({endpoint, keyType, vcVersion}) => {
   } = endpoint.settings;
   // if an issuer does not support the current keyType skip it
   const keyTypes = supportedEcdsaKeyTypes || supports?.keyTypes;
-  if(!keyTypes?.includes(keyType)) {
+  if(keyType && !keyTypes?.includes(keyType)) {
     return false;
   }
   // check to make sure the issuer supports the vc type
@@ -115,14 +115,43 @@ export const buildResultCell = ({name, keyType, testTitle}) => ({
   columnId: `${name}: ${keyType}`, rowId: testTitle
 });
 
+function getMochaTestDefinitionFromContext(testContext) {
+  if('currentTest' in testContext) {
+    // Test when called from a `beforeEach` or `afterEach` hook
+    return testContext.currentTest;
+  }
+
+  if('test' in testContext) {
+    // Test when called from a test function directly
+    return testContext.test;
+  }
+
+  throw new Error('Could not find test definition in test context');
+}
+
 export function annotateReportableTest(testContext, {
   implementationName, keyType
 }) {
-  testContext.test.cell = buildResultCell({
+  // The precise test definition object depends on the
+  // context in which this helper is called.
+  const context = getMochaTestDefinitionFromContext(testContext);
+
+  context.cell = buildResultCell({
     name: implementationName,
     keyType,
-    testTitle: testContext.test.title
+    testTitle: context.title
   });
+}
+
+export function getColumnNameForTestCategory(testCategory) {
+  switch(testCategory) {
+    case 'verifiers':
+      return 'Verifier';
+    case 'issuers':
+      return 'Issuer';
+    default:
+      throw new Error('testCategory must be "verifiers" or "issuers"');
+  }
 }
 
 export function setupReportableTestSuite(runnerContext, name) {
