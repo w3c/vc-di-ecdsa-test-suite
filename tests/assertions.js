@@ -12,10 +12,6 @@ import chai from 'chai';
 import {klona} from 'klona';
 import varint from 'varint';
 
-import {
-  annotateReportableTest
-} from './helpers.js';
-
 const should = chai.should();
 
 // RegExp with bs58 characters in it
@@ -147,23 +143,21 @@ export function expectImplementationTestVector({testVector, keyType}) {
 }
 
 export function itMustVerifyValidVC({
-  implementationName, keyType,
+  keyType,
   suiteName,
-  verifier, testVector
+  endpoint, testVector
 }) {
   return it(`MUST verify a valid VC with an ${suiteName} proof.`,
     async function() {
-      annotateReportableTest(this, {implementationName, keyType});
-
       expectImplementationTestVector({testVector, keyType});
 
-      await verificationSuccess({credential: testVector, verifier});
+      await verificationSuccess({credential: testVector, verifier: endpoint});
     });
 }
 
 export function itRejectsInvalidCryptosuite(expectedValidSuites, {
-  implementationName, keyType,
-  verifier, testVector
+  keyType,
+  endpoint, testVector
 }) {
   const validDescription = expectedValidSuites
     .map(suite => `the string "${suite}"`)
@@ -172,8 +166,6 @@ export function itRejectsInvalidCryptosuite(expectedValidSuites, {
   return it('If the "cryptosuite" field is not ' + validDescription +
   ', an error MUST be raised.',
   async function() {
-    annotateReportableTest(this, {implementationName, keyType});
-
     expectImplementationTestVector({testVector, keyType});
 
     const credential = klona(testVector);
@@ -181,6 +173,6 @@ export function itRejectsInvalidCryptosuite(expectedValidSuites, {
     // name, so the signature is correct, but the cryptosuite
     // name is incorrect
     credential.proof.cryptosuite = 'invalid-cryptosuite';
-    await verificationFail({credential, verifier});
+    await verificationFail({credential, verifier: endpoint});
   });
 }
