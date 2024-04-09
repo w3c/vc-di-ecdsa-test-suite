@@ -140,7 +140,7 @@ describe('ecdsa-sd-2019 (verify)', async function() {
       }
     });
     it('If the "cryptosuite" field is not the string ' +
-  '"ecdsa-sd-2023", an error MUST be raised.', async function() {
+    '"ecdsa-sd-2023", an error MUST be raised.', async function() {
       assertTestVector(disclosedCredentials);
       for(const credential of disclosedCredentials) {
         const signedCredentialCopy = klona(credential);
