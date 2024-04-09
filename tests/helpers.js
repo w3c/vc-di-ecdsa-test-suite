@@ -134,12 +134,12 @@ export function annotateReportableTest(testContext, {
 }) {
   // The precise test definition object depends on the
   // context in which this helper is called.
-  const context = getMochaTestDefinitionFromContext(testContext);
+  const def = getMochaTestDefinitionFromContext(testContext);
 
-  context.cell = buildResultCell({
+  def.cell = buildResultCell({
     name: implementationName,
     keyType,
-    testTitle: context.title
+    testTitle: def.title
   });
 }
 

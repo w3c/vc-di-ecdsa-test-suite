@@ -2,10 +2,8 @@ import {
   itMustVerifyValidVC,
   itRejectsInvalidCryptosuite,
 } from './assertions.js';
-
-import {issueCredentials} from './vc-generator/index.js';
-
 import {defineSuiteConformanceTests} from './suiteTests.js';
+import {issueCredentials} from './vc-generator/index.js';
 
 function buildTestVectors(suite, credentials, keyTypes) {
   return issueCredentials({

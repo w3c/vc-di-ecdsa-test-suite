@@ -83,6 +83,7 @@ export async function defineSuiteConformanceTests({
 
               const perTestCommonArgs = {
                 suiteName: suite,
+                implementationName: name,
                 vcVersion: vc,
                 keyType,
                 endpoint: ep,
