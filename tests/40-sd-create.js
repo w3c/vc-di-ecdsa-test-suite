@@ -142,7 +142,6 @@ describe('ecdsa-sd-2023 (create)', function() {
                   };
                   const derivedCredential = await deriveCredential({
                     verifiableCredential: issuedVc,
-                    documentLoader,
                     suite: 'ecdsa-sd-2023',
                     selectivePointers: ['/credentialSubject/id']
                   });
