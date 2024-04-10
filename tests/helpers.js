@@ -46,7 +46,11 @@ export const createInitialVc = async ({issuer, vc, mandatoryPointers}) => {
   }
   const {data, result, error} = await issuer.post({json: body});
   if(!result || !result.ok) {
-    console.warn('initial vc creation failed', {issuer, data, error});
+    console.warn(
+      `initial vc creation failed for ${(result || error)?.requestUrl}`,
+      error,
+      JSON.stringify(data, null, 2)
+    );
     return null;
   }
   return data;
@@ -64,7 +68,11 @@ export const createDisclosedVc = async ({
     }
   });
   if(!result || !result.ok) {
-    console.warn('derived vc creation failed', {vcHolder, data, error});
+    console.warn(
+      `derived vc creation failed for ${(result || error)?.requestUrl}`,
+      error,
+      JSON.stringify(data, null, 2)
+    );
   }
   return {disclosedCredential: data};
 };

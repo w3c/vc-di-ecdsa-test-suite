@@ -110,7 +110,7 @@ export const localVerifier = ({cryptosuite}) => ({
         };
       }
 
-      return {result: {...result, status: 200}};
+      return {result: {...result, status: 200, requestUrl: 'local-verifier'}};
     } catch(e) {
       return {
         error: {...e, verified: false, status: 400},

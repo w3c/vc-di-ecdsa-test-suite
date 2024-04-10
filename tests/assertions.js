@@ -108,7 +108,13 @@ export const verificationSuccess = async ({credential, verifier}) => {
       checks: ['proof']
     }
   };
-  const {result, error} = await verifier.post({json: body});
+  const {result, error, data} = await verifier.post({json: body});
+  if(!result || !result.ok) {
+    console.warn(
+      `Verification failed for ${(result || error)?.requestUrl}`,
+      (error || 'no error thrown'),
+      JSON.stringify({credential, data}, null, 2));
+  }
   should.not.exist(error, 'Expected verifier to not error.');
   should.exist(result, 'Expected a result from verifier.');
   should.exist(result.status,
