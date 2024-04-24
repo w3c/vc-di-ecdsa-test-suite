@@ -55,7 +55,8 @@ describe('ecdsa-sd-2023 (create)', function() {
                   issuer,
                   vc: credentials.create[vcVersion].document,
                   mandatoryPointers:
-                   credentials.create[vcVersion].mandatoryPointers
+                   credentials.create[vcVersion].mandatoryPointers,
+                  vcVersion
                 });
                 // Support multiple proofs
                 proofs = Array.isArray(issuedVc?.proof) ? issuedVc.proof :

@@ -30,15 +30,23 @@ export const ISOTimeStamp = ({date = new Date()} = {}) => {
  * @param {object} options.vc - The credential to be issued.
  * @param {Array<string>} [options.mandatoryPointers] - An optional
  *   array of mandatory pointers.
+ * @param {string} options.vcVersion - The version of the VC.
  *
  * @returns {Promise<object>} The resulting issuance result.
  */
-export const createInitialVc = async ({issuer, vc, mandatoryPointers}) => {
+export const createInitialVc = async ({
+  issuer,
+  vc,
+  mandatoryPointers,
+  vcVersion
+}) => {
   const {settings: {id: issuerId, options = {}}} = issuer;
   const credential = klona(vc);
   credential.id = `urn:uuid:${uuidv4()}`;
   credential.issuer = issuerId;
-  credential.issuanceDate = ISOTimeStamp();
+  if(vcVersion === '1.1') {
+    credential.issuanceDate = ISOTimeStamp();
+  }
   const body = {credential, options};
   // if there are mandatoryPointers for sd tests add them
   if(Array.isArray(mandatoryPointers)) {

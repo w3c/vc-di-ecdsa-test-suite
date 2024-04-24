@@ -55,7 +55,8 @@ describe('ecdsa-rdfc-2019 (create)', function() {
               before(async function() {
                 issuedVc = await createInitialVc({
                   issuer,
-                  vc: credentials.create[vcVersion].document
+                  vc: credentials.create[vcVersion].document,
+                  vcVersion
                 });
                 // VCs can have multiple proofs so account for that
                 proofs = Array.isArray(issuedVc?.proof) ? issuedVc.proof :
