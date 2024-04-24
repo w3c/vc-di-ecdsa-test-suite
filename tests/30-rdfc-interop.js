@@ -78,7 +78,8 @@ const {
         before(async function() {
           issuedVc = await createInitialVc({
             issuer: issuerEndpoint,
-            vc: credentials.interop['1.1'].document
+            vc: credentials.interop['1.1'].document,
+            vcVersion: '1.1'
           });
         });
         it(`"${verifierDisplayName}" should verify "${issuerDisplayName}"`,
