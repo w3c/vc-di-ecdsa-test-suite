@@ -6,7 +6,7 @@ SPDX-License-Identifier: BSD-3-Clause
 
 # w3c/vc-di-ecdsa-test-suite  ChangeLog
 
-## 3.0.0 - yyyy-mm-dd
+## 3.0.0 - 2024-04-17
 
 ### Changed
 - **BREAKING**: Verify test suites generate data locally.
@@ -23,6 +23,7 @@ than only testing what is marked by `supportedEcdsaKeyTypes` as
 supported by integration.
 - Support for a new `localConfig.cjs` feature.
   - Adds options for test suite config and local implementation endpoint configuration.
+- Test suites test against both VC `1.1` and `2.0` test vectors.
 
 ## 2.3.0 - 2024-02-25
 
