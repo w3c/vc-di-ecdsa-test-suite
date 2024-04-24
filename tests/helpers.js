@@ -44,7 +44,8 @@ export const createInitialVc = async ({
   const credential = klona(vc);
   credential.id = `urn:uuid:${uuidv4()}`;
   credential.issuer = issuerId;
-  if(vcVersion === '1.1') {
+  const vcNumber = Number(vcVersion);
+  if(vcNumber >= 1 && vcNumber < 2.0) {
     credential.issuanceDate = ISOTimeStamp();
   }
   const body = {credential, options};
