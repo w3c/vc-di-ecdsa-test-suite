@@ -165,7 +165,7 @@ The `implementations` array may contain more than one implementation object, to
 test multiple implementations in one run.
 
 ```js
-// .localConfig.cjs defining local implementations
+// localConfig.cjs defining local implementations
 // you can specify a BASE_URL before running the tests such as:
 // BASE_URL=http://localhost:40443/zDdfsdfs npm test
 const baseUrl = process.env.BASE_URL || 'https://localhost:40443/id';
