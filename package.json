@@ -56,7 +56,7 @@
     "base64url-universal": "^2.0.0",
     "chai": "^4.3.7",
     "credentials-context": "^2.0.0",
-    "data-integrity-test-suite-assertion": "github:w3c-ccg/data-integrity-test-suite-assertion",
+    "data-integrity-test-suite-assertion": "github:w3c-ccg/data-integrity-test-suite-assertion#add-suite-verifier-tests",
     "jsonld-document-loader": "^2.0.0",
     "klona": "^2.0.6",
     "mocha": "^10.2.0",
