@@ -15,10 +15,17 @@ const {match} = endpoints.filterByTag({
   tags: [...tags],
   property: 'verifiers'
 });
-
+// options for the DI Verifier Suite
+const testDataOptions = {
+  suiteName: 'ecdsa-sd-2023',
+  keyType: 'P-256',
+  mandatoryPointers: ['/issuer'],
+  selectivePointers: ['/credentialSubject']
+};
 checkDataIntegrityProofVerifyErrors({
   implemented: match,
   isEcdsaTests: true,
-  testDescription: 'Data Integrity (ecdsa-sd-2023 verifiers)'
+  testDescription: 'Data Integrity (ecdsa-sd-2023 verifiers)',
+  testDataOptions
 });
 
