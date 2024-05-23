@@ -20,7 +20,7 @@ const testDataOptions = {
   suiteName: 'ecdsa-rdfc-2019',
   keyType: 'P-256'
 };
-checkDataIntegrityProofVerifyErrors({
+await checkDataIntegrityProofVerifyErrors({
   implemented: match,
   isEcdsaTests: true,
   testDescription: 'Data Integrity (ecdsa-rdfc-2019 verifiers)',

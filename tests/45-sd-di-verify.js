@@ -22,7 +22,7 @@ const testDataOptions = {
   mandatoryPointers: ['/issuer'],
   selectivePointers: ['/credentialSubject']
 };
-checkDataIntegrityProofVerifyErrors({
+await checkDataIntegrityProofVerifyErrors({
   implemented: match,
   isEcdsaTests: true,
   testDescription: 'Data Integrity (ecdsa-sd-2023 verifiers)',
