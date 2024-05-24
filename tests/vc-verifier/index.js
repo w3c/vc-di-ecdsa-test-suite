@@ -5,9 +5,7 @@
 import * as didKey from '@digitalbazaar/did-method-key';
 import * as EcdsaMultikey from '@digitalbazaar/ecdsa-multikey';
 import * as vc from '@digitalbazaar/vc';
-
-import {didIo} from '@bedrock/did-io';
-
+import {CachedResolver} from '@digitalbazaar/did-io';
 import {DataIntegrityProof} from '@digitalbazaar/data-integrity';
 import {documentLoader} from '../vc-generator/documentLoader.js';
 import {
@@ -16,7 +14,7 @@ import {
 
 // Configure the driver for ECDSA DID keys
 const driver = didKey.driver();
-
+const didResolver = new CachedResolver();
 const keyTypes = [
   {keyType: 'P-256', header: 'zDna', fromMultibase: EcdsaMultikey.from},
   {keyType: 'P-384', header: 'z82L', fromMultibase: EcdsaMultikey.from},
@@ -34,19 +32,18 @@ for(const {header, fromMultibase} of keyTypes) {
   });
 }
 
-didIo.use(driver);
+didResolver.use(driver);
 
 // Wrap the local document loader to handle DIDs
 async function localDocumentLoader(url) {
   if(url.startsWith('did:')) {
-    const document = await didIo.get({did: url});
+    const document = await didResolver.get({did: url});
     return {
       contextUrl: null,
       documentUrl: url,
       document
     };
   }
-
   return documentLoader(url);
 }
 
