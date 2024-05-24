@@ -11,5 +11,4 @@ for(const [key, value] of contextMap) {
   jdl.addStatic(key, value);
 }
 
-const documentLoader = jdl.build();
-export {documentLoader};
+export const documentLoader = jdl.build();
