@@ -6,6 +6,11 @@ SPDX-License-Identifier: BSD-3-Clause
 
 # w3c/vc-di-ecdsa-test-suite  ChangeLog
 
+## 3.0.1 -
+
+### Changed
+- No longer depend on `@bedrock/vc-verifier` and bedrock related libs.
+
 ## 3.0.0 - 2024-04-17
 
 ### Changed
