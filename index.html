@@ -94,10 +94,10 @@
     <section class="informative" id="conformance-testing-results">
       <h2> Conformance Testing Results </h2>
       <p>
-      Tests passed 388/424 91%
+      Tests passed 409/445 91%
       </p>
       <p>
-      Tests failed 36/424 9%
+      Tests failed 36/445 9%
       </p>
       <p>
       Failures 36
@@ -106,10 +106,10 @@
       Tests skipped 0
       </p>
       <p>
-      Total tests 424
+      Total tests 445
       </p>
       <p>
-        These tests were run on <time>19 May 2024 at 5:06 am UTC</time>
+        These tests were run on <time>26 May 2024 at 5:06 am UTC</time>
       </p>
       <section class="informative" id="Key">
         <h3>Key</h3>
@@ -4728,8 +4728,493 @@
                   <span>&#8659;</span><span>Test Name</span>
                   </div>
                 </th>
+                    <th class="no-wrap small-font text-center">Digital Bazaar: P-256</th>
+                    <th class="no-wrap small-font text-center">Digital Bazaar: P-384</th>
                 </thead>
               <tbody>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">The (proof) type property MUST be DataIntegrityProof.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">The cryptosuite property of the proof MUST be ecdsa-rdfc-2019 or ecdsa-jcs-2019.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">the signature value (proofValue) MUST be expressed according to section 7 of [RFC4754] (sometimes referred to as the IEEE P1363 format) and encoded according to the specific cryptosuite proof generation algorithm.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">The &quot;proof&quot; MUST verify with a conformant verifier.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">The &quot;proof.proofPurpose&quot; field MUST match the verification relationship expressed by the verification method controller.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">Dereferencing &quot;verificationMethod&quot; MUST result in an object containing a type property with &quot;Multikey&quot; value.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">The &quot;publicKeyMultibase&quot; property of the verification method MUST be public key encoded according to MULTICODEC and formatted according to MULTIBASE.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
             </tbody>
             </table>
           </div>
@@ -5941,8 +6426,8 @@
                       <span class="err hide no-space-around">
                         <pre>{
                       "name": "AssertionError",
-                      "message": "Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-length': '940', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 19 May 2024 05:06:15 GMT', etag: 'W/\"3ac-881JTn8YdZNX7Ax4NAOiV1KKFPQ\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google', 'x-cloud-trace-context': 'f08a007a64d61caf5e2bad4cb1e43b26' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist",
-                      "stack": "AssertionError: Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-length': '940', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 19 May 2024 05:06:15 GMT', etag: 'W/\"3ac-881JTn8YdZNX7Ax4NAOiV1KKFPQ\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google', 'x-cloud-trace-context': 'f08a007a64d61caf5e2bad4cb1e43b26' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:419:7)"
+                      "message": "Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-length': '940', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 26 May 2024 05:05:42 GMT', etag: 'W/\"3ac-WdrrKEj49sJKdgz9zYZ0swFjJes\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google', 'x-cloud-trace-context': '262bbc3622458f654b298e6f81005645' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist",
+                      "stack": "AssertionError: Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-length': '940', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 26 May 2024 05:05:42 GMT', etag: 'W/\"3ac-WdrrKEj49sJKdgz9zYZ0swFjJes\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google', 'x-cloud-trace-context': '262bbc3622458f654b298e6f81005645' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:419:7)"
                     }</pre>
                       </span>
                     </div>
@@ -6347,8 +6832,8 @@
                       <span class="err hide no-space-around">
                         <pre>{
                       "name": "AssertionError",
-                      "message": "Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-length': '931', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 19 May 2024 05:06:15 GMT', etag: 'W/\"3a3-E9YJGf3LO6emBH8ot9L5BHt3Xr4\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google', 'x-cloud-trace-context': '3a34ff3053864681d91b7772fa8af154' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist",
-                      "stack": "AssertionError: Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-length': '931', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 19 May 2024 05:06:15 GMT', etag: 'W/\"3a3-E9YJGf3LO6emBH8ot9L5BHt3Xr4\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google', 'x-cloud-trace-context': '3a34ff3053864681d91b7772fa8af154' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:450:7)"
+                      "message": "Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-length': '931', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 26 May 2024 05:05:43 GMT', etag: 'W/\"3a3-E9YJGf3LO6emBH8ot9L5BHt3Xr4\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google', 'x-cloud-trace-context': '1d60cc9b0041bd2fd46bdc9257ea4f27' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist",
+                      "stack": "AssertionError: Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-length': '931', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 26 May 2024 05:05:43 GMT', etag: 'W/\"3a3-E9YJGf3LO6emBH8ot9L5BHt3Xr4\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google', 'x-cloud-trace-context': '1d60cc9b0041bd2fd46bdc9257ea4f27' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:450:7)"
                     }</pre>
                       </span>
                     </div>
@@ -9373,871 +9858,6 @@
             </div>
           </div>
         </section>
-        <section class="informative" id="ecdsa-sd-2023 (issuers) VC 1.1">
-          <h2>ecdsa-sd-2023 (issuers) VC 1.1</h2>
-          <style>
-            .no-wrap {
-              white-space: nowrap;
-            }
-            td.optional {
-              background-color: #b9b7b7;
-            }
-           .text-right {
-              text-align: right;
-            }
-           .text-left {
-              text-align: left;
-            }
-           .text-center, th.text-center {
-             text-align: center;
-           }
-           .qr-code {
-             margin-left: 25px;
-           }
-           .row {
-             display: flex;
-             justify-content: space-between;
-             align-items: center;
-           }
-           .small-font {
-             font-size: 0.75rem;
-           }
-           .highlight-on-hover:hover {
-             background-color: yellow;
-             cursor: default;
-           }
-           .highlight-on-hover:hover + .relative-pos > .err {
-             display: block;
-           }
-           pre, code.hljs {
-             overflow: auto;
-           }
-           .relative-pos {
-             position: relative;
-             width: 0.5rem;
-             height: 0.5rem;
-             z-index: 1;
-           }
-           .relative-pos:hover > .err {
-             display: block;
-           }
-          </style>
-          <div class="row">
-            <table class="simple">
-              <thead>
-                <th width="20%">
-                  <div class="text-right small-font">
-                  Implementation &#8658;
-                  </div>
-                  <div class="text-left small-font">
-                  <span>&#8659;</span><span>Test Name</span>
-                  </div>
-                </th>
-                    <th class="no-wrap small-font text-center">apicatalog.com: P-256</th>
-                    <th class="no-wrap small-font text-center">Digital Bazaar: P-256</th>
-                    <th class="no-wrap small-font text-center">Grotto Networking: P-256</th>
-                </thead>
-              <tbody>
-              <tr>
-                <!--This is the name of the test-->
-                <td class="subtest">The field &quot;cryptosuite&quot; MUST be &quot;ecdsa-sd-2023&quot;.</td>
-                <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                      <style>
-                       .hide {
-                         display: none;
-                       }
-                       .err {
-                         position: relative;
-                         z-index: 1;
-                         width: 50rem;
-                         right: calc(0% + 15rem);
-                         background: rgba(0, 0, 0, 0.0);
-                       }
-                       .no-space-around {
-                         margin: 0;
-                         padding: 0;
-                       }
-                       pre {
-                         width: 75%;
-                         white-space: pre-line;
-                         word-break: break-all;
-                         margin: 0;
-                         padding: 0;
-                         background: white;
-                       }
-                       code > span.hljs-attr {
-                         margin-left: 1rem;
-                       }
-                      </style>
-                    </div>
-                  </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                      <style>
-                       .hide {
-                         display: none;
-                       }
-                       .err {
-                         position: relative;
-                         z-index: 1;
-                         width: 50rem;
-                         right: calc(0% + 15rem);
-                         background: rgba(0, 0, 0, 0.0);
-                       }
-                       .no-space-around {
-                         margin: 0;
-                         padding: 0;
-                       }
-                       pre {
-                         width: 75%;
-                         white-space: pre-line;
-                         word-break: break-all;
-                         margin: 0;
-                         padding: 0;
-                         background: white;
-                       }
-                       code > span.hljs-attr {
-                         margin-left: 1rem;
-                       }
-                      </style>
-                    </div>
-                  </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                      <style>
-                       .hide {
-                         display: none;
-                       }
-                       .err {
-                         position: relative;
-                         z-index: 1;
-                         width: 50rem;
-                         right: calc(0% + 15rem);
-                         background: rgba(0, 0, 0, 0.0);
-                       }
-                       .no-space-around {
-                         margin: 0;
-                         padding: 0;
-                       }
-                       pre {
-                         width: 75%;
-                         white-space: pre-line;
-                         word-break: break-all;
-                         margin: 0;
-                         padding: 0;
-                         background: white;
-                       }
-                       code > span.hljs-attr {
-                         margin-left: 1rem;
-                       }
-                      </style>
-                    </div>
-                  </td>
-              </tr>
-              <tr>
-                <!--This is the name of the test-->
-                <td class="subtest">the signature value (proofValue) MUST be expressed according to section 7 of [RFC4754] (sometimes referred to as the IEEE P1363 format) and encoded according to the specific cryptosuite proof generation algorithm.</td>
-                <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                      <style>
-                       .hide {
-                         display: none;
-                       }
-                       .err {
-                         position: relative;
-                         z-index: 1;
-                         width: 50rem;
-                         right: calc(0% + 15rem);
-                         background: rgba(0, 0, 0, 0.0);
-                       }
-                       .no-space-around {
-                         margin: 0;
-                         padding: 0;
-                       }
-                       pre {
-                         width: 75%;
-                         white-space: pre-line;
-                         word-break: break-all;
-                         margin: 0;
-                         padding: 0;
-                         background: white;
-                       }
-                       code > span.hljs-attr {
-                         margin-left: 1rem;
-                       }
-                      </style>
-                    </div>
-                  </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                      <style>
-                       .hide {
-                         display: none;
-                       }
-                       .err {
-                         position: relative;
-                         z-index: 1;
-                         width: 50rem;
-                         right: calc(0% + 15rem);
-                         background: rgba(0, 0, 0, 0.0);
-                       }
-                       .no-space-around {
-                         margin: 0;
-                         padding: 0;
-                       }
-                       pre {
-                         width: 75%;
-                         white-space: pre-line;
-                         word-break: break-all;
-                         margin: 0;
-                         padding: 0;
-                         background: white;
-                       }
-                       code > span.hljs-attr {
-                         margin-left: 1rem;
-                       }
-                      </style>
-                    </div>
-                  </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                      <style>
-                       .hide {
-                         display: none;
-                       }
-                       .err {
-                         position: relative;
-                         z-index: 1;
-                         width: 50rem;
-                         right: calc(0% + 15rem);
-                         background: rgba(0, 0, 0, 0.0);
-                       }
-                       .no-space-around {
-                         margin: 0;
-                         padding: 0;
-                       }
-                       pre {
-                         width: 75%;
-                         white-space: pre-line;
-                         word-break: break-all;
-                         margin: 0;
-                         padding: 0;
-                         background: white;
-                       }
-                       code > span.hljs-attr {
-                         margin-left: 1rem;
-                       }
-                      </style>
-                    </div>
-                  </td>
-              </tr>
-              <tr>
-                <!--This is the name of the test-->
-                <td class="subtest">The field &quot;proofValue&quot; MUST start with &quot;u&quot;.</td>
-                <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                      <style>
-                       .hide {
-                         display: none;
-                       }
-                       .err {
-                         position: relative;
-                         z-index: 1;
-                         width: 50rem;
-                         right: calc(0% + 15rem);
-                         background: rgba(0, 0, 0, 0.0);
-                       }
-                       .no-space-around {
-                         margin: 0;
-                         padding: 0;
-                       }
-                       pre {
-                         width: 75%;
-                         white-space: pre-line;
-                         word-break: break-all;
-                         margin: 0;
-                         padding: 0;
-                         background: white;
-                       }
-                       code > span.hljs-attr {
-                         margin-left: 1rem;
-                       }
-                      </style>
-                    </div>
-                  </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                      <style>
-                       .hide {
-                         display: none;
-                       }
-                       .err {
-                         position: relative;
-                         z-index: 1;
-                         width: 50rem;
-                         right: calc(0% + 15rem);
-                         background: rgba(0, 0, 0, 0.0);
-                       }
-                       .no-space-around {
-                         margin: 0;
-                         padding: 0;
-                       }
-                       pre {
-                         width: 75%;
-                         white-space: pre-line;
-                         word-break: break-all;
-                         margin: 0;
-                         padding: 0;
-                         background: white;
-                       }
-                       code > span.hljs-attr {
-                         margin-left: 1rem;
-                       }
-                      </style>
-                    </div>
-                  </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                      <style>
-                       .hide {
-                         display: none;
-                       }
-                       .err {
-                         position: relative;
-                         z-index: 1;
-                         width: 50rem;
-                         right: calc(0% + 15rem);
-                         background: rgba(0, 0, 0, 0.0);
-                       }
-                       .no-space-around {
-                         margin: 0;
-                         padding: 0;
-                       }
-                       pre {
-                         width: 75%;
-                         white-space: pre-line;
-                         word-break: break-all;
-                         margin: 0;
-                         padding: 0;
-                         background: white;
-                       }
-                       code > span.hljs-attr {
-                         margin-left: 1rem;
-                       }
-                      </style>
-                    </div>
-                  </td>
-              </tr>
-              <tr>
-                <!--This is the name of the test-->
-                <td class="subtest">The &quot;proof&quot; MUST verify when using a conformant verifier.</td>
-                <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="failed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">❌</div>
-                    <div class="relative-pos">
-                      <style>
-                       .hide {
-                         display: none;
-                       }
-                       .err {
-                         position: relative;
-                         z-index: 1;
-                         width: 50rem;
-                         right: calc(0% + 15rem);
-                         background: rgba(0, 0, 0, 0.0);
-                       }
-                       .no-space-around {
-                         margin: 0;
-                         padding: 0;
-                       }
-                       pre {
-                         width: 75%;
-                         white-space: pre-line;
-                         word-break: break-all;
-                         margin: 0;
-                         padding: 0;
-                         background: white;
-                       }
-                       code > span.hljs-attr {
-                         margin-left: 1rem;
-                       }
-                      </style>
-                      <span class="err hide no-space-around">
-                        <pre>{
-                      "name": "AssertionError",
-                      "message": "Expected verifier to not error.: expected { name: 'VerificationError', …(4) } to not exist",
-                      "stack": "AssertionError: Expected verifier to not error.: expected { name: 'VerificationError', …(4) } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationSuccess (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/tests/assertions.js:118:14)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/tests/40-sd-create.js:150:19)"
-                    }</pre>
-                      </span>
-                    </div>
-                  </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                      <style>
-                       .hide {
-                         display: none;
-                       }
-                       .err {
-                         position: relative;
-                         z-index: 1;
-                         width: 50rem;
-                         right: calc(0% + 15rem);
-                         background: rgba(0, 0, 0, 0.0);
-                       }
-                       .no-space-around {
-                         margin: 0;
-                         padding: 0;
-                       }
-                       pre {
-                         width: 75%;
-                         white-space: pre-line;
-                         word-break: break-all;
-                         margin: 0;
-                         padding: 0;
-                         background: white;
-                       }
-                       code > span.hljs-attr {
-                         margin-left: 1rem;
-                       }
-                      </style>
-                    </div>
-                  </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                      <style>
-                       .hide {
-                         display: none;
-                       }
-                       .err {
-                         position: relative;
-                         z-index: 1;
-                         width: 50rem;
-                         right: calc(0% + 15rem);
-                         background: rgba(0, 0, 0, 0.0);
-                       }
-                       .no-space-around {
-                         margin: 0;
-                         padding: 0;
-                       }
-                       pre {
-                         width: 75%;
-                         white-space: pre-line;
-                         word-break: break-all;
-                         margin: 0;
-                         padding: 0;
-                         background: white;
-                       }
-                       code > span.hljs-attr {
-                         margin-left: 1rem;
-                       }
-                      </style>
-                    </div>
-                  </td>
-              </tr>
-              <tr>
-                <!--This is the name of the test-->
-                <td class="subtest">The &quot;proof.proofPurpose&quot; field MUST match the verification relationship expressed by the verification method controller.</td>
-                <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                      <style>
-                       .hide {
-                         display: none;
-                       }
-                       .err {
-                         position: relative;
-                         z-index: 1;
-                         width: 50rem;
-                         right: calc(0% + 15rem);
-                         background: rgba(0, 0, 0, 0.0);
-                       }
-                       .no-space-around {
-                         margin: 0;
-                         padding: 0;
-                       }
-                       pre {
-                         width: 75%;
-                         white-space: pre-line;
-                         word-break: break-all;
-                         margin: 0;
-                         padding: 0;
-                         background: white;
-                       }
-                       code > span.hljs-attr {
-                         margin-left: 1rem;
-                       }
-                      </style>
-                    </div>
-                  </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                      <style>
-                       .hide {
-                         display: none;
-                       }
-                       .err {
-                         position: relative;
-                         z-index: 1;
-                         width: 50rem;
-                         right: calc(0% + 15rem);
-                         background: rgba(0, 0, 0, 0.0);
-                       }
-                       .no-space-around {
-                         margin: 0;
-                         padding: 0;
-                       }
-                       pre {
-                         width: 75%;
-                         white-space: pre-line;
-                         word-break: break-all;
-                         margin: 0;
-                         padding: 0;
-                         background: white;
-                       }
-                       code > span.hljs-attr {
-                         margin-left: 1rem;
-                       }
-                      </style>
-                    </div>
-                  </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                      <style>
-                       .hide {
-                         display: none;
-                       }
-                       .err {
-                         position: relative;
-                         z-index: 1;
-                         width: 50rem;
-                         right: calc(0% + 15rem);
-                         background: rgba(0, 0, 0, 0.0);
-                       }
-                       .no-space-around {
-                         margin: 0;
-                         padding: 0;
-                       }
-                       pre {
-                         width: 75%;
-                         white-space: pre-line;
-                         word-break: break-all;
-                         margin: 0;
-                         padding: 0;
-                         background: white;
-                       }
-                       code > span.hljs-attr {
-                         margin-left: 1rem;
-                       }
-                      </style>
-                    </div>
-                  </td>
-              </tr>
-              <tr>
-                <!--This is the name of the test-->
-                <td class="subtest">Dereferencing &quot;verificationMethod&quot; MUST result in an object containing a type property with &quot;Multikey&quot; value.</td>
-                <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                      <style>
-                       .hide {
-                         display: none;
-                       }
-                       .err {
-                         position: relative;
-                         z-index: 1;
-                         width: 50rem;
-                         right: calc(0% + 15rem);
-                         background: rgba(0, 0, 0, 0.0);
-                       }
-                       .no-space-around {
-                         margin: 0;
-                         padding: 0;
-                       }
-                       pre {
-                         width: 75%;
-                         white-space: pre-line;
-                         word-break: break-all;
-                         margin: 0;
-                         padding: 0;
-                         background: white;
-                       }
-                       code > span.hljs-attr {
-                         margin-left: 1rem;
-                       }
-                      </style>
-                    </div>
-                  </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                      <style>
-                       .hide {
-                         display: none;
-                       }
-                       .err {
-                         position: relative;
-                         z-index: 1;
-                         width: 50rem;
-                         right: calc(0% + 15rem);
-                         background: rgba(0, 0, 0, 0.0);
-                       }
-                       .no-space-around {
-                         margin: 0;
-                         padding: 0;
-                       }
-                       pre {
-                         width: 75%;
-                         white-space: pre-line;
-                         word-break: break-all;
-                         margin: 0;
-                         padding: 0;
-                         background: white;
-                       }
-                       code > span.hljs-attr {
-                         margin-left: 1rem;
-                       }
-                      </style>
-                    </div>
-                  </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                      <style>
-                       .hide {
-                         display: none;
-                       }
-                       .err {
-                         position: relative;
-                         z-index: 1;
-                         width: 50rem;
-                         right: calc(0% + 15rem);
-                         background: rgba(0, 0, 0, 0.0);
-                       }
-                       .no-space-around {
-                         margin: 0;
-                         padding: 0;
-                       }
-                       pre {
-                         width: 75%;
-                         white-space: pre-line;
-                         word-break: break-all;
-                         margin: 0;
-                         padding: 0;
-                         background: white;
-                       }
-                       code > span.hljs-attr {
-                         margin-left: 1rem;
-                       }
-                      </style>
-                    </div>
-                  </td>
-              </tr>
-              <tr>
-                <!--This is the name of the test-->
-                <td class="subtest">The &quot;publicKeyMultibase&quot; property of the verification method MUST be public key encoded according to MULTICODEC and formatted according to MULTIBASE.</td>
-                <!--These contain if the test passed, failed, or was skipped-->
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                      <style>
-                       .hide {
-                         display: none;
-                       }
-                       .err {
-                         position: relative;
-                         z-index: 1;
-                         width: 50rem;
-                         right: calc(0% + 15rem);
-                         background: rgba(0, 0, 0, 0.0);
-                       }
-                       .no-space-around {
-                         margin: 0;
-                         padding: 0;
-                       }
-                       pre {
-                         width: 75%;
-                         white-space: pre-line;
-                         word-break: break-all;
-                         margin: 0;
-                         padding: 0;
-                         background: white;
-                       }
-                       code > span.hljs-attr {
-                         margin-left: 1rem;
-                       }
-                      </style>
-                    </div>
-                  </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                      <style>
-                       .hide {
-                         display: none;
-                       }
-                       .err {
-                         position: relative;
-                         z-index: 1;
-                         width: 50rem;
-                         right: calc(0% + 15rem);
-                         background: rgba(0, 0, 0, 0.0);
-                       }
-                       .no-space-around {
-                         margin: 0;
-                         padding: 0;
-                       }
-                       pre {
-                         width: 75%;
-                         white-space: pre-line;
-                         word-break: break-all;
-                         margin: 0;
-                         padding: 0;
-                         background: white;
-                       }
-                       code > span.hljs-attr {
-                         margin-left: 1rem;
-                       }
-                      </style>
-                    </div>
-                  </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
-                    <div class="relative-pos">
-                      <style>
-                       .hide {
-                         display: none;
-                       }
-                       .err {
-                         position: relative;
-                         z-index: 1;
-                         width: 50rem;
-                         right: calc(0% + 15rem);
-                         background: rgba(0, 0, 0, 0.0);
-                       }
-                       .no-space-around {
-                         margin: 0;
-                         padding: 0;
-                       }
-                       pre {
-                         width: 75%;
-                         white-space: pre-line;
-                         word-break: break-all;
-                         margin: 0;
-                         padding: 0;
-                         background: white;
-                       }
-                       code > span.hljs-attr {
-                         margin-left: 1rem;
-                       }
-                      </style>
-                    </div>
-                  </td>
-              </tr>
-            </tbody>
-            </table>
-          </div>
-          <div>
-            <div class="flex-center">
-              <div class="row">
-              </div>
-              <div class="">
-              </div>
-            </div>
-          </div>
-        </section>
-        <section class="informative" id="ecdsa-sd-2023 (issuers) VC 2.0">
-          <h2>ecdsa-sd-2023 (issuers) VC 2.0</h2>
-          <style>
-            .no-wrap {
-              white-space: nowrap;
-            }
-            td.optional {
-              background-color: #b9b7b7;
-            }
-           .text-right {
-              text-align: right;
-            }
-           .text-left {
-              text-align: left;
-            }
-           .text-center, th.text-center {
-             text-align: center;
-           }
-           .qr-code {
-             margin-left: 25px;
-           }
-           .row {
-             display: flex;
-             justify-content: space-between;
-             align-items: center;
-           }
-           .small-font {
-             font-size: 0.75rem;
-           }
-           .highlight-on-hover:hover {
-             background-color: yellow;
-             cursor: default;
-           }
-           .highlight-on-hover:hover + .relative-pos > .err {
-             display: block;
-           }
-           pre, code.hljs {
-             overflow: auto;
-           }
-           .relative-pos {
-             position: relative;
-             width: 0.5rem;
-             height: 0.5rem;
-             z-index: 1;
-           }
-           .relative-pos:hover > .err {
-             display: block;
-           }
-          </style>
-          <div class="row">
-            <table class="simple">
-              <thead>
-                <th width="20%">
-                  <div class="text-right small-font">
-                  Implementation &#8658;
-                  </div>
-                  <div class="text-left small-font">
-                  <span>&#8659;</span><span>Test Name</span>
-                  </div>
-                </th>
-                </thead>
-              <tbody>
-            </tbody>
-            </table>
-          </div>
-          <div>
-            <div class="flex-center">
-              <div class="row">
-              </div>
-              <div class="">
-              </div>
-            </div>
-          </div>
-        </section>
         <section class="informative" id="ecdsa-rdfc-2019 (verifiers 1.1)">
           <h2>ecdsa-rdfc-2019 (verifiers 1.1)</h2>
           <style>
@@ -11530,6 +11150,1131 @@
             </div>
           </div>
         </section>
+        <section class="informative" id="ecdsa-sd-2023 (issuers) VC 1.1">
+          <h2>ecdsa-sd-2023 (issuers) VC 1.1</h2>
+          <style>
+            .no-wrap {
+              white-space: nowrap;
+            }
+            td.optional {
+              background-color: #b9b7b7;
+            }
+           .text-right {
+              text-align: right;
+            }
+           .text-left {
+              text-align: left;
+            }
+           .text-center, th.text-center {
+             text-align: center;
+           }
+           .qr-code {
+             margin-left: 25px;
+           }
+           .row {
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+           }
+           .small-font {
+             font-size: 0.75rem;
+           }
+           .highlight-on-hover:hover {
+             background-color: yellow;
+             cursor: default;
+           }
+           .highlight-on-hover:hover + .relative-pos > .err {
+             display: block;
+           }
+           pre, code.hljs {
+             overflow: auto;
+           }
+           .relative-pos {
+             position: relative;
+             width: 0.5rem;
+             height: 0.5rem;
+             z-index: 1;
+           }
+           .relative-pos:hover > .err {
+             display: block;
+           }
+          </style>
+          <div class="row">
+            <table class="simple">
+              <thead>
+                <th width="20%">
+                  <div class="text-right small-font">
+                  Implementation &#8658;
+                  </div>
+                  <div class="text-left small-font">
+                  <span>&#8659;</span><span>Test Name</span>
+                  </div>
+                </th>
+                    <th class="no-wrap small-font text-center">apicatalog.com: P-256</th>
+                    <th class="no-wrap small-font text-center">Digital Bazaar: P-256</th>
+                    <th class="no-wrap small-font text-center">Grotto Networking: P-256</th>
+                </thead>
+              <tbody>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">The field &quot;cryptosuite&quot; MUST be &quot;ecdsa-sd-2023&quot;.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">the signature value (proofValue) MUST be expressed according to section 7 of [RFC4754] (sometimes referred to as the IEEE P1363 format) and encoded according to the specific cryptosuite proof generation algorithm.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">The field &quot;proofValue&quot; MUST start with &quot;u&quot;.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">The &quot;proof&quot; MUST verify when using a conformant verifier.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="failed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">❌</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                      <span class="err hide no-space-around">
+                        <pre>{
+                      "name": "AssertionError",
+                      "message": "Expected verifier to not error.: expected { name: 'VerificationError', …(4) } to not exist",
+                      "stack": "AssertionError: Expected verifier to not error.: expected { name: 'VerificationError', …(4) } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationSuccess (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/tests/assertions.js:118:14)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/tests/40-sd-create.js:150:19)"
+                    }</pre>
+                      </span>
+                    </div>
+                  </td>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">The &quot;proof.proofPurpose&quot; field MUST match the verification relationship expressed by the verification method controller.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">Dereferencing &quot;verificationMethod&quot; MUST result in an object containing a type property with &quot;Multikey&quot; value.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">The &quot;publicKeyMultibase&quot; property of the verification method MUST be public key encoded according to MULTICODEC and formatted according to MULTIBASE.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+            </tbody>
+            </table>
+          </div>
+          <div>
+            <div class="flex-center">
+              <div class="row">
+              </div>
+              <div class="">
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="informative" id="ecdsa-sd-2023 (issuers) VC 2.0">
+          <h2>ecdsa-sd-2023 (issuers) VC 2.0</h2>
+          <style>
+            .no-wrap {
+              white-space: nowrap;
+            }
+            td.optional {
+              background-color: #b9b7b7;
+            }
+           .text-right {
+              text-align: right;
+            }
+           .text-left {
+              text-align: left;
+            }
+           .text-center, th.text-center {
+             text-align: center;
+           }
+           .qr-code {
+             margin-left: 25px;
+           }
+           .row {
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+           }
+           .small-font {
+             font-size: 0.75rem;
+           }
+           .highlight-on-hover:hover {
+             background-color: yellow;
+             cursor: default;
+           }
+           .highlight-on-hover:hover + .relative-pos > .err {
+             display: block;
+           }
+           pre, code.hljs {
+             overflow: auto;
+           }
+           .relative-pos {
+             position: relative;
+             width: 0.5rem;
+             height: 0.5rem;
+             z-index: 1;
+           }
+           .relative-pos:hover > .err {
+             display: block;
+           }
+          </style>
+          <div class="row">
+            <table class="simple">
+              <thead>
+                <th width="20%">
+                  <div class="text-right small-font">
+                  Implementation &#8658;
+                  </div>
+                  <div class="text-left small-font">
+                  <span>&#8659;</span><span>Test Name</span>
+                  </div>
+                </th>
+                    <th class="no-wrap small-font text-center">Digital Bazaar: P-256</th>
+                </thead>
+              <tbody>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">The field &quot;cryptosuite&quot; MUST be &quot;ecdsa-sd-2023&quot;.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">the signature value (proofValue) MUST be expressed according to section 7 of [RFC4754] (sometimes referred to as the IEEE P1363 format) and encoded according to the specific cryptosuite proof generation algorithm.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">The field &quot;proofValue&quot; MUST start with &quot;u&quot;.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">The &quot;proof&quot; MUST verify when using a conformant verifier.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">The &quot;proof.proofPurpose&quot; field MUST match the verification relationship expressed by the verification method controller.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">Dereferencing &quot;verificationMethod&quot; MUST result in an object containing a type property with &quot;Multikey&quot; value.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">The &quot;publicKeyMultibase&quot; property of the verification method MUST be public key encoded according to MULTICODEC and formatted according to MULTIBASE.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+            </tbody>
+            </table>
+          </div>
+          <div>
+            <div class="flex-center">
+              <div class="row">
+              </div>
+              <div class="">
+              </div>
+            </div>
+          </div>
+        </section>
         <section class="informative" id="Data Integrity (ecdsa-sd-2023 verifiers)">
           <h2>Data Integrity (ecdsa-sd-2023 verifiers)</h2>
           <style>
@@ -12472,8 +13217,8 @@
                       <span class="err hide no-space-around">
                         <pre>{
                       "name": "AssertionError",
-                      "message": "Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-length': '940', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 19 May 2024 05:06:28 GMT', etag: 'W/\"3ac-881JTn8YdZNX7Ax4NAOiV1KKFPQ\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google', 'x-cloud-trace-context': '26c7702bd838ed481328d327d67ce605' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist",
-                      "stack": "AssertionError: Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-length': '940', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 19 May 2024 05:06:28 GMT', etag: 'W/\"3ac-881JTn8YdZNX7Ax4NAOiV1KKFPQ\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google', 'x-cloud-trace-context': '26c7702bd838ed481328d327d67ce605' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:419:7)"
+                      "message": "Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-length': '940', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 26 May 2024 05:05:56 GMT', etag: 'W/\"3ac-WdrrKEj49sJKdgz9zYZ0swFjJes\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google', 'x-cloud-trace-context': 'f5bc0a0a7da7d70911ec43f476e173e5' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist",
+                      "stack": "AssertionError: Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-length': '940', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 26 May 2024 05:05:56 GMT', etag: 'W/\"3ac-WdrrKEj49sJKdgz9zYZ0swFjJes\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google', 'x-cloud-trace-context': 'f5bc0a0a7da7d70911ec43f476e173e5' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:419:7)"
                     }</pre>
                       </span>
                     </div>
@@ -12782,8 +13527,8 @@
                       <span class="err hide no-space-around">
                         <pre>{
                       "name": "AssertionError",
-                      "message": "Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-length': '931', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 19 May 2024 05:06:28 GMT', etag: 'W/\"3a3-E9YJGf3LO6emBH8ot9L5BHt3Xr4\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google', 'x-cloud-trace-context': '5bdbc9da3b0cd6192547748c5df4dfc8' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist",
-                      "stack": "AssertionError: Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-length': '931', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 19 May 2024 05:06:28 GMT', etag: 'W/\"3a3-E9YJGf3LO6emBH8ot9L5BHt3Xr4\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google', 'x-cloud-trace-context': '5bdbc9da3b0cd6192547748c5df4dfc8' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:450:7)"
+                      "message": "Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-length': '931', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 26 May 2024 05:05:56 GMT', etag: 'W/\"3a3-E9YJGf3LO6emBH8ot9L5BHt3Xr4\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google', 'x-cloud-trace-context': 'c0407f312769e52456b1667ceb1fec76' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist",
+                      "stack": "AssertionError: Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-length': '931', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 26 May 2024 05:05:56 GMT', etag: 'W/\"3a3-E9YJGf3LO6emBH8ot9L5BHt3Xr4\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google', 'x-cloud-trace-context': 'c0407f312769e52456b1667ceb1fec76' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:450:7)"
                     }</pre>
                       </span>
                     </div>
