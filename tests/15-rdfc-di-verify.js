@@ -9,23 +9,33 @@ import {
   cryptosuite as ecdsaRdfc2019Cryptosuite
 } from '@digitalbazaar/ecdsa-rdfc-2019-cryptosuite';
 import {endpoints} from 'vc-test-suite-implementations';
+import {getMultiKey} from './vc-generator/key-gen.js';
 import {getSuiteConfig} from './test-config.js';
-const {tags} = getSuiteConfig('ecdsa-rdfc-2019');
 
+const {tags, vectors, credentials} = getSuiteConfig('ecdsa-rdfc-2019');
 // only use implementations with `ecdsa-rdfc-2019` verifiers.
 const {match} = endpoints.filterByTag({
   tags: [...tags],
   property: 'verifiers'
 });
-// options for the DI Verifier Suite
-const testDataOptions = {
-  suiteName: 'ecdsa-rdfc-2019',
-  cryptosuite: ecdsaRdfc2019Cryptosuite,
-  keyType: 'P-256'
-};
-await checkDataIntegrityProofVerifyErrors({
-  implemented: match,
-  isEcdsaTests: true,
-  testDescription: 'Data Integrity (ecdsa-rdfc-2019 verifiers)',
-  testDataOptions
-});
+
+for(const vcVersion of vectors.vcTypes) {
+  for(const keyType of vectors.keyTypes) {
+    const key = await getMultiKey({keyType});
+    const {document} = credentials.verify[vcVersion];
+    // options for the DI Verifier Suite
+    checkDataIntegrityProofVerifyErrors({
+      implemented: match,
+      isEcdsaTests: true,
+      testDescription:
+        `Data Integrity (ecdsa-rdfc-2019 verifiers) VC ${vcVersion}`,
+      testDataOptions: {
+        suiteName: 'ecdsa-rdfc-2019',
+        cryptosuite: ecdsaRdfc2019Cryptosuite,
+        key,
+        testVector: document,
+        keyType
+      }
+    });
+  }
+}
