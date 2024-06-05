@@ -30,7 +30,6 @@ for(const vcVersion of vectors.vcTypes) {
     // options for the DI Verifier Suite
     checkDataIntegrityProofVerifyErrors({
       implemented: match,
-      isEcdsaTests: true,
       testDescription:
         `Data Integrity (ecdsa-sd-2023 verifiers) VC ${vcVersion}`,
       testDataOptions: {
