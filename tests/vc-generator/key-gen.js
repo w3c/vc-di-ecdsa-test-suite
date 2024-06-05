@@ -29,11 +29,7 @@ export const getMultikeys = async ({keyTypes}) => {
     if(!new Set(keyTypes).has(keyType)) {
       continue;
     }
-    // require the exported keyPair
-    const serializedKeyPair = require(`../${keys[keyType]}`);
-    // check format keyPair to ensure it's interoperable with multikey spec
-    const formattedKey = formatKey(serializedKeyPair);
-    const key = await EcdsaMultikey.from(formattedKey);
+    const key = await getMultiKey({keyType});
     const signer = key.signer();
     // The issuer needs to match the signer or the controller of the signer
     const issuer = `did:key:${key.publicKeyMultibase}`;
@@ -44,3 +40,11 @@ export const getMultikeys = async ({keyTypes}) => {
   }
   return _keys;
 };
+
+export async function getMultiKey({keyType}) {
+  // require the exported keyPair
+  const serializedKeyPair = require(`../${keys[keyType]}`);
+  // check format keyPair to ensure it's interoperable with multikey spec
+  const formattedKey = formatKey(serializedKeyPair);
+  return EcdsaMultikey.from(formattedKey);
+}
