@@ -5,9 +5,11 @@
 import {
   checkDataIntegrityProofVerifyErrors
 } from 'data-integrity-test-suite-assertion';
+import {
+  cryptosuite as ecdsaRdfc2019Cryptosuite
+} from '@digitalbazaar/ecdsa-rdfc-2019-cryptosuite';
 import {endpoints} from 'vc-test-suite-implementations';
 import {getSuiteConfig} from './test-config.js';
-
 const {tags} = getSuiteConfig('ecdsa-rdfc-2019');
 
 // only use implementations with `ecdsa-rdfc-2019` verifiers.
@@ -18,6 +20,7 @@ const {match} = endpoints.filterByTag({
 // options for the DI Verifier Suite
 const testDataOptions = {
   suiteName: 'ecdsa-rdfc-2019',
+  cryptosuite: ecdsaRdfc2019Cryptosuite,
   keyType: 'P-256'
 };
 await checkDataIntegrityProofVerifyErrors({
