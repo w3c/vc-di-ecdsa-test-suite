@@ -8,6 +8,7 @@ import {
   checkDataIntegrityProofVerifyErrors
 } from 'data-integrity-test-suite-assertion';
 import {endpoints} from 'vc-test-suite-implementations';
+import {getMultiKey} from './vc-generator/key-gen.js';
 import {getSuiteConfig} from './test-config.js';
 
 const {tags, credentials, vectors} = getSuiteConfig('ecdsa-sd-2023');
@@ -17,21 +18,30 @@ const {match} = endpoints.filterByTag({
   tags: [...tags],
   property: 'verifiers'
 });
-// options for the DI Verifier Suite
-const testDataOptions = {
-  suiteName: 'ecdsa-sd-2023',
-  cryptosuite: ecdsaSd2023Cryptosuite,
-  keyType: 'P-256',
-  mandatoryPointers: ['/issuer'],
-  selectivePointers: ['/credentialSubject']
-};
 
-console.log({credentials, vectors});
-
-await checkDataIntegrityProofVerifyErrors({
-  implemented: match,
-  isEcdsaTests: true,
-  testDescription: 'Data Integrity (ecdsa-sd-2023 verifiers)',
-  testDataOptions
-});
-
+for(const vcVersion of vectors.vcTypes) {
+  for(const keyType of vectors.keyTypes) {
+    const key = await getMultiKey({keyType});
+    const {
+      document,
+      mandatoryPointers,
+      selectivePointers
+    } = credentials.verify.subjectHasArrays[vcVersion];
+    // options for the DI Verifier Suite
+    checkDataIntegrityProofVerifyErrors({
+      implemented: match,
+      isEcdsaTests: true,
+      testDescription:
+        `Data Integrity (ecdsa-sd-2023 verifiers) VC ${vcVersion}`,
+      testDataOptions: {
+        suiteName: 'ecdsa-sd-2023',
+        cryptosuite: ecdsaSd2023Cryptosuite,
+        key,
+        testVector: document,
+        mandatoryPointers,
+        selectivePointers,
+        keyType
+      }
+    });
+  }
+}
