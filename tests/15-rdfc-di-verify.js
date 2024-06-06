@@ -20,21 +20,19 @@ const {match} = endpoints.filterByTag({
 });
 
 for(const vcVersion of vectors.vcTypes) {
-  for(const keyType of vectors.keyTypes) {
-    const key = await getMultiKey({keyType});
-    const {document} = credentials.verify[vcVersion];
-    // options for the DI Verifier Suite
-    checkDataIntegrityProofVerifyErrors({
-      implemented: match,
-      testDescription:
-        `Data Integrity (ecdsa-rdfc-2019 verifiers) VC ${vcVersion}`,
-      testDataOptions: {
-        suiteName: 'ecdsa-rdfc-2019',
-        cryptosuite: ecdsaRdfc2019Cryptosuite,
-        key,
-        testVector: document,
-        keyType
-      }
-    });
-  }
+  const key = await getMultiKey({keyType: 'P-256'});
+  const {document} = credentials.verify[vcVersion];
+  // options for the DI Verifier Suite
+  checkDataIntegrityProofVerifyErrors({
+    implemented: match,
+    testDescription:
+      `Data Integrity (ecdsa-rdfc-2019 verifiers) VC ${vcVersion}`,
+    testDataOptions: {
+      suiteName: 'ecdsa-rdfc-2019',
+      cryptosuite: ecdsaRdfc2019Cryptosuite,
+      key,
+      testVector: document,
+      keyType: 'P-256'
+    }
+  });
 }

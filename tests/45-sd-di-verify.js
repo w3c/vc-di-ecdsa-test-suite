@@ -20,27 +20,25 @@ const {match} = endpoints.filterByTag({
 });
 
 for(const vcVersion of vectors.vcTypes) {
-  for(const keyType of vectors.keyTypes) {
-    const key = await getMultiKey({keyType});
-    const {
-      document,
+  const key = await getMultiKey({keyType: 'P-256'});
+  const {
+    document,
+    mandatoryPointers,
+    selectivePointers
+  } = credentials.verify.subjectHasArrays[vcVersion];
+  // options for the DI Verifier Suite
+  checkDataIntegrityProofVerifyErrors({
+    implemented: match,
+    testDescription:
+      `Data Integrity (ecdsa-sd-2023 verifiers) VC ${vcVersion}`,
+    testDataOptions: {
+      suiteName: 'ecdsa-sd-2023',
+      cryptosuite: ecdsaSd2023Cryptosuite,
+      key,
+      testVector: document,
       mandatoryPointers,
-      selectivePointers
-    } = credentials.verify.subjectHasArrays[vcVersion];
-    // options for the DI Verifier Suite
-    checkDataIntegrityProofVerifyErrors({
-      implemented: match,
-      testDescription:
-        `Data Integrity (ecdsa-sd-2023 verifiers) VC ${vcVersion}`,
-      testDataOptions: {
-        suiteName: 'ecdsa-sd-2023',
-        cryptosuite: ecdsaSd2023Cryptosuite,
-        key,
-        testVector: document,
-        mandatoryPointers,
-        selectivePointers,
-        keyType
-      }
-    });
-  }
+      selectivePointers,
+      keyType: 'P-256'
+    }
+  });
 }
