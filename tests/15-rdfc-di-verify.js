@@ -19,7 +19,13 @@ for(const vcVersion of vectors.vcTypes) {
   const key = await getMultiKey({keyType: 'P-256'});
   const {document} = credentials.verify[vcVersion];
   const {match} = endpoints.filter({
-    filter: filterVerifiers.bind({vcVersion, tags, vcDefault: '1.1'})
+    filter: filterVerifiers.bind({
+      vc: {
+        version: vcVersion,
+        default: '1.1'
+      },
+      tags
+    })
   });
   // options for the DI Verifier Suite
   checkDataIntegrityProofVerifyErrors({

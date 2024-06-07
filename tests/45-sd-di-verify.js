@@ -22,7 +22,13 @@ for(const vcVersion of vectors.vcTypes) {
     selectivePointers
   } = credentials.verify.subjectHasArrays[vcVersion];
   const {match} = endpoints.filter({
-    filter: filterVerifiers.bind({vcVersion, tags, vcDefault: '2.0'})
+    filter: filterVerifiers.bind({
+      vc: {
+        version: vcVersion,
+        default: '2.0'
+      },
+      tags
+    })
   });
   // options for the DI Verifier Suite
   checkDataIntegrityProofVerifyErrors({
