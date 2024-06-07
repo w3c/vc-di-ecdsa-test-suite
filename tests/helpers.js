@@ -104,6 +104,30 @@ export const endpointCheck = ({endpoint, vcVersion, keyType}) => {
   return true;
 };
 
+export class EndpointFilter {
+  constructor({tag, vcVersion, keyType, property}) {
+    this.tag = tag;
+    this.vcVersion = vcVersion;
+    this.keyType = keyType;
+    this.property = property;
+  }
+  filterEndpoints({name, implementation}) {
+    const endpoints = implementation[this.property];
+    return endpoints.filter(endpoint = {
+    
+    });
+  }
+  build() {
+    // return ref to method bound to class properties
+    return this.filterEndpoints.bind({
+      tag: this.tag,
+      vcVersion: this.vcVersion,
+      keyType: this.keyType,
+      property: this.property
+    });
+  }
+}
+
 export const SUPPORTED_BASE58_ECDSA_MULTIKEY_HEADERS = new Map([
   ['P-256', 'zDna'],
   ['P-384', 'z82L'],
