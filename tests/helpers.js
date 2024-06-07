@@ -104,28 +104,18 @@ export const endpointCheck = ({endpoint, vcVersion, keyType}) => {
   return true;
 };
 
-export class EndpointFilter {
-  constructor({tag, vcVersion, keyType, property}) {
-    this.tag = tag;
-    this.vcVersion = vcVersion;
-    this.keyType = keyType;
-    this.property = property;
-  }
-  filterEndpoints({name, implementation}) {
-    const endpoints = implementation[this.property];
-    return endpoints.filter(endpoint = {
-    
-    });
-  }
-  build() {
-    // return ref to method bound to class properties
-    return this.filterEndpoints.bind({
-      tag: this.tag,
-      vcVersion: this.vcVersion,
-      keyType: this.keyType,
-      property: this.property
-    });
-  }
+export function filterVerifiers({implementation}) {
+  const endpoints = implementation.verifiers;
+  // the filter function expects an array to be returned
+  return endpoints.filter(e => {
+    // we want only endpoints that match every tag
+    if(this.tags.every(tag => e.tags.has(tag))) {
+      // only return endpoints with the vcVersion support
+      const {supports = {vc: [this.vcDefault]}} = e?.settings;
+      return supports?.vc?.includes(this.vcVersion);
+    }
+    return false;
+  });
 }
 
 export const SUPPORTED_BASE58_ECDSA_MULTIKEY_HEADERS = new Map([

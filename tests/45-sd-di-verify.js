@@ -8,16 +8,11 @@ import {
   checkDataIntegrityProofVerifyErrors
 } from 'data-integrity-test-suite-assertion';
 import {endpoints} from 'vc-test-suite-implementations';
+import {filterVerifiers} from './helpers.js';
 import {getMultiKey} from './vc-generator/key-gen.js';
 import {getSuiteConfig} from './test-config.js';
 
 const {tags, credentials, vectors} = getSuiteConfig('ecdsa-sd-2023');
-
-// only use implementations with `ecdsa-sd-2023` verifiers.
-const {match} = endpoints.filterByTag({
-  tags: [...tags],
-  property: 'verifiers'
-});
 
 for(const vcVersion of vectors.vcTypes) {
   const key = await getMultiKey({keyType: 'P-256'});
@@ -26,6 +21,9 @@ for(const vcVersion of vectors.vcTypes) {
     mandatoryPointers,
     selectivePointers
   } = credentials.verify.subjectHasArrays[vcVersion];
+  const {match} = endpoints.filter({
+    filter: filterVerifiers.bind({vcVersion, tags, vcDefault: '2.0'})
+  });
   // options for the DI Verifier Suite
   checkDataIntegrityProofVerifyErrors({
     implemented: match,
