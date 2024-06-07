@@ -104,6 +104,15 @@ export const endpointCheck = ({endpoint, vcVersion, keyType}) => {
   return true;
 };
 
+/**
+ * Filters verifiers using supports.vc and tags explicitly.
+ * Requires that function is bound to vcDefault, vcVersion, and tags.
+ *
+ * @param {object} options - Options to use.
+ * @param {object} options.implementation - An implementation.
+ *
+ * @returns {Array<object>} An array of filtered endpoints.
+ */
 export function filterVerifiers({implementation}) {
   const endpoints = implementation.verifiers;
   // the filter function expects an array to be returned
@@ -111,8 +120,8 @@ export function filterVerifiers({implementation}) {
     // we want only endpoints that match every tag
     if(this.tags.every(tag => e.tags.has(tag))) {
       // only return endpoints with the vcVersion support
-      const {supports = {vc: [this.vcDefault]}} = e?.settings;
-      return supports?.vc?.includes(this.vcVersion);
+      const {supports = {vc: [this.vc.default]}} = e?.settings;
+      return supports?.vc?.includes(this.vc.version);
     }
     return false;
   });
