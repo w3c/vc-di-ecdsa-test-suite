@@ -55,7 +55,7 @@
     "base64url-universal": "^2.0.0",
     "chai": "^4.3.7",
     "credentials-context": "^2.0.0",
-    "data-integrity-test-suite-assertion": "github:w3c-ccg/data-integrity-test-suite-assertion#make-vc-gen-suite-configurable",
+    "data-integrity-test-suite-assertion": "github:w3c-ccg/data-integrity-test-suite-assertion",
     "jsonld-document-loader": "^2.0.0",
     "klona": "^2.0.6",
     "mocha": "^10.2.0",
