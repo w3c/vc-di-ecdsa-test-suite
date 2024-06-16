@@ -94,22 +94,22 @@
     <section class="informative" id="conformance-testing-results">
       <h2> Conformance Testing Results </h2>
       <p>
-      Tests passed 409/445 91%
+      Tests passed 428/475 90%
       </p>
       <p>
-      Tests failed 36/445 9%
+      Tests failed 47/475 10%
       </p>
       <p>
-      Failures 36
+      Failures 47
       </p>
       <p>
       Tests skipped 0
       </p>
       <p>
-      Total tests 445
+      Total tests 475
       </p>
       <p>
-        These tests were run on <time>9 June 2024 at 5:06 am UTC</time>
+        These tests were run on <time>16 June 2024 at 5:06 am UTC</time>
       </p>
       <section class="informative" id="Key">
         <h3>Key</h3>
@@ -957,7 +957,7 @@
                         <pre>{
                       "name": "AssertionError",
                       "message": "expected false to equal true",
-                      "stack": "AssertionError: expected false to equal true\n    at Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:147:38)\n    at process.processImmediate (node:internal/timers:478:21)"
+                      "stack": "AssertionError: expected false to equal true\n    at Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:150:38)\n    at process.processImmediate (node:internal/timers:478:21)"
                     }</pre>
                       </span>
                     </div>
@@ -5227,8 +5227,8 @@
             </div>
           </div>
         </section>
-        <section class="informative" id="Data Integrity (ecdsa-rdfc-2019 verifiers)">
-          <h2>Data Integrity (ecdsa-rdfc-2019 verifiers)</h2>
+        <section class="informative" id="Data Integrity (ecdsa-rdfc-2019 verifiers) VC 1.1">
+          <h2>Data Integrity (ecdsa-rdfc-2019 verifiers) VC 1.1</h2>
           <style>
             .no-wrap {
               white-space: nowrap;
@@ -5287,8 +5287,8 @@
                   <span>&#8659;</span><span>Test Name</span>
                   </div>
                 </th>
-                    <th class="no-wrap small-font text-center">apicatalog.com: P-256, P-384</th>
-                    <th class="no-wrap small-font text-center">Digital Bazaar: P-256, P-384</th>
+                    <th class="no-wrap small-font text-center">apicatalog.com: P-256</th>
+                    <th class="no-wrap small-font text-center">Digital Bazaar: P-256</th>
                     <th class="no-wrap small-font text-center">SpruceID: P-256</th>
                     <th class="no-wrap small-font text-center">bovine: P-256</th>
                 </thead>
@@ -6426,8 +6426,8 @@
                       <span class="err hide no-space-around">
                         <pre>{
                       "name": "AssertionError",
-                      "message": "Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-length': '940', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 09 Jun 2024 05:05:39 GMT', etag: 'W/\"3ac-vMMmoPpklXsJQH0RnJ5UBTetgvY\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google', 'x-cloud-trace-context': '7064a553200a0b5935a9fe6ec7c71c05' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist",
-                      "stack": "AssertionError: Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-length': '940', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 09 Jun 2024 05:05:39 GMT', etag: 'W/\"3ac-vMMmoPpklXsJQH0RnJ5UBTetgvY\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google', 'x-cloud-trace-context': '7064a553200a0b5935a9fe6ec7c71c05' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:419:7)"
+                      "message": "Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-encoding': 'gzip', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:06 GMT', etag: 'W/\"557-zGB7Ubg2BupsjOBFZb7qZYpQLjM\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', 'transfer-encoding': 'chunked', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist",
+                      "stack": "AssertionError: Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-encoding': 'gzip', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:06 GMT', etag: 'W/\"557-zGB7Ubg2BupsjOBFZb7qZYpQLjM\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', 'transfer-encoding': 'chunked', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:445:7)"
                     }</pre>
                       </span>
                     </div>
@@ -6464,8 +6464,8 @@
                       </style>
                     </div>
                   </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
+                  <td class="failed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">❌</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -6494,6 +6494,13 @@
                          margin-left: 1rem;
                        }
                       </style>
+                      <span class="err hide no-space-around">
+                        <pre>{
+                      "name": "AssertionError",
+                      "message": "Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', connection: 'keep-alive', 'content-length': '0', 'content-type': 'text/html; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:08 GMT', server: 'nginx/1.18.0 (Ubuntu)' }, body: null, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist",
+                      "stack": "AssertionError: Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', connection: 'keep-alive', 'content-length': '0', 'content-type': 'text/html; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:08 GMT', server: 'nginx/1.18.0 (Ubuntu)' }, body: null, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:445:7)"
+                    }</pre>
+                      </span>
                     </div>
                   </td>
               </tr>
@@ -6832,8 +6839,8 @@
                       <span class="err hide no-space-around">
                         <pre>{
                       "name": "AssertionError",
-                      "message": "Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-length': '931', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 09 Jun 2024 05:05:39 GMT', etag: 'W/\"3a3-E9YJGf3LO6emBH8ot9L5BHt3Xr4\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google', 'x-cloud-trace-context': '719999fec40d914a3d073e4e5ca1cfbf' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist",
-                      "stack": "AssertionError: Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-length': '931', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 09 Jun 2024 05:05:39 GMT', etag: 'W/\"3a3-E9YJGf3LO6emBH8ot9L5BHt3Xr4\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google', 'x-cloud-trace-context': '719999fec40d914a3d073e4e5ca1cfbf' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:450:7)"
+                      "message": "Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-encoding': 'gzip', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:06 GMT', etag: 'W/\"54e-1koM5grFM2IFUXeNHAke+5+GBxM\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', 'transfer-encoding': 'chunked', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist",
+                      "stack": "AssertionError: Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-encoding': 'gzip', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:06 GMT', etag: 'W/\"54e-1koM5grFM2IFUXeNHAke+5+GBxM\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', 'transfer-encoding': 'chunked', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:475:9)"
                     }</pre>
                       </span>
                     </div>
@@ -7136,8 +7143,8 @@
                       </style>
                     </div>
                   </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
+                  <td class="failed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">❌</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -7166,6 +7173,13 @@
                          margin-left: 1rem;
                        }
                       </style>
+                      <span class="err hide no-space-around">
+                        <pre>{
+                      "name": "AssertionError",
+                      "message": "Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', connection: 'keep-alive', 'content-length': '0', 'content-type': 'text/html; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:09 GMT', server: 'nginx/1.18.0 (Ubuntu)' }, body: null, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist",
+                      "stack": "AssertionError: Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', connection: 'keep-alive', 'content-length': '0', 'content-type': 'text/html; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:09 GMT', server: 'nginx/1.18.0 (Ubuntu)' }, body: null, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:494:9)"
+                    }</pre>
+                      </span>
                     </div>
                   </td>
               </tr>
@@ -7269,6 +7283,657 @@
                       </style>
                     </div>
                   </td>
+                  <td class="failed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">❌</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                      <span class="err hide no-space-around">
+                        <pre>{
+                      "name": "AssertionError",
+                      "message": "Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', connection: 'keep-alive', 'content-length': '0', 'content-type': 'text/html; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:09 GMT', server: 'nginx/1.18.0 (Ubuntu)' }, body: null, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist",
+                      "stack": "AssertionError: Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', connection: 'keep-alive', 'content-length': '0', 'content-type': 'text/html; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:09 GMT', server: 'nginx/1.18.0 (Ubuntu)' }, body: null, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:504:9)"
+                    }</pre>
+                      </span>
+                    </div>
+                  </td>
+              </tr>
+            </tbody>
+            </table>
+          </div>
+          <div>
+            <div class="flex-center">
+              <div class="row">
+              </div>
+              <div class="">
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="informative" id="Data Integrity (ecdsa-rdfc-2019 verifiers) VC 2.0">
+          <h2>Data Integrity (ecdsa-rdfc-2019 verifiers) VC 2.0</h2>
+          <style>
+            .no-wrap {
+              white-space: nowrap;
+            }
+            td.optional {
+              background-color: #b9b7b7;
+            }
+           .text-right {
+              text-align: right;
+            }
+           .text-left {
+              text-align: left;
+            }
+           .text-center, th.text-center {
+             text-align: center;
+           }
+           .qr-code {
+             margin-left: 25px;
+           }
+           .row {
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+           }
+           .small-font {
+             font-size: 0.75rem;
+           }
+           .highlight-on-hover:hover {
+             background-color: yellow;
+             cursor: default;
+           }
+           .highlight-on-hover:hover + .relative-pos > .err {
+             display: block;
+           }
+           pre, code.hljs {
+             overflow: auto;
+           }
+           .relative-pos {
+             position: relative;
+             width: 0.5rem;
+             height: 0.5rem;
+             z-index: 1;
+           }
+           .relative-pos:hover > .err {
+             display: block;
+           }
+          </style>
+          <div class="row">
+            <table class="simple">
+              <thead>
+                <th width="20%">
+                  <div class="text-right small-font">
+                  Verifier &#8658;
+                  </div>
+                  <div class="text-left small-font">
+                  <span>&#8659;</span><span>Test Name</span>
+                  </div>
+                </th>
+                    <th class="no-wrap small-font text-center">Digital Bazaar: P-256</th>
+                </thead>
+              <tbody>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;proof&quot; field is missing, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;proof&quot; field is invalid, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;proof.type&quot; field is missing, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;proof.type&quot; field is not the string &quot;DataIntegrityProof&quot;, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;proof.verificationMethod&quot; field is missing, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;proof.verificationMethod&quot; field is invalid, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;proof.proofPurpose&quot; field is missing, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;proof.proofPurpose&quot; field is invalid, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;proof.proofPurpose&quot; value does not match &quot;options.expectedProofPurpose&quot;, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="failed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">❌</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                      <span class="err hide no-space-around">
+                        <pre>{
+                      "name": "AssertionError",
+                      "message": "Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-encoding': 'gzip', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:09 GMT', etag: 'W/\"527-9gHSurG/yhAqGhFeejax5vDQUvc\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', 'transfer-encoding': 'chunked', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist",
+                      "stack": "AssertionError: Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-encoding': 'gzip', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:09 GMT', etag: 'W/\"527-9gHSurG/yhAqGhFeejax5vDQUvc\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', 'transfer-encoding': 'chunked', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:445:7)"
+                    }</pre>
+                      </span>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;proof.proofValue&quot; field is missing, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;proof.proofValue&quot; field is invalid, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;proof.created&quot; field is invalid, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="failed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">❌</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                      <span class="err hide no-space-around">
+                        <pre>{
+                      "name": "AssertionError",
+                      "message": "Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-encoding': 'gzip', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:09 GMT', etag: 'W/\"51d-d2Zdfwi36rqEnX3wmfbdkwoWegw\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', 'transfer-encoding': 'chunked', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist",
+                      "stack": "AssertionError: Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-encoding': 'gzip', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:09 GMT', etag: 'W/\"51d-d2Zdfwi36rqEnX3wmfbdkwoWegw\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', 'transfer-encoding': 'chunked', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:475:9)"
+                    }</pre>
+                      </span>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;proof.proofValue&quot; field is not multibase-encoded, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;options.domain&quot; is set and it does not match &quot;proof.domain&quot;, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;options.challenge&quot; is set and it does not match &quot;proof.challenge&quot;, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
                   <td class="passed not-optional highlight-on-hover text-center">
                     <div class= "highlight-on-hover">✓</div>
                     <div class="relative-pos">
@@ -12275,8 +12940,8 @@
             </div>
           </div>
         </section>
-        <section class="informative" id="Data Integrity (ecdsa-sd-2023 verifiers)">
-          <h2>Data Integrity (ecdsa-sd-2023 verifiers)</h2>
+        <section class="informative" id="Data Integrity (ecdsa-sd-2023 verifiers) VC 1.1">
+          <h2>Data Integrity (ecdsa-sd-2023 verifiers) VC 1.1</h2>
           <style>
             .no-wrap {
               white-space: nowrap;
@@ -12335,8 +13000,652 @@
                   <span>&#8659;</span><span>Test Name</span>
                   </div>
                 </th>
-                    <th class="no-wrap small-font text-center">apicatalog.com: P-256, P-384</th>
-                    <th class="no-wrap small-font text-center">Digital Bazaar: P-256, P-384</th>
+                    <th class="no-wrap small-font text-center">Digital Bazaar: P-256</th>
+                </thead>
+              <tbody>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;proof&quot; field is missing, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;proof&quot; field is invalid, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;proof.type&quot; field is missing, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;proof.type&quot; field is not the string &quot;DataIntegrityProof&quot;, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;proof.verificationMethod&quot; field is missing, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;proof.verificationMethod&quot; field is invalid, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;proof.proofPurpose&quot; field is missing, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;proof.proofPurpose&quot; field is invalid, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;proof.proofPurpose&quot; value does not match &quot;options.expectedProofPurpose&quot;, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="failed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">❌</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                      <span class="err hide no-space-around">
+                        <pre>{
+                      "name": "AssertionError",
+                      "message": "Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-encoding': 'gzip', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:20 GMT', etag: 'W/\"1c4e-eohXW6J42lt9OlbNRl6div9Lnek\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', 'transfer-encoding': 'chunked', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist",
+                      "stack": "AssertionError: Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-encoding': 'gzip', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:20 GMT', etag: 'W/\"1c4e-eohXW6J42lt9OlbNRl6div9Lnek\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', 'transfer-encoding': 'chunked', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:445:7)"
+                    }</pre>
+                      </span>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;proof.proofValue&quot; field is missing, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;proof.proofValue&quot; field is invalid, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;proof.created&quot; field is invalid, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="failed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">❌</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                      <span class="err hide no-space-around">
+                        <pre>{
+                      "name": "AssertionError",
+                      "message": "Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-encoding': 'gzip', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:20 GMT', etag: 'W/\"1c3f-PGqlgbuiWRLku1cJ5MFSmoMHbLU\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', 'transfer-encoding': 'chunked', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist",
+                      "stack": "AssertionError: Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-encoding': 'gzip', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:20 GMT', etag: 'W/\"1c3f-PGqlgbuiWRLku1cJ5MFSmoMHbLU\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', 'transfer-encoding': 'chunked', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:475:9)"
+                    }</pre>
+                      </span>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;proof.proofValue&quot; field is not multibase-encoded, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;options.domain&quot; is set and it does not match &quot;proof.domain&quot;, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+                <!--This is the name of the test-->
+                <td class="subtest">If the &quot;options.challenge&quot; is set and it does not match &quot;proof.challenge&quot;, an error MUST be raised.</td>
+                <!--These contain if the test passed, failed, or was skipped-->
+                  <td class="passed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">✓</div>
+                    <div class="relative-pos">
+                      <style>
+                       .hide {
+                         display: none;
+                       }
+                       .err {
+                         position: relative;
+                         z-index: 1;
+                         width: 50rem;
+                         right: calc(0% + 15rem);
+                         background: rgba(0, 0, 0, 0.0);
+                       }
+                       .no-space-around {
+                         margin: 0;
+                         padding: 0;
+                       }
+                       pre {
+                         width: 75%;
+                         white-space: pre-line;
+                         word-break: break-all;
+                         margin: 0;
+                         padding: 0;
+                         background: white;
+                       }
+                       code > span.hljs-attr {
+                         margin-left: 1rem;
+                       }
+                      </style>
+                    </div>
+                  </td>
+              </tr>
+            </tbody>
+            </table>
+          </div>
+          <div>
+            <div class="flex-center">
+              <div class="row">
+              </div>
+              <div class="">
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="informative" id="Data Integrity (ecdsa-sd-2023 verifiers) VC 2.0">
+          <h2>Data Integrity (ecdsa-sd-2023 verifiers) VC 2.0</h2>
+          <style>
+            .no-wrap {
+              white-space: nowrap;
+            }
+            td.optional {
+              background-color: #b9b7b7;
+            }
+           .text-right {
+              text-align: right;
+            }
+           .text-left {
+              text-align: left;
+            }
+           .text-center, th.text-center {
+             text-align: center;
+           }
+           .qr-code {
+             margin-left: 25px;
+           }
+           .row {
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+           }
+           .small-font {
+             font-size: 0.75rem;
+           }
+           .highlight-on-hover:hover {
+             background-color: yellow;
+             cursor: default;
+           }
+           .highlight-on-hover:hover + .relative-pos > .err {
+             display: block;
+           }
+           pre, code.hljs {
+             overflow: auto;
+           }
+           .relative-pos {
+             position: relative;
+             width: 0.5rem;
+             height: 0.5rem;
+             z-index: 1;
+           }
+           .relative-pos:hover > .err {
+             display: block;
+           }
+          </style>
+          <div class="row">
+            <table class="simple">
+              <thead>
+                <th width="20%">
+                  <div class="text-right small-font">
+                  Verifier &#8658;
+                  </div>
+                  <div class="text-left small-font">
+                  <span>&#8659;</span><span>Test Name</span>
+                  </div>
+                </th>
+                    <th class="no-wrap small-font text-center">apicatalog.com: P-256</th>
+                    <th class="no-wrap small-font text-center">Digital Bazaar: P-256</th>
                     <th class="no-wrap small-font text-center">Grotto Networking: P-256</th>
                 </thead>
               <tbody>
@@ -13115,8 +14424,8 @@
                       </style>
                     </div>
                   </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
+                  <td class="failed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">❌</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -13145,6 +14454,13 @@
                          margin-left: 1rem;
                        }
                       </style>
+                      <span class="err hide no-space-around">
+                        <pre>{
+                      "name": "AssertionError",
+                      "message": "Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', connection: 'keep-alive', 'content-length': '27', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:24 GMT', etag: 'W/\"1b-rRfMrqLEzOSc4mDcQ32caLaauZM\"', server: 'nginx/1.18.0 (Ubuntu)', 'x-powered-by': 'Express' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist",
+                      "stack": "AssertionError: Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', connection: 'keep-alive', 'content-length': '27', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:24 GMT', etag: 'W/\"1b-rRfMrqLEzOSc4mDcQ32caLaauZM\"', server: 'nginx/1.18.0 (Ubuntu)', 'x-powered-by': 'Express' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:438:7)"
+                    }</pre>
+                      </span>
                     </div>
                   </td>
               </tr>
@@ -13217,14 +14533,14 @@
                       <span class="err hide no-space-around">
                         <pre>{
                       "name": "AssertionError",
-                      "message": "Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-length': '940', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 09 Jun 2024 05:05:53 GMT', etag: 'W/\"3ac-vMMmoPpklXsJQH0RnJ5UBTetgvY\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google', 'x-cloud-trace-context': '3b3a35bb2f24aeea9bd577a6dea82beb' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist",
-                      "stack": "AssertionError: Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-length': '940', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 09 Jun 2024 05:05:53 GMT', etag: 'W/\"3ac-vMMmoPpklXsJQH0RnJ5UBTetgvY\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google', 'x-cloud-trace-context': '3b3a35bb2f24aeea9bd577a6dea82beb' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:419:7)"
+                      "message": "Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-encoding': 'gzip', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:22 GMT', etag: 'W/\"1bf6-HZPFjBiQIxSjbt8IPe3RLgYGDug\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', 'transfer-encoding': 'chunked', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist",
+                      "stack": "AssertionError: Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-encoding': 'gzip', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:22 GMT', etag: 'W/\"1bf6-HZPFjBiQIxSjbt8IPe3RLgYGDug\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', 'transfer-encoding': 'chunked', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:445:7)"
                     }</pre>
                       </span>
                     </div>
                   </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
+                  <td class="failed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">❌</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -13253,6 +14569,13 @@
                          margin-left: 1rem;
                        }
                       </style>
+                      <span class="err hide no-space-around">
+                        <pre>{
+                      "name": "AssertionError",
+                      "message": "Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', connection: 'keep-alive', 'content-length': '27', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:24 GMT', etag: 'W/\"1b-rRfMrqLEzOSc4mDcQ32caLaauZM\"', server: 'nginx/1.18.0 (Ubuntu)', 'x-powered-by': 'Express' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist",
+                      "stack": "AssertionError: Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', connection: 'keep-alive', 'content-length': '27', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:24 GMT', etag: 'W/\"1b-rRfMrqLEzOSc4mDcQ32caLaauZM\"', server: 'nginx/1.18.0 (Ubuntu)', 'x-powered-by': 'Express' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:445:7)"
+                    }</pre>
+                      </span>
                     </div>
                   </td>
               </tr>
@@ -13527,8 +14850,8 @@
                       <span class="err hide no-space-around">
                         <pre>{
                       "name": "AssertionError",
-                      "message": "Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-length': '931', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 09 Jun 2024 05:05:53 GMT', etag: 'W/\"3a3-E9YJGf3LO6emBH8ot9L5BHt3Xr4\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google', 'x-cloud-trace-context': 'b2884c6a1fc0f7ca3d0da946fdbba619' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist",
-                      "stack": "AssertionError: Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-length': '931', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 09 Jun 2024 05:05:53 GMT', etag: 'W/\"3a3-E9YJGf3LO6emBH8ot9L5BHt3Xr4\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google', 'x-cloud-trace-context': 'b2884c6a1fc0f7ca3d0da946fdbba619' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:450:7)"
+                      "message": "Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-encoding': 'gzip', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:22 GMT', etag: 'W/\"1bf1-vAfAZgOXjU2o+hJdlqhYMgxO7U8\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', 'transfer-encoding': 'chunked', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist",
+                      "stack": "AssertionError: Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { 'access-control-allow-origin': '*', 'alt-svc': 'h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000', authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', 'cache-control': 'no-cache, no-store, must-revalidate', 'content-encoding': 'gzip', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:22 GMT', etag: 'W/\"1bf1-vAfAZgOXjU2o+hJdlqhYMgxO7U8\"', expires: '0', pragma: 'no-cache', server: 'Google Frontend', 'transfer-encoding': 'chunked', vary: 'X-HTTP-Method-Override, Accept-Encoding', via: '1.1 google' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:475:9)"
                     }</pre>
                       </span>
                     </div>
@@ -13735,8 +15058,8 @@
                       </style>
                     </div>
                   </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
+                  <td class="failed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">❌</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -13765,6 +15088,13 @@
                          margin-left: 1rem;
                        }
                       </style>
+                      <span class="err hide no-space-around">
+                        <pre>{
+                      "name": "AssertionError",
+                      "message": "Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', connection: 'keep-alive', 'content-length': '27', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:25 GMT', etag: 'W/\"1b-rRfMrqLEzOSc4mDcQ32caLaauZM\"', server: 'nginx/1.18.0 (Ubuntu)', 'x-powered-by': 'Express' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist",
+                      "stack": "AssertionError: Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', connection: 'keep-alive', 'content-length': '27', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:25 GMT', etag: 'W/\"1b-rRfMrqLEzOSc4mDcQ32caLaauZM\"', server: 'nginx/1.18.0 (Ubuntu)', 'x-powered-by': 'Express' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:494:9)"
+                    }</pre>
+                      </span>
                     </div>
                   </td>
               </tr>
@@ -13836,8 +15166,8 @@
                       </style>
                     </div>
                   </td>
-                  <td class="passed not-optional highlight-on-hover text-center">
-                    <div class= "highlight-on-hover">✓</div>
+                  <td class="failed not-optional highlight-on-hover text-center">
+                    <div class= "highlight-on-hover">❌</div>
                     <div class="relative-pos">
                       <style>
                        .hide {
@@ -13866,6 +15196,13 @@
                          margin-left: 1rem;
                        }
                       </style>
+                      <span class="err hide no-space-around">
+                        <pre>{
+                      "name": "AssertionError",
+                      "message": "Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', connection: 'keep-alive', 'content-length': '27', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:26 GMT', etag: 'W/\"1b-rRfMrqLEzOSc4mDcQ32caLaauZM\"', server: 'nginx/1.18.0 (Ubuntu)', 'x-powered-by': 'Express' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist",
+                      "stack": "AssertionError: Expected no result from verifier.: expected Response { status: 200, statusText: 'OK', headers: Headers { authorization: '** SANITIZED TO PREVENT EXPOSING OF SECRETS ***', connection: 'keep-alive', 'content-length': '27', 'content-type': 'application/json; charset=utf-8', date: 'Sun, 16 Jun 2024 05:06:26 GMT', etag: 'W/\"1b-rRfMrqLEzOSc4mDcQ32caLaauZM\"', server: 'nginx/1.18.0 (Ubuntu)', 'x-powered-by': 'Express' }, body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true }, bodyUsed: false, ok: true, redirected: false, type: 'default', url: '' } to not exist\n    at should.not.exist (node_modules/chai/lib/chai/interface/should.js:208:38)\n    at verificationFail (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/helpers.js:63:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Context.<anonymous> (file:///home/runner/work/vc-di-ecdsa-test-suite/vc-di-ecdsa-test-suite/node_modules/data-integrity-test-suite-assertion/index.js:504:9)"
+                    }</pre>
+                      </span>
                     </div>
                   </td>
               </tr>
