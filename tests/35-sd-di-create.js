@@ -17,5 +17,6 @@ const {match} = endpoints.filterByTag({
 checkDataIntegrityProofFormat({
   implemented: match,
   isEcdsaTests: true,
-  testDescription: 'Data Integrity (ecdsa-sd-2023 issuers)'
+  testDescription: 'Data Integrity (ecdsa-sd-2023 issuers)',
+  cryptosuiteName: 'ecdsa-sd-2023'
 });
