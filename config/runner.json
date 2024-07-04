@@ -6,10 +6,16 @@
       "proofLengths": {
         "P-256": 64,
         "P-384": 96
+      },
+      "interop": {
+        "vcVersion": "1.1"
       }
     },
     "ecdsa-sd-2023": {
       "tags": ["ecdsa-sd-2023"],
+      "interop": {
+        "vcVersion": "2.0"
+      },
       "vcHolder": {
         "holderName": "Grotto Networking",
         "tags": ["vcHolder"]

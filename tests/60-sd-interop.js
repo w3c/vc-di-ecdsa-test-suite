@@ -12,7 +12,8 @@ const {
   tags,
   credentials,
   vcHolder: {holderName},
-  disableInterop
+  disableInterop,
+  interop: {vcVersion}
 } = getSuiteConfig('ecdsa-sd-2023');
 
 const should = chai.should();
@@ -24,7 +25,6 @@ const {
 const {
   match: verifierMatches
 } = endpoints.filterByTag({tags: [...tags], property: 'verifiers'});
-const vcVersion = '2.0';
 
 (disableInterop ? describe.skip : describe)(
   'ecdsa-sd-2023 (interop)', function() {
