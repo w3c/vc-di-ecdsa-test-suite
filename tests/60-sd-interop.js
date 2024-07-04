@@ -24,6 +24,7 @@ const {
 const {
   match: verifierMatches
 } = endpoints.filterByTag({tags: [...tags], property: 'verifiers'});
+const vcVersion = '2.0';
 
 (disableInterop ? describe.skip : describe)(
   'ecdsa-sd-2023 (interop)', function() {
@@ -84,9 +85,9 @@ const {
         before(async function() {
           const issuedVc = await createInitialVc({
             issuer: issuerEndpoint,
-            vc: credentials.interop['2.0'].document,
-            mandatoryPointers: credentials.interop['2.0'].mandatoryPointers,
-            vcVersion: '2.0'
+            vc: credentials.interop[vcVersion].document,
+            mandatoryPointers: credentials.interop[vcVersion].mandatoryPointers,
+            vcVersion
           });
           const {match: matchingVcHolders} = endpoints.filterByTag({
             tags: ['vcHolder'],
