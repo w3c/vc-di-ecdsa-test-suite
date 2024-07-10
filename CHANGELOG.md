@@ -6,7 +6,12 @@ SPDX-License-Identifier: BSD-3-Clause
 
 # w3c/vc-di-ecdsa-test-suite  ChangeLog
 
-## 3.0.1 -
+## 3.0.2 -
+
+### Fixed
+- Add missing dependency `@digitalbazaar/ed25519-verification-key-2020`.
+
+## 3.0.1 - 2024-06-09
 
 ### Changed
 - No longer depend on `@bedrock/vc-verifier` and bedrock related libs.
