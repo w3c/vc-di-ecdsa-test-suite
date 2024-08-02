@@ -38,7 +38,7 @@
   },
   "homepage": "https://github.com/w3c/vc-di-ecdsa-test-suite#readme",
   "dependencies": {
-    "@digitalbazaar/credentials-v2-context": "github:digitalbazaar/credentials-v2-context",
+    "@digitalbazaar/credentials-context": "^3.1.0",
     "@digitalbazaar/data-integrity": "^2.1.0",
     "@digitalbazaar/data-integrity-context": "^2.0.0",
     "@digitalbazaar/did-io": "^2.0.0",
@@ -55,7 +55,6 @@
     "base58-universal": "^2.0.0",
     "base64url-universal": "^2.0.0",
     "chai": "^4.3.7",
-    "credentials-context": "^2.0.0",
     "data-integrity-test-suite-assertion": "github:w3c-ccg/data-integrity-test-suite-assertion",
     "jsonld-document-loader": "^2.0.0",
     "klona": "^2.0.6",
