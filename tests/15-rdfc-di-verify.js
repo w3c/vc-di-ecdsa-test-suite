@@ -19,9 +19,13 @@ for(const vcVersion of vectors.vcTypes) {
   const key = await getMultiKey({keyType: 'P-256'});
   const {document} = credentials.verify[vcVersion];
   const {match} = endpoints.filter({
+    // create a filter for endpoints by vc version
     filter: filterVerifiers.bind({
       vc: {
         version: vcVersion,
+        // this will be the default supported version
+        // if an endpoint does not explictly declare
+        // which vc version is supported
         default: '1.1'
       },
       tags
@@ -38,6 +42,9 @@ for(const vcVersion of vectors.vcTypes) {
       key,
       testVector: document,
       keyType: 'P-256'
+    },
+    optionalTests: {
+      proofChain: true
     }
   });
 }
