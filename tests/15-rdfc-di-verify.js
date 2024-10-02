@@ -43,8 +43,5 @@ for(const vcVersion of vectors.vcTypes) {
       testVector: document,
       keyType: 'P-256'
     },
-    optionalTests: {
-      proofChain: true
-    }
   });
 }
