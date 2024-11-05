@@ -11,12 +11,14 @@ import {DataIntegrityProof} from '@digitalbazaar/data-integrity';
 import {getMultiKey} from '../vc-generator/key-gen.js';
 import {getSuite} from '../vc-generator/cryptosuites.js';
 
-export function assertConformance({
+export function conformanceSuite({
   verifiers,
   suiteName,
   keyType,
   vcVersion,
   credential,
+  mandatoryPointers,
+  selectivePointers,
   setup = _setup
 }) {
   describe(`${suiteName} - Conformance - VC ${vcVersion}`, function() {
@@ -27,7 +29,13 @@ export function assertConformance({
     this.columnLabel = 'Implementation';
     let credentials = new Map();
     before(async function() {
-      credentials = await setup({credential, suiteName, keyType});
+      credentials = await setup({
+        credential,
+        mandatoryPointers,
+        selectivePointers,
+        suiteName,
+        keyType
+      });
     });
     for(const [name, {endpoints}] of verifiers) {
       const [verifier] = endpoints;
