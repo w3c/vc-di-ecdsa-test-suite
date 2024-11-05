@@ -7,7 +7,9 @@ import {
   generators,
   issueCloned
 } from 'data-integrity-test-suite-assertion';
+import {DataIntegrityProof} from '@digitalbazaar/data-integrity';
 import {getMultiKey} from '../vc-generator/key-gen.js';
+import {getSuite} from '../vc-generator/cryptosuites.js';
 
 export function assertConformance({
   verifiers,
@@ -40,6 +42,13 @@ export function assertConformance({
         'Data Model and 3. Algorithms of this document MUST be enforced.',
         async function() {
           this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#:~:text=Specifically%2C%20all%20relevant%20normative%20statements%20in%20Sections%202.%20Data%20Model%20and%203.%20Algorithms%20of%20this%20document%20MUST%20be%20enforced.';
+          for(const [key, credential] of credentials) {
+            await assertions.verificationFail({
+              verifier,
+              credential,
+              reason: `Should not verify VC with ${key}`
+            });
+          }
         });
         it('Conforming processors MUST produce errors when non-conforming ' +
         'documents are consumed.', async function() {
@@ -60,7 +69,6 @@ async function _setup({
   credential,
   suiteName,
   keyType,
-  cryptosuite,
   mandatoryPointers,
   selectivePointers
 }) {
@@ -75,14 +83,59 @@ async function _setup({
   // not bs58 encoded verificationMethod via invalidVm
   // type is not DataIntegrityProof invalidType
   // invalid cryptosuite name invalidCryptosuite
-  credentials.set('invalidCryptosuite', await issueCloned(invalidCryptosuite({
-
+  credentials.set('invalid cryptosuite', await issueCloned(invalidCryptosuite({
+    credential: structuredClone(credential),
+    ..._getSuites({
+      signer,
+      suiteName,
+      selectivePointers,
+      mandatoryPointers
+    })
   })));
-  credentials.set('invalidVerificationMethod', await issueCloned(invalidVm({
-
+  credentials.set('invalid VerificationMethod', await issueCloned(invalidVm({
+    credential: structuredClone(credential),
+    ..._getSuites({
+      signer,
+      suiteName,
+      selectivePointers,
+      mandatoryPointers
+    })
   })));
-  credentials.set('invalidProofType', await issueCloned(invalidProofType({
-
+  credentials.set('invalid Proof Type', await issueCloned(invalidProofType({
+    credential: structuredClone(credential),
+    ..._getSuites({
+      signer,
+      suiteName,
+      selectivePointers,
+      mandatoryPointers
+    })
   })));
   return credentials;
+}
+
+function _getSuites({
+  signer,
+  suiteName,
+  mandatoryPointers,
+  selectivePointers
+}) {
+  const suites = {
+    suite: new DataIntegrityProof({
+      signer,
+      cryptosuite: getSuite({
+        suite: suiteName,
+        mandatoryPointers
+      })
+    })
+  };
+  if(selectivePointers) {
+    suites.selectiveSuite = new DataIntegrityProof({
+      signer,
+      cryptosuite: getSuite({
+        suite: suiteName,
+        selectivePointers
+      })
+    });
+  }
+  return suites;
 }
