@@ -136,6 +136,9 @@ export const endpointCheck = ({endpoint, vcVersion, keyType}) => {
  */
 export function filterVerifiers({implementation}) {
   const endpoints = implementation.verifiers;
+  if(undefined === endpoints) {
+    return [];
+  }
   // the filter function expects an array to be returned
   return endpoints.filter(e => {
     // we want only endpoints that match every tag
