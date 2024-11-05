@@ -2,7 +2,12 @@
  * Copyright 2024 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
-import {assertions} from 'data-integrity-test-suite-assertion';
+import {
+  assertions,
+  generators,
+  issueCloned
+} from 'data-integrity-test-suite-assertion';
+import {getMultiKey} from '../vc-generator/key-gen.js';
 
 export function assertConformance({
   verifiers,
@@ -39,19 +44,45 @@ export function assertConformance({
         it('Conforming processors MUST produce errors when non-conforming ' +
         'documents are consumed.', async function() {
           this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#:~:text=Conforming%20processors%20MUST%20produce%20errors%20when%20non%2Dconforming%20documents%20are%20consumed.';
-          await assertions.verificationFail({
-            verifier,
-            credential: {},
-            reason: 'Should '
-          });
+          for(const [key, credential] of credentials) {
+            await assertions.verificationFail({
+              verifier,
+              credential,
+              reason: `Should not verify VC with ${key}`
+            });
+          }
         });
       });
     }
   });
 }
-async function _setup({}) {
-  // not bs58 encoded verificationMethod
-  // type is not DataIntegrityProof
-  // invalid cryptosuite name
+async function _setup({
+  credential,
+  suiteName,
+  keyType,
+  cryptosuite,
+  mandatoryPointers,
+  selectivePointers
+}) {
+  const {
+    invalidProofType,
+    invalidVm,
+    invalidCryptosuite
+  } = generators?.mandatory;
+  const credentials = new Map();
+  const keyPair = await getMultiKey({keyType});
+  const signer = keyPair.signer();
+  // not bs58 encoded verificationMethod via invalidVm
+  // type is not DataIntegrityProof invalidType
+  // invalid cryptosuite name invalidCryptosuite
+  credentials.set('invalidCryptosuite', await issueCloned(invalidCryptosuite({
 
+  })));
+  credentials.set('invalidVerificationMethod', await issueCloned(invalidVm({
+
+  })));
+  credentials.set('invalidProofType', await issueCloned(invalidProofType({
+
+  })));
+  return credentials;
 }
