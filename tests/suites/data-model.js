@@ -82,15 +82,34 @@ export function dataModelSuite({
           async function() {
             this.test.link = 'https://w3c.github.io/vc-di-eddsa/#data-model:~:text=of%20Controller%20Documents%201.0.-,Any%20other%20encoding%20MUST%20NOT%20be%20allowed.,-Developers%20are%20advised%20to%20not';
             assertBefore();
+            for(const proof of proofs) {
+              expect(proof.verificationMethod).to.exist;
+              expect(proof.verificationMethod).to.be.a('string');
+              expect(
+                assertions.shouldBeBs58(proof.verificationMethod),
+                'Expected "proof.verificationMethod" to be Base58 encoded'
+              ).to.be.true;
+            }
           });
         it('The type property MUST be DataIntegrityProof.', async function() {
           this.test.link = 'https://w3c.github.io/vc-di-eddsa/#data-model:~:text=The%20type%20property%20MUST%20be%20DataIntegrityProof.';
           assertBefore();
+          for(const proof of proofs) {
+            expect(proof.type).to.exist;
+            expect(proof.type).to.be.a('string');
+            expect(proof.type).to.equal('DataIntegrityProof');
+          }
         });
         it('The cryptosuite property of the proof MUST be eddsa-rdfc-2022 or ' +
           'eddsa-jcs-2022.', async function() {
           this.test.link = 'https://w3c.github.io/vc-di-eddsa/#data-model:~:text=The%20cryptosuite%20property%20of%20the%20proof%20MUST%20be%20eddsa%2Drdfc%2D2022%20or%20eddsa%2Djcs%2D2022.';
           assertBefore();
+          for(const proof of proofs) {
+            expect(proof.cryptosuite).to.exist;
+            expect(proof.cryptosuite).to.be.a('string');
+            expect(proof.cryptosuite).to.oneOf(
+              ['eddsa-rdfc-2022', 'eddsa-jcs-2022']);
+          }
         });
         it('The proofValue property of the proof MUST be a detached EdDSA ' +
           'signature produced according to [RFC8032], encoded using the ' +
@@ -98,7 +117,14 @@ export function dataModelSuite({
           'section of Controller Documents 1.0.', async function() {
           this.test.link = 'https://w3c.github.io/vc-di-eddsa/#data-model:~:text=The%20proofValue%20property%20of%20the%20proof%20MUST%20be%20a%20detached%20EdDSA%20signature%20produced%20according%20to%20%5BRFC8032%5D%2C%20encoded%20using%20the%20base%2D58%2Dbtc%20header%20and%20alphabet%20as%20described%20in%20the%20Multibase%20section%20of%20Controller%20Documents%201.0.';
           assertBefore();
-
+          for(const proof of proofs) {
+            expect(proof.proofValue).to.exist;
+            expect(proof.proofValue).to.be.a('string');
+            expect(
+              assertions.shouldBeBs58(proof.proofValue),
+              'Expected "proof.proofValue" to be Base58 encoded'
+            ).to.be.true;
+          }
         });
       });
     }
