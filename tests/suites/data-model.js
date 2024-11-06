@@ -16,7 +16,7 @@ export function dataModelSuite({
   credential,
   mandatoryPointers
 }) {
-  describe(`${suiteName} - Data Model - VC ${vcVersion}`, function() {
+  return describe(`${suiteName} - Data Model - VC ${vcVersion}`, function() {
     this.matrix = true;
     this.report = true;
     this.implemented = [...issuers];
@@ -30,6 +30,7 @@ export function dataModelSuite({
       }
       describe(`${name}: ${keyType}`, function() {
         let securedCredential = null;
+        let proofs = [];
         before(async function() {
           securedCredential = await createInitialVc({
             issuer,
@@ -37,6 +38,12 @@ export function dataModelSuite({
             vc: credential,
             mandatoryPointers
           });
+          if(securedCredential) {
+            proofs = Array.isArray(securedCredential.proofs) ?
+              securedCredential?.proofs : [securedCredential?.proofs];
+            // only test proofs that match the relevant cryptosuite
+            proofs.filter(p => p.cryptosuite === suiteName);
+          }
         });
         beforeEach(function() {
           this.currentTest.cell = {
@@ -49,6 +56,10 @@ export function dataModelSuite({
             securedCredential,
             `Expected issuer ${name}: ${keyType} to issue a VC`
           ).to.exist;
+          expect(
+            securedCredential,
+            'Expected VC to be an object'
+          ).to.be.an('object');
         }
         it('The publicKeyMultibase value of the verification method MUST ' +
           'start with the base-58-btc prefix (z), as defined in the ' +
@@ -58,6 +69,14 @@ export function dataModelSuite({
         async function() {
           this.test.link = 'https://w3c.github.io/vc-di-eddsa/#data-model:~:text=in%20this%20specification.-,The%20publicKeyMultibase%20value%20of%20the%20verification%20method%20MUST%20start%20with%20the%20base%2D58%2Dbtc%20prefix,-(z)%2C%20as';
           assertBefore();
+          for(const proof of proofs) {
+            expect(proof.verificationMethod).to.exist;
+            expect(proof.verificationMethod).to.be.a('string');
+            expect(
+              assertions.shouldBeBs58(proof.verificationMethod),
+              'Expected "proof.verificationMethod" to be Base58 encoded'
+            ).to.be.true;
+          }
         });
         it('Any other encoding MUST NOT be allowed. (verificationMethod)',
           async function() {
