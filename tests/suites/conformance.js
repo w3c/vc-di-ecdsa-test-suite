@@ -88,11 +88,13 @@ async function _setup({
   const credentials = new Map();
   const keyPair = await getMultiKey({keyType});
   const signer = keyPair.signer();
+  const _credential = structuredClone(credential);
+  _credential.issuer = keyPair.controller;
   // not bs58 encoded verificationMethod via invalidVm
   // type is not DataIntegrityProof invalidType
   // invalid cryptosuite name invalidCryptosuite
   credentials.set('invalid cryptosuite', await issueCloned(invalidCryptosuite({
-    credential: structuredClone(credential),
+    credential: structuredClone(_credential),
     ..._getSuites({
       signer,
       suiteName,
@@ -101,7 +103,7 @@ async function _setup({
     })
   })));
   credentials.set('invalid VerificationMethod', await issueCloned(invalidVm({
-    credential: structuredClone(credential),
+    credential: structuredClone(_credential),
     ..._getSuites({
       signer,
       suiteName,
@@ -110,7 +112,7 @@ async function _setup({
     })
   })));
   credentials.set('invalid Proof Type', await issueCloned(invalidProofType({
-    credential: structuredClone(credential),
+    credential: structuredClone(_credential),
     ..._getSuites({
       signer,
       suiteName,
