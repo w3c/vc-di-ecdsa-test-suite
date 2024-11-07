@@ -39,10 +39,10 @@ export function dataModelSuite({
             mandatoryPointers
           });
           if(securedCredential) {
-            proofs = Array.isArray(securedCredential.proofs) ?
-              securedCredential?.proofs : [securedCredential?.proofs];
+            proofs = Array.isArray(securedCredential.proof) ?
+              securedCredential?.proof : [securedCredential?.proof];
             // only test proofs that match the relevant cryptosuite
-            proofs.filter(p => p.cryptosuite === suiteName);
+            proofs = proofs.filter(p => p?.cryptosuite === suiteName);
           }
         });
         beforeEach(function() {

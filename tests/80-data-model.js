@@ -8,7 +8,8 @@ import {getSuiteConfig} from './test-config.js';
 
 const cryptosuites = [
   'ecdsa-rdfc-2019',
-  'ecdsa-jcs-2019'
+  'ecdsa-sd-2023'
+  //FIXME implement jcs 'ecdsa-jcs-2019'
 ];
 
 for(const suiteName of cryptosuites) {
