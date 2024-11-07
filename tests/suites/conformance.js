@@ -21,7 +21,7 @@ export function conformanceSuite({
   selectivePointers,
   setup = _setup
 }) {
-  describe(`${suiteName} - Conformance - VC ${vcVersion}`, function() {
+  return describe(`${suiteName} - Conformance - VC ${vcVersion}`, function() {
     this.matrix = true;
     this.report = true;
     this.implemented = [...verifiers];
