@@ -63,11 +63,9 @@ export function dataModelSuite({
         }
         it('The publicKeyMultibase value of the verification method MUST ' +
           'start with the base-58-btc prefix (z), as defined in the ' +
-          'Multibase section of Controller Documents 1.0. A ' +
-          'Multibase-encoded Ed25519 256-bit public key value follows, as ' +
-          'defined in the Multikey section of Controller Documents 1.0.',
+          'Multibase section of Controller Documents 1.0. A ',
         async function() {
-          this.test.link = 'https://w3c.github.io/vc-di-eddsa/#data-model:~:text=in%20this%20specification.-,The%20publicKeyMultibase%20value%20of%20the%20verification%20method%20MUST%20start%20with%20the%20base%2D58%2Dbtc%20prefix,-(z)%2C%20as';
+          this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#data-model:~:text=The%20publicKeyMultibase%20value%20of%20the%20verification%20method%20MUST%20start%20with%20the%20base%2D58%2Dbtc%20prefix%20(z)%2C%20as%20defined%20in%20the%20Multibase%20section%20of%20Controller%20Documents%201.0.';
           assertBefore();
           for(const proof of proofs) {
             expect(proof.verificationMethod).to.exist;
@@ -80,7 +78,7 @@ export function dataModelSuite({
         });
         it('Any other encoding MUST NOT be allowed. (verificationMethod)',
           async function() {
-            this.test.link = 'https://w3c.github.io/vc-di-eddsa/#data-model:~:text=of%20Controller%20Documents%201.0.-,Any%20other%20encoding%20MUST%20NOT%20be%20allowed.,-Developers%20are%20advised%20to%20not';
+            this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#multikey';
             assertBefore();
             for(const proof of proofs) {
               expect(proof.verificationMethod).to.exist;
@@ -92,7 +90,7 @@ export function dataModelSuite({
             }
           });
         it('The type property MUST be DataIntegrityProof.', async function() {
-          this.test.link = 'https://w3c.github.io/vc-di-eddsa/#data-model:~:text=The%20type%20property%20MUST%20be%20DataIntegrityProof.';
+          this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#multikey:~:text=The%20type%20property%20MUST%20be%20DataIntegrityProof.';
           assertBefore();
           for(const proof of proofs) {
             expect(proof.type).to.exist;
@@ -100,30 +98,15 @@ export function dataModelSuite({
             expect(proof.type).to.equal('DataIntegrityProof');
           }
         });
-        it('The cryptosuite property of the proof MUST be eddsa-rdfc-2022 or ' +
-          'eddsa-jcs-2022.', async function() {
-          this.test.link = 'https://w3c.github.io/vc-di-eddsa/#data-model:~:text=The%20cryptosuite%20property%20of%20the%20proof%20MUST%20be%20eddsa%2Drdfc%2D2022%20or%20eddsa%2Djcs%2D2022.';
+        it('The cryptosuite property MUST be ecdsa-rdfc-2019, ' +
+          'ecdsa-jcs-2019, or ecdsa-sd-2023.', async function() {
+          this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#multikey:~:text=The%20cryptosuite%20property%20MUST%20be%20ecdsa%2Drdfc%2D2019%2C%20ecdsa%2Djcs%2D2019%2C%20or%20ecdsa%2Dsd%2D2023.';
           assertBefore();
           for(const proof of proofs) {
             expect(proof.cryptosuite).to.exist;
             expect(proof.cryptosuite).to.be.a('string');
             expect(proof.cryptosuite).to.be.oneOf(
-              ['eddsa-rdfc-2022', 'eddsa-jcs-2022']);
-          }
-        });
-        it('The proofValue property of the proof MUST be a detached EdDSA ' +
-          'signature produced according to [RFC8032], encoded using the ' +
-          'base-58-btc header and alphabet as described in the Multibase ' +
-          'section of Controller Documents 1.0.', async function() {
-          this.test.link = 'https://w3c.github.io/vc-di-eddsa/#data-model:~:text=The%20proofValue%20property%20of%20the%20proof%20MUST%20be%20a%20detached%20EdDSA%20signature%20produced%20according%20to%20%5BRFC8032%5D%2C%20encoded%20using%20the%20base%2D58%2Dbtc%20header%20and%20alphabet%20as%20described%20in%20the%20Multibase%20section%20of%20Controller%20Documents%201.0.';
-          assertBefore();
-          for(const proof of proofs) {
-            expect(proof.proofValue).to.exist;
-            expect(proof.proofValue).to.be.a('string');
-            expect(
-              assertions.shouldBeBs58(proof.proofValue),
-              'Expected "proof.proofValue" to be Base58 encoded'
-            ).to.be.true;
+              ['ecdsa-rdfc-2019', 'edcsa-jcs-2019', 'ecdsa-sd-2023']);
           }
         });
       });
