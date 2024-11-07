@@ -6,6 +6,7 @@ import {createInitialVc, endpointCheck} from '../helpers.js';
 import {
   assertions,
 } from 'data-integrity-test-suite-assertion';
+import {didResolver} from '../didResolver.js';
 import {expect} from 'chai';
 
 export function dataModelSuite({
@@ -70,9 +71,12 @@ export function dataModelSuite({
           for(const proof of proofs) {
             expect(proof.verificationMethod).to.exist;
             expect(proof.verificationMethod).to.be.a('string');
+            const didDoc = await didResolver({url: proof.verificationMethod});
+            expect(didDoc).to.be.an('object');
+            expect(didDoc.publicKeyMultibase).to.be.a('string');
             expect(
-              assertions.shouldBeBs58(proof.verificationMethod),
-              'Expected "proof.verificationMethod" to be Base58 encoded'
+              assertions.shouldBeBs58(didDoc.publicKeyMultibase),
+              'Expected "publicKeyMultibase" to be Base58 encoded'
             ).to.be.true;
           }
         });
@@ -83,9 +87,12 @@ export function dataModelSuite({
             for(const proof of proofs) {
               expect(proof.verificationMethod).to.exist;
               expect(proof.verificationMethod).to.be.a('string');
+              const didDoc = await didResolver({url: proof.verificationMethod});
+              expect(didDoc).to.be.an('object');
+              expect(didDoc.publicKeyMultibase).to.be.a('string');
               expect(
-                assertions.shouldBeBs58(proof.verificationMethod),
-                'Expected "proof.verificationMethod" to be Base58 encoded'
+                assertions.shouldBeBs58(didDoc.publicKeyMultibase),
+                'Expected "publicKeyMultibase" to be Base58 encoded'
               ).to.be.true;
             }
           });
