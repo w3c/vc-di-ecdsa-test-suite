@@ -107,7 +107,7 @@ export function dataModelSuite({
           for(const proof of proofs) {
             expect(proof.cryptosuite).to.exist;
             expect(proof.cryptosuite).to.be.a('string');
-            expect(proof.cryptosuite).to.oneOf(
+            expect(proof.cryptosuite).to.be.oneOf(
               ['eddsa-rdfc-2022', 'eddsa-jcs-2022']);
           }
         });
