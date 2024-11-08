@@ -2,6 +2,8 @@
  * Copyright 2024 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
+import {createInitialVc, endpointCheck} from '../helpers.js';
+import {expect} from 'chai';
 
 export function algorithmSuite({
   suiteName
@@ -23,9 +25,11 @@ export function algorithmSuite({
 }
 
 export function ecdsaRdfc2019Algorithms({
+  credential,
   endpoints,
-  suiteName,
+  mandatoryPointers,
   keyType,
+  suiteName,
   vcVersion
 }) {
   return describe(`${suiteName} - Algorithms - VC ${vcVersion}`, function() {
@@ -35,7 +39,28 @@ export function ecdsaRdfc2019Algorithms({
     this.rowLabel = 'Test Name';
     this.columnLabel = 'Implementation';
     for(const [name, {endpoints: issuers}] of endpoints) {
+      const [issuer] = issuers;
+      // does the endpoint support this test?
+      if(!endpointCheck({endpoint: issuer, keyType, vcVersion})) {
+        continue;
+      }
       describe(`${name}: ${keyType}`, function() {
+        let securedCredential = null;
+        let proofs = [];
+        before(async function() {
+          securedCredential = await createInitialVc({
+            issuer,
+            vcVersion,
+            vc: credential,
+            mandatoryPointers
+          });
+          if(securedCredential) {
+            proofs = Array.isArray(securedCredential.proof) ?
+              securedCredential?.proof : [securedCredential?.proof];
+            // only test proofs that match the relevant cryptosuite
+            proofs = proofs.filter(p => p?.cryptosuite === suiteName);
+          }
+        });
         beforeEach(function() {
           this.currentTest.cell = {
             rowId: this.currentTest.title,
@@ -50,6 +75,14 @@ export function ecdsaRdfc2019Algorithms({
         it('Whenever this algorithm encodes strings, it MUST use UTF-8 ' +
         'encoding. (proof.type)', async function() {
           this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#transformation-ecdsa-rdfc-2019';
+          for(const proof of proofs) {
+            expect(proof?.type).to.exist;
+            expect(proof.type).to.be.a('string');
+            expect(
+              proof.type.isWellFormed(),
+              'Expected string to be a well formed UTF string'
+            ).to.be.true;
+          }
         });
         it('If options.type is not set to the string DataIntegrityProof ' +
         'and options.cryptosuite is not set to the string ecdsa-rdfc-2019, ' +
