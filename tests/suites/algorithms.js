@@ -23,14 +23,31 @@ export function algorithmSuite({
 }
 
 export function ecdsaRdfc2019Algorithms({
+  endpoints,
   suiteName,
+  keyType,
   vcVersion
 }) {
   return describe(`${suiteName} - Algorithms - VC ${vcVersion}`, function() {
-    it('The transformation options MUST contain a type identifier for the ' +
-      'cryptographic suite (type) and a cryptosuite identifier (cryptosuite).',
-    async function() {
-      this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#transformation-ecdsa-rdfc-2019';
-    });
+    this.matrix = true;
+    this.report = true;
+    this.implemented = [...endpoints];
+    this.rowLabel = 'Test Name';
+    this.columnLabel = 'Implementation';
+    for(const [name, {endpoints: issuers}] of endpoints) {
+      describe(`${name}: ${keyType}`, function() {
+        beforeEach(function() {
+          this.currentTest.cell = {
+            rowId: this.currentTest.title,
+            columnId: this.currentTest.parent.title
+          };
+        });
+        it('The transformation options MUST contain a type identifier for ' +
+        'the cryptographic suite (type) and a cryptosuite identifier ' +
+          '(cryptosuite).', async function() {
+          this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#transformation-ecdsa-rdfc-2019';
+        });
+      });
+    }
   });
 }
