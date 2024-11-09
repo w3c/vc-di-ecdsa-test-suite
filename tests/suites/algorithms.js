@@ -8,7 +8,6 @@ import {
   issueCloned
 } from 'data-integrity-test-suite-assertion';
 import {createInitialVc, endpointCheck} from '../helpers.js';
-import {expect} from 'chai';
 import {localVerifier} from '../vc-verifier/index.js';
 
 export function commonAlgorithms({
@@ -83,7 +82,7 @@ export function ecdsaRdfc2019Algorithms({
   keyType,
   suiteName,
   vcVersion,
-  suite = _suite
+  setup = _setup
 }) {
   return describe(`${suiteName} - Algorithms - VC ${vcVersion}`, function() {
     this.matrix = true;
@@ -183,8 +182,18 @@ export function ecdsaRdfc2019Algorithms({
   });
 }
 
-async function _suite({
-
+async function _setup({
+  credential,
+  mandatoryPointers,
+  selectivePointers,
+  suiteName,
+  keyType
 }) {
+  const {
+    invalidProofType,
+    invalidCryptosuite
+  } = generators?.mandatory;
+  const credentials = new Map();
+  const {invalidCreated} = generators?.dates;
 
 }
