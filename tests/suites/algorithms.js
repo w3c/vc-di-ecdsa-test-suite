@@ -207,20 +207,55 @@ async function _setup({
       mandatoryPointers
     })
   })));
+  credentials.set('noTypeOrCryptosuite',
+    await issueCloned(_generateNoTypeCryptosuite({
+      signer,
+      suiteName,
+      credential,
+      mandatoryPointers,
+      selectivePointers
+    })));
   return credentials;
 }
 
 async function _generateNoTypeCryptosuite({
   signer,
+  suiteName,
   credential,
   mandatoryPointers,
   selectivePointers
 }) {
+  const {suite, selectiveSuite} = getSuites({
+    signer,
+    suiteName,
+    selectivePointers,
+    mandatoryPointers
+  });
   const {
     invalidProofType,
     invalidCryptosuite
   } = generators?.mandatory;
   const noType = invalidProofType({
+    credential: structuredClone(credential),
+    suite: stubUnsafe(suite),
+    selectiveSuite: stubUnsafe(selectiveSuite),
+    proofType: ''
+  });
+  return invalidCryptosuite({...noType, cryptosuiteName: ''});
+}
 
+function stubUnsafe(suite) {
+  if(typeof suite !== 'object') {
+    return suite;
+  }
+  return new Proxy(suite, {
+    get(target, prop) {
+      if(prop === 'canonize') {
+        return function(doc, options) {
+          return suite.canonize(doc, {...options, safe: false});
+        };
+      }
+      return Reflect.get(...arguments);
+    }
   });
 }
