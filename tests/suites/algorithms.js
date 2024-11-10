@@ -248,6 +248,18 @@ function stubUnsafe(suite) {
   if(typeof suite !== 'object') {
     return suite;
   }
+  // if the suite has a cryptosuite object proxy it
+  if(suite._cryptosuite) {
+    suite._cryptosuite = new Proxy(suite._cryptosuite, {
+      get(target, prop) {
+        if(prop === 'canonize') {
+          return function(doc, options) {
+            return suite._cryptosuite.canonize(doc, {...options, safe: false});
+          };
+        }
+      }
+    });
+  }
   return new Proxy(suite, {
     get(target, prop) {
       if(prop === 'canonize') {
