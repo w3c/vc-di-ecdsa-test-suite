@@ -211,14 +211,14 @@ async function _setup({
     await issueCloned(_generateNoTypeCryptosuite({
       signer,
       suiteName,
-      credential,
+      credential: _credential,
       mandatoryPointers,
       selectivePointers
     })));
   return credentials;
 }
 
-async function _generateNoTypeCryptosuite({
+function _generateNoTypeCryptosuite({
   signer,
   suiteName,
   credential,
