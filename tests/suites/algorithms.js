@@ -8,6 +8,8 @@ import {
   issueCloned
 } from 'data-integrity-test-suite-assertion';
 import {createInitialVc, endpointCheck} from '../helpers.js';
+import {getMultiKey} from '../vc-generator/key-gen.js';
+import {getSuites} from './helpers.js';
 import {localVerifier} from '../vc-verifier/index.js';
 
 export function commonAlgorithms({
@@ -189,11 +191,36 @@ async function _setup({
   suiteName,
   keyType
 }) {
+  // stub suite canonize via Proxy cryptosuite.canonize and set safe to false
+  const credentials = new Map();
+  const keyPair = await getMultiKey({keyType});
+  const signer = keyPair.signer();
+  const _credential = structuredClone(credential);
+  _credential.issuer = keyPair.controller;
+  const {invalidCreated} = generators?.dates;
+  credentials.set('invalidCreated', await issueCloned(invalidCreated({
+    credential: structuredClone(_credential),
+    ...getSuites({
+      signer,
+      suiteName,
+      selectivePointers,
+      mandatoryPointers
+    })
+  })));
+  return credentials;
+}
+
+async function _generateNoTypeCryptosuite({
+  signer,
+  credential,
+  mandatoryPointers,
+  selectivePointers
+}) {
   const {
     invalidProofType,
     invalidCryptosuite
   } = generators?.mandatory;
-  const credentials = new Map();
-  const {invalidCreated} = generators?.dates;
+  const noType = invalidProofType({
 
+  });
 }
