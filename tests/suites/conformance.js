@@ -7,9 +7,8 @@ import {
   generators,
   issueCloned
 } from 'data-integrity-test-suite-assertion';
-import {DataIntegrityProof} from '@digitalbazaar/data-integrity';
 import {getMultiKey} from '../vc-generator/key-gen.js';
-import {getSuite} from '../vc-generator/cryptosuites.js';
+import {getSuites} from './helpers.js';
 
 export function conformanceSuite({
   verifiers,
@@ -101,7 +100,7 @@ async function _setup({
   // invalid cryptosuite name invalidCryptosuite
   credentials.set('invalid cryptosuite', await issueCloned(invalidCryptosuite({
     credential: structuredClone(_credential),
-    ..._getSuites({
+    ...getSuites({
       signer,
       suiteName,
       selectivePointers,
@@ -110,7 +109,7 @@ async function _setup({
   })));
   credentials.set('invalid VerificationMethod', await issueCloned(invalidVm({
     credential: structuredClone(_credential),
-    ..._getSuites({
+    ...getSuites({
       signer,
       suiteName,
       selectivePointers,
@@ -119,7 +118,7 @@ async function _setup({
   })));
   credentials.set('invalid Proof Type', await issueCloned(invalidProofType({
     credential: structuredClone(_credential),
-    ..._getSuites({
+    ...getSuites({
       signer,
       suiteName,
       selectivePointers,
@@ -127,31 +126,4 @@ async function _setup({
     })
   })));
   return credentials;
-}
-
-function _getSuites({
-  signer,
-  suiteName,
-  mandatoryPointers,
-  selectivePointers
-}) {
-  const suites = {
-    suite: new DataIntegrityProof({
-      signer,
-      cryptosuite: getSuite({
-        suite: suiteName,
-        mandatoryPointers
-      })
-    })
-  };
-  if(selectivePointers) {
-    suites.selectiveSuite = new DataIntegrityProof({
-      signer,
-      cryptosuite: getSuite({
-        suite: suiteName,
-        selectivePointers
-      })
-    });
-  }
-  return suites;
 }
