@@ -87,7 +87,7 @@ export function ecdsaRdfc2019Algorithms({
   verifiers,
   mandatoryPointers,
   selectivePointers,
-  keyType,
+  keyTypes,
   suiteName,
   vcVersion,
   setup = _setup
@@ -98,95 +98,106 @@ export function ecdsaRdfc2019Algorithms({
     this.implemented = [];
     this.rowLabel = 'Test Name';
     this.columnLabel = 'Implementation';
-    let credentials = new Map();
+    const credentials = new Map(keyTypes.map(kt => [kt, null]));
     before(async function() {
-      credentials = await setup({
-        suiteName,
-        keyType,
-        credential,
-        mandatoryPointers,
-        selectivePointers
-      });
+      for(const keyType of keyTypes) {
+        credentials.set(keyType, await setup({
+          suiteName,
+          keyType,
+          credential,
+          mandatoryPointers,
+          selectivePointers
+        }));
+      }
     });
     for(const [name, {endpoints}] of verifiers) {
       const [verifier] = endpoints;
-      this.implemented.push(`${name}: ${keyType}`);
-      describe(`${name}: ${keyType}`, function() {
-        beforeEach(function() {
-          this.currentTest.cell = {
-            rowId: this.currentTest.title,
-            columnId: this.currentTest.parent.title
-          };
-        });
-        it('The transformation options MUST contain a type identifier for ' +
-        'the cryptographic suite (type) and a cryptosuite identifier ' +
-          '(cryptosuite).', async function() {
-          this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#transformation-ecdsa-rdfc-2019';
-          await assertions.verificationFail({
-            verifier,
-            credentials: credentials.get('noTypeOrCryptosuite'),
-            reason: 'Should not verify VC w/ no type or cryptosuite identifier'
+      for(const keyType of keyTypes) {
+        this.implemented.push(`${name}: ${keyType}`);
+        describe(`${name}: ${keyType}`, function() {
+          beforeEach(function() {
+            this.currentTest.cell = {
+              rowId: this.currentTest.title,
+              columnId: this.currentTest.parent.title
+            };
+          });
+          it('The transformation options MUST contain a type identifier for ' +
+          'the cryptographic suite (type) and a cryptosuite identifier ' +
+            '(cryptosuite).', async function() {
+            this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#transformation-ecdsa-rdfc-2019';
+            await assertions.verificationFail({
+              verifier,
+              credentials: credentials.get('noTypeOrCryptosuite'),
+              reason: 'Should not verify VC w/ no type or cryptosuite ' +
+              'identifier'
+            });
+          });
+          it('Whenever this algorithm encodes strings, it MUST use UTF-8 ' +
+          'encoding. (proof.type)', async function() {
+            this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#transformation-ecdsa-rdfc-2019';
+            await assertions.verificationFail({
+              verifier,
+              credentials: credentials.get('notUTF8'),
+              reason: 'Should not verify VC w/ non UTF-8 encoding'
+            });
+          });
+          it('If options.type is not set to the string DataIntegrityProof ' +
+          'and options.cryptosuite is not set to the string ecdsa-rdfc-2019, ' +
+          'an error MUST be raised ', async function() {
+            this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#transformation-ecdsa-rdfc-2019:~:text=If%20options.type%20is%20not%20set%20to%20the%20string%20DataIntegrityProof%20and%20options.cryptosuite%20is%20not%20set%20to%20the%20string%20ecdsa%2Drdfc%2D2019%2C%20an%20error%20MUST%20be%20raised';
+            await assertions.verificationFail({
+              verifier,
+              credentials: credentials.get('noTypeOrCryptosuite'),
+              reason: 'Should not verify VC w/ no type or cryptosuite ' +
+              'identifier'
+            });
+          });
+          it('The proof options MUST contain a type identifier for the ' +
+          'cryptographic suite (type) and MUST contain a cryptosuite ' +
+          'identifier (cryptosuite).', async function() {
+            this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#proof-configuration-ecdsa-rdfc-2019';
+            await assertions.verificationFail({
+              verifier,
+              credentials: credentials.get('noTypeOrCryptosuite'),
+              reason: 'Should not verify VC w/ no type or cryptosuite ' +
+              'identifier'
+            });
+          });
+          it('If proofConfig.type is not set to DataIntegrityProof and/or ' +
+          'proofConfig.cryptosuite is not set to ecdsa-rdfc-2019, an error ' +
+          'MUST be raised', async function() {
+            this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#proof-configuration-ecdsa-rdfc-2019:~:text=If%20proofConfig.type%20is%20not%20set%20to%20DataIntegrityProof%20and/or%20proofConfig.cryptosuite%20is%20not%20set%20to%20ecdsa%2Drdfc%2D2019%2C%20an%20error%20MUST%20be%20raised';
+            await assertions.verificationFail({
+              verifier,
+              credentials: credentials.get('noTypeOrCryptosuite'),
+              reason: 'Should not verify VC w/ no type or cryptosuite ' +
+              'identifier'
+            });
+          });
+          it('If proofConfig.created is set and if the value is not a valid ' +
+          '[XMLSCHEMA11-2] datetime, an error MUST be raised',
+          async function() {
+            this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#proof-configuration-ecdsa-rdfc-2019';
+            await assertions.verificationFail({
+              verifier,
+              credentials: credentials.get('invalidCreated'),
+              reason: 'Should not verify VC w/ invalid "proof.created"'
+            });
+          });
+          it('The proof options MUST contain a type identifier for the ' +
+          'cryptographic suite (type) and MAY contain a cryptosuite ' +
+          'identifier (cryptosuite).', async function() {
+            this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#proof-serialization-ecdsa-rdfc-2019';
+            await assertions.verificationFail({
+              verifier,
+              credentials: credentials.get('noTypeOrCryptosuite'),
+              reason: 'Should not verify VC w/ no type or cryptosuite ' +
+              'identifier'
+            });
           });
         });
-        it('Whenever this algorithm encodes strings, it MUST use UTF-8 ' +
-        'encoding. (proof.type)', async function() {
-          this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#transformation-ecdsa-rdfc-2019';
-          await assertions.verificationFail({
-            verifier,
-            credentials: credentials.get('notUTF8'),
-            reason: 'Should not verify VC w/ non UTF-8 encoding'
-          });
-        });
-        it('If options.type is not set to the string DataIntegrityProof ' +
-        'and options.cryptosuite is not set to the string ecdsa-rdfc-2019, ' +
-        'an error MUST be raised ', async function() {
-          this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#transformation-ecdsa-rdfc-2019:~:text=If%20options.type%20is%20not%20set%20to%20the%20string%20DataIntegrityProof%20and%20options.cryptosuite%20is%20not%20set%20to%20the%20string%20ecdsa%2Drdfc%2D2019%2C%20an%20error%20MUST%20be%20raised';
-          await assertions.verificationFail({
-            verifier,
-            credentials: credentials.get('noTypeOrCryptosuite'),
-            reason: 'Should not verify VC w/ no type or cryptosuite identifier'
-          });
-        });
-        it('The proof options MUST contain a type identifier for the ' +
-        'cryptographic suite (type) and MUST contain a cryptosuite ' +
-        'identifier (cryptosuite).', async function() {
-          this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#proof-configuration-ecdsa-rdfc-2019';
-          await assertions.verificationFail({
-            verifier,
-            credentials: credentials.get('noTypeOrCryptosuite'),
-            reason: 'Should not verify VC w/ no type or cryptosuite identifier'
-          });
-        });
-        it('If proofConfig.type is not set to DataIntegrityProof and/or ' +
-        'proofConfig.cryptosuite is not set to ecdsa-rdfc-2019, an error ' +
-        'MUST be raised', async function() {
-          this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#proof-configuration-ecdsa-rdfc-2019:~:text=If%20proofConfig.type%20is%20not%20set%20to%20DataIntegrityProof%20and/or%20proofConfig.cryptosuite%20is%20not%20set%20to%20ecdsa%2Drdfc%2D2019%2C%20an%20error%20MUST%20be%20raised';
-          await assertions.verificationFail({
-            verifier,
-            credentials: credentials.get('noTypeOrCryptosuite'),
-            reason: 'Should not verify VC w/ no type or cryptosuite identifier'
-          });
-        });
-        it('If proofConfig.created is set and if the value is not a valid ' +
-        '[XMLSCHEMA11-2] datetime, an error MUST be raised', async function() {
-          this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#proof-configuration-ecdsa-rdfc-2019';
-          await assertions.verificationFail({
-            verifier,
-            credentials: credentials.get('invalidCreated'),
-            reason: 'Should not verify VC w/ invalid "proof.created"'
-          });
-        });
-        it('The proof options MUST contain a type identifier for the ' +
-        'cryptographic suite (type) and MAY contain a cryptosuite ' +
-        'identifier (cryptosuite).', async function() {
-          this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#proof-serialization-ecdsa-rdfc-2019';
-          await assertions.verificationFail({
-            verifier,
-            credentials: credentials.get('noTypeOrCryptosuite'),
-            reason: 'Should not verify VC w/ no type or cryptosuite identifier'
-          });
-        });
-      });
+
+      }
     }
   });
 }

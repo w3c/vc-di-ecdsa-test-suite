@@ -22,16 +22,14 @@ for(const suiteName of cryptosuites) {
       mandatoryPointers,
       selectivePointers
     } = credentials.create[vcVersion];
-    for(const keyType of vectors.keyTypes) {
-      ecdsaRdfc2019Algorithms({
-        verifiers,
-        suiteName,
-        keyType,
-        vcVersion,
-        credential: document,
-        mandatoryPointers,
-        selectivePointers
-      });
-    }
+    ecdsaRdfc2019Algorithms({
+      verifiers,
+      suiteName,
+      keyTypes: vectors.keyTypes,
+      vcVersion,
+      credential: document,
+      mandatoryPointers,
+      selectivePointers
+    });
   }
 }
