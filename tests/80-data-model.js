@@ -24,16 +24,14 @@ for(const suiteName of cryptosuites) {
       mandatoryPointers,
       selectivePointers
     } = credentials.create[vcVersion];
-    for(const keyType of vectors.keyTypes) {
-      dataModelSuite({
-        issuers,
-        suiteName,
-        keyType,
-        vcVersion,
-        credential: document,
-        mandatoryPointers,
-        selectivePointers
-      });
-    }
+    dataModelSuite({
+      issuers,
+      suiteName,
+      keyTypes: vectors.keyTypes,
+      vcVersion,
+      credential: document,
+      mandatoryPointers,
+      selectivePointers
+    });
   }
 }
