@@ -237,14 +237,14 @@ function _generateNoTypeCryptosuite({
   } = generators?.mandatory;
   const noType = invalidProofType({
     credential: structuredClone(credential),
-    suite: stubUnsafe(suite),
-    selectiveSuite: stubUnsafe(selectiveSuite),
+    suite: unsafeProxy(suite),
+    selectiveSuite: unsafeProxy(selectiveSuite),
     proofType: ''
   });
   return invalidCryptosuite({...noType, cryptosuiteName: ''});
 }
 
-function stubUnsafe(suite) {
+function unsafeProxy(suite) {
   if(typeof suite !== 'object') {
     return suite;
   }
@@ -257,6 +257,7 @@ function stubUnsafe(suite) {
             return suite._cryptosuite.canonize(doc, {...options, safe: false});
           };
         }
+        return Reflect.get(...arguments);
       }
     });
   }
