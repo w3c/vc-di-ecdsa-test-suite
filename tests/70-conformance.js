@@ -23,16 +23,14 @@ for(const suiteName of cryptosuites) {
       mandatoryPointers,
       selectivePointers
     } = credentials.create[vcVersion];
-    for(const keyType of vectors.keyTypes) {
-      conformanceSuite({
-        verifiers,
-        suiteName,
-        keyType,
-        vcVersion,
-        credential: document,
-        mandatoryPointers,
-        selectivePointers
-      });
-    }
+    conformanceSuite({
+      verifiers,
+      suiteName,
+      keyTypes: vectors.keyTypes,
+      vcVersion,
+      credential: document,
+      mandatoryPointers,
+      selectivePointers
+    });
   }
 }
