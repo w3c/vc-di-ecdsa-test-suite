@@ -55,11 +55,11 @@ export function dataModelSuite({
         function assertBefore() {
           expect(
             securedCredential,
-            `Expected issuer ${name}: ${keyType} to issue a VC`
+            `Expected issuer ${name}: ${keyType} to issue a VC.`
           ).to.exist;
           expect(
             securedCredential,
-            'Expected VC to be an object'
+            'Expected VC to be an object.'
           ).to.be.an('object');
         }
         it('The publicKeyMultibase value of the verification method MUST ' +
