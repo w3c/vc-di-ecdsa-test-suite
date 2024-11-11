@@ -64,7 +64,7 @@ export function dataModelSuite({
         }
         it('The publicKeyMultibase value of the verification method MUST ' +
           'start with the base-58-btc prefix (z), as defined in the ' +
-          'Multibase section of Controller Documents 1.0. A ',
+          'Multibase section of Controller Documents 1.0. ',
         async function() {
           this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#data-model:~:text=The%20publicKeyMultibase%20value%20of%20the%20verification%20method%20MUST%20start%20with%20the%20base%2D58%2Dbtc%20prefix%20(z)%2C%20as%20defined%20in%20the%20Multibase%20section%20of%20Controller%20Documents%201.0.';
           assertBefore();
