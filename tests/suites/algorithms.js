@@ -38,6 +38,12 @@ export function commonAlgorithms({
           mandatoryPointers
         });
       });
+      beforeEach(function() {
+        this.currentTest.cell = {
+          rowId: this.currentTest.title,
+          columnId: this.currentTest.parent.title
+        };
+      });
       it('When generating ECDSA signatures, the signature value MUST be ' +
         'expressed according to section 7 of [RFC4754] (sometimes referred ' +
         'to as the IEEE P1363 format) and encoded according to the specific ' +
@@ -254,7 +260,7 @@ function unsafeProxy(suite) {
       get(target, prop) {
         if(prop === 'canonize') {
           return function(doc, options) {
-            return suite._cryptosuite.canonize(doc, {...options, safe: false});
+            return target.canonize(doc, {...options, safe: false});
           };
         }
         return Reflect.get(...arguments);
@@ -265,7 +271,7 @@ function unsafeProxy(suite) {
     get(target, prop) {
       if(prop === 'canonize') {
         return function(doc, options) {
-          return suite.canonize(doc, {...options, safe: false});
+          return target.canonize(doc, {...options, safe: false});
         };
       }
       return Reflect.get(...arguments);
