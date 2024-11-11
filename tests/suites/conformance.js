@@ -41,7 +41,7 @@ export function conformanceSuite({
     for(const [name, {endpoints}] of verifiers) {
       const [verifier] = endpoints;
       for(const keyType of keyTypes) {
-      // add implementer name and keyType to test report
+        // add implementer name and keyType to test report
         this.implemented.push(`${name}: ${keyType}`);
         describe(`${name}: ${keyType}`, function() {
           beforeEach(function() {

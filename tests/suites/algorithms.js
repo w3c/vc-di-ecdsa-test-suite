@@ -95,7 +95,7 @@ export function ecdsaRdfc2019Algorithms({
   return describe(`${suiteName} - Algorithms - VC ${vcVersion}`, function() {
     this.matrix = true;
     this.report = true;
-    this.implemented = [...verifiers];
+    this.implemented = [];
     this.rowLabel = 'Test Name';
     this.columnLabel = 'Implementation';
     let credentials = new Map();
@@ -110,6 +110,7 @@ export function ecdsaRdfc2019Algorithms({
     });
     for(const [name, {endpoints}] of verifiers) {
       const [verifier] = endpoints;
+      this.implemented.push(`${name}: ${keyType}`);
       describe(`${name}: ${keyType}`, function() {
         beforeEach(function() {
           this.currentTest.cell = {
