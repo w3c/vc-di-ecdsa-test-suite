@@ -92,7 +92,7 @@ export function dataModelSuite({
               expect(didDoc.publicKeyMultibase).to.be.a('string');
               expect(
                 assertions.shouldBeBs58(didDoc.publicKeyMultibase),
-                'Expected "publicKeyMultibase" to be Base58 encoded'
+                'Expected "publicKeyMultibase" to be Base58 encoded.'
               ).to.be.true;
             }
           });
