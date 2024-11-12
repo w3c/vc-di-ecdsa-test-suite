@@ -282,8 +282,8 @@ export function setupRow() {
 }
 
 export function getProofs(issuedVc) {
-  // if the implementation failed to issue a VC or to sign the VC, return
-  // an empty array
+  // if the implementation failed to issue a VC or to sign the VC,
+  // return an empty array
   if(!issuedVc?.proof) {
     return [];
   }
