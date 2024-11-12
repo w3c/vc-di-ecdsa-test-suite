@@ -58,25 +58,29 @@ export function commonAlgorithms({
             });
           }
         });
-        it('For P-256 keys, the default hashing function, SHA-2 with 256 bits' +
-          'of output, MUST be used.', async function() {
-          this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#algorithms:~:text=For%20P%2D256%20keys%2C%20the%20default%20hashing%20function%2C%20SHA%2D2%20with%20256%20bits%20of%20output%2C%20MUST%20be%20used.';
-          await assertions.verificationSuccess({
-            credential: credentials.get('P-256').get('invalidHash'),
-            verifier,
-            reason: `Should not verify VC with invalid hash.`
+        if(keyTypes.includes('P-256')) {
+          it('For P-256 keys, the default hashing function, SHA-2 with 256 ' +
+            'bits of output, MUST be used.', async function() {
+            this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#algorithms:~:text=For%20P%2D256%20keys%2C%20the%20default%20hashing%20function%2C%20SHA%2D2%20with%20256%20bits%20of%20output%2C%20MUST%20be%20used.';
+            await assertions.verificationSuccess({
+              credential: credentials.get('P-256').get('invalidHash'),
+              verifier,
+              reason: `Should not verify VC with invalid hash.`
+            });
           });
-        });
-        it('For P-384 keys, SHA-2 with 384-bits of output MUST be used, ' +
-          'specified via the RDFC-1.0 implementation-specific parameter.',
-        async function() {
-          this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#algorithms:~:text=For%20P%2D384%20keys%2C%20SHA%2D2%20with%20384%2Dbits%20of%20output%20MUST%20be%20used%2C%20specified%20via%20the%20RDFC%2D1.0%20implementation%2Dspecific%20parameter.';
-          await assertions.verificationFail({
-            credential: credentials.get('P-384').get('invalidHash'),
-            verifier,
-            reason: `Should not verify VC with invalid hash.`
+        }
+        if(keyTypes.includes('P-384')) {
+          it('For P-384 keys, SHA-2 with 384-bits of output MUST be used, ' +
+            'specified via the RDFC-1.0 implementation-specific parameter.',
+          async function() {
+            this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#algorithms:~:text=For%20P%2D384%20keys%2C%20SHA%2D2%20with%20384%2Dbits%20of%20output%20MUST%20be%20used%2C%20specified%20via%20the%20RDFC%2D1.0%20implementation%2Dspecific%20parameter.';
+            await assertions.verificationFail({
+              credential: credentials.get('P-384').get('invalidHash'),
+              verifier,
+              reason: `Should not verify VC with invalid hash.`
+            });
           });
-        });
+        }
       });
     }
   });
