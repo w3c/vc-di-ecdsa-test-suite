@@ -7,79 +7,79 @@ import {
   generators,
   issueCloned
 } from 'data-integrity-test-suite-assertion';
-import {createInitialVc, endpointCheck} from '../helpers.js';
 import {getMultiKey} from '../vc-generator/key-gen.js';
 import {getSuites} from './helpers.js';
-import {localVerifier} from '../vc-verifier/index.js';
 
 export function commonAlgorithms({
   credential,
-  issuers,
+  verifiers,
   mandatoryPointers,
-  keyType,
-  cryptosuite,
+  selectivePointers,
+  keyTypes,
   suiteName,
-  vcVersion
+  vcVersion,
+  setup = _commonSetup
 }) {
-  const verifier = localVerifier({cryptosuite});
-  for(const [name, {endpoints}] of issuers) {
-    const [issuer] = endpoints;
-    // does the endpoint support this test?
-    if(!endpointCheck({endpoint: issuer, keyType, vcVersion})) {
-      continue;
-    }
-    describe(`${name}: ${keyType}`, function() {
-      let securedCredential = null;
-      before(async function() {
-        securedCredential = await createInitialVc({
-          issuer,
-          vcVersion,
-          vc: credential,
-          mandatoryPointers
+  const title = `${suiteName} - Algorithms Common - VC ${vcVersion}`;
+  return describe(title, function() {
+    const credentials = new Map(keyTypes.map(keyType => [keyType, null]));
+    before(async function() {
+      for(const keyType of keyTypes) {
+        credentials.set(keyType, await setup({
+          credential,
+          verifiers,
+          mandatoryPointers,
+          selectivePointers,
+          keyType,
+          suiteName,
+          vcVersion
+        }));
+      }
+    });
+    for(const [name, {endpoints}] of verifiers) {
+      const [verifier] = endpoints;
+      describe(`${name}`, function() {
+        beforeEach(function() {
+          this.currentTest.cell = {
+            rowId: this.currentTest.title,
+            columnId: this.currentTest.parent.title
+          };
         });
-      });
-      beforeEach(function() {
-        this.currentTest.cell = {
-          rowId: this.currentTest.title,
-          columnId: this.currentTest.parent.title
-        };
-      });
-      it('When generating ECDSA signatures, the signature value MUST be ' +
-        'expressed according to section 7 of [RFC4754] (sometimes referred ' +
-        'to as the IEEE P1363 format) and encoded according to the specific ' +
-        'cryptosuite proof generation algorithm.', async function() {
-        this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#algorithms:~:text=When%20generating%20ECDSA%20signatures%2C%20the%20signature%20value%20MUST%20be%20expressed%20according%20to%20section%207%20of%20%5BRFC4754%5D%20(sometimes%20referred%20to%20as%20the%20IEEE%20P1363%20format)%20and%20encoded%20according%20to%20the%20specific%20cryptosuite%20proof%20generation%20algorithm';
-        await assertions.verificationSuccess({
-          credential: securedCredential,
-          verifier,
-          reason: `Should verify VC signed with ${suiteName} ${keyType}`
+        it('When generating ECDSA signatures, the signature value MUST be ' +
+          'expressed according to section 7 of [RFC4754] (sometimes referred ' +
+          'to as the IEEE P1363 format) and encoded according to the ' +
+          'specific cryptosuite proof generation algorithm.', async function() {
+          this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#algorithms:~:text=When%20generating%20ECDSA%20signatures%2C%20the%20signature%20value%20MUST%20be%20expressed%20according%20to%20section%207%20of%20%5BRFC4754%5D%20(sometimes%20referred%20to%20as%20the%20IEEE%20P1363%20format)%20and%20encoded%20according%20to%20the%20specific%20cryptosuite%20proof%20generation%20algorithm';
+          for(const [keyType, fixtures] of credentials) {
+            await assertions.verificationSuccess({
+              credential: fixtures.get('invalidHash'),
+              verifier,
+              reason: `Should not verify VC signed w/ ${keyType} & invalidHash.`
+            });
+          }
         });
-      });
-      if(keyType === 'P-256') {
         it('For P-256 keys, the default hashing function, SHA-2 with 256 bits' +
           'of output, MUST be used.', async function() {
           this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#algorithms:~:text=For%20P%2D256%20keys%2C%20the%20default%20hashing%20function%2C%20SHA%2D2%20with%20256%20bits%20of%20output%2C%20MUST%20be%20used.';
           await assertions.verificationSuccess({
-            credential: securedCredential,
+            credential: credentials.get('P-256').get('invalidHash'),
             verifier,
-            reason: `Should verify VC signed with ${suiteName} ${keyType}`
+            reason: `Should not verify VC with invalid hash.`
           });
         });
-      }
-      if(keyType === 'P-384') {
         it('For P-384 keys, SHA-2 with 384-bits of output MUST be used, ' +
           'specified via the RDFC-1.0 implementation-specific parameter.',
         async function() {
           this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#algorithms:~:text=For%20P%2D384%20keys%2C%20SHA%2D2%20with%20384%2Dbits%20of%20output%20MUST%20be%20used%2C%20specified%20via%20the%20RDFC%2D1.0%20implementation%2Dspecific%20parameter.';
-          await assertions.verificationSuccess({
-            credential: securedCredential,
+          await assertions.verificationFail({
+            credential: credentials.get('P-384').get('invalidHash'),
             verifier,
-            reason: `Should verify VC signed with ${suiteName} ${keyType}`
+            reason: `Should not verify VC with invalid hash.`
           });
         });
-      }
-    });
-  }
+      });
+    }
+  });
 }
 
 export function ecdsaRdfc2019Algorithms({
@@ -289,4 +289,8 @@ function unsafeProxy(suite) {
       return Reflect.get(...arguments);
     }
   });
+}
+
+function _commonSetup({}) {
+
 }
