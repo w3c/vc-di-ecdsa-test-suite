@@ -16,7 +16,7 @@ import chai from 'chai';
 import {endpoints} from 'vc-test-suite-implementations';
 
 export function ecdsaJcs2019Algorithms() {
-  const cryptosuite = 'ecdsa-jcs-2022';
+  const cryptosuite = 'ecdsa-jcs-2019';
   const {tags} = config.suites[
     cryptosuite
   ];
