@@ -7,10 +7,11 @@ import {
   createInitialVc,
   createValidCredential,
   getProofs,
+  isValidDatetime,
+  isValidUtf8,
   setupMatrix,
   setupRow
 } from '../helpers.js';
-import {isValidDatetime, isValidUtf8} from '../helpers.js';
 import chai from 'chai';
 import {endpoints} from 'vc-test-suite-implementations';
 
