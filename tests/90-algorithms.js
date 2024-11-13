@@ -2,7 +2,10 @@
  * Copyright 2024 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
-import {ecdsaRdfc2019Algorithms} from './suites/algorithms.js';
+import {
+  commonAlgorithms,
+  ecdsaRdfc2019Algorithms
+} from './suites/algorithms.js';
 import {endpoints} from 'vc-test-suite-implementations';
 import {getSuiteConfig} from './test-config.js';
 
@@ -22,16 +25,23 @@ for(const suiteName of cryptosuites) {
       mandatoryPointers,
       selectivePointers
     } = credentials.create[vcVersion];
-    for(const keyType of vectors.keyTypes) {
-      ecdsaRdfc2019Algorithms({
-        verifiers,
-        suiteName,
-        keyType,
-        vcVersion,
-        credential: document,
-        mandatoryPointers,
-        selectivePointers
-      });
-    }
+    ecdsaRdfc2019Algorithms({
+      verifiers,
+      suiteName,
+      keyTypes: vectors.keyTypes,
+      vcVersion,
+      credential: document,
+      mandatoryPointers,
+      selectivePointers
+    });
+    commonAlgorithms({
+      verifiers,
+      suiteName,
+      keyTypes: vectors.keyTypes,
+      vcVersion,
+      credential: document,
+      mandatoryPointers,
+      selectivePointers
+    });
   }
 }
