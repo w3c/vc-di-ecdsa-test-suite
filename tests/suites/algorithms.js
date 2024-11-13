@@ -52,7 +52,7 @@ export function commonAlgorithms({
           'specific cryptosuite proof generation algorithm.', async function() {
           this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#algorithms:~:text=When%20generating%20ECDSA%20signatures%2C%20the%20signature%20value%20MUST%20be%20expressed%20according%20to%20section%207%20of%20%5BRFC4754%5D%20(sometimes%20referred%20to%20as%20the%20IEEE%20P1363%20format)%20and%20encoded%20according%20to%20the%20specific%20cryptosuite%20proof%20generation%20algorithm';
           for(const [keyType, fixtures] of credentials) {
-            await assertions.verificationSuccess({
+            await assertions.verificationFail({
               credential: fixtures.get('invalidHash'),
               verifier,
               reason: `Should not verify VC signed w/ ${keyType} & invalidHash.`
@@ -63,7 +63,7 @@ export function commonAlgorithms({
           it('For P-256 keys, the default hashing function, SHA-2 with 256 ' +
             'bits of output, MUST be used.', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#algorithms:~:text=For%20P%2D256%20keys%2C%20the%20default%20hashing%20function%2C%20SHA%2D2%20with%20256%20bits%20of%20output%2C%20MUST%20be%20used.';
-            await assertions.verificationSuccess({
+            await assertions.verificationFail({
               credential: credentials.get('P-256').get('invalidHash'),
               verifier,
               reason: `Should not verify VC with invalid hash.`
@@ -316,14 +316,19 @@ async function _commonSetup({
   });
   credentials.set('invalidHash', await issueCloned({
     credential: _credential,
-    suite: invalidHashProxy({suite, suiteName}),
-    selectiveSuite: invalidHashProxy({suite: selectiveSuite, suiteName})
+    suite: invalidHashProxy({suite, suiteName, keyType}),
+    selectiveSuite: invalidHashProxy({
+      suite: selectiveSuite,
+      suiteName,
+      keyType
+    })
   }));
   return credentials;
 }
 
 function invalidHashProxy({
   suiteName,
+  keyType,
   suite,
 }) {
   if(typeof suite !== 'object') {
@@ -340,8 +345,7 @@ function invalidHashProxy({
             cryptosuite, document, proof,
             documentLoader, dataIntegrityProof
           } = {}) {
-            const algorithm = 'SHA-512';
-
+            const algorithm = (keyType === 'P-256') ? 'sha384' : 'sha256';
             const c14nOptions = {
               documentLoader,
               safe: true,
@@ -355,13 +359,13 @@ function invalidHashProxy({
               // canonize and hash proof
               _canonizeProof(proof, {
                 document, cryptosuite, dataIntegrityProof, c14nOptions
-              }).then(c14nProofOptions => sha512({
+              }).then(c14nProofOptions => sha({
                 algorithm,
                 string: c14nProofOptions
               })),
               // canonize and hash document
               cryptosuite.canonize(document, c14nOptions).then(
-                c14nDocument => sha512({algorithm, string: c14nDocument}))
+                c14nDocument => sha({algorithm, string: c14nDocument}))
             ]);
             // concatenate hash of c14n proof options and hash of c14n document
             return _concat(proofHash, docHash);
@@ -381,8 +385,8 @@ function _concat(b1, b2) {
   return rval;
 }
 
-export async function sha512({string}) {
-  return new Uint8Array(crypto.createHash('sha512').update(string).digest());
+export async function sha({algorithm, string}) {
+  return new Uint8Array(crypto.createHash(algorithm).update(string).digest());
 }
 
 async function _canonizeProof(proof, {
