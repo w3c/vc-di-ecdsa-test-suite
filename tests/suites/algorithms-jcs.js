@@ -24,14 +24,11 @@ export function ecdsaJcs2019Algorithms() {
     tags: [...tags],
     property: 'issuers'
   });
-  // const {verifierMatch} = endpoints.filterByTag({
-  //   tags: [...tags],
-  //   property: 'verifiers'
-  // });
   const should = chai.should();
 
   describe('ecdsa-jcs-2019 - Algorithms - Transformation', function() {
     setupReportableTestSuite(this);
+    this.implemented = [...issuers.keys()];
     let validCredential;
     before(async function() {
       validCredential = await createValidCredential();
@@ -109,6 +106,7 @@ export function ecdsaJcs2019Algorithms() {
 
   describe('ecdsa-jcs-2019 - Algorithms - Proof Configuration', function() {
     setupReportableTestSuite(this);
+    this.implemented = [...issuers.keys()];
     let validCredential;
     before(async function() {
       validCredential = await createValidCredential();
@@ -186,6 +184,7 @@ export function ecdsaJcs2019Algorithms() {
 
   describe('ecdsa-jcs-2019 - Algorithms - Transformation', function() {
     setupReportableTestSuite(this);
+    this.implemented = [...issuers.keys()];
     let validCredential;
     before(async function() {
       validCredential = await createValidCredential();
