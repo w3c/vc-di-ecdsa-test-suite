@@ -8,7 +8,7 @@
         "P-384": 96
       },
       "interop": {
-        "vcVersion": "1.1"
+        "vcVersion": "2.0"
       }
     },
     "ecdsa-sd-2023": {
