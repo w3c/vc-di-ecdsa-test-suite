@@ -38,12 +38,12 @@ export function ecdsaJcs2019Algorithms() {
         const [issuer] = endpoints;
         let issuedVc;
         let proofs;
-        let ecdsa2022Proofs = [];
+        let jcs2019Proofs = [];
         before(async function() {
           issuedVc = await createInitialVc({issuer, vc: validCredential});
           proofs = getProofs(issuedVc);
           if(proofs?.length) {
-            ecdsa2022Proofs = proofs.filter(
+            jcs2019Proofs = proofs.filter(
               proof => proof?.cryptosuite === cryptosuite);
           }
         });
@@ -52,7 +52,7 @@ export function ecdsaJcs2019Algorithms() {
           should.exist(issuedVc, 'Expected issuer to have issued a ' +
                       'credential.');
           should.exist(proofs, 'Expected credential to have a proof.');
-          ecdsa2022Proofs.length.should.be.gte(1, 'Expected at least one ' +
+          jcs2019Proofs.length.should.be.gte(1, 'Expected at least one ' +
                       'ecdsa-jcs-2019 cryptosuite.');
         };
         it('The transformation options MUST contain a type identifier ' +
@@ -61,7 +61,7 @@ export function ecdsaJcs2019Algorithms() {
         async function() {
           this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#transformation-ecdsa-jcs-2019';
           assertBefore();
-          for(const proof of ecdsa2022Proofs) {
+          for(const proof of jcs2019Proofs) {
             should.exist(proof.type, 'Expected a type identifier on ' +
                               'the proof.');
             should.exist(proof.cryptosuite,
@@ -73,7 +73,7 @@ export function ecdsaJcs2019Algorithms() {
         async function() {
           this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#transformation-ecdsa-jcs-2019';
           assertBefore();
-          for(const proof of ecdsa2022Proofs) {
+          for(const proof of jcs2019Proofs) {
             should.exist(proof?.proofValue,
               'Expected proofValue to exist.');
             isValidUtf8(proof.proofValue).should.equal(
@@ -89,7 +89,7 @@ export function ecdsaJcs2019Algorithms() {
         async function() {
           this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#transformation-ecdsa-jcs-2019';
           assertBefore();
-          for(const proof of ecdsa2022Proofs) {
+          for(const proof of jcs2019Proofs) {
             should.exist(proof.type,
               'Expected a type identifier on the proof.');
             should.exist(proof.cryptosuite,
@@ -116,12 +116,12 @@ export function ecdsaJcs2019Algorithms() {
         const [issuer] = endpoints;
         let issuedVc;
         let proofs;
-        let ecdsa2022Proofs = [];
+        let jcs2019Proofs = [];
         before(async function() {
           issuedVc = await createInitialVc({issuer, vc: validCredential});
           proofs = getProofs(issuedVc);
           if(proofs?.length) {
-            ecdsa2022Proofs = proofs.filter(
+            jcs2019Proofs = proofs.filter(
               proof => proof?.cryptosuite === cryptosuite);
           }
         });
@@ -130,7 +130,7 @@ export function ecdsaJcs2019Algorithms() {
           should.exist(issuedVc, 'Expected issuer to have issued a ' +
                       'credential.');
           should.exist(proofs, 'Expected credential to have a proof.');
-          ecdsa2022Proofs.length.should.be.gte(1, 'Expected at least one ' +
+          jcs2019Proofs.length.should.be.gte(1, 'Expected at least one ' +
                       'ecdsa-jcs-2019 cryptosuite.');
         };
         it('The proof options MUST contain a type identifier for the ' +
@@ -139,7 +139,7 @@ export function ecdsaJcs2019Algorithms() {
         async function() {
           this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-jcs-2019';
           assertBefore();
-          for(const proof of ecdsa2022Proofs) {
+          for(const proof of jcs2019Proofs) {
             should.exist(proof.type,
               'Expected a type identifier on the proof.');
             should.exist(proof.cryptosuite,
@@ -153,7 +153,7 @@ export function ecdsaJcs2019Algorithms() {
         async function() {
           this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-jcs-2019';
           assertBefore();
-          for(const proof of ecdsa2022Proofs) {
+          for(const proof of jcs2019Proofs) {
             should.exist(proof.type,
               'Expected a type identifier on the proof.');
             should.exist(proof.cryptosuite,
@@ -169,7 +169,7 @@ export function ecdsaJcs2019Algorithms() {
           'SHOULD convey an error type of PROOF_GENERATION_ERROR.',
         async function() {
           this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-jcs-2019';
-          for(const proof of ecdsa2022Proofs) {
+          for(const proof of jcs2019Proofs) {
             if(proof?.created) {
               isValidDatetime(proof.created).should.equal(
                 true,
@@ -194,12 +194,12 @@ export function ecdsaJcs2019Algorithms() {
         const [issuer] = endpoints;
         let issuedVc;
         let proofs;
-        let ecdsa2022Proofs = [];
+        let jcs2019Proofs = [];
         before(async function() {
           issuedVc = await createInitialVc({issuer, vc: validCredential});
           proofs = getProofs(issuedVc);
           if(proofs?.length) {
-            ecdsa2022Proofs = proofs.filter(
+            jcs2019Proofs = proofs.filter(
               proof => proof?.cryptosuite === cryptosuite);
           }
         });
@@ -208,7 +208,7 @@ export function ecdsaJcs2019Algorithms() {
           should.exist(issuedVc, 'Expected issuer to have issued a ' +
                       'credential.');
           should.exist(proofs, 'Expected credential to have a proof.');
-          ecdsa2022Proofs.length.should.be.gte(1, 'Expected at least one ' +
+          jcs2019Proofs.length.should.be.gte(1, 'Expected at least one ' +
                       'ecdsa-jcs-2019 cryptosuite.');
         };
         it('The proof options MUST contain a type identifier for the ' +
@@ -217,7 +217,7 @@ export function ecdsaJcs2019Algorithms() {
         async function() {
           this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-serialization-ecdsa-jcs-2019';
           assertBefore();
-          for(const proof of ecdsa2022Proofs) {
+          for(const proof of jcs2019Proofs) {
             should.exist(proof.type,
               'Expected a type identifier on the proof.');
           }
