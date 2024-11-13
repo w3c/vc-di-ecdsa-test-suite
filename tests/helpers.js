@@ -91,7 +91,7 @@ export const createDisclosedVc = async ({
 export const endpointCheck = ({endpoint, vcVersion, keyType}) => {
   const {
     supportedEcdsaKeyTypes,
-    // assume support for vc 1.1
+    // assume support for vc 2.0
     supports = {vc: ['2.0']}
   } = endpoint.settings;
   // if an issuer does not support the current keyType skip it
