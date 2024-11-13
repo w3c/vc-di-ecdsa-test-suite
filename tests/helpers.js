@@ -92,7 +92,7 @@ export const endpointCheck = ({endpoint, vcVersion, keyType}) => {
   const {
     supportedEcdsaKeyTypes,
     // assume support for vc 1.1
-    supports = {vc: ['1.1']}
+    supports = {vc: ['2.0']}
   } = endpoint.settings;
   // if an issuer does not support the current keyType skip it
   const keyTypes = supportedEcdsaKeyTypes || supports?.keyTypes;
