@@ -7,6 +7,7 @@ import {
   generators,
   issueCloned
 } from 'data-integrity-test-suite-assertion';
+import crypto from 'node:crypto';
 import {getMultiKey} from '../vc-generator/key-gen.js';
 import {getSuites} from './helpers.js';
 
@@ -328,5 +329,74 @@ function invalidHashProxy({
   if(typeof suite !== 'object') {
     return suite;
   }
+  if(suite._cryptosuite) {
+    if(suiteName !== 'ecdsa-rdfc-2019') {
+      throw new Error(`Unsupported suite ${suiteName}`);
+    }
+    suite._cryptosuite = new Proxy(suite._cryptosuite, {
+      get(target, prop) {
+        if(prop === 'createVerifyData') {
+          return async function({
+            cryptosuite, document, proof,
+            documentLoader, dataIntegrityProof
+          } = {}) {
+            const algorithm = 'SHA-512';
 
+            const c14nOptions = {
+              documentLoader,
+              safe: true,
+              base: null,
+              skipExpansion: false,
+              messageDigestAlgorithm: algorithm
+            };
+
+            // await both c14n proof hash and c14n document hash
+            const [proofHash, docHash] = await Promise.all([
+              // canonize and hash proof
+              _canonizeProof(proof, {
+                document, cryptosuite, dataIntegrityProof, c14nOptions
+              }).then(c14nProofOptions => sha512({
+                algorithm,
+                string: c14nProofOptions
+              })),
+              // canonize and hash document
+              cryptosuite.canonize(document, c14nOptions).then(
+                c14nDocument => sha512({algorithm, string: c14nDocument}))
+            ]);
+            // concatenate hash of c14n proof options and hash of c14n document
+            return _concat(proofHash, docHash);
+          };
+        }
+        return Reflect.get(...arguments);
+      }
+    });
+  }
+  return suite;
 }
+
+function _concat(b1, b2) {
+  const rval = new Uint8Array(b1.length + b2.length);
+  rval.set(b1, 0);
+  rval.set(b2, b1.length);
+  return rval;
+}
+
+export async function sha512({string}) {
+  return new Uint8Array(crypto.createHash('sha512').update(string).digest());
+}
+
+async function _canonizeProof(proof, {
+  document, cryptosuite, dataIntegrityProof, c14nOptions
+}) {
+  // `proofValue` must not be included in the proof options
+  proof = {
+    '@context': document['@context'],
+    ...proof
+  };
+  dataIntegrityProof.ensureSuiteContext({
+    document: proof, addSuiteContext: true
+  });
+  delete proof.proofValue;
+  return cryptosuite.canonize(proof, c14nOptions);
+}
+
