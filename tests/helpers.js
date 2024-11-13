@@ -210,12 +210,14 @@ export function getColumnNameForTestCategory(testCategory) {
   }
 }
 
-export function setupReportableTestSuite(runnerContext, name) {
+export function setupReportableTestSuite(
+  runnerContext,
+  name = 'Implementation'
+) {
   runnerContext.matrix = true;
   runnerContext.report = true;
   runnerContext.rowLabel = 'Test Name';
   runnerContext.columnLabel = name;
-
   runnerContext.implemented = [];
 }
 
@@ -231,16 +233,6 @@ export function isValidUtf8(string) {
 
 export function isValidDatetime(dateString) {
   return !isNaN(Date.parse(dateString));
-}
-
-export function setupMatrix(match) {
-  // this will tell the report
-  // to make an interop matrix with this suite
-  this.matrix = true;
-  this.report = true;
-  this.implemented = [...match.keys()];
-  this.rowLabel = 'Test Name';
-  this.columnLabel = 'Implementer';
 }
 
 export const config = JSON.parse(readFileSync('./config/runner.json'));

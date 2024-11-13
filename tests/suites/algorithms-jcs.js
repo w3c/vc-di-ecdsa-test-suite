@@ -9,7 +9,7 @@ import {
   getProofs,
   isValidDatetime,
   isValidUtf8,
-  setupMatrix,
+  setupReportableTestSuite,
   setupRow
 } from '../helpers.js';
 import chai from 'chai';
@@ -20,7 +20,7 @@ export function ecdsaJcs2019Algorithms() {
   const {tags} = config.suites[
     cryptosuite
   ];
-  const {issuerMatch} = endpoints.filterByTag({
+  const {match: issuers} = endpoints.filterByTag({
     tags: [...tags],
     property: 'issuers'
   });
@@ -31,12 +31,12 @@ export function ecdsaJcs2019Algorithms() {
   const should = chai.should();
 
   describe('ecdsa-jcs-2019 - Algorithms - Transformation', function() {
-    setupMatrix.call(this, issuerMatch);
+    setupReportableTestSuite(this);
     let validCredential;
     before(async function() {
       validCredential = await createValidCredential();
     });
-    for(const [columnId, {endpoints}] of issuerMatch) {
+    for(const [columnId, {endpoints}] of issuers) {
       describe(columnId, function() {
         const [issuer] = endpoints;
         let issuedVc;
@@ -99,8 +99,8 @@ export function ecdsaJcs2019Algorithms() {
               'Expected a cryptosuite identifier on the proof.');
             proof.type.should.equal('DataIntegrityProof',
               'Expected DataIntegrityProof type.');
-            proof.cryptosuite.should.equal('ecdsa-jcs-2022',
-              'Expected ecdsa-jcs-2022 cryptosuite.');
+            proof.cryptosuite.should.equal('ecdsa-jcs-2019',
+              'Expected ecdsa-jcs-2019 cryptosuite.');
           }
         });
       });
@@ -108,12 +108,12 @@ export function ecdsaJcs2019Algorithms() {
   });
 
   describe('ecdsa-jcs-2019 - Algorithms - Proof Configuration', function() {
-    setupMatrix.call(this, issuerMatch);
+    setupReportableTestSuite(this);
     let validCredential;
     before(async function() {
       validCredential = await createValidCredential();
     });
-    for(const [columnId, {endpoints}] of issuerMatch) {
+    for(const [columnId, {endpoints}] of issuers) {
       describe(columnId, function() {
         const [issuer] = endpoints;
         let issuedVc;
@@ -162,8 +162,8 @@ export function ecdsaJcs2019Algorithms() {
               'Expected a cryptosuite identifier on the proof.');
             proof.type.should.equal('DataIntegrityProof',
               'Expected DataIntegrityProof type.');
-            proof.cryptosuite.should.equal('ecdsa-jcs-2022',
-              'Expected ecdsa-jcs-2022 cryptosuite.');
+            proof.cryptosuite.should.equal('ecdsa-jcs-2019',
+              'Expected ecdsa-jcs-2019 cryptosuite.');
           }
         });
         it('If proofConfig.created is set and if the value is not a ' +
@@ -185,12 +185,12 @@ export function ecdsaJcs2019Algorithms() {
   });
 
   describe('ecdsa-jcs-2019 - Algorithms - Transformation', function() {
-    setupMatrix.call(this, issuerMatch);
+    setupReportableTestSuite(this);
     let validCredential;
     before(async function() {
       validCredential = await createValidCredential();
     });
-    for(const [columnId, {endpoints}] of issuerMatch) {
+    for(const [columnId, {endpoints}] of issuers) {
       describe(columnId, function() {
         const [issuer] = endpoints;
         let issuedVc;
