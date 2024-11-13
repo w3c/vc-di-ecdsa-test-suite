@@ -213,7 +213,6 @@ async function _setup({
   suiteName,
   keyType
 }) {
-  // stub suite canonize via Proxy cryptosuite.canonize and set safe to false
   const credentials = new Map();
   const keyPair = await getMultiKey({keyType});
   const signer = keyPair.signer();
@@ -229,6 +228,7 @@ async function _setup({
       mandatoryPointers
     })
   })));
+  // stub suite canonize via Proxy cryptosuite.canonize and set safe to false
   credentials.set('noTypeOrCryptosuite',
     await issueCloned(_generateNoTypeCryptosuite({
       signer,
@@ -295,6 +295,38 @@ function unsafeProxy(suite) {
   });
 }
 
-function _commonSetup({}) {
+async function _commonSetup({
+  credential,
+  mandatoryPointers,
+  selectivePointers,
+  suiteName,
+  keyType
+}) {
+  const credentials = new Map();
+  const keyPair = await getMultiKey({keyType});
+  const signer = keyPair.signer();
+  const _credential = structuredClone(credential);
+  _credential.issuer = keyPair.controller;
+  const {suite, selectiveSuite} = getSuites({
+    signer,
+    suiteName,
+    selectivePointers,
+    mandatoryPointers
+  });
+  credentials.set('invalidHash', await issueCloned({
+    credential: _credential,
+    suite: invalidHashProxy({suite, suiteName}),
+    selectiveSuite: invalidHashProxy({suite: selectiveSuite, suiteName})
+  }));
+  return credentials;
+}
+
+function invalidHashProxy({
+  suiteName,
+  suite,
+}) {
+  if(typeof suite !== 'object') {
+    return suite;
+  }
 
 }
