@@ -23,6 +23,11 @@ export function commonAlgorithms({
 }) {
   const title = `${suiteName} - Algorithms Common - VC ${vcVersion}`;
   return describe(title, function() {
+    this.matrix = true;
+    this.report = true;
+    this.implemented = [];
+    this.rowLabel = 'Test Name';
+    this.columnLabel = 'Implementation';
     const credentials = new Map(keyTypes.map(keyType => [keyType, null]));
     before(async function() {
       for(const keyType of keyTypes) {
@@ -39,6 +44,7 @@ export function commonAlgorithms({
     });
     for(const [name, {endpoints}] of verifiers) {
       const [verifier] = endpoints;
+      this.implemented.push(`${name}`);
       describe(`${name}`, function() {
         beforeEach(function() {
           this.currentTest.cell = {
@@ -345,6 +351,7 @@ function invalidHashProxy({
             cryptosuite, document, proof,
             documentLoader, dataIntegrityProof
           } = {}) {
+            // this switch the hash to the wrong hash for that keyType
             const algorithm = (keyType === 'P-256') ? 'sha384' : 'sha256';
             const c14nOptions = {
               documentLoader,
