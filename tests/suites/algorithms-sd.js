@@ -5,17 +5,16 @@
 import {
   assertions,
 } from 'data-integrity-test-suite-assertion';
+import {sdVerifySetup} from '../setup.js';
 
 export function sd2023Algorithms({
-  credential,
+  credentials,
   verifiers,
   issuers,
-  mandatoryPointers,
-  selectivePointers,
   keyTypes,
   suiteName,
   vcVersion,
-  setup = _setup
+  setup = sdVerifySetup
 }) {
   return describe(`${suiteName} - Algorithms - VC ${vcVersion}`, function() {
     this.matrix = true;
@@ -23,17 +22,13 @@ export function sd2023Algorithms({
     this.implemented = [];
     this.rowLabel = 'Test Name';
     this.columnLabel = 'Implementation';
-    const credentials = new Map(keyTypes.map(kt => [kt, null]));
+    let fixtures = new Map();
     before(async function() {
-      for(const keyType of keyTypes) {
-        credentials.set(keyType, await setup({
-          suiteName,
-          keyType,
-          credential,
-          mandatoryPointers,
-          selectivePointers
-        }));
-      }
+      fixtures = await setup({
+        suite: suiteName,
+        keyTypes,
+        credentials
+      });
     });
     for(const [name, {endpoints}] of verifiers) {
       const [verifier] = endpoints;
@@ -101,6 +96,11 @@ export function sd2023Algorithms({
           'MUST be raised and SHOULD convey an error type of ' +
           'PROOF_VERIFICATION_ERROR.', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=labelMap%22%2C%20and%20%22mandatoryIndexes%22.-,If%20the%20proofValue%20string%20does%20not%20start%20with%20u%2C%20indicating%20that%20it%20is%20a%20multibase%2Dbase64url%2Dno%2Dpad%2Dencoded%20value%2C%20an%20error%20MUST%20be%20raised%20and%20SHOULD%20convey%20an%20error%20type%20of%20PROOF_VERIFICATION_ERROR.,-Initialize%20decodedProofValue%20to';
+            await assertions.verificationFail({
+              credential,
+              verifier,
+              reason: 'Should not verify proofValue not starting with u'
+            });
           });
           it('If the decodedProofValue does not start with the ECDSA-SD ' +
           'disclosure proof header bytes 0xd9, 0x5d, and 0x01, an error ' +
