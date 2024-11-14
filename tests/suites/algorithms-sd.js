@@ -2,10 +2,14 @@
  * Copyright 2024 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
+import {
+  assertions,
+} from 'data-integrity-test-suite-assertion';
 
 export function sd2023Algorithms({
   credential,
   verifiers,
+  issuers,
   mandatoryPointers,
   selectivePointers,
   keyTypes,
@@ -33,6 +37,7 @@ export function sd2023Algorithms({
     });
     for(const [name, {endpoints}] of verifiers) {
       const [verifier] = endpoints;
+      const [issuer] = issuers.get(name)?.endpoints;
       for(const keyType of keyTypes) {
         this.implemented.push(`${name}: ${keyType}`);
         describe(`${name}: ${keyType}`, function() {
@@ -59,6 +64,15 @@ export function sd2023Algorithms({
           'PROOF_GENERATION_ERROR, indicating that the JSON pointer does ' +
           'not match the given document.', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=Set%20value%20to%20parentValue.path.%20If%20value%20is%20now%20undefined%2C%20an%20error%20MUST%20be%20raised%20and%20SHOULD%20convey%20an%20error%20type%20of%20PROOF_GENERATION_ERROR%2C%20indicating%20that%20the%20JSON%20pointer%20does%20not%20match%20the%20given%20document.';
+            await assertions.shouldFailIssuance({
+              credential: structuredClone(credential),
+              issuer,
+              reason: 'Should not issue VC with json pointer that does not ' +
+              'match credential.',
+              options: {
+                mandatoryPointers: ['/non/existent/path']
+              }
+            });
           });
           it('CBOR-encode components per [RFC8949] where CBOR tagging MUST ' +
           'NOT be used on any of the components. Append the produced encoded ' +
