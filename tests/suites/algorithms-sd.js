@@ -42,6 +42,7 @@ export function sd2023Algorithms({
     });
     for(const [name, {endpoints}] of verifiers) {
       const [verifier] = endpoints;
+      // account for cases where implementer has no issuer
       const [issuer] = (issuers.get(name)?.endpoints || []);
       for(const keyType of keyTypes) {
         this.implemented.push(`${name}: ${keyType}`);
@@ -49,8 +50,6 @@ export function sd2023Algorithms({
           let baseCredential;
           let proofs = [];
           before(async function() {
-            // we can fairly safely assume there is an issuer
-            // but we should check
             if(issuer) {
               baseCredential = await createInitialVc({
                 issuer,
@@ -71,11 +70,22 @@ export function sd2023Algorithms({
               columnId: this.currentTest.parent.title
             };
           });
+          const assertIssuer = () => {
+            expect(
+              issuer,
+              `Expected ${name} to have an "ecdsa-sd-2023" issuer endpoint`
+            ).to.exist;
+            expect(
+              baseCredential,
+              `Expected ${name} to issue a base credential`
+            ).to.exist;
+          };
           it('When generating ECDSA signatures, the signature value MUST be ' +
           'expressed according to section 7 of [RFC4754] (sometimes referred ' +
           'to as the IEEE P1363 format) and encoded according to the ' +
           'specific cryptosuite proof generation algorithm.', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#base-proof-serialization-ecdsa-sd-2023:~:text=When%20generating%20ECDSA%20signatures%2C%20the%20signature%20value%20MUST%20be%20expressed%20according%20to%20section%207';
+            assertIssuer();
             const _proof = proofs.find(p =>
               p?.cryptosuite === 'ecdsa-sd-2023');
             expect(
@@ -130,8 +140,9 @@ export function sd2023Algorithms({
           'PROOF_GENERATION_ERROR, indicating that the JSON pointer does ' +
           'not match the given document.', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=Set%20value%20to%20parentValue.path.%20If%20value%20is%20now%20undefined%2C%20an%20error%20MUST%20be%20raised%20and%20SHOULD%20convey%20an%20error%20type%20of%20PROOF_GENERATION_ERROR%2C%20indicating%20that%20the%20JSON%20pointer%20does%20not%20match%20the%20given%20document.';
+            assertIssuer();
             await assertions.shouldFailIssuance({
-              credential: credentials.get('unsecured'),
+              credential: structuredClone(credential),
               issuer,
               reason: 'Should not issue VC with json pointer that does not ' +
               'match credential.',
