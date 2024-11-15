@@ -7,7 +7,7 @@ import {
   generators,
   issueCloned
 } from 'data-integrity-test-suite-assertion';
-import crypto from 'node:crypto';
+import {invalidHashProxy, unsafeProxy} from './proxies.js';
 import {getMultiKey} from '../vc-generator/key-gen.js';
 import {getSuites} from './helpers.js';
 
@@ -273,35 +273,6 @@ function _generateNoTypeCryptosuite({
   return invalidCryptosuite({...noType, cryptosuiteName: ''});
 }
 
-function unsafeProxy(suite) {
-  if(typeof suite !== 'object') {
-    return suite;
-  }
-  // if the suite has a cryptosuite object proxy it
-  if(suite._cryptosuite) {
-    suite._cryptosuite = new Proxy(suite._cryptosuite, {
-      get(target, prop) {
-        if(prop === 'canonize') {
-          return function(doc, options) {
-            return target.canonize(doc, {...options, safe: false});
-          };
-        }
-        return Reflect.get(...arguments);
-      }
-    });
-  }
-  return new Proxy(suite, {
-    get(target, prop) {
-      if(prop === 'canonize') {
-        return function(doc, options) {
-          return target.canonize(doc, {...options, safe: false});
-        };
-      }
-      return Reflect.get(...arguments);
-    }
-  });
-}
-
 async function _commonSetup({
   credential,
   mandatoryPointers,
@@ -331,83 +302,3 @@ async function _commonSetup({
   }));
   return credentials;
 }
-
-function invalidHashProxy({
-  suiteName,
-  keyType,
-  suite,
-}) {
-  if(typeof suite !== 'object') {
-    return suite;
-  }
-  if(suite._cryptosuite) {
-    if(suiteName !== 'ecdsa-rdfc-2019') {
-      throw new Error(`Unsupported suite ${suiteName}`);
-    }
-    suite._cryptosuite = new Proxy(suite._cryptosuite, {
-      get(target, prop) {
-        if(prop === 'createVerifyData') {
-          return async function({
-            cryptosuite, document, proof,
-            documentLoader, dataIntegrityProof
-          } = {}) {
-            // this switch the hash to the wrong hash for that keyType
-            const algorithm = (keyType === 'P-256') ? 'sha384' : 'sha256';
-            const c14nOptions = {
-              documentLoader,
-              safe: true,
-              base: null,
-              skipExpansion: false,
-              messageDigestAlgorithm: algorithm
-            };
-
-            // await both c14n proof hash and c14n document hash
-            const [proofHash, docHash] = await Promise.all([
-              // canonize and hash proof
-              _canonizeProof(proof, {
-                document, cryptosuite, dataIntegrityProof, c14nOptions
-              }).then(c14nProofOptions => sha({
-                algorithm,
-                string: c14nProofOptions
-              })),
-              // canonize and hash document
-              cryptosuite.canonize(document, c14nOptions).then(
-                c14nDocument => sha({algorithm, string: c14nDocument}))
-            ]);
-            // concatenate hash of c14n proof options and hash of c14n document
-            return _concat(proofHash, docHash);
-          };
-        }
-        return Reflect.get(...arguments);
-      }
-    });
-  }
-  return suite;
-}
-
-function _concat(b1, b2) {
-  const rval = new Uint8Array(b1.length + b2.length);
-  rval.set(b1, 0);
-  rval.set(b2, b1.length);
-  return rval;
-}
-
-export async function sha({algorithm, string}) {
-  return new Uint8Array(crypto.createHash(algorithm).update(string).digest());
-}
-
-async function _canonizeProof(proof, {
-  document, cryptosuite, dataIntegrityProof, c14nOptions
-}) {
-  // `proofValue` must not be included in the proof options
-  proof = {
-    '@context': document['@context'],
-    ...proof
-  };
-  dataIntegrityProof.ensureSuiteContext({
-    document: proof, addSuiteContext: true
-  });
-  delete proof.proofValue;
-  return cryptosuite.canonize(proof, c14nOptions);
-}
-
