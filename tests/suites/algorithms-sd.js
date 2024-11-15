@@ -14,7 +14,9 @@ import {expect} from 'chai';
 import {sdVerifySetup} from '../setup.js';
 
 export function sd2023Algorithms({
-  credentials,
+  credential,
+  mandatoryPointers,
+  selectivePointers,
   verifiers,
   issuers,
   keyTypes,
@@ -33,12 +35,14 @@ export function sd2023Algorithms({
       fixtures = await setup({
         suite: suiteName,
         keyTypes,
-        credentials
+        credential,
+        mandatoryPointers,
+        selectivePointers
       });
     });
     for(const [name, {endpoints}] of verifiers) {
       const [verifier] = endpoints;
-      const [issuer] = issuers.get(name)?.endpoints;
+      const [issuer] = (issuers.get(name)?.endpoints || []);
       for(const keyType of keyTypes) {
         this.implemented.push(`${name}: ${keyType}`);
         describe(`${name}: ${keyType}`, function() {
