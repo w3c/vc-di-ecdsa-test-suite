@@ -296,7 +296,7 @@ export function sd2023Algorithms({
           'convey an error type of PROOF_GENERATION_ERROR.', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#base-proof-configuration-ecdsa-sd-2023';
             await assertions.verificationFail({
-              credential: fixtures.get('invalidCreated'),
+              credential: fixtures.get(keyType).get('invalidCreated'),
               verifier,
               reason: 'Should not verify VC with invalid created'
             });
