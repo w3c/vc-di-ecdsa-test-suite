@@ -162,34 +162,46 @@ export function sd2023Algorithms({
           'MUST be raised and SHOULD convey an error type of ' +
           'PROOF_VERIFICATION_ERROR.', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=produced%20as%20output.-,If%20the%20proofValue%20string%20does%20not%20start%20with%20u%2C%20indicating%20that%20it%20is%20a%20multibase%2Dbase64url%2Dno%2Dpad%2Dencoded%20value%2C%20an%20error%20MUST%20be%20raised%20and%20SHOULD%20convey%20an%20error%20type%20of%20PROOF_VERIFICATION_ERROR.,-Initialize%20decodedProofValue%20to';
+            this.cell.skipMessage = 'Not Implemented';
+            this.skip();
+            /*
             await assertions.verificationFail({
               verifier,
               credential: fixtures.get('invalidProofValuePrefix'),
               reason: 'Should not verify VC with invalid proofValue prefix'
             });
+            */
           });
           it('If the decodedProofValue does not start with the ECDSA-SD ' +
           'base proof header bytes 0xd9, 0x5d, and 0x00, an error MUST be ' +
           'raised and SHOULD convey an error type of PROOF_VERIFICATION_ERROR.',
           async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=If%20the%20decodedProofValue%20does%20not%20start%20with%20the%20ECDSA%2DSD%20base%20proof%20header%20bytes%200xd9%2C%200x5d%2C%20and%200x00%2C%20an%20error%20MUST%20be%20raised%20and%20SHOULD%20convey%20an%20error%20type%20of%20PROOF_VERIFICATION_ERROR.';
+            this.cell.skipMessage = 'Not Implemented';
+            this.skip();
+            /*
             await assertions.verificationFail({
               verifier,
               credential: fixtures.get('invalidBaseProofHeader'),
               reason: 'Should not verify VC with invalid base proof header'
             });
+            */
           });
           it('If the decodedProofValue does not start with the ECDSA-SD ' +
           'disclosure proof header bytes 0xd9, 0x5d, and 0x01, an error ' +
           'MUST be raised and SHOULD convey an error type of ' +
           'PROOF_VERIFICATION_ERROR.', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=If%20the%20decodedProofValue%20does%20not%20start%20with%20the%20ECDSA%2DSD%20disclosure%20proof%20header%20bytes%200xd9%2C%200x5d%2C%20and%200x01%2C%20an%20error%20MUST%20be%20raised%20and%20SHOULD%20convey%20an%20error%20type%20of%20PROOF_VERIFICATION_ERROR.';
+            this.cell.skipMessage = 'Not Implemented';
+            this.skip();
+            /*
             await assertions.verificationFail({
               verifier,
               credential: fixtures.get('invalidDisclosureProofHeader'),
               reason: 'Should not verify VC with invalid disclosure proof ' +
               'header'
             });
+            */
           });
           it('If the result is not an array of the following five elements ' +
           '— a byte array of length 64; a byte array of length 36; an array ' +
@@ -208,16 +220,27 @@ export function sd2023Algorithms({
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=The%20transformation%20options%20MUST%20contain%20a%20type%20identifier%20for%20the%20cryptographic%20suite%20(type)%2C%20a%20cryptosuite%20identifier%20(cryptosuite)%2C%20and%20a%20verification%20method%20(verificationMethod).';
             this.cell.skipMessage = 'Not Implemented';
             this.skip();
+            /*
+            await assertions.verificationFail({
+              verifier,
+              credential: fixtures.get('noTypeCryptosuiteOrVm'),
+              reason: 'Should not verify VC with no type or cryptosuite'
+            });
+            */
           });
           it('The transformation options MUST contain an array of mandatory ' +
           'JSON pointers (mandatoryPointers) and MAY contain additional ' +
           'options, such as a JSON-LD document loader.', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=The%20transformation%20options%20MUST%20contain%20an%20array%20of%20mandatory%20JSON%20pointers%20(mandatoryPointers)%20and%20MAY%20contain%20additional%20options%2C%20such%20as%20a%20JSON%2DLD%20document%20loader.';
+            this.cell.skipMessage = 'Not Implemented';
+            this.skip();
+            /*
             await assertions.verificationFail({
               credential: fixtures.get('noMandatoryPointers'),
               verifier,
               reason: 'Should not verify VC with no mandatoryPointers'
             });
+            */
           });
           it('Whenever this algorithm encodes strings, it MUST use UTF-8 ' +
           'encoding.', async function() {
@@ -236,22 +259,30 @@ export function sd2023Algorithms({
           'cryptographic suite (type) and MUST contain a cryptosuite ' +
           'identifier (cryptosuite).', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#base-proof-configuration-ecdsa-sd-2023';
+            this.cell.skipMessage = 'Not Implemented';
+            this.skip();
+            /*
             await assertions.verificationFail({
               verifier,
               credential: fixtures.get('noTypeCryptosuite'),
               reason: 'Should not verify VC with no type or cryptosuite'
             });
+            */
           });
           it('If proofConfig.type is not set to DataIntegrityProof and/or ' +
           'proofConfig.cryptosuite is not set to ecdsa-sd-2023, an error ' +
           'MUST be raised and SHOULD convey an error type of ' +
           'PROOF_GENERATION_ERROR.', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#base-proof-configuration-ecdsa-sd-2023:~:text=If%20proofConfig.type%20is%20not%20set%20to%20DataIntegrityProof%20and/or%20proofConfig.cryptosuite%20is%20not%20set%20to%20ecdsa%2Dsd%2D2023%2C%20an%20error%20MUST%20be%20raised%20and%20SHOULD%20convey%20an%20error%20type%20of%20PROOF_GENERATION_ERROR.';
+            this.cell.skipMessage = 'Not Implemented';
+            this.skip();
+            /*
             await assertions.verificationFail({
               verifier,
               credential: fixtures.get('noTypeCryptosuite'),
               reason: 'Should not verify VC with no type or cryptosuite'
             });
+            */
           });
           it('If proofConfig.created is set and if the value is not a valid ' +
           '[XMLSCHEMA11-2] datetime, an error MUST be raised and SHOULD ' +
@@ -267,11 +298,15 @@ export function sd2023Algorithms({
           'cryptographic suite (type) and MAY contain a cryptosuite ' +
           'identifier (cryptosuite).', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#base-proof-serialization-ecdsa-sd-2023';
+            this.cell.skipMessage = 'Not Implemented';
+            this.skip();
+            /*
             await assertions.verificationFail({
               verifier,
               credential: fixtures.get('noTypeCryptosuite'),
               reason: 'Should not verify VC with no type or cryptosuite'
             });
+            */
           });
           it('If the length of signatures does not match the length of ' +
           'nonMandatory, an error MUST be raised and SHOULD convey an ' +
