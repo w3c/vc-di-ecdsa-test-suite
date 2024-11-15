@@ -33,15 +33,17 @@ export function sd2023Algorithms({
     this.implemented = [];
     this.rowLabel = 'Test Name';
     this.columnLabel = 'Implementation';
-    let fixtures = new Map();
+    const fixtures = new Map();
     before(async function() {
-      fixtures = await setup({
-        suite: suiteName,
-        keyTypes,
-        credential,
-        mandatoryPointers,
-        selectivePointers
-      });
+      for(const keyType of keyTypes) {
+        fixtures.set(keyType, await setup({
+          suiteName,
+          keyType,
+          credential,
+          mandatoryPointers,
+          selectivePointers
+        }));
+      }
     });
     for(const [name, {endpoints}] of verifiers) {
       const [verifier] = endpoints;
@@ -56,7 +58,8 @@ export function sd2023Algorithms({
             if(issuer) {
               baseCredential = await createInitialVc({
                 issuer,
-                credential,
+                vc: credential,
+                vcVersion,
                 mandatoryPointers
               });
               if(baseCredential) {
@@ -128,14 +131,14 @@ export function sd2023Algorithms({
           'selection, this includes any root document identifier.',
           async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#jsonpointertopaths:~:text=If%20source%20has%20an%20id%20that%20is%20not%20a%20blank%20node%20identifier%2C%20set%20selection.id%20to%20its%20value.%20Note%3A%20All%20non%2Dblank%20node%20identifiers%20in%20the%20path%20of%20any%20JSON%20Pointer%20MUST%20be%20included%20in%20the%20selection%2C%20this%20includes%20any%20root%20document%20identifier.';
-            this.cell.skipMessage = 'Not Implemented';
+            this.test.cell.skipMessage = 'Not Implemented';
             this.skip();
           });
           it('If source.type is set, set selection.type to its value. ' +
           'Note: The selection MUST include all types in the path of any ' +
           'JSON Pointer, including any root document type.', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=If%20source.type%20is%20set%2C%20set%20selection.type%20to%20its%20value.%20Note%3A%20The%20selection%20MUST%20include%20all%20types%20in%20the%20path%20of%20any%20JSON%20Pointer%2C%20including%20any%20root%20document%20type.';
-            this.cell.skipMessage = 'Not Implemented';
+            this.test.cell.skipMessage = 'Not Implemented';
             this.skip();
           });
           it('Set value to parentValue.path. If value is now undefined, an ' +
@@ -158,7 +161,7 @@ export function sd2023Algorithms({
           'NOT be used on any of the components. Append the produced encoded ' +
           'value to proofValue.', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=and%20mandatoryPointers.-,CBOR%2Dencode%20components%20per%20%5BRFC8949%5D%20where%20CBOR%20tagging%20MUST,-NOT%20be%20used';
-            this.cell.skipMessage = 'Not Implemented';
+            this.test.cell.skipMessage = 'Not Implemented';
             this.skip();
           });
           it('If the proofValue string does not start with u, indicating ' +
@@ -166,7 +169,7 @@ export function sd2023Algorithms({
           'MUST be raised and SHOULD convey an error type of ' +
           'PROOF_VERIFICATION_ERROR.', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=produced%20as%20output.-,If%20the%20proofValue%20string%20does%20not%20start%20with%20u%2C%20indicating%20that%20it%20is%20a%20multibase%2Dbase64url%2Dno%2Dpad%2Dencoded%20value%2C%20an%20error%20MUST%20be%20raised%20and%20SHOULD%20convey%20an%20error%20type%20of%20PROOF_VERIFICATION_ERROR.,-Initialize%20decodedProofValue%20to';
-            this.cell.skipMessage = 'Not Implemented';
+            this.test.cell.skipMessage = 'Not Implemented';
             this.skip();
             /*
             await assertions.verificationFail({
@@ -181,7 +184,7 @@ export function sd2023Algorithms({
           'raised and SHOULD convey an error type of PROOF_VERIFICATION_ERROR.',
           async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=If%20the%20decodedProofValue%20does%20not%20start%20with%20the%20ECDSA%2DSD%20base%20proof%20header%20bytes%200xd9%2C%200x5d%2C%20and%200x00%2C%20an%20error%20MUST%20be%20raised%20and%20SHOULD%20convey%20an%20error%20type%20of%20PROOF_VERIFICATION_ERROR.';
-            this.cell.skipMessage = 'Not Implemented';
+            this.test.cell.skipMessage = 'Not Implemented';
             this.skip();
             /*
             await assertions.verificationFail({
@@ -196,7 +199,7 @@ export function sd2023Algorithms({
           'MUST be raised and SHOULD convey an error type of ' +
           'PROOF_VERIFICATION_ERROR.', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=If%20the%20decodedProofValue%20does%20not%20start%20with%20the%20ECDSA%2DSD%20disclosure%20proof%20header%20bytes%200xd9%2C%200x5d%2C%20and%200x01%2C%20an%20error%20MUST%20be%20raised%20and%20SHOULD%20convey%20an%20error%20type%20of%20PROOF_VERIFICATION_ERROR.';
-            this.cell.skipMessage = 'Not Implemented';
+            this.test.cell.skipMessage = 'Not Implemented';
             this.skip();
             /*
             await assertions.verificationFail({
@@ -214,7 +217,7 @@ export function sd2023Algorithms({
           'MUST be raised and SHOULD convey an error type of ' +
           'PROOF_VERIFICATION_ERROR.', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=array%20of%20integers%20%E2%80%94-,an%20error%20MUST%20be%20raised%20and%20SHOULD%20convey%20an%20error%20type%20of%20PROOF_VERIFICATION_ERROR.,-Replace%20the%20fourth';
-            this.cell.skipMessage = 'Not Implemented';
+            this.test.cell.skipMessage = 'Not Implemented';
             this.skip();
           });
           it('The transformation options MUST contain a type identifier for ' +
@@ -222,7 +225,7 @@ export function sd2023Algorithms({
           '(cryptosuite), and a verification method (verificationMethod).',
           async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=The%20transformation%20options%20MUST%20contain%20a%20type%20identifier%20for%20the%20cryptographic%20suite%20(type)%2C%20a%20cryptosuite%20identifier%20(cryptosuite)%2C%20and%20a%20verification%20method%20(verificationMethod).';
-            this.cell.skipMessage = 'Not Implemented';
+            this.test.cell.skipMessage = 'Not Implemented';
             this.skip();
             /*
             await assertions.verificationFail({
@@ -236,7 +239,7 @@ export function sd2023Algorithms({
           'JSON pointers (mandatoryPointers) and MAY contain additional ' +
           'options, such as a JSON-LD document loader.', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=The%20transformation%20options%20MUST%20contain%20an%20array%20of%20mandatory%20JSON%20pointers%20(mandatoryPointers)%20and%20MAY%20contain%20additional%20options%2C%20such%20as%20a%20JSON%2DLD%20document%20loader.';
-            this.cell.skipMessage = 'Not Implemented';
+            this.test.cell.skipMessage = 'Not Implemented';
             this.skip();
             /*
             await assertions.verificationFail({
@@ -249,21 +252,21 @@ export function sd2023Algorithms({
           it('Whenever this algorithm encodes strings, it MUST use UTF-8 ' +
           'encoding.', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=produced%20as%20output.-,Whenever%20this%20algorithm%20encodes%20strings%2C%20it%20MUST%20use%20UTF%2D8%20encoding.,-Initialize%20hmac%20to';
-            this.cell.skipMessage = 'Not Implemented';
+            this.test.cell.skipMessage = 'Not Implemented';
             this.skip();
           });
           it('Per the recommendations of [RFC2104], the HMAC key MUST be the ' +
           'same length as the digest size; for SHA-256, this is 256 bits or ' +
           '32 bytes.', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=Per%20the%20recommendations%20of%20%5BRFC2104%5D%2C%20the%20HMAC%20key%20MUST%20be%20the%20same%20length%20as%20the%20digest%20size%3B%20for%20SHA%2D256%2C%20this%20is%20256%20bits%20or%2032%20bytes.';
-            this.cell.skipMessage = 'Not Implemented';
+            this.test.cell.skipMessage = 'Not Implemented';
             this.skip();
           });
           it('The proof options MUST contain a type identifier for the ' +
           'cryptographic suite (type) and MUST contain a cryptosuite ' +
           'identifier (cryptosuite).', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#base-proof-configuration-ecdsa-sd-2023';
-            this.cell.skipMessage = 'Not Implemented';
+            this.test.cell.skipMessage = 'Not Implemented';
             this.skip();
             /*
             await assertions.verificationFail({
@@ -278,7 +281,7 @@ export function sd2023Algorithms({
           'MUST be raised and SHOULD convey an error type of ' +
           'PROOF_GENERATION_ERROR.', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#base-proof-configuration-ecdsa-sd-2023:~:text=If%20proofConfig.type%20is%20not%20set%20to%20DataIntegrityProof%20and/or%20proofConfig.cryptosuite%20is%20not%20set%20to%20ecdsa%2Dsd%2D2023%2C%20an%20error%20MUST%20be%20raised%20and%20SHOULD%20convey%20an%20error%20type%20of%20PROOF_GENERATION_ERROR.';
-            this.cell.skipMessage = 'Not Implemented';
+            this.test.cell.skipMessage = 'Not Implemented';
             this.skip();
             /*
             await assertions.verificationFail({
@@ -302,7 +305,7 @@ export function sd2023Algorithms({
           'cryptographic suite (type) and MAY contain a cryptosuite ' +
           'identifier (cryptosuite).', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#base-proof-serialization-ecdsa-sd-2023';
-            this.cell.skipMessage = 'Not Implemented';
+            this.test.cell.skipMessage = 'Not Implemented';
             this.skip();
             /*
             await assertions.verificationFail({
@@ -318,7 +321,7 @@ export function sd2023Algorithms({
           'signature count does not match the non-mandatory message count.',
           async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#base-proof-serialization-ecdsa-sd-2023:~:text=If%20the%20length%20of%20signatures%20does%20not%20match%20the%20length%20of%20nonMandatory%2C%20an%20error%20MUST%20be%20raised%20and%20SHOULD%20convey%20an%20error%20type%20of%20PROOF_VERIFICATION_ERROR%2C%20indicating%20that%20the%20signature%20count%20does%20not%20match%20the%20non%2Dmandatory%20message%20count.';
-            this.cell.skipMessage = 'Not Implemented';
+            this.test.cell.skipMessage = 'Not Implemented';
             this.skip();
           });
         });
