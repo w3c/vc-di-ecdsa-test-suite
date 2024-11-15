@@ -165,7 +165,7 @@ export function sd2023Algorithms({
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=produced%20as%20output.-,If%20the%20proofValue%20string%20does%20not%20start%20with%20u%2C%20indicating%20that%20it%20is%20a%20multibase%2Dbase64url%2Dno%2Dpad%2Dencoded%20value%2C%20an%20error%20MUST%20be%20raised%20and%20SHOULD%20convey%20an%20error%20type%20of%20PROOF_VERIFICATION_ERROR.,-Initialize%20decodedProofValue%20to';
             await assertions.verificationFail({
               verifier,
-              credential: credentials.get('invalidProofValuePrefix'),
+              credential: fixtures.get('invalidProofValuePrefix'),
               reason: 'Should not verify VC with invalid proofValue prefix'
             });
           });
@@ -176,7 +176,7 @@ export function sd2023Algorithms({
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=If%20the%20decodedProofValue%20does%20not%20start%20with%20the%20ECDSA%2DSD%20base%20proof%20header%20bytes%200xd9%2C%200x5d%2C%20and%200x00%2C%20an%20error%20MUST%20be%20raised%20and%20SHOULD%20convey%20an%20error%20type%20of%20PROOF_VERIFICATION_ERROR.';
             await assertions.verificationFail({
               verifier,
-              credential: credentials.get('invalidBaseProofHeader'),
+              credential: fixtures.get('invalidBaseProofHeader'),
               reason: 'Should not verify VC with invalid base proof header'
             });
           });
@@ -194,7 +194,7 @@ export function sd2023Algorithms({
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=If%20the%20decodedProofValue%20does%20not%20start%20with%20the%20ECDSA%2DSD%20disclosure%20proof%20header%20bytes%200xd9%2C%200x5d%2C%20and%200x01%2C%20an%20error%20MUST%20be%20raised%20and%20SHOULD%20convey%20an%20error%20type%20of%20PROOF_VERIFICATION_ERROR.';
             await assertions.verificationFail({
               verifier,
-              credential: credentials.get('invalidDisclosureProofHeader'),
+              credential: fixtures.get('invalidDisclosureProofHeader'),
               reason: 'Should not verify VC with invalid disclosure proof ' +
               'header'
             });
@@ -222,7 +222,7 @@ export function sd2023Algorithms({
           'options, such as a JSON-LD document loader.', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=The%20transformation%20options%20MUST%20contain%20an%20array%20of%20mandatory%20JSON%20pointers%20(mandatoryPointers)%20and%20MAY%20contain%20additional%20options%2C%20such%20as%20a%20JSON%2DLD%20document%20loader.';
             await assertions.verificationFail({
-              credential: credentials.get('noMandatoryPointers'),
+              credential: fixtures.get('noMandatoryPointers'),
               verifier,
               reason: 'Should not verify VC with no mandatoryPointers'
             });
@@ -246,7 +246,7 @@ export function sd2023Algorithms({
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#base-proof-configuration-ecdsa-sd-2023';
             await assertions.verificationFail({
               verifier,
-              credential: credentials.get('noTypeCryptosuite'),
+              credential: fixtures.get('noTypeCryptosuite'),
               reason: 'Should not verify VC with no type or cryptosuite'
             });
           });
@@ -257,7 +257,7 @@ export function sd2023Algorithms({
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#base-proof-configuration-ecdsa-sd-2023:~:text=If%20proofConfig.type%20is%20not%20set%20to%20DataIntegrityProof%20and/or%20proofConfig.cryptosuite%20is%20not%20set%20to%20ecdsa%2Dsd%2D2023%2C%20an%20error%20MUST%20be%20raised%20and%20SHOULD%20convey%20an%20error%20type%20of%20PROOF_GENERATION_ERROR.';
             await assertions.verificationFail({
               verifier,
-              credential: credentials.get('noTypeCryptosuite'),
+              credential: fixtures.get('noTypeCryptosuite'),
               reason: 'Should not verify VC with no type or cryptosuite'
             });
           });
@@ -266,7 +266,7 @@ export function sd2023Algorithms({
           'convey an error type of PROOF_GENERATION_ERROR.', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#base-proof-configuration-ecdsa-sd-2023';
             await assertions.verificationFail({
-              credential: credentials.get('invalidCreated'),
+              credential: fixtures.get('invalidCreated'),
               verifier,
               reason: 'Should not verify VC with invalid created'
             });
@@ -277,7 +277,7 @@ export function sd2023Algorithms({
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#base-proof-serialization-ecdsa-sd-2023';
             await assertions.verificationFail({
               verifier,
-              credential: credentials.get('noTypeCryptosuite'),
+              credential: fixtures.get('noTypeCryptosuite'),
               reason: 'Should not verify VC with no type or cryptosuite'
             });
           });
