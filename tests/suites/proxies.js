@@ -2,10 +2,8 @@
  * Copyright 2024 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
-import * as base64url from 'base64url-universal';
-import * as cborg from 'cborg';
 import crypto from 'node:crypto';
-
+import {stubDerive} from './stubs.js';
 /**
  * Creates a proxy of an object with stubs.
  *
@@ -154,44 +152,13 @@ async function _canonizeProof(proof, {
   return cryptosuite.canonize(proof, c14nOptions);
 }
 
-// ecdsa-sd-2023 method that uses invalid cbor tags
-export function serializeDisclosureProofValue({
-  baseSignature, publicKey, signatures, labelMap, mandatoryIndexes
-} = {}) {
-  const CBOR_PREFIX_DERIVED = new Uint8Array([0xd9, 0x5d, 0x01]);
-  // encode as multibase (base64url no pad) CBOR
-  const payload = [
-    // Uint8Array
-    baseSignature,
-    // Uint8Array
-    publicKey,
-    // array of Uint8Arrays
-    signatures,
-    // Map of strings => strings compressed to ints => Uint8Arrays
-    _compressLabelMap(labelMap),
-    // array of numbers
-    mandatoryIndexes
-  ];
-  const cbor = _concatBuffers([
-    CBOR_PREFIX_DERIVED, cborg.encode(payload, {useMaps: true})
-  ]);
-  return `u${base64url.encode(cbor)}`;
-}
-
-function _concatBuffers(buffers) {
-  const bytes = new Uint8Array(buffers.reduce((acc, b) => acc + b.length, 0));
-  let offset = 0;
-  for(const b of buffers) {
-    bytes.set(b, offset);
-    offset += b.length;
+export function invalidCborTagProxy(suite) {
+  const stubs = {derive: stubDerive};
+  if(suite._cryptosuite) {
+    suite._cryptosuite = createProxy({
+      original: suite._cryptosuite,
+      stubs
+    });
   }
-  return bytes;
-}
-
-function _compressLabelMap(labelMap) {
-  const map = new Map();
-  for(const [k, v] of labelMap.entries()) {
-    map.set(parseInt(k.slice(4), 10), base64url.decode(v.slice(1)));
-  }
-  return map;
+  return suite;
 }
