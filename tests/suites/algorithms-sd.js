@@ -3,8 +3,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 import {
+  shouldBeBs64UrlNoPad,
+  shouldHaveHeaderBytes,
+} from '../assertions.js';
+import {
   assertions,
 } from 'data-integrity-test-suite-assertion';
+import {createInitialVc} from '../helpers.js';
+import {expect} from 'chai';
 import {sdVerifySetup} from '../setup.js';
 
 export function sd2023Algorithms({
@@ -36,11 +42,68 @@ export function sd2023Algorithms({
       for(const keyType of keyTypes) {
         this.implemented.push(`${name}: ${keyType}`);
         describe(`${name}: ${keyType}`, function() {
+          let baseCredential;
+          let proofs = [];
+          before(async function() {
+            // we can fairly safely assume there is an issuer
+            // but we should check
+            if(issuer) {
+              baseCredential = await createInitialVc({
+                issuer,
+                credential,
+                mandatoryPointers
+              });
+              if(baseCredential) {
+                proofs = Array.isArray(baseCredential.proof) ?
+                  baseCredential?.proof : [baseCredential?.proof];
+                // only test proofs that match the relevant cryptosuite
+                proofs = proofs.filter(p => p?.cryptosuite === suiteName);
+              }
+            }
+          });
           beforeEach(function() {
             this.currentTest.cell = {
               rowId: this.currentTest.title,
               columnId: this.currentTest.parent.title
             };
+          });
+          it('When generating ECDSA signatures, the signature value MUST be ' +
+          'expressed according to section 7 of [RFC4754] (sometimes referred ' +
+          'to as the IEEE P1363 format) and encoded according to the ' +
+          'specific cryptosuite proof generation algorithm.', async function() {
+            this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#base-proof-serialization-ecdsa-sd-2023:~:text=When%20generating%20ECDSA%20signatures%2C%20the%20signature%20value%20MUST%20be%20expressed%20according%20to%20section%207';
+            const _proof = proofs.find(p =>
+              p?.cryptosuite === 'ecdsa-sd-2023');
+            expect(
+              _proof,
+              `Expected VC from issuer ${name} to have an ' +
+              '"ecdsa-sd-2023" proof`).to.exist;
+            expect(
+              _proof.proofValue,
+              `Expected VC from issuer ${name} to have a ' +
+              '"proof.proofValue"`
+            ).to.exist;
+            expect(
+              _proof.proofValue,
+              `Expected VC "proof.proofValue" from issuer ${name} to be ` +
+              'a string.'
+            ).to.be.a.string;
+            //Ensure the proofValue string starts with u, indicating that it
+            //is a multibase-base64url-no-pad-encoded value, throwing an
+            //error if it does not.
+            expect(
+              _proof.proofValue.startsWith('u'),
+              `Expected "proof.proofValue" to start with u received ` +
+              `${_proof.proofValue[0]}`).to.be.true;
+            // now test the encoding which is bs64 url no pad for this suite
+            expect(
+              shouldBeBs64UrlNoPad(_proof.proofValue),
+              'Expected "proof.proofValue" to be bs64 url no pad encoded.'
+            ).to.be.true;
+            await shouldHaveHeaderBytes(
+              _proof.proofValue,
+              new Uint8Array([0xd9, 0x5d, 0x00])
+            );
           });
           it('If source has an id that is not a blank node identifier, set ' +
           'selection.id to its value. Note: All non-blank node identifiers ' +
