@@ -3,14 +3,18 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 import {
+  assertions,
+  generators,
+  issueCloned
+} from 'data-integrity-test-suite-assertion';
+import {
   shouldBeBs64UrlNoPad,
   shouldHaveHeaderBytes,
 } from '../assertions.js';
-import {
-  assertions,
-} from 'data-integrity-test-suite-assertion';
 import {createInitialVc} from '../helpers.js';
 import {expect} from 'chai';
+import {getMultiKey} from '../vc-generator/key-gen.js';
+import {getSuites} from './helpers.js';
 
 export function sd2023Algorithms({
   credential,
@@ -323,6 +327,27 @@ export function sd2023Algorithms({
   });
 }
 
-function _setup() {
-
+async function _setup({
+  credential,
+  suiteName,
+  keyType,
+  mandatoryPointers,
+  selectivePointers
+}) {
+  const {invalidCreated} = generators?.dates;
+  const credentials = new Map();
+  const keyPair = await getMultiKey({keyType});
+  const signer = keyPair.signer();
+  const _credential = structuredClone(credential);
+  _credential.issuer = keyPair.controller;
+  credentials.set('invalidCreated', await issueCloned(invalidCreated({
+    credential: structuredClone(_credential),
+    ...getSuites({
+      signer,
+      suiteName,
+      selectivePointers,
+      mandatoryPointers
+    })
+  })));
+  return credentials;
 }
