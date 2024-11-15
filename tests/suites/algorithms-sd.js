@@ -11,7 +11,6 @@ import {
 } from 'data-integrity-test-suite-assertion';
 import {createInitialVc} from '../helpers.js';
 import {expect} from 'chai';
-import {sdVerifySetup} from '../setup.js';
 
 export function sd2023Algorithms({
   credential,
@@ -22,7 +21,7 @@ export function sd2023Algorithms({
   keyTypes,
   suiteName,
   vcVersion,
-  setup = sdVerifySetup
+  setup = _setup
 }) {
   return describe(`${suiteName} - Algorithms - VC ${vcVersion}`, function() {
     this.matrix = true;
@@ -179,13 +178,6 @@ export function sd2023Algorithms({
               credential: fixtures.get('invalidBaseProofHeader'),
               reason: 'Should not verify VC with invalid base proof header'
             });
-          });
-          it('CBOR-encode components per [RFC8949] where CBOR tagging MUST ' +
-          'NOT be used on any of the components. Append the produced ' +
-          'encoded value to proofValue.', async function() {
-            this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=and%20mandatoryIndexes.-,CBOR%2Dencode%20components%20per%20%5BRFC8949%5D%20where%20CBOR%20tagging%20MUST%20NOT%20be%20used%20on%20any%20of%20the%20components.%20Append%20the%20produced%20encoded%20value%20to%20proofValue.,-Return%20the%20derived';
-            this.cell.skipMessage = 'Not Implemented';
-            this.skip();
           });
           it('If the decodedProofValue does not start with the ECDSA-SD ' +
           'disclosure proof header bytes 0xd9, 0x5d, and 0x01, an error ' +
