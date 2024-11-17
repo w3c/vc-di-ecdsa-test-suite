@@ -192,3 +192,48 @@ describe('ecdsa-jcs-2019 - Algorithms - Proof Configuration', function() {
     });
   }
 });
+
+describe('ecdsa-jcs-2019 - Algorithms - Proof Serialization', function() {
+  setupReportableTestSuite(this);
+  this.implemented = [...issuers.keys()];
+  let validCredential;
+  before(async function() {
+    validCredential = await createValidCredential();
+  });
+  for(const [columnId, {endpoints}] of issuers) {
+    describe(columnId, function() {
+      const [issuer] = endpoints;
+      let issuedVc;
+      let proofs;
+      let jcs2019Proofs = [];
+      before(async function() {
+        issuedVc = await createInitialVc({issuer, vc: validCredential});
+        proofs = getProofs(issuedVc);
+        if(proofs?.length) {
+          jcs2019Proofs = proofs.filter(
+            proof => proof?.cryptosuite === cryptosuite);
+        }
+      });
+      beforeEach(setupRow);
+      const assertBefore = () => {
+        should.exist(issuedVc, 'Expected issuer to have issued a ' +
+                            'credential.');
+        should.exist(proofs, 'Expected credential to have a proof.');
+        jcs2019Proofs.length.should.be.gte(1, 'Expected at least one ' +
+                            'ecdsa-jcs-2019 cryptosuite.');
+      };
+      it('The proof options MUST contain a type identifier for the ' +
+        'cryptographic suite (type) and MAY contain a cryptosuite identifier ' +
+        '(cryptosuite).',
+      async function() {
+        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-serialization-ecdsa-jcs-2019';
+        assertBefore();
+        for(const proof of jcs2019Proofs) {
+          should.exist(proof.type,
+            'Expected a type identifier on the proof.');
+        }
+      });
+    });
+  }
+});
+
