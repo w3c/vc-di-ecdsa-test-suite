@@ -15,6 +15,7 @@ import {createInitialVc} from '../helpers.js';
 import {expect} from 'chai';
 import {getMultiKey} from '../vc-generator/key-gen.js';
 import {getSuites} from './helpers.js';
+import {invalidCborTagProxy} from './proxies.js';
 
 export function sd2023Algorithms({
   credential,
@@ -344,7 +345,7 @@ async function _setup({
   const _credential = structuredClone(credential);
   _credential.issuer = keyPair.controller;
   credentials.set('invalidCreated', await issueCloned(invalidCreated({
-    credential: structuredClone(_credential),
+    credential: _credential,
     ...getSuites({
       signer,
       suiteName,
@@ -352,5 +353,16 @@ async function _setup({
       mandatoryPointers
     })
   })));
+  const cborTagSuites = getSuites({
+    signer,
+    suiteName,
+    selectivePointers,
+    mandatoryPointers
+  });
+  credentials.set('invalidCborTag', await issueCloned({
+    credential: _credential,
+    suite: cborTagSuites.suite,
+    selectiveSuite: invalidCborTagProxy(cborTagSuites.selectiveSuite)
+  }));
   return credentials;
 }
