@@ -12,7 +12,6 @@ import {
   selectJsonLd,
   stripBlankNodePrefixes
 } from '@digitalbazaar/di-sd-primitives';
-import {Token, Type} from 'cborg';
 
 const CBOR_PREFIX_BASE = new Uint8Array([0xd9, 0x5d, 0x00]);
 const CBOR_PREFIX_DERIVED = new Uint8Array([0xd9, 0x5d, 0x01]);
@@ -21,6 +20,38 @@ const CBOR_PREFIX_DERIVED = new Uint8Array([0xd9, 0x5d, 0x01]);
 const TAGS = [];
 TAGS[64] = bytes => bytes;
 
+export class DeriveStub {
+  constructor({typeEncoders}) {
+    this.typeEncoders = typeEncoders;
+  }
+  async derive({
+    cryptosuite, document, proofSet,
+    documentLoader, dataIntegrityProof
+  }) {
+    // get test specific options
+    const {typeEncoders} = this;
+    // find matching base `proof` in `proofSet`
+    const {options: {proofId}} = cryptosuite;
+    const baseProof = await _findProof({proofId, proofSet, dataIntegrityProof});
+    // generate data for disclosure
+    const {
+      baseSignature, publicKey, signatures,
+      labelMap, mandatoryIndexes, revealDoc
+    } = await _createDisclosureData(
+      {cryptosuite, document, proof: baseProof, documentLoader});
+
+    // create new disclosure proof
+    const newProof = {...baseProof};
+    newProof.proofValue = await serializeDisclosureProofValue({
+      baseSignature, publicKey, signatures,
+      labelMap, mandatoryIndexes, typeEncoders
+    });
+    // attach proof to reveal doc w/o context
+    delete newProof['@context'];
+    revealDoc.proof = newProof;
+    return revealDoc;
+  }
+}
 // Stubs the ecdsa-sd-2023 derive function
 export async function stubDerive({
   cryptosuite, document, proofSet,
@@ -37,7 +68,7 @@ export async function stubDerive({
 
   // create new disclosure proof
   const newProof = {...baseProof};
-  newProof.proofValue = await invalidSerializeDisclosureProofValue(
+  newProof.proofValue = await serializeDisclosureProofValue(
     {baseSignature, publicKey, signatures, labelMap, mandatoryIndexes});
 
   // attach proof to reveal doc w/o context
@@ -47,17 +78,10 @@ export async function stubDerive({
 }
 
 // ecdsa-sd-2023 method that uses invalid cbor tags
-function invalidSerializeDisclosureProofValue({
-  baseSignature, publicKey, signatures, labelMap, mandatoryIndexes
+function serializeDisclosureProofValue({
+  baseSignature, publicKey, signatures,
+  labelMap, mandatoryIndexes, typeEncoders
 } = {}) {
-  const typeEncoders = {
-    Uint8Array(uint8Array) {
-      return [
-        new Token(Type.tag, 2),
-        new Token(Type.bytes, uint8Array.map(b => b + 1))
-      ];
-    }
-  };
   // encode as multibase (base64url no pad) CBOR
   const payload = [
     // Uint8Array
@@ -241,3 +265,40 @@ async function _findProof({proofId, proofSet, dataIntegrityProof}) {
   }
   return proof;
 }
+
+// ecdsa-sd-2023 proofValue
+export function parseDisclosureProofValue({proof} = {}) {
+  try {
+    // decode from base64url
+    const proofValue = base64url.decode(proof.proofValue.slice(1));
+
+    const payload = proofValue.subarray(CBOR_PREFIX_DERIVED.length);
+    const [
+      baseSignature,
+      publicKey,
+      signatures,
+      compressedLabelMap,
+      mandatoryIndexes
+    ] = cborg.decode(payload, {useMaps: true, tags: TAGS});
+
+    const labelMap = _decompressLabelMap(compressedLabelMap);
+    const params = {
+      baseSignature, publicKey, signatures, labelMap, mandatoryIndexes
+    };
+    return params;
+  } catch(e) {
+    const err = new TypeError(
+      'The proof does not include a valid "proofValue" property.');
+    err.cause = e;
+    throw err;
+  }
+}
+// ecdsa-sd-2023 proofValue
+function _decompressLabelMap(compressedLabelMap) {
+  const map = new Map();
+  for(const [k, v] of compressedLabelMap.entries()) {
+    map.set(`c14n${k}`, `u${base64url.encode(v)}`);
+  }
+  return map;
+}
+

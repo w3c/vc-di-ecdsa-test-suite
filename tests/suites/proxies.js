@@ -2,8 +2,9 @@
  * Copyright 2024 Digital Bazaar, Inc.
  * SPDX-License-Identifier: BSD-3-Clause
  */
+import {Token, Type} from 'cborg';
 import crypto from 'node:crypto';
-import {stubDerive} from './stubs.js';
+import {DeriveStub} from './stubs.js';
 /**
  * Creates a proxy of an object with stubs.
  *
@@ -154,7 +155,17 @@ async function _canonizeProof(proof, {
 }
 
 export function invalidCborTagProxy(suite) {
-  const stubs = {derive: stubDerive};
+  const typeEncoders = {
+    Uint8Array(uint8Array) {
+      return [
+        new Token(Type.tag, 2),
+        new Token(Type.bytes, uint8Array.map(b => b + 1))
+      ];
+    }
+  };
+  const stubs = {derive({...args}) {
+    return new DeriveStub({typeEncoders}).derive({...args});
+  }};
   if(suite._cryptosuite) {
     suite._cryptosuite = createProxy({
       original: suite._cryptosuite,
