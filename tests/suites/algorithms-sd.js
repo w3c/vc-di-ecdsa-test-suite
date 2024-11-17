@@ -162,8 +162,11 @@ export function sd2023Algorithms({
           'NOT be used on any of the components. Append the produced encoded ' +
           'value to proofValue.', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=and%20mandatoryPointers.-,CBOR%2Dencode%20components%20per%20%5BRFC8949%5D%20where%20CBOR%20tagging%20MUST,-NOT%20be%20used';
-            this.test.cell.skipMessage = 'Not Implemented';
-            this.skip();
+            await assertions.verificationFail({
+              verifier,
+              credential: fixtures.get(keyType).get('invalidCborTag'),
+              reason: 'Should not verify proofValue created with cbor tag'
+            });
           });
           it('If the proofValue string does not start with u, indicating ' +
           'that it is a multibase-base64url-no-pad-encoded value, an error ' +
