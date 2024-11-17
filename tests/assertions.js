@@ -13,6 +13,7 @@ import {klona} from 'klona';
 import varint from 'varint';
 
 const should = chai.should();
+const {expect} = chai;
 
 // RegExp with bs58 characters in it
 const bs58 =
@@ -181,4 +182,37 @@ export function itRejectsInvalidCryptosuite(expectedValidSuites, {
     credential.proof.cryptosuite = 'invalid-cryptosuite';
     await verificationFail({credential, verifier: endpoint});
   });
+}
+
+export async function shouldBeBaseProofValue({proof, name}) {
+  expect(
+    proof,
+    `Expected VC from issuer ${name} to have an ' +
+    '"ecdsa-sd-2023" proof`).to.exist;
+  expect(
+    proof.proofValue,
+    `Expected VC from issuer ${name} to have a ' +
+    '"proof.proofValue"`
+  ).to.exist;
+  expect(
+    proof.proofValue,
+    `Expected VC "proof.proofValue" from issuer ${name} to be ` +
+    'a string.'
+  ).to.be.a.string;
+  //Ensure the proofValue string starts with u, indicating that it
+  //is a multibase-base64url-no-pad-encoded value, throwing an
+  //error if it does not.
+  expect(
+    proof.proofValue.startsWith('u'),
+    `Expected "proof.proofValue" to start with u received ` +
+    `${proof.proofValue[0]}`).to.be.true;
+  // now test the encoding which is bs64 url no pad for this suite
+  expect(
+    shouldBeBs64UrlNoPad(proof.proofValue),
+    'Expected "proof.proofValue" to be bs64 url no pad encoded.'
+  ).to.be.true;
+  await shouldHaveHeaderBytes(
+    proof.proofValue,
+    new Uint8Array([0xd9, 0x5d, 0x00])
+  );
 }

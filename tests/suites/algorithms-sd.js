@@ -8,6 +8,7 @@ import {
   issueCloned
 } from 'data-integrity-test-suite-assertion';
 import {
+  shouldBeBaseProofValue,
   shouldBeBs64UrlNoPad,
   shouldHaveHeaderBytes,
 } from '../assertions.js';
@@ -93,38 +94,8 @@ export function sd2023Algorithms({
           'specific cryptosuite proof generation algorithm.', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#base-proof-serialization-ecdsa-sd-2023:~:text=When%20generating%20ECDSA%20signatures%2C%20the%20signature%20value%20MUST%20be%20expressed%20according%20to%20section%207';
             assertIssuer();
-            const _proof = proofs.find(p =>
-              p?.cryptosuite === 'ecdsa-sd-2023');
-            expect(
-              _proof,
-              `Expected VC from issuer ${name} to have an ' +
-              '"ecdsa-sd-2023" proof`).to.exist;
-            expect(
-              _proof.proofValue,
-              `Expected VC from issuer ${name} to have a ' +
-              '"proof.proofValue"`
-            ).to.exist;
-            expect(
-              _proof.proofValue,
-              `Expected VC "proof.proofValue" from issuer ${name} to be ` +
-              'a string.'
-            ).to.be.a.string;
-            //Ensure the proofValue string starts with u, indicating that it
-            //is a multibase-base64url-no-pad-encoded value, throwing an
-            //error if it does not.
-            expect(
-              _proof.proofValue.startsWith('u'),
-              `Expected "proof.proofValue" to start with u received ` +
-              `${_proof.proofValue[0]}`).to.be.true;
-            // now test the encoding which is bs64 url no pad for this suite
-            expect(
-              shouldBeBs64UrlNoPad(_proof.proofValue),
-              'Expected "proof.proofValue" to be bs64 url no pad encoded.'
-            ).to.be.true;
-            await shouldHaveHeaderBytes(
-              _proof.proofValue,
-              new Uint8Array([0xd9, 0x5d, 0x00])
-            );
+            const proof = proofs.find(p => p?.cryptosuite === 'ecdsa-sd-2023');
+            await shouldBeBaseProofValue({proof, name});
           });
           it('If source has an id that is not a blank node identifier, set ' +
           'selection.id to its value. Note: All non-blank node identifiers ' +
@@ -184,9 +155,9 @@ export function sd2023Algorithms({
           'raised and SHOULD convey an error type of PROOF_VERIFICATION_ERROR.',
           async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=If%20the%20decodedProofValue%20does%20not%20start%20with%20the%20ECDSA%2DSD%20base%20proof%20header%20bytes%200xd9%2C%200x5d%2C%20and%200x00%2C%20an%20error%20MUST%20be%20raised%20and%20SHOULD%20convey%20an%20error%20type%20of%20PROOF_VERIFICATION_ERROR.';
-            this.test.cell.skipMessage = 'Not Implemented';
-            this.skip();
             assertIssuer();
+            const proof = proofs.find(p => p?.cryptosuite === 'ecdsa-sd-2023');
+            await shouldBeBaseProofValue({proof, name});
           });
           it('If the decodedProofValue does not start with the ECDSA-SD ' +
           'disclosure proof header bytes 0xd9, 0x5d, and 0x01, an error ' +
