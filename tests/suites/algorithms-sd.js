@@ -173,15 +173,11 @@ export function sd2023Algorithms({
           'MUST be raised and SHOULD convey an error type of ' +
           'PROOF_VERIFICATION_ERROR.', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=produced%20as%20output.-,If%20the%20proofValue%20string%20does%20not%20start%20with%20u%2C%20indicating%20that%20it%20is%20a%20multibase%2Dbase64url%2Dno%2Dpad%2Dencoded%20value%2C%20an%20error%20MUST%20be%20raised%20and%20SHOULD%20convey%20an%20error%20type%20of%20PROOF_VERIFICATION_ERROR.,-Initialize%20decodedProofValue%20to';
-            this.test.cell.skipMessage = 'Not Implemented';
-            this.skip();
-            /*
             await assertions.verificationFail({
               verifier,
-              credential: fixtures.get('invalidProofValuePrefix'),
+              credential: fixtures.get(keyType).get('invalidProofValuePrefix'),
               reason: 'Should not verify VC with invalid proofValue prefix'
             });
-            */
           });
           it('If the decodedProofValue does not start with the ECDSA-SD ' +
           'base proof header bytes 0xd9, 0x5d, and 0x00, an error MUST be ' +
@@ -190,13 +186,7 @@ export function sd2023Algorithms({
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=If%20the%20decodedProofValue%20does%20not%20start%20with%20the%20ECDSA%2DSD%20base%20proof%20header%20bytes%200xd9%2C%200x5d%2C%20and%200x00%2C%20an%20error%20MUST%20be%20raised%20and%20SHOULD%20convey%20an%20error%20type%20of%20PROOF_VERIFICATION_ERROR.';
             this.test.cell.skipMessage = 'Not Implemented';
             this.skip();
-            /*
-            await assertions.verificationFail({
-              verifier,
-              credential: fixtures.get('invalidBaseProofHeader'),
-              reason: 'Should not verify VC with invalid base proof header'
-            });
-            */
+            assertIssuer();
           });
           it('If the decodedProofValue does not start with the ECDSA-SD ' +
           'disclosure proof header bytes 0xd9, 0x5d, and 0x01, an error ' +
@@ -367,5 +357,18 @@ async function _setup({
     suite: cborTagSuites.suite,
     selectiveSuite: invalidCborTagProxy(cborTagSuites.selectiveSuite)
   }));
+  const securedCredential = await issueCloned({
+    credential: _credential,
+    ...getSuites({
+      signer,
+      suiteName,
+      selectivePointers,
+      mandatoryPointers
+    })
+  });
+  const nonbase64ProofValue = structuredClone(securedCredential);
+  nonbase64ProofValue.proof.proofValue =
+    nonbase64ProofValue.proof.proofValue.substring(1);
+  credentials.set('invalidProofValuePrefix', nonbase64ProofValue);
   return credentials;
 }
