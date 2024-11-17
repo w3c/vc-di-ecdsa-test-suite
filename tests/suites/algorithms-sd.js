@@ -7,16 +7,11 @@ import {
   generators,
   issueCloned
 } from 'data-integrity-test-suite-assertion';
-import {
-  shouldBeBaseProofValue,
-  shouldBeBs64UrlNoPad,
-  shouldHaveHeaderBytes,
-} from '../assertions.js';
-import {createInitialVc} from '../helpers.js';
-import {expect} from 'chai';
+import {createInitialVc, getBs64UrlBytes} from '../helpers.js';
 import {getMultiKey} from '../vc-generator/key-gen.js';
 import {getSuites} from './helpers.js';
 import {invalidCborTagProxy} from './proxies.js';
+import {shouldBeBaseProofValue} from '../assertions.js';
 
 export function sd2023Algorithms({
   credential,
@@ -164,16 +159,12 @@ export function sd2023Algorithms({
           'MUST be raised and SHOULD convey an error type of ' +
           'PROOF_VERIFICATION_ERROR.', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=If%20the%20decodedProofValue%20does%20not%20start%20with%20the%20ECDSA%2DSD%20disclosure%20proof%20header%20bytes%200xd9%2C%200x5d%2C%20and%200x01%2C%20an%20error%20MUST%20be%20raised%20and%20SHOULD%20convey%20an%20error%20type%20of%20PROOF_VERIFICATION_ERROR.';
-            this.test.cell.skipMessage = 'Not Implemented';
-            this.skip();
-            /*
             await assertions.verificationFail({
               verifier,
               credential: fixtures.get('invalidDisclosureProofHeader'),
               reason: 'Should not verify VC with invalid disclosure proof ' +
               'header'
             });
-            */
           });
           it('If the result is not an array of the following five elements ' +
           '— a byte array of length 64; a byte array of length 36; an array ' +
@@ -341,5 +332,9 @@ async function _setup({
   nonbase64ProofValue.proof.proofValue =
     nonbase64ProofValue.proof.proofValue.substring(1);
   credentials.set('invalidProofValuePrefix', nonbase64ProofValue);
+  const invalidProofValueHeader = structuredClone(securedCredential);
+  const disclosureBytes = getBs64UrlBytes(
+    invalidProofValueHeader?.proof?.proofValue);
+  credentials.set('invalidDisclosureProofHeader', null);
   return credentials;
 }
