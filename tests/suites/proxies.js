@@ -17,7 +17,7 @@ import {stubDerive} from './stubs.js';
  * @returns {Proxy<object>} Returns a Proxy.
  */
 export function createProxy({original, stubs}) {
-  if(typeof original === 'object') {
+  if(typeof original !== 'object') {
     throw new Error(`Expected parameter original to be an object received ` +
     `${typeof original}`);
   }
