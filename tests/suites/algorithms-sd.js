@@ -8,6 +8,7 @@ import {
   issueCloned
 } from 'data-integrity-test-suite-assertion';
 import {createInitialVc, getBs64UrlBytes} from '../helpers.js';
+import {expect} from 'chai';
 import {getMultiKey} from '../vc-generator/key-gen.js';
 import {getSuites} from './helpers.js';
 import {invalidCborTagProxy} from './proxies.js';
