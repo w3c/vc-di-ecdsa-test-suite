@@ -166,7 +166,8 @@ export function sd2023Algorithms({
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=If%20the%20decodedProofValue%20does%20not%20start%20with%20the%20ECDSA%2DSD%20disclosure%20proof%20header%20bytes%200xd9%2C%200x5d%2C%20and%200x01%2C%20an%20error%20MUST%20be%20raised%20and%20SHOULD%20convey%20an%20error%20type%20of%20PROOF_VERIFICATION_ERROR.';
             await assertions.verificationFail({
               verifier,
-              credential: fixtures.get('invalidDisclosureProofHeader'),
+              credential: fixtures.get(keyType).get(
+                'invalidDisclosureProofHeader'),
               reason: 'Should not verify VC with invalid disclosure proof ' +
               'header'
             });
