@@ -6,6 +6,7 @@ import * as bs58 from 'base58-universal';
 import * as bs64 from 'base64url-universal';
 import {createRequire} from 'node:module';
 import {isUtf8} from 'node:buffer';
+import {isUtf8} from 'node:buffer';
 import {klona} from 'klona';
 import {readFileSync} from 'fs';
 import {v4 as uuidv4} from 'uuid';
