@@ -21,6 +21,7 @@ const CBOR_PREFIX_DERIVED = new Uint8Array([0xd9, 0x5d, 0x01]);
 const TAGS = [];
 TAGS[64] = bytes => bytes;
 
+// Stubs the ecdsa-sd-2023 derive function
 export async function stubDerive({
   cryptosuite, document, proofSet,
   documentLoader, dataIntegrityProof
@@ -76,6 +77,7 @@ function invalidSerializeDisclosureProofValue({
   return `u${base64url.encode(cbor)}`;
 }
 
+// ecdsa-sd-2023 derive helper
 async function _createDisclosureData({
   cryptosuite, document, proof, documentLoader
 }) {

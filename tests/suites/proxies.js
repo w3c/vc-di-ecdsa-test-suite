@@ -70,6 +70,7 @@ export function unsafeProxy(suite) {
   });
 }
 
+//ecdsa-rdfc-2019 proxy
 export function invalidHashProxy({
   suiteName,
   keyType,
@@ -123,7 +124,7 @@ export function invalidHashProxy({
   return suite;
 }
 
-// concat 2 unit8Arrays together
+// ecdsa-rdfc-2019 concat 2 unit8Arrays together
 function _concat(b1, b2) {
   const rval = new Uint8Array(b1.length + b2.length);
   rval.set(b1, 0);
@@ -131,7 +132,7 @@ function _concat(b1, b2) {
   return rval;
 }
 
-// sha hashing function
+// ecdsa-rdfc-2019 sha hashing function
 export async function sha({algorithm, string}) {
   return new Uint8Array(crypto.createHash(algorithm).update(string).digest());
 }
