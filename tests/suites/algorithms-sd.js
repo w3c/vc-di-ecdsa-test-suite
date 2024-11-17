@@ -179,8 +179,11 @@ export function sd2023Algorithms({
           'MUST be raised and SHOULD convey an error type of ' +
           'PROOF_VERIFICATION_ERROR.', async function() {
             this.test.link = 'https://w3c.github.io/vc-di-ecdsa/#selective-disclosure-functions:~:text=array%20of%20integers%20%E2%80%94-,an%20error%20MUST%20be%20raised%20and%20SHOULD%20convey%20an%20error%20type%20of%20PROOF_VERIFICATION_ERROR.,-Replace%20the%20fourth';
-            this.test.cell.skipMessage = 'Not Implemented';
-            this.skip();
+            await assertions.verificationFail({
+              verifier,
+              credential: fixtures.get(keyType).get('invalidProofArray'),
+              reason: 'Should not verify proofValue array missing elements'
+            });
           });
           it('The transformation options MUST contain a type identifier for ' +
           'the cryptographic suite (type), a cryptosuite identifier ' +
@@ -351,5 +354,6 @@ async function _setup({
   // invalid 3 byte header
   invalidProofValueHeader.proof.proofValue = `u${encodeBs64Url(invalidBuffer)}`;
   credentials.set('invalidDisclosureProofHeader', invalidProofValueHeader);
+  const invalidProofArray = structuredClone(securedCredential);
   return credentials;
 }
