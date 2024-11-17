@@ -30,18 +30,18 @@ export const proofBytes = {
   'P-384': 96
 };
 
-export const shouldHaveByteLength = async (
+export const shouldHaveByteLength = (
   multibaseString,
   expectedByteLength
 ) => {
-  const bytes = await getBs58Bytes(multibaseString);
+  const bytes = getBs58Bytes(multibaseString);
   bytes.length.should.eql(
     expectedByteLength,
     `Expected byteLength of ${expectedByteLength} received ${bytes.length}.`);
 };
 
-export const shouldHaveHeaderBytes = async (multibaseString, headerBytes) => {
-  const bytes = await getBs64UrlBytes(multibaseString);
+export const shouldHaveHeaderBytes = (multibaseString, headerBytes) => {
+  const bytes = getBs64UrlBytes(multibaseString);
   const actualHeaderBytes = Array.from(bytes.slice(0, headerBytes.length));
   actualHeaderBytes.should.eql(
     Array.from(headerBytes),
@@ -54,7 +54,7 @@ export const shouldBeMulticodecEncoded = async s => {
   if(s.startsWith(multibaseMultikeyHeaderP256)) {
     // example of a P-256 publicKeyMultibase -
     // zDnaepHgv4AU1btQ8dp6EYbvgJ6M1ovzKnSpXJUPU2hshXLvp
-    const bytes = await getBs58Bytes(s);
+    const bytes = getBs58Bytes(s);
     bytes.length.should.equal(35);
     // bytes example => Uint8Array(35) [
     //   128,  36,   3,  98, 121, 153, 205, 199,
@@ -72,7 +72,7 @@ export const shouldBeMulticodecEncoded = async s => {
   }
 
   if(s.startsWith(multibaseMultikeyHeaderP384)) {
-    const bytes = await getBs58Bytes(s);
+    const bytes = getBs58Bytes(s);
     bytes.length.should.equal(51);
     // get the two-byte prefix
     const prefix = Array.from(bytes.slice(0, 2));
@@ -211,7 +211,7 @@ export async function shouldBeBaseProofValue({proof, name}) {
     shouldBeBs64UrlNoPad(proof.proofValue),
     'Expected "proof.proofValue" to be bs64 url no pad encoded.'
   ).to.be.true;
-  await shouldHaveHeaderBytes(
+  shouldHaveHeaderBytes(
     proof.proofValue,
     new Uint8Array([0xd9, 0x5d, 0x00])
   );
