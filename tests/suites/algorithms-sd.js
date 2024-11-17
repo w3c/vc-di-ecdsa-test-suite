@@ -7,7 +7,11 @@ import {
   generators,
   issueCloned
 } from 'data-integrity-test-suite-assertion';
-import {createInitialVc, getBs64UrlBytes} from '../helpers.js';
+import {
+  createInitialVc,
+  encodeBs64Url,
+  getBs64UrlBytes
+} from '../helpers.js';
 import {expect} from 'chai';
 import {getMultiKey} from '../vc-generator/key-gen.js';
 import {getSuites} from './helpers.js';
@@ -334,8 +338,17 @@ async function _setup({
     nonbase64ProofValue.proof.proofValue.substring(1);
   credentials.set('invalidProofValuePrefix', nonbase64ProofValue);
   const invalidProofValueHeader = structuredClone(securedCredential);
+  // get the bytes
   const disclosureBytes = getBs64UrlBytes(
     invalidProofValueHeader?.proof?.proofValue);
-  credentials.set('invalidDisclosureProofHeader', null);
+  // remove the 3 byte prefix and replace with an invalid prefix
+  const invalidBuffer = Buffer.concat(
+    [Buffer.from([0xA1, 0x44, 0x01]), disclosureBytes.slice(3)],
+    disclosureBytes.length
+  );
+  // replace the proofValue with a newer proofValue with an
+  // invalid 3 byte header
+  invalidProofValueHeader.proof.proofValue = `u${encodeBs64Url(invalidBuffer)}`;
+  credentials.set('invalidDisclosureProofHeader', invalidProofValueHeader);
   return credentials;
 }

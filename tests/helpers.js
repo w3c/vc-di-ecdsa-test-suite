@@ -16,6 +16,7 @@ export const require = createRequire(import.meta.url);
 // and gets the bytes
 export const getBs58Bytes = s => bs58.decode(s.slice(1));
 export const getBs64UrlBytes = s => bs64.decode(s.slice(1));
+export const encodeBs64Url = bytes => bs64.encode(bytes);
 
 // Javascript's default ISO timestamp contains milliseconds.
 // This lops off the MS part of the UTC RFC3339 TimeStamp and replaces
