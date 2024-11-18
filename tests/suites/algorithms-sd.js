@@ -359,7 +359,9 @@ async function _setup({
   invalidProofValueHeader.proof.proofValue = `u${encodeBs64Url(invalidBuffer)}`;
   credentials.set('invalidDisclosureProofHeader', invalidProofValueHeader);
   const invalidProofArray = structuredClone(securedCredential);
+  // parse the existing disclosure proofValue
   const params = parseDisclosureProofValue({proof: invalidProofArray.proof});
+  // create a new proofValue missing 3 elements
   invalidProofArray.proof.proofValue = serializeProofValue({
     payload: [params.baseSignature, params.publicKey]
   });
