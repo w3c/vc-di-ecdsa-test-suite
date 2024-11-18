@@ -52,30 +52,6 @@ export class DeriveStub {
     return revealDoc;
   }
 }
-// Stubs the ecdsa-sd-2023 derive function
-export async function stubDerive({
-  cryptosuite, document, proofSet,
-  documentLoader, dataIntegrityProof
-}) {
-  // find matching base `proof` in `proofSet`
-  const {options: {proofId}} = cryptosuite;
-  const baseProof = await _findProof({proofId, proofSet, dataIntegrityProof});
-  // generate data for disclosure
-  const {
-    baseSignature, publicKey, signatures, labelMap, mandatoryIndexes, revealDoc
-  } = await _createDisclosureData(
-    {cryptosuite, document, proof: baseProof, documentLoader});
-
-  // create new disclosure proof
-  const newProof = {...baseProof};
-  newProof.proofValue = await serializeDisclosureProofValue(
-    {baseSignature, publicKey, signatures, labelMap, mandatoryIndexes});
-
-  // attach proof to reveal doc w/o context
-  delete newProof['@context'];
-  revealDoc.proof = newProof;
-  return revealDoc;
-}
 
 // ecdsa-sd-2023 method that uses invalid cbor tags
 function serializeDisclosureProofValue({
@@ -95,10 +71,11 @@ function serializeDisclosureProofValue({
     // array of numbers
     mandatoryIndexes
   ];
-  const cbor = _concatBuffers([
-    CBOR_PREFIX_DERIVED, cborg.encode(payload, {useMaps: true, typeEncoders})
-  ]);
-  return `u${base64url.encode(cbor)}`;
+  return serializeProofValue({
+    prefix: CBOR_PREFIX_DERIVED,
+    payload,
+    typeEncoders
+  });
 }
 
 // ecdsa-sd-2023 test data creation function
