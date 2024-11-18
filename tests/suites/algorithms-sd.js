@@ -12,6 +12,10 @@ import {
   encodeBs64Url,
   getBs64UrlBytes
 } from '../helpers.js';
+import {
+  parseDisclosureProofValue,
+  serializeProofValue
+} from './stubs.js';
 import {expect} from 'chai';
 import {getMultiKey} from '../vc-generator/key-gen.js';
 import {getSuites} from './helpers.js';
@@ -355,5 +359,10 @@ async function _setup({
   invalidProofValueHeader.proof.proofValue = `u${encodeBs64Url(invalidBuffer)}`;
   credentials.set('invalidDisclosureProofHeader', invalidProofValueHeader);
   const invalidProofArray = structuredClone(securedCredential);
+  const params = parseDisclosureProofValue({proof: invalidProofArray.proof});
+  invalidProofArray.proof.proofValue = serializeProofValue({
+    payload: [params.baseSignature, params.publicKey]
+  });
+  credentials.set('invalidProofArray', invalidProofArray);
   return credentials;
 }

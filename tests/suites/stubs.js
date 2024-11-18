@@ -101,6 +101,18 @@ function serializeDisclosureProofValue({
   return `u${base64url.encode(cbor)}`;
 }
 
+// ecdsa-sd-2023 test data creation function
+export function serializeProofValue({
+  prefix = CBOR_PREFIX_DERIVED,
+  payload,
+  typeEncoders
+}) {
+  const cbor = _concatBuffers([
+    prefix, cborg.encode(payload, {useMaps: true, typeEncoders})
+  ]);
+  return `u${base64url.encode(cbor)}`;
+}
+
 // ecdsa-sd-2023 derive helper
 async function _createDisclosureData({
   cryptosuite, document, proof, documentLoader
