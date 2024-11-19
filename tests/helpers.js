@@ -7,6 +7,7 @@ import * as bs64 from 'base64url-universal';
 import {createRequire} from 'node:module';
 import {isUtf8} from 'node:buffer';
 import {klona} from 'klona';
+import {readFileSync} from 'fs';
 import {v4 as uuidv4} from 'uuid';
 
 export const require = createRequire(import.meta.url);
@@ -35,6 +36,9 @@ export const ISOTimeStamp = ({date = new Date()} = {}) => {
  *
  * @returns {Promise<object>} The resulting issuance result.
  */
+
+export const config = JSON.parse(readFileSync('./config/runner.json'));
+
 export const createInitialVc = async ({
   issuer,
   vc,
@@ -269,4 +273,12 @@ export function createValidCredential(version = 2) {
     return null;
   }
   return credential;
+}
+
+export function setupRow() {
+  // append test meta data to the it/test this.
+  this.currentTest.cell = {
+    columnId: this.currentTest.parent.title,
+    rowId: this.currentTest.title
+  };
 }
