@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 import {
+  assertIssuedVc,
   config,
   createInitialVc,
   createValidCredential,
@@ -26,6 +27,42 @@ const {match: issuers} = endpoints.filterByTag({
   property: 'issuers'
 });
 
+describe('ecdsa-jcs-2019 - Algorithms - Create Proof', function() {
+  setupReportableTestSuite(this);
+  this.implemented = [...issuers.keys()];
+  let validCredential;
+  before(async function() {
+    validCredential = await createValidCredential();
+  });
+  for(const [columnId, {endpoints}] of issuers) {
+    describe(columnId, function() {
+      const [issuer] = endpoints;
+      let issuedVc;
+      let proofs;
+      let filteredProofs = [];
+      before(async function() {
+        issuedVc = await createInitialVc({issuer, vc: validCredential});
+        proofs = getProofs(issuedVc);
+        if(proofs?.length) {
+          filteredProofs = proofs.filter(
+            proof => proof?.cryptosuite === cryptosuite);
+        }
+      });
+      beforeEach(setupRow);
+      it('If unsecuredDocument.@context is present, ' +
+        'set proof.@context to unsecuredDocument.@context.',
+      async function() {
+        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#create-proof-ecdsa-jcs-2019';
+        assertIssuedVc(issuedVc, proofs, filteredProofs);
+        for(const proof of filteredProofs) {
+          proof.should.have('@context',
+            'Expected proof to have context.');
+        }
+      });
+    });
+  }
+});
+
 describe('ecdsa-jcs-2019 - Algorithms - Transformation', function() {
   setupReportableTestSuite(this);
   this.implemented = [...issuers.keys()];
@@ -38,30 +75,23 @@ describe('ecdsa-jcs-2019 - Algorithms - Transformation', function() {
       const [issuer] = endpoints;
       let issuedVc;
       let proofs;
-      let jcs2019Proofs = [];
+      let filteredProofs = [];
       before(async function() {
         issuedVc = await createInitialVc({issuer, vc: validCredential});
         proofs = getProofs(issuedVc);
         if(proofs?.length) {
-          jcs2019Proofs = proofs.filter(
+          filteredProofs = proofs.filter(
             proof => proof?.cryptosuite === cryptosuite);
         }
       });
       beforeEach(setupRow);
-      const assertBefore = () => {
-        should.exist(issuedVc, 'Expected issuer to have issued a ' +
-                        'credential.');
-        should.exist(proofs, 'Expected credential to have a proof.');
-        jcs2019Proofs.length.should.be.gte(1, 'Expected at least one ' +
-                        'ecdsa-jcs-2019 cryptosuite.');
-      };
       it('The proof options MUST contain a type identifier for the ' +
-            'cryptographic suite (type) and MAY contain a cryptosuite ' +
-            'identifier (cryptosuite).',
+        'cryptographic suite (type) and MAY contain a cryptosuite ' +
+        'identifier (cryptosuite).',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-serialization-ecdsa-jcs-2019';
-        assertBefore();
-        for(const proof of jcs2019Proofs) {
+        assertIssuedVc(issuedVc, proofs, filteredProofs);
+        for(const proof of filteredProofs) {
           should.exist(proof.type,
             'Expected a type identifier on the proof.');
         }
@@ -71,8 +101,8 @@ describe('ecdsa-jcs-2019 - Algorithms - Transformation', function() {
             '(cryptosuite).',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#transformation-ecdsa-jcs-2019';
-        assertBefore();
-        for(const proof of jcs2019Proofs) {
+        assertIssuedVc(issuedVc, proofs, filteredProofs);
+        for(const proof of filteredProofs) {
           should.exist(proof.type, 'Expected a type identifier on ' +
                                 'the proof.');
           should.exist(proof.cryptosuite,
@@ -83,8 +113,8 @@ describe('ecdsa-jcs-2019 - Algorithms - Transformation', function() {
             'it MUST use UTF-8 encoding.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#transformation-ecdsa-jcs-2019';
-        assertBefore();
-        for(const proof of jcs2019Proofs) {
+        assertIssuedVc(issuedVc, proofs, filteredProofs);
+        for(const proof of filteredProofs) {
           should.exist(proof?.proofValue,
             'Expected proofValue to exist.');
           isValidUtf8(proof.proofValue).should.equal(
@@ -94,13 +124,13 @@ describe('ecdsa-jcs-2019 - Algorithms - Transformation', function() {
         }
       });
       it('If options.type is not set to the string DataIntegrityProof or ' +
-            'options.cryptosuite is not set to the string ecdsa-jcs-2019, ' +
-            'an error MUST be raised and SHOULD convey an error type ' +
-            'of PROOF_TRANSFORMATION_ERROR.',
+        'options.cryptosuite is not set to the string ecdsa-jcs-2019, ' +
+        'an error MUST be raised and SHOULD convey an error type ' +
+        'of PROOF_TRANSFORMATION_ERROR.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#transformation-ecdsa-jcs-2019';
-        assertBefore();
-        for(const proof of jcs2019Proofs) {
+        assertIssuedVc(issuedVc, proofs, filteredProofs);
+        for(const proof of filteredProofs) {
           should.exist(proof.type,
             'Expected a type identifier on the proof.');
           should.exist(proof.cryptosuite,
@@ -127,30 +157,23 @@ describe('ecdsa-jcs-2019 - Algorithms - Proof Configuration', function() {
       const [issuer] = endpoints;
       let issuedVc;
       let proofs;
-      let jcs2019Proofs = [];
+      let filteredProofs = [];
       before(async function() {
         issuedVc = await createInitialVc({issuer, vc: validCredential});
         proofs = getProofs(issuedVc);
         if(proofs?.length) {
-          jcs2019Proofs = proofs.filter(
+          filteredProofs = proofs.filter(
             proof => proof?.cryptosuite === cryptosuite);
         }
       });
       beforeEach(setupRow);
-      const assertBefore = () => {
-        should.exist(issuedVc, 'Expected issuer to have issued a ' +
-                        'credential.');
-        should.exist(proofs, 'Expected credential to have a proof.');
-        jcs2019Proofs.length.should.be.gte(1, 'Expected at least one ' +
-                        'ecdsa-jcs-2019 cryptosuite.');
-      };
       it('The proof options MUST contain a type identifier for the ' +
             'cryptographic suite (type) and MUST contain a cryptosuite ' +
             'identifier (cryptosuite).',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-jcs-2019';
-        assertBefore();
-        for(const proof of jcs2019Proofs) {
+        assertIssuedVc(issuedVc, proofs, filteredProofs);
+        for(const proof of filteredProofs) {
           should.exist(proof.type,
             'Expected a type identifier on the proof.');
           should.exist(proof.cryptosuite,
@@ -163,8 +186,8 @@ describe('ecdsa-jcs-2019 - Algorithms - Proof Configuration', function() {
             'of PROOF_GENERATION_ERROR.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-jcs-2019';
-        assertBefore();
-        for(const proof of jcs2019Proofs) {
+        assertIssuedVc(issuedVc, proofs, filteredProofs);
+        for(const proof of filteredProofs) {
           should.exist(proof.type,
             'Expected a type identifier on the proof.');
           should.exist(proof.cryptosuite,
@@ -180,7 +203,8 @@ describe('ecdsa-jcs-2019 - Algorithms - Proof Configuration', function() {
             'SHOULD convey an error type of PROOF_GENERATION_ERROR.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-jcs-2019';
-        for(const proof of jcs2019Proofs) {
+        assertIssuedVc(issuedVc, proofs, filteredProofs);
+        for(const proof of filteredProofs) {
           if(proof?.created) {
             isValidDatetime(proof.created).should.equal(
               true,
@@ -205,30 +229,23 @@ describe('ecdsa-jcs-2019 - Algorithms - Proof Serialization', function() {
       const [issuer] = endpoints;
       let issuedVc;
       let proofs;
-      let jcs2019Proofs = [];
+      let filteredProofs = [];
       before(async function() {
         issuedVc = await createInitialVc({issuer, vc: validCredential});
         proofs = getProofs(issuedVc);
         if(proofs?.length) {
-          jcs2019Proofs = proofs.filter(
+          filteredProofs = proofs.filter(
             proof => proof?.cryptosuite === cryptosuite);
         }
       });
       beforeEach(setupRow);
-      const assertBefore = () => {
-        should.exist(issuedVc, 'Expected issuer to have issued a ' +
-                            'credential.');
-        should.exist(proofs, 'Expected credential to have a proof.');
-        jcs2019Proofs.length.should.be.gte(1, 'Expected at least one ' +
-                            'ecdsa-jcs-2019 cryptosuite.');
-      };
       it('The proof options MUST contain a type identifier for the ' +
         'cryptographic suite (type) and MAY contain a cryptosuite identifier ' +
         '(cryptosuite).',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-serialization-ecdsa-jcs-2019';
-        assertBefore();
-        for(const proof of jcs2019Proofs) {
+        assertIssuedVc(issuedVc, proofs, filteredProofs);
+        for(const proof of filteredProofs) {
           should.exist(proof.type,
             'Expected a type identifier on the proof.');
         }
