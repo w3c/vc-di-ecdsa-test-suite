@@ -42,7 +42,7 @@ export const ISOTimeStamp = ({date = new Date()} = {}) => {
 
 export const config = JSON.parse(readFileSync('./config/runner.json'));
 
-export const secureCredential = async ({
+export const createInitialVc = async ({
   issuer,
   vc,
   mandatoryPointers,
