@@ -43,7 +43,7 @@ export const ISOTimeStamp = ({date = new Date()} = {}) => {
 
 export const config = JSON.parse(readFileSync('./config/runner.json'));
 
-export const createInitialVc = async ({
+export const secureCredential = async ({
   issuer,
   vc,
   mandatoryPointers,
@@ -251,7 +251,7 @@ export function getProofs(issuedVc) {
   return proofs;
 }
 
-export function createValidCredential(version = 2) {
+export function baseCredential(version = 2) {
   let credential = {
     type: ['VerifiableCredential'],
     id: `urn:uuid:${uuidv4()}`,
@@ -287,11 +287,12 @@ export function setupRow() {
   };
 }
 
-export function assertIssuedVc(issuedVc, proofs, filteredProofs) {
-  should.exist(issuedVc,
+export function assertSecuredCredential(securedCredential) {
+  should.exist(securedCredential,
     'Expected issuer to have issued a credential.');
+  const proofs = getProofs(securedCredential);
   should.exist(proofs,
     'Expected credential to have a proof.');
-  filteredProofs.length.should.be.gte(1,
-    'Expected at least one filtered cryptosuite proof.');
+  proofs.length.should.equal(1,
+    'Expected credential to have a single proof.');
 }

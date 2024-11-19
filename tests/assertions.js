@@ -5,6 +5,9 @@
 import {
   getBs58Bytes,
   getBs64UrlBytes,
+  getProofs,
+  isValidDatetime,
+  isValidUtf8,
   multibaseMultikeyHeaderP256,
   multibaseMultikeyHeaderP384,
 } from './helpers.js';
@@ -181,4 +184,89 @@ export function itRejectsInvalidCryptosuite(expectedValidSuites, {
     credential.proof.cryptosuite = 'invalid-cryptosuite';
     await verificationFail({credential, verifier: endpoint});
   });
+}
+
+export function assertSecuredCredential(securedCredential) {
+  should.exist(securedCredential,
+    'Expected issuer to have issued a credential.');
+  const proofs = getProofs(securedCredential);
+  should.exist(proofs,
+    'Expected credential to have a proof.');
+  proofs.length.should.equal(1,
+    'Expected credential to have a single proof.');
+}
+
+export function assertDataIntegrityProof(proof, cryptosuite) {
+  if(proof?.id) {
+  }
+  should.exist(proof.type,
+    'Expected a type on the proof.');
+  proof.type.should.equal('DataIntegrityProof',
+    'Expected DataIntegrityProof type.');
+  isValidUtf8(proof.type).should.equal(
+    true,
+    'Expected type value to be a valid UTF-8 encoded string.'
+  );
+  should.exist(proof.proofPurpose,
+    'Expected a proofPurpose on the proof.');
+  isValidUtf8(proof.proofPurpose).should.equal(
+    true,
+    'Expected proofPurpose value to be a valid UTF-8 encoded string.'
+  );
+  if(proof?.verificationMethod) {
+    isValidUtf8(proof.verificationMethod).should.equal(
+      true,
+      'Expected verificationMethod value to be a valid UTF-8 encoded string.'
+    );
+  }
+  should.exist(proof.cryptosuite,
+    'Expected a cryptosuite identifier on the proof.');
+  proof.cryptosuite.should.equal(cryptosuite,
+    `Expected {cryptosuite} cryptosuite.`);
+  isValidUtf8(proof.cryptosuite).should.equal(
+    true,
+    'Expected cryptosuite value to be a valid UTF-8 encoded string.'
+  );
+  if(proof?.created) {
+    isValidDatetime(proof.created).should.equal(
+      true,
+      'Expected created value to be a valid datetime string.'
+    );
+    isValidUtf8(proof.created).should.equal(
+      true,
+      'Expected created value to be a valid UTF-8 encoded string.'
+    );
+  }
+  if(proof?.expires) {
+    isValidDatetime(proof.expires).should.equal(
+      true,
+      'Expected created value to be a valid datetime string.'
+    );
+    isValidUtf8(proof.expires).should.equal(
+      true,
+      'Expected expires value to be a valid UTF-8 encoded string.'
+    );
+  }
+  if(proof?.domain) {
+    isValidUtf8(proof.domain).should.equal(
+      true,
+      'Expected domain value to be a valid UTF-8 encoded string.'
+    );
+  }
+  if(proof?.challenge) {
+    isValidUtf8(proof.challenge).should.equal(
+      true,
+      'Expected challenge value to be a valid UTF-8 encoded string.'
+    );
+  }
+  should.exist(proof.proofValue,
+    'Expected proof to have proofValue.');
+  isValidUtf8(proof.proofValue).should.equal(
+    true,
+    'Expected proofValue value to be a valid UTF-8 encoded string.'
+  );
+  if(proof?.previousProof) {
+  }
+  if(proof?.nonce) {
+  }
 }
