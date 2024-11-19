@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 import chai from 'chai';
-import {createInitialVc} from './helpers.js';
 import {endpoints} from 'vc-test-suite-implementations';
 import {getSuiteConfig} from './test-config.js';
+import {secureCredential} from './helpers.js';
 import {verificationSuccess} from './assertions.js';
 
 const {
@@ -81,7 +81,7 @@ const {
         }
         let issuedVc;
         before(async function() {
-          issuedVc = await createInitialVc({
+          issuedVc = await secureCredential({
             issuer: issuerEndpoint,
             vc: credentials.interop[vcVersion].document,
             vcVersion

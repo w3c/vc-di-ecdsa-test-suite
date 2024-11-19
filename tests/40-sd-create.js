@@ -4,7 +4,7 @@
  */
 import * as ecdsaSd2023Cryptosuite
   from '@digitalbazaar/ecdsa-sd-2023-cryptosuite';
-import {createInitialVc, endpointCheck} from './helpers.js';
+import {endpointCheck, secureCredential} from './helpers.js';
 import {
   shouldBeBs58,
   shouldBeBs64UrlNoPad,
@@ -51,7 +51,7 @@ describe('ecdsa-sd-2023 (create)', function() {
               let proofs;
               const verificationMethodDocuments = [];
               before(async function() {
-                issuedVc = await createInitialVc({
+                issuedVc = await secureCredential({
                   issuer,
                   vc: credentials.create[vcVersion].document,
                   mandatoryPointers:
