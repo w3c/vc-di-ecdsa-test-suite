@@ -67,7 +67,7 @@ describe('Data Model - Verification Methods (Multikey)', function() {
         const keyType = issuer.settings.supportedEcdsaKeyTypes[0];
         const multikey =
           await multikeyFromVerificationMethod(verificationMethod, keyType);
-        expect(multikey).to.be.exist;
+        expect(multikey).to.exist;
       });
     });
   }
