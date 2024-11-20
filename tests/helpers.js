@@ -7,7 +7,6 @@ import * as bs64 from 'base64url-universal';
 import chai from 'chai';
 import {createRequire} from 'node:module';
 import {isUtf8} from 'node:buffer';
-import {isUtf8} from 'node:buffer';
 import {klona} from 'klona';
 import {readFileSync} from 'fs';
 import {v4 as uuidv4} from 'uuid';
@@ -288,19 +287,15 @@ export function setupRow() {
   };
 }
 
-export function proofExists(proofs) {
+export function proofExists(securedCredential) {
+  should.exist(securedCredential,
+    'Expected issuer to have issued a credential.');
+  const proofs = getProofs(securedCredential);
   should.exist(proofs,
     'Expected credential to have a proof.');
   proofs.length.should.be.gte(1,
     'Expected credential to have at least one proof.');
   return proofs[0];
-}
-
-export function assertSecuredCredential(securedCredential) {
-  should.exist(securedCredential,
-    'Expected issuer to have issued a credential.');
-  const proofs = getProofs(securedCredential);
-  proofExists(proofs);
 }
 
 export async function verifySuccess(verifier, securedCredential) {
@@ -318,4 +313,3 @@ export async function verifyError(verifier, securedCredential) {
   const response = await verifier.post({json: body});
   should.exist(response.error, 'Expected an error from verifier.');
 }
-

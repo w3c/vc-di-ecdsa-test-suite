@@ -4,12 +4,10 @@
  */
 import {
   assertAllUtf8,
-  assertDataIntegrityProof,
-  assertSecuredCredential
+  assertDataIntegrityProof
 } from './assertions.js';
 import {
   generateCredential,
-  getProofs,
   isValidDatetime,
   proofExists,
   secureCredential,
@@ -47,18 +45,15 @@ describe('Algorithms - Create Proof (ecdsa-jcs-2019)', function() {
     describe(columnId, function() {
       const [issuer] = endpoints;
       let securedCredential;
-      let proofs;
       before(async function() {
         securedCredential = await secureCredential(
           {issuer, vc: generateCredential()});
-        proofs = getProofs(securedCredential);
       });
       beforeEach(setupRow);
       it('A data integrity proof (map), or an error, is produced as output.',
         async function() {
           this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#create-proof-ecdsa-jcs-2019';
-          assertSecuredCredential(securedCredential);
-          const proof = proofExists(proofs);
+          const proof = proofExists(securedCredential);
           assertDataIntegrityProof(proof, 'ecdsa-jcs-2019');
           // Since we are not sending proof options, we only do a positive test
         });
@@ -69,7 +64,7 @@ describe('Algorithms - Create Proof (ecdsa-jcs-2019)', function() {
         // NOTE, for backwards compatibility reason, this step is not mandatory
         // This feature is designed to be used with proof sets/chains,
         // when adding new context in subsequent proofs
-        const proof = proofExists(proofs);
+        const proof = proofExists(securedCredential);
         should.exist(proof['@context'],
           'Expected proof to have context.');
         canonicalize(proof['@context']).should.equal(
@@ -83,7 +78,7 @@ describe('Algorithms - Create Proof (ecdsa-jcs-2019)', function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#create-proof-ecdsa-jcs-2019';
         // Shallow multibase test
         // TODO try decoding
-        const proof = proofExists(proofs);
+        const proof = proofExists(securedCredential);
         should.exist(proof.proofValue,
           'Expected proof to have proofValue.');
         expect(proof.proofValue.startsWith('z')).to.be.true;
@@ -121,35 +116,24 @@ describe('Algorithms - Verify Proof (ecdsa-jcs-2019)', function() {
   }
 });
 
-describe('Algorithms - Transformation', function() {
+describe('Algorithms - Transformation (ecdsa-jcs-2019)', function() {
   setupReportableTestSuite(this);
   this.implemented = [...issuers.keys()];
   for(const [columnId, {endpoints}] of issuers) {
     describe(columnId, function() {
       const [issuer] = endpoints;
       let securedCredential;
-      let proofs;
       before(async function() {
         securedCredential = await secureCredential(
           {issuer, vc: generateCredential()});
-        proofs = getProofs(securedCredential);
       });
       beforeEach(setupRow);
-      it('The proof options MUST contain a type identifier for the ' +
-        'cryptographic suite (type) and MAY contain a cryptosuite ' +
-        'identifier (cryptosuite).',
-      async function() {
-        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-serialization-ecdsa-jcs-2019';
-        const proof = proofExists(proofs);
-        should.exist(proof.type,
-          'Expected a type identifier on the proof.');
-      });
       it('The transformation options MUST contain a type identifier ' +
         'for the cryptographic suite (type) and a cryptosuite identifier ' +
         '(cryptosuite).',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#transformation-ecdsa-jcs-2019';
-        const proof = proofExists(proofs);
+        const proof = proofExists(securedCredential);
         should.exist(proof.type,
           'Expected a type identifier on  the proof.');
         should.exist(proof.cryptosuite,
@@ -159,7 +143,7 @@ describe('Algorithms - Transformation', function() {
         'it MUST use UTF-8 encoding.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#transformation-ecdsa-jcs-2019';
-        const proof = proofExists(proofs);
+        const proof = proofExists(securedCredential);
         assertAllUtf8(proof);
       });
       it('If options.type is not set to the string DataIntegrityProof or ' +
@@ -168,7 +152,7 @@ describe('Algorithms - Transformation', function() {
         'of PROOF_TRANSFORMATION_ERROR.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#transformation-ecdsa-jcs-2019';
-        const proof = proofExists(proofs);
+        const proof = proofExists(securedCredential);
         should.exist(proof.type,
           'Expected a type identifier on the proof.');
         should.exist(proof.cryptosuite,
@@ -182,26 +166,24 @@ describe('Algorithms - Transformation', function() {
   }
 });
 
-describe('ecdsa-jcs-2019 - Algorithms - Proof Configuration', function() {
+describe('Algorithms - Proof Configuration (ecdsa-jcs-2019)', function() {
   setupReportableTestSuite(this);
   this.implemented = [...issuers.keys()];
   for(const [columnId, {endpoints}] of issuers) {
     describe(columnId, function() {
       const [issuer] = endpoints;
       let securedCredential;
-      let proofs;
       before(async function() {
         securedCredential = await secureCredential(
           {issuer, vc: generateCredential()});
-        proofs = getProofs(securedCredential);
       });
       beforeEach(setupRow);
       it('The proof options MUST contain a type identifier for the ' +
-            'cryptographic suite (type) and MUST contain a cryptosuite ' +
-            'identifier (cryptosuite).',
+        'cryptographic suite (type) and MUST contain a cryptosuite ' +
+        'identifier (cryptosuite).',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-jcs-2019';
-        const proof = proofExists(proofs);
+        const proof = proofExists(securedCredential);
         should.exist(proof.type,
           'Expected a type identifier on the proof.');
         should.exist(proof.cryptosuite,
@@ -213,7 +195,7 @@ describe('ecdsa-jcs-2019 - Algorithms - Proof Configuration', function() {
         'of PROOF_GENERATION_ERROR.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-jcs-2019';
-        const proof = proofExists(proofs);
+        const proof = proofExists(securedCredential);
         should.exist(proof.type,
           'Expected a type identifier on the proof.');
         should.exist(proof.cryptosuite,
@@ -228,7 +210,7 @@ describe('ecdsa-jcs-2019 - Algorithms - Proof Configuration', function() {
         'SHOULD convey an error type of PROOF_GENERATION_ERROR.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-jcs-2019';
-        const proof = proofExists(proofs);
+        const proof = proofExists(securedCredential);
         if(proof?.created) {
           isValidDatetime(proof.created).should.equal(
             true,
@@ -240,18 +222,16 @@ describe('ecdsa-jcs-2019 - Algorithms - Proof Configuration', function() {
   }
 });
 
-describe('ecdsa-jcs-2019 - Algorithms - Proof Serialization', function() {
+describe('Algorithms - Proof Serialization (ecdsa-jcs-2019)', function() {
   setupReportableTestSuite(this);
   this.implemented = [...issuers.keys()];
   for(const [columnId, {endpoints}] of issuers) {
     describe(columnId, function() {
       const [issuer] = endpoints;
       let securedCredential;
-      let proofs;
       before(async function() {
         securedCredential = await secureCredential(
           {issuer, vc: generateCredential()});
-        proofs = getProofs(securedCredential);
       });
       beforeEach(setupRow);
       it('The proof options MUST contain a type identifier for the ' +
@@ -259,7 +239,7 @@ describe('ecdsa-jcs-2019 - Algorithms - Proof Serialization', function() {
         '(cryptosuite).',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-serialization-ecdsa-jcs-2019';
-        const proof = proofExists(proofs);
+        const proof = proofExists(securedCredential);
         should.exist(proof.type,
           'Expected a type identifier on the proof.');
       });
