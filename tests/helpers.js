@@ -251,7 +251,7 @@ export function getProofs(issuedVc) {
   return proofs;
 }
 
-export function baseCredential(version = 2) {
+export function generateCredential(version = 2) {
   let credential = {
     type: ['VerifiableCredential'],
     id: `urn:uuid:${uuidv4()}`,
@@ -273,6 +273,7 @@ export function baseCredential(version = 2) {
         'https://www.w3.org/ns/credentials/v2'
       ]
     }, credential);
+    credential.credentialSubject.name = 'Alice';
   } else {
     return null;
   }
@@ -296,3 +297,20 @@ export function assertSecuredCredential(securedCredential) {
   proofs.length.should.equal(1,
     'Expected credential to have a single proof.');
 }
+
+export async function verifySuccess(verifier, securedCredential) {
+  const body = {
+    verifiableCredential: securedCredential
+  };
+  const response = await verifier.post({json: body});
+  should.exist(response.result, 'Expected a result from verifier.');
+}
+
+export async function verifyFail(verifier, securedCredential) {
+  const body = {
+    verifiableCredential: securedCredential
+  };
+  const response = await verifier.post({json: body});
+  should.exist(response.error, 'Expected an error from verifier.');
+}
+

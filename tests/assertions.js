@@ -196,6 +196,15 @@ export function assertSecuredCredential(securedCredential) {
     'Expected credential to have a single proof.');
 }
 
+export function assertAllUtf8(proof) {
+  for(const [key, value] of Object.entries(proof)) {
+    isValidUtf8(value).should.equal(
+      true,
+      `Expected ${key} value to be a valid UTF-8 encoded string.`
+    );
+  }
+}
+
 export function assertDataIntegrityProof(proof, cryptosuite) {
   if(proof?.id) {
   }
