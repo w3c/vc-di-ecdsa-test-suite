@@ -3,149 +3,142 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 import {
-  config,
-  createInitialVc,
-  createValidCredential,
-  getProofs,
+  assertAllUtf8,
+  assertCryptosuiteProof,
+  assertDataIntegrityProof
+} from './assertions.js';
+import {
+  generateCredential,
   isValidDatetime,
-  isValidUtf8,
+  proofExists,
+  secureCredential,
   setupReportableTestSuite,
-  setupRow
+  setupRow,
 } from './helpers.js';
 import chai from 'chai';
 import {endpoints} from 'vc-test-suite-implementations';
+import {expect} from 'chai';
 
 const should = chai.should();
 
-const cryptosuite = 'ecdsa-sd-2023';
-const {tags} = config.suites[
-  cryptosuite
+const cryptosuites = [
+  'ecdsa-sd-2023',
 ];
+
 const {match: issuers} = endpoints.filterByTag({
-  tags: [...tags],
+  tags: cryptosuites,
   property: 'issuers'
 });
 
-describe('ecdsa-sd-2023 - Algorithms - Base Proof Transformation', function() {
+const {match: verifiers} = endpoints.filterByTag({
+  tags: cryptosuites,
+  property: 'verifiers'
+});
+
+describe('Algorithms - Create Base Proof (ecdsa-sd-2023)', function() {
   setupReportableTestSuite(this);
   this.implemented = [...issuers.keys()];
-  let validCredential;
-  before(async function() {
-    validCredential = await createValidCredential();
-  });
   for(const [columnId, {endpoints}] of issuers) {
     describe(columnId, function() {
       const [issuer] = endpoints;
-      let issuedVc;
-      let proofs;
-      let sd2023Proofs = [];
+      let securedCredential;
       before(async function() {
-        issuedVc = await createInitialVc({issuer, vc: validCredential});
-        proofs = getProofs(issuedVc);
-        if(proofs?.length) {
-          sd2023Proofs = proofs.filter(
-            proof => proof?.cryptosuite === cryptosuite);
-        }
+        securedCredential = await secureCredential(
+          {issuer, vc: generateCredential()});
       });
       beforeEach(setupRow);
-      const assertBefore = () => {
-        should.exist(issuedVc, 'Expected issuer to have issued a ' +
-                          'credential.');
-        should.exist(proofs, 'Expected credential to have a proof.');
-        sd2023Proofs.length.should.be.gte(1, 'Expected at least one ' +
-                          'ecdsa-sd-2023 cryptosuite.');
-      };
+      it('A data integrity proof (map), or an error, is produced as output.',
+        async function() {
+          this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#create-proof-ecdsa-sd-2023';
+          const proof = proofExists(securedCredential);
+          assertDataIntegrityProof(proof, 'ecdsa-sd-2023');
+          // Since we are not sending proof options, we only do a positive test
+        });
+      it('Let proof.proofValue be a base64-url-encoded ' +
+        'Multibase value of the proofBytes.',
+      async function() {
+        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#create-proof-ecdsa-sd-2023';
+        // Shallow multibase test
+        // TODO try decoding
+        const proof = proofExists(securedCredential);
+        should.exist(proof.proofValue,
+          'Expected proof to have proofValue.');
+        expect(proof.proofValue.startsWith('u')).to.be.true;
+      });
+    });
+  }
+});
+
+describe('Algorithms - Base Proof Transformation (ecdsa-sd-2023)', function() {
+  setupReportableTestSuite(this);
+  this.implemented = [...issuers.keys()];
+  for(const [columnId, {endpoints}] of issuers) {
+    describe(columnId, function() {
+      const [issuer] = endpoints;
+      let securedCredential;
+      before(async function() {
+        securedCredential = await secureCredential(
+          {issuer, vc: generateCredential()});
+      });
+      beforeEach(setupRow);
       it('The transformation options MUST contain a type identifier for the ' +
         'cryptographic suite (type), a cryptosuite identifier (cryptosuite), ' +
         'and a verification method (verificationMethod).',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-serialization-ecdsa-sd-2023';
-        assertBefore();
-        for(const proof of sd2023Proofs) {
-          should.exist(proof.type,
-            'Expected a type identifier on the proof.');
-          should.exist(proof.cryptosuite,
-            'Expected a cryptosuite on the proof.');
-          should.exist(proof.verificationMethod,
-            'Expected a verificationMethod on the proof.');
-        }
+        const proof = proofExists(securedCredential);
+        should.exist(proof.type,
+          'Expected a type identifier on the proof.');
+        should.exist(proof.cryptosuite,
+          'Expected a cryptosuite on the proof.');
+        should.exist(proof.verificationMethod,
+          'Expected a verificationMethod on the proof.');
       });
       it('The transformation options MUST contain an array of mandatory ' +
         'JSON pointers (mandatoryPointers) and MAY contain additional ' +
         'options, such as a JSON-LD document loader.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#transformation-ecdsa-sd-2023';
-        assertBefore();
         this.skip();
       });
-      it('Whenever this algorithm encodes strings, ' +
-        'it MUST use UTF-8 encoding.',
-      async function() {
-        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#transformation-ecdsa-sd-2023';
-        assertBefore();
-        for(const proof of sd2023Proofs) {
-          should.exist(proof?.proofValue,
-            'Expected proofValue to exist.');
-          isValidUtf8(proof.proofValue).should.equal(
-            true,
-            'Expected proofValue value to be a valid UTF-8 encoded string.'
-          );
-        }
-      });
+      it('Whenever this algorithm encodes strings, it MUST use UTF-8 encoding.',
+        async function() {
+          this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#transformation-ecdsa-sd-2023';
+          const proof = proofExists(securedCredential);
+          assertAllUtf8(proof);
+        });
       it('Per the recommendations of [RFC2104], the HMAC key MUST be the ' +
         'same length as the digest size; for SHA-256, this is 256 bits ' +
         'or 32 bytes.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#transformation-ecdsa-sd-2023';
-        assertBefore();
         this.skip();
       });
     });
   }
 });
 
-describe('ecdsa-sd-2023 - Algorithms - Base Proof Configuration', function() {
+describe('Algorithms - Base Proof Configuration (ecdsa-sd-2023)', function() {
   setupReportableTestSuite(this);
   this.implemented = [...issuers.keys()];
-  let validCredential;
-  before(async function() {
-    validCredential = await createValidCredential();
-  });
   for(const [columnId, {endpoints}] of issuers) {
     describe(columnId, function() {
       const [issuer] = endpoints;
-      let issuedVc;
-      let proofs;
-      let sd2023Proofs = [];
+      let securedCredential;
       before(async function() {
-        issuedVc = await createInitialVc({issuer, vc: validCredential});
-        proofs = getProofs(issuedVc);
-        if(proofs?.length) {
-          sd2023Proofs = proofs.filter(
-            proof => proof?.cryptosuite === cryptosuite);
-        }
+        securedCredential = await secureCredential(
+          {issuer, vc: generateCredential()});
       });
-      beforeEach(setupRow);
-      const assertBefore = () => {
-        should.exist(issuedVc,
-          'Expected issuer to have issued a credential.');
-        should.exist(proofs,
-          'Expected credential to have a proof.');
-        sd2023Proofs.length.should.be.gte(1,
-          'Expected at least one ecdsa-sd-2023 cryptosuite.');
-      };
       it('The proof options MUST contain a type identifier for the ' +
         'cryptographic suite (type) and MUST contain a cryptosuite ' +
         'identifier (cryptosuite).',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-sd-2023';
-        assertBefore();
-        for(const proof of sd2023Proofs) {
-          should.exist(proof.type,
-            'Expected a type identifier on the proof.');
-          should.exist(proof.cryptosuite,
-            'Expected a cryptosuite identifier on the proof.');
-        }
+        const proof = proofExists(securedCredential);
+        should.exist(proof.type,
+          'Expected a type identifier on the proof.');
+        should.exist(proof.cryptosuite,
+          'Expected a cryptosuite identifier on the proof.');
       });
       it('If proofConfig.type is not set to DataIntegrityProof and/or ' +
         'proofConfig.cryptosuite is not set to ecdsa-sd-2023, ' +
@@ -153,116 +146,65 @@ describe('ecdsa-sd-2023 - Algorithms - Base Proof Configuration', function() {
         'PROOF_GENERATION_ERROR.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-sd-2023';
-        assertBefore();
-        for(const proof of sd2023Proofs) {
-          should.exist(proof.type,
-            'Expected a type identifier on the proof.');
-          should.exist(proof.cryptosuite,
-            'Expected a cryptosuite identifier on the proof.');
-          proof.type.should.equal('DataIntegrityProof',
-            'Expected DataIntegrityProof type.');
-          proof.cryptosuite.should.equal('ecdsa-sd-2023',
-            'Expected ecdsa-sd-2023 cryptosuite.');
-        }
+        const proof = proofExists(securedCredential);
+        assertCryptosuiteProof(proof, 'ecdsa-sd-2023');
       });
       it('If proofConfig.created is set and if the value is not a ' +
         'valid [XMLSCHEMA11-2] datetime, an error MUST be raised and ' +
         'SHOULD convey an error type of PROOF_GENERATION_ERROR.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-sd-2023';
-        for(const proof of sd2023Proofs) {
-          if(proof?.created) {
-            isValidDatetime(proof.created).should.equal(
-              true,
-              'Expected created value to be a valid datetime string.'
-            );
-          }
+        const proof = proofExists(securedCredential);
+        if(proof?.created) {
+          isValidDatetime(proof.created).should.equal(
+            true,
+            'Expected created value to be a valid datetime string.'
+          );
         }
       });
     });
   }
 });
 
-describe('ecdsa-sd-2023 - Algorithms - Base Proof Serialization', function() {
+describe('Algorithms - Base Proof Serialization (ecdsa-sd-2023)', function() {
   setupReportableTestSuite(this);
   this.implemented = [...issuers.keys()];
-  let validCredential;
-  before(async function() {
-    validCredential = await createValidCredential();
-  });
   for(const [columnId, {endpoints}] of issuers) {
     describe(columnId, function() {
       const [issuer] = endpoints;
-      let issuedVc;
-      let proofs;
-      let sd2023Proofs = [];
+      let securedCredential;
       before(async function() {
-        issuedVc = await createInitialVc({issuer, vc: validCredential});
-        proofs = getProofs(issuedVc);
-        if(proofs?.length) {
-          sd2023Proofs = proofs.filter(
-            proof => proof?.cryptosuite === cryptosuite);
-        }
+        securedCredential = await secureCredential(
+          {issuer, vc: generateCredential()});
       });
       beforeEach(setupRow);
-      const assertBefore = () => {
-        should.exist(issuedVc, 'Expected issuer to have issued a ' +
-                              'credential.');
-        should.exist(proofs, 'Expected credential to have a proof.');
-        sd2023Proofs.length.should.be.gte(1, 'Expected at least one ' +
-                              'ecdsa-sd-2023 cryptosuite.');
-      };
       it('The proof options MUST contain a type identifier for the ' +
         'cryptographic suite (type) and MAY contain a cryptosuite identifier ' +
         '(cryptosuite).',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-serialization-ecdsa-sd-2023';
-        assertBefore();
-        for(const proof of sd2023Proofs) {
-          should.exist(proof.type,
-            'Expected a type identifier on the proof.');
-        }
+        const proof = proofExists(securedCredential);
+        should.exist(proof.type,
+          'Expected a type identifier on the proof.');
       });
     });
   }
 });
 
-describe('ecdsa-sd-2023 - Algorithms - Verify Derived Proof', function() {
+describe('Algorithms - Verify Derived Proof (ecdsa-sd-2023)', function() {
   setupReportableTestSuite(this);
-  this.implemented = [...issuers.keys()];
-  let validCredential;
-  before(async function() {
-    validCredential = await createValidCredential();
-  });
-  for(const [columnId, {endpoints}] of issuers) {
+  this.implemented = [...verifiers.keys()];
+  for(const [columnId, {endpoints}] of verifiers) {
     describe(columnId, function() {
-      const [issuer] = endpoints;
-      let issuedVc;
-      let proofs;
-      let sd2023Proofs = [];
-      before(async function() {
-        issuedVc = await createInitialVc({issuer, vc: validCredential});
-        proofs = getProofs(issuedVc);
-        if(proofs?.length) {
-          sd2023Proofs = proofs.filter(
-            proof => proof?.cryptosuite === cryptosuite);
-        }
-      });
+      const [verifier] = endpoints;
       beforeEach(setupRow);
-      const assertBefore = () => {
-        should.exist(issuedVc, 'Expected issuer to have issued a ' +
-                              'credential.');
-        should.exist(proofs, 'Expected credential to have a proof.');
-        sd2023Proofs.length.should.be.gte(1, 'Expected at least one ' +
-                              'ecdsa-sd-2023 cryptosuite.');
-      };
       it('If the length of signatures does not match the length of ' +
         'nonMandatory, an error MUST be raised and SHOULD convey an ' +
         'error type of PROOF_VERIFICATION_ERROR, indicating that the ' +
         'signature count does not match the non-mandatory message count.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-serialization-ecdsa-sd-2023';
-        assertBefore();
+        verifier;
         this.skip();
       });
     });
