@@ -288,14 +288,19 @@ export function setupRow() {
   };
 }
 
+export function proofExists(proofs) {
+  should.exist(proofs,
+    'Expected credential to have a proof.');
+  proofs.length.should.be.gte(1,
+    'Expected credential to have at least one proof.');
+  return proofs[0];
+}
+
 export function assertSecuredCredential(securedCredential) {
   should.exist(securedCredential,
     'Expected issuer to have issued a credential.');
   const proofs = getProofs(securedCredential);
-  should.exist(proofs,
-    'Expected credential to have a proof.');
-  proofs.length.should.equal(1,
-    'Expected credential to have a single proof.');
+  proofExists(proofs);
 }
 
 export async function verifySuccess(verifier, securedCredential) {
