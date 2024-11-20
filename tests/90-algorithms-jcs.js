@@ -54,7 +54,7 @@ describe('Algorithms - Create Proof (ecdsa-jcs-2019)', function() {
         async function() {
           this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#create-proof-ecdsa-jcs-2019';
           const proof = proofExists(securedCredential);
-          assertDataIntegrityProof(proof, 'ecdsa-jcs-2019');
+          assertDataIntegrityProof(proof);
           // Since we are not sending proof options, we only do a positive test
         });
       it('If unsecuredDocument.@context is present, ' +

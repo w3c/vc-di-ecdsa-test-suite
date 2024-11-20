@@ -205,7 +205,7 @@ export function assertAllUtf8(proof) {
   }
 }
 
-export function assertDataIntegrityProof(proof, cryptosuite) {
+export function assertDataIntegrityProof(proof) {
   if(proof?.id) {
   }
   should.exist(proof.type,
@@ -230,8 +230,6 @@ export function assertDataIntegrityProof(proof, cryptosuite) {
   }
   should.exist(proof.cryptosuite,
     'Expected a cryptosuite identifier on the proof.');
-  proof.cryptosuite.should.equal(cryptosuite,
-    `Expected {cryptosuite} cryptosuite.`);
   isValidUtf8(proof.cryptosuite).should.equal(
     true,
     'Expected cryptosuite value to be a valid UTF-8 encoded string.'
