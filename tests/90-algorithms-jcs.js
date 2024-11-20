@@ -14,7 +14,7 @@ import {
   secureCredential,
   setupReportableTestSuite,
   setupRow,
-  verifyFail,
+  verifyError,
   verifySuccess
 } from './helpers.js';
 import canonicalize from 'json-canon';
@@ -53,21 +53,20 @@ describe('Algorithms - Create Proof (ecdsa-jcs-2019)', function() {
         proof = getProofs(securedCredential)[0];
       });
       beforeEach(setupRow);
-      it('The following algorithm specifies how to create a ' +
-        'data integrity proof given an unsecured data document. ' +
-        'Required inputs are an unsecured data document ' +
-        '(map unsecuredDocument), and a set of proof options ' +
-        '(map options). A data integrity proof (map), or an error, ' +
-        'is produced as output.',
-      async function() {
-        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#create-proof-ecdsa-jcs-2019';
-        assertSecuredCredential(securedCredential);
-        assertDataIntegrityProof(proof, 'ecdsa-jcs-2019');
-      });
+      it('A data integrity proof (map), or an error, is produced as output.',
+        async function() {
+          this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#create-proof-ecdsa-jcs-2019';
+          assertSecuredCredential(securedCredential);
+          assertDataIntegrityProof(proof, 'ecdsa-jcs-2019');
+          // Since we are not sending proof options, we only do a positive test
+        });
       it('If unsecuredDocument.@context is present, ' +
         'set proof.@context to unsecuredDocument.@context.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#create-proof-ecdsa-jcs-2019';
+        // NOTE, for backwards compatibility reason, this step is not mandatory
+        // This feature is designed to be used with proof sets/chains,
+        // when adding new context in subsequent proofs
         should.exist(proof['@context'],
           'Expected proof to have context.');
         canonicalize(proof['@context']).should.equal(
@@ -79,6 +78,8 @@ describe('Algorithms - Create Proof (ecdsa-jcs-2019)', function() {
         'Multibase value of the proofBytes.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#create-proof-ecdsa-jcs-2019';
+        // Shallow multibase test
+        // TODO try decoding
         should.exist(proof.proofValue,
           'Expected proof to have proofValue.');
         expect(proof.proofValue.startsWith('z')).to.be.true;
@@ -100,13 +101,16 @@ describe('Algorithms - Verify Proof (ecdsa-jcs-2019)', function() {
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#verify-proof-ecdsa-rdfc-2019';
         for(const curve of verifier.settings.supportedEcdsaKeyTypes) {
+          // Send a valid VC and an invalid VC to the verifier
+          // Check for success/error on response
           const testVector = structuredClone(ecdsaJcsVectors[curve]);
           await verifySuccess(verifier, testVector);
 
           // Slice the proof
           testVector.proof.proofValue =
             testVector.proof.proofValue.slice(0, -1);
-          await verifyFail(verifier, testVector);
+          await verifyError(verifier, testVector);
+          // TODO, create a verifyProblemDetails function
         }
       });
     });
@@ -136,12 +140,12 @@ describe('Algorithms - Transformation', function() {
           'Expected a type identifier on the proof.');
       });
       it('The transformation options MUST contain a type identifier ' +
-            'for the cryptographic suite (type) and a cryptosuite identifier ' +
-            '(cryptosuite).',
+        'for the cryptographic suite (type) and a cryptosuite identifier ' +
+        '(cryptosuite).',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#transformation-ecdsa-jcs-2019';
-        should.exist(proof.type, 'Expected a type identifier on ' +
-                                'the proof.');
+        should.exist(proof.type,
+          'Expected a type identifier on  the proof.');
         should.exist(proof.cryptosuite,
           'Expected a cryptosuite identifier on the proof.');
       });
@@ -195,9 +199,9 @@ describe('ecdsa-jcs-2019 - Algorithms - Proof Configuration', function() {
           'Expected a cryptosuite identifier on the proof.');
       });
       it('If proofConfig.type is not set to DataIntegrityProof ' +
-            'and/or proofConfig.cryptosuite is not set to ecdsa-jcs-2019, ' +
-            'an error MUST be raised and SHOULD convey an error type ' +
-            'of PROOF_GENERATION_ERROR.',
+        'and/or proofConfig.cryptosuite is not set to ecdsa-jcs-2019, ' +
+        'an error MUST be raised and SHOULD convey an error type ' +
+        'of PROOF_GENERATION_ERROR.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-jcs-2019';
         should.exist(proof.type,
@@ -210,8 +214,8 @@ describe('ecdsa-jcs-2019 - Algorithms - Proof Configuration', function() {
           'Expected ecdsa-jcs-2019 cryptosuite.');
       });
       it('If proofConfig.created is set and if the value is not a ' +
-            'valid [XMLSCHEMA11-2] datetime, an error MUST be raised and ' +
-            'SHOULD convey an error type of PROOF_GENERATION_ERROR.',
+        'valid [XMLSCHEMA11-2] datetime, an error MUST be raised and ' +
+        'SHOULD convey an error type of PROOF_GENERATION_ERROR.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-jcs-2019';
         if(proof?.created) {

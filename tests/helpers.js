@@ -306,7 +306,7 @@ export async function verifySuccess(verifier, securedCredential) {
   should.exist(response.result, 'Expected a result from verifier.');
 }
 
-export async function verifyFail(verifier, securedCredential) {
+export async function verifyError(verifier, securedCredential) {
   const body = {
     verifiableCredential: securedCredential
   };
