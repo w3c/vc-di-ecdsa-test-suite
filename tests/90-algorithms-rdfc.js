@@ -3,80 +3,67 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 import {
-  config,
-  createInitialVc,
-  createValidCredential,
-  getProofs,
+  generateCredential,
   isValidDatetime,
   proofExists,
   secureCredential,
   setupReportableTestSuite,
   setupRow
 } from './helpers.js';
+import {
+  assertAllUtf8
+} from './assertions.js';
 import chai from 'chai';
 import {endpoints} from 'vc-test-suite-implementations';
 
 const should = chai.should();
 
-const cryptosuite = 'ecdsa-rdfc-2019';
-const {tags} = config.suites[
-  cryptosuite
+const cryptosuites = [
+  'ecdsa-rdfc-2019',
 ];
+
 const {match: issuers} = endpoints.filterByTag({
-  tags: [...tags],
+  tags: cryptosuites,
   property: 'issuers'
 });
 
-describe('ecdsa-rdfc-2019 - Algorithms - Transformation', function() {
+describe('Algorithms - Transformation (ecdsa-rdfc-2019)', function() {
   setupReportableTestSuite(this);
   this.implemented = [...issuers.keys()];
-  let validCredential;
-  before(async function() {
-    validCredential = await createValidCredential();
-  });
   for(const [columnId, {endpoints}] of issuers) {
     describe(columnId, function() {
       const [issuer] = endpoints;
       let securedCredential;
-      let proofs;
       before(async function() {
         securedCredential = await secureCredential(
           {issuer, vc: generateCredential()});
-        proofs = getProofs(securedCredential);
       });
       beforeEach(setupRow);
-      const assertBefore = () => {
-        should.exist(issuedVc, 'Expected issuer to have issued a ' +
-                          'credential.');
-        should.exist(proofs, 'Expected credential to have a proof.');
-        rdfc2019Proofs.length.should.be.gte(1, 'Expected at least one ' +
-                          'ecdsa-rdfc-2019 cryptosuite.');
-      };
       it('The transformation options MUST contain a type identifier ' +
-            'for the cryptographic suite (type) and a cryptosuite identifier ' +
-            '(cryptosuite).',
+          'for the cryptographic suite (type) and a cryptosuite identifier ' +
+          '(cryptosuite).',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#transformation-ecdsa-rdfc-2019';
-        const proof = proofExists(proofs);
+        const proof = proofExists(securedCredential);
         should.exist(proof.type,
           'Expected a type identifier on the proof.');
         should.exist(proof.cryptosuite,
           'Expected a cryptosuite identifier on the proof.');
       });
       it('Whenever this algorithm encodes strings, ' +
-              'it MUST use UTF-8 encoding.',
+          'it MUST use UTF-8 encoding.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#transformation-ecdsa-rdfc-2019';
-        const proof = proofExists(proofs);
+        const proof = proofExists(securedCredential);
         assertAllUtf8(proof);
       });
       it('If options.type is not set to the string DataIntegrityProof or ' +
-              'options.cryptosuite is not set to the string ecdsa-rdfc-2019, ' +
-              'an error MUST be raised and SHOULD convey an error type ' +
-              'of PROOF_TRANSFORMATION_ERROR.',
+        'options.cryptosuite is not set to the string ecdsa-rdfc-2019, ' +
+        'an error MUST be raised and SHOULD convey an error type ' +
+        'of PROOF_TRANSFORMATION_ERROR.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#transformation-ecdsa-rdfc-2019';
-        const proof = proofExists(proofs);
+        const proof = proofExists(securedCredential);
         should.exist(proof.type,
           'Expected a type identifier on the proof.');
         should.exist(proof.cryptosuite,
@@ -97,11 +84,9 @@ describe('Algorithms - Proof Configuration (ecdsa-rdfc-2019)', function() {
     describe(columnId, function() {
       const [issuer] = endpoints;
       let securedCredential;
-      let proofs;
       before(async function() {
         securedCredential = await secureCredential(
           {issuer, vc: generateCredential()});
-        proofs = getProofs(securedCredential);
       });
       beforeEach(setupRow);
       it('The proof options MUST contain a type identifier for the ' +
@@ -109,7 +94,7 @@ describe('Algorithms - Proof Configuration (ecdsa-rdfc-2019)', function() {
         'identifier (cryptosuite).',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-rdfc-2019';
-        const proof = proofExists(proofs);
+        const proof = proofExists(securedCredential);
         should.exist(proof.type,
           'Expected a type identifier on the proof.');
         should.exist(proof.cryptosuite,
@@ -121,7 +106,7 @@ describe('Algorithms - Proof Configuration (ecdsa-rdfc-2019)', function() {
         'of PROOF_GENERATION_ERROR.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-rdfc-2019';
-        const proof = proofExists(proofs);
+        const proof = proofExists(securedCredential);
         should.exist(proof.type,
           'Expected a type identifier on the proof.');
         should.exist(proof.cryptosuite,
@@ -136,7 +121,7 @@ describe('Algorithms - Proof Configuration (ecdsa-rdfc-2019)', function() {
         'SHOULD convey an error type of PROOF_GENERATION_ERROR.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-rdfc-2019';
-        const proof = proofExists(proofs);
+        const proof = proofExists(securedCredential);
         if(proof?.created) {
           isValidDatetime(proof.created).should.equal(
             true,
@@ -148,115 +133,24 @@ describe('Algorithms - Proof Configuration (ecdsa-rdfc-2019)', function() {
   }
 });
 
-describe('ecdsa-rdfc-2019 - Algorithms - Proof Configuration', function() {
+describe('Algorithms - Proof Serialization (ecdsa-rdfc-2019)', function() {
   setupReportableTestSuite(this);
   this.implemented = [...issuers.keys()];
-  let validCredential;
-  before(async function() {
-    validCredential = await createValidCredential();
-  });
   for(const [columnId, {endpoints}] of issuers) {
     describe(columnId, function() {
       const [issuer] = endpoints;
       let securedCredential;
-      let proofs;
       before(async function() {
         securedCredential = await secureCredential(
           {issuer, vc: generateCredential()});
-        proofs = getProofs(securedCredential);
       });
       beforeEach(setupRow);
-      const assertBefore = () => {
-        should.exist(issuedVc, 'Expected issuer to have issued a ' +
-                          'credential.');
-        should.exist(proofs, 'Expected credential to have a proof.');
-        rdfc2019Proofs.length.should.be.gte(1, 'Expected at least one ' +
-                          'ecdsa-rdfc-2019 cryptosuite.');
-      };
-      it('The proof options MUST contain a type identifier for the ' +
-              'cryptographic suite (type) and MUST contain a cryptosuite ' +
-              'identifier (cryptosuite).',
-      async function() {
-        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-rdfc-2019';
-        assertBefore();
-        for(const proof of rdfc2019Proofs) {
-          should.exist(proof.type,
-            'Expected a type identifier on the proof.');
-          should.exist(proof.cryptosuite,
-            'Expected a cryptosuite identifier on the proof.');
-        }
-      });
-      it('If proofConfig.type is not set to DataIntegrityProof ' +
-              'and/or proofConfig.cryptosuite is not set to ecdsa-rdfc-2019, ' +
-              'an error MUST be raised and SHOULD convey an error type ' +
-              'of PROOF_GENERATION_ERROR.',
-      async function() {
-        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-rdfc-2019';
-        assertBefore();
-        for(const proof of rdfc2019Proofs) {
-          should.exist(proof.type,
-            'Expected a type identifier on the proof.');
-          should.exist(proof.cryptosuite,
-            'Expected a cryptosuite identifier on the proof.');
-          proof.type.should.equal('DataIntegrityProof',
-            'Expected DataIntegrityProof type.');
-          proof.cryptosuite.should.equal('ecdsa-rdfc-2019',
-            'Expected ecdsa-rdfc-2019 cryptosuite.');
-        }
-      });
-      it('If proofConfig.created is set and if the value is not a ' +
-              'valid [XMLSCHEMA11-2] datetime, an error MUST be raised and ' +
-              'SHOULD convey an error type of PROOF_GENERATION_ERROR.',
-      async function() {
-        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-rdfc-2019';
-        for(const proof of rdfc2019Proofs) {
-          if(proof?.created) {
-            isValidDatetime(proof.created).should.equal(
-              true,
-              'Expected created value to be a valid datetime string.'
-            );
-          }
-        }
-      });
-    });
-  }
-});
-
-describe('ecdsa-rdfc-2019 - Algorithms - Proof Serialization', function() {
-  setupReportableTestSuite(this);
-  this.implemented = [...issuers.keys()];
-  let validCredential;
-  before(async function() {
-    validCredential = await createValidCredential();
-  });
-  for(const [columnId, {endpoints}] of issuers) {
-    describe(columnId, function() {
-      const [issuer] = endpoints;
-      let issuedVc;
-      let proofs;
-      let rdfc2019Proofs = [];
-      before(async function() {
-        issuedVc = await createInitialVc({issuer, vc: validCredential});
-        proofs = getProofs(issuedVc);
-        if(proofs?.length) {
-          rdfc2019Proofs = proofs.filter(
-            proof => proof?.cryptosuite === cryptosuite);
-        }
-      });
-      beforeEach(setupRow);
-      const assertBefore = () => {
-        should.exist(issuedVc, 'Expected issuer to have issued a ' +
-                            'credential.');
-        should.exist(proofs, 'Expected credential to have a proof.');
-        rdfc2019Proofs.length.should.be.gte(1, 'Expected at least one ' +
-                            'ecdsa-rdfc-2019 cryptosuite.');
-      };
       it('The proof options MUST contain a type identifier for the ' +
         'cryptographic suite (type) and MAY contain a cryptosuite identifier ' +
         '(cryptosuite).',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-serialization-ecdsa-rdfc-2019';
-        const proof = proofExists(proofs);
+        const proof = proofExists(securedCredential);
         should.exist(proof.type,
           'Expected a type identifier on the proof.');
       });
