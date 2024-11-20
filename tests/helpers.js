@@ -4,9 +4,14 @@
  */
 import * as bs58 from 'base58-universal';
 import * as bs64 from 'base64url-universal';
+import * as didKey from '@digitalbazaar/did-method-key';
+import * as EcdsaMultikey from '@digitalbazaar/ecdsa-multikey';
+import {CachedResolver} from '@digitalbazaar/did-io';
 import chai from 'chai';
 import {createRequire} from 'node:module';
+import {contexts as credContexts} from '@digitalbazaar/credentials-context';
 import {isUtf8} from 'node:buffer';
+import {JsonLdDocumentLoader} from 'jsonld-document-loader';
 import {klona} from 'klona';
 import {readFileSync} from 'fs';
 import {v4 as uuidv4} from 'uuid';
@@ -312,4 +317,30 @@ export async function verifyError(verifier, securedCredential) {
   };
   const response = await verifier.post({json: body});
   should.exist(response.error, 'Expected an error from verifier.');
+}
+
+export async function multikeyFromVerificationMethod(
+  verificationMethod, keyType) {
+  const cachedResolver = new CachedResolver();
+  const jdl = new JsonLdDocumentLoader();
+  jdl.addDocuments({documents: credContexts});
+  jdl.setDidResolver(cachedResolver);
+  const didKeyDriverMultikey = didKey.driver();
+  const prefixes = {
+    Ed25519: 'z6Mk',
+    'P-256': 'zDna',
+    'P-384': 'z82L'
+  };
+  try {
+    didKeyDriverMultikey.use({
+      multibaseMultikeyHeader: prefixes[keyType],
+      fromMultibase: EcdsaMultikey.from
+    });
+    cachedResolver.use(didKeyDriverMultikey);
+    const response = await jdl.documentLoader(verificationMethod);
+    return response.document.publicKeyMultibase;
+  } catch(error) {
+    // Do nothing on error
+  }
+  return null;
 }

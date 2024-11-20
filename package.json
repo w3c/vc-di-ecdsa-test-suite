@@ -57,7 +57,7 @@
     "chai": "^4.3.7",
     "chai-string": "^1.5.0",
     "data-integrity-test-suite-assertion": "github:w3c-ccg/data-integrity-test-suite-assertion",
-    "jsonld-document-loader": "^2.0.0",
+    "jsonld-document-loader": "^2.2.0",
     "json-canon": "^1.0.1",
     "klona": "^2.0.6",
     "multibase": "^4.0.6",
