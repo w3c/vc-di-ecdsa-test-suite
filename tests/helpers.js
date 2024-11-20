@@ -287,10 +287,16 @@ export function setupRow() {
   };
 }
 
+<<<<<<< HEAD
 export function proofExists(securedCredential) {
   should.exist(securedCredential,
     'Expected issuer to have issued a credential.');
   const proofs = getProofs(securedCredential);
+=======
+<<<<<<< HEAD
+=======
+export function proofExists(proofs) {
+>>>>>>> ec4cd6a (improve proof handling when asserting a secured credential)
   should.exist(proofs,
     'Expected credential to have a proof.');
   proofs.length.should.be.gte(1,
@@ -298,6 +304,17 @@ export function proofExists(securedCredential) {
   return proofs[0];
 }
 
+<<<<<<< HEAD
+=======
+export function assertSecuredCredential(securedCredential) {
+  should.exist(securedCredential,
+    'Expected issuer to have issued a credential.');
+  const proofs = getProofs(securedCredential);
+  proofExists(proofs);
+}
+
+>>>>>>> 265e798 (improve proof handling when asserting a secured credential)
+>>>>>>> ec4cd6a (improve proof handling when asserting a secured credential)
 export async function verifySuccess(verifier, securedCredential) {
   const body = {
     verifiableCredential: securedCredential
