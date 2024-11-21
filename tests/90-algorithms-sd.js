@@ -8,15 +8,20 @@ import {
   assertDataIntegrityProof
 } from './assertions.js';
 import {
+  encodeSdDerivedProofValue,
   generateCredential,
-  inspectSdProofValue,
+  inspectSdBaseProofValue,
+  inspectSdDerivedProofValue,
   isValidDatetime,
   proofExists,
   secureCredential,
   setupReportableTestSuite,
   setupRow,
+  verifyError,
+  verifySuccess
 } from './helpers.js';
 import chai from 'chai';
+import {ecdsaSdVectors} from './vectors.js';
 import {endpoints} from 'vc-test-suite-implementations';
 import {expect} from 'chai';
 
@@ -107,7 +112,7 @@ describe('Algorithms - Base Proof Transformation (ecdsa-sd-2023)', function() {
           {issuer, vc: generateCredential()});
         const proof = proofExists(securedCredentialNoPointers);
         const decodedProof =
-          await inspectSdProofValue(proof);
+          await inspectSdBaseProofValue(proof);
         should.exist(decodedProof.mandatoryPointers,
           'Expected mandatoryPointers to be included in the proofValue.');
       });
@@ -123,7 +128,7 @@ describe('Algorithms - Base Proof Transformation (ecdsa-sd-2023)', function() {
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#transformation-ecdsa-sd-2023';
         const proof = proofExists(securedCredential);
-        const decodedProof = await inspectSdProofValue(proof);
+        const decodedProof = await inspectSdBaseProofValue(proof);
         decodedProof.hmacKey.length.should.equal(32,
           'Expected HMAC key to be the same length as the digest size.'
         );
@@ -220,8 +225,22 @@ describe('Algorithms - Verify Derived Proof (ecdsa-sd-2023)', function() {
         'signature count does not match the non-mandatory message count.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-serialization-ecdsa-sd-2023';
-        verifier;
-        this.skip();
+
+        // const validBaseProof = structuredClone(ecdsaSdVectors.baseProof);
+        // await verifySuccess(verifier, validBaseProof);
+
+        const validDerivedProof = structuredClone(ecdsaSdVectors.derivedProof);
+        await verifySuccess(verifier, validDerivedProof);
+
+        // Instanciate a new signed credential and remove a signature
+        const invalidDerivedProof = structuredClone(validDerivedProof);
+        const decodedDerivedProofValue =
+          await inspectSdDerivedProofValue(invalidDerivedProof.proof);
+        decodedDerivedProofValue.signatures =
+          decodedDerivedProofValue.signatures.slice(1);
+        invalidDerivedProof.proof.proofValue =
+          encodeSdDerivedProofValue(decodedDerivedProofValue);
+        await verifyError(verifier, invalidDerivedProof);
       });
     });
   }
