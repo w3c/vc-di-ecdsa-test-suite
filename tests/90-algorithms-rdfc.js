@@ -54,7 +54,7 @@ describe('Algorithms - Create Proof (ecdsa-rdfc-2019)', function() {
         async function() {
           this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#create-proof-ecdsa-rdfc-2019';
           const proof = proofExists(securedCredential);
-          assertDataIntegrityProof(proof, 'ecdsa-rdfc-2019');
+          assertDataIntegrityProof(proof);
           // Since we are not sending proof options, we only do a positive test
         });
       it('Let proof.proofValue be a base58-btc-encoded ' +
