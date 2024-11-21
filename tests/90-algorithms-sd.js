@@ -9,6 +9,7 @@ import {
 } from './assertions.js';
 import {
   generateCredential,
+  inspectSdProofValue,
   isValidDatetime,
   proofExists,
   secureCredential,
@@ -43,16 +44,17 @@ describe('Algorithms - Create Base Proof (ecdsa-sd-2023)', function() {
       const [issuer] = endpoints;
       let securedCredential;
       before(async function() {
+        const mandatoryPointers = ['/credentialSubject/name'];
         securedCredential = await secureCredential(
-          {issuer, vc: generateCredential()});
+          {issuer, vc: generateCredential(), mandatoryPointers});
       });
       beforeEach(setupRow);
       it('A data integrity proof (map), or an error, is produced as output.',
         async function() {
           this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#create-proof-ecdsa-sd-2023';
           const proof = proofExists(securedCredential);
-          assertDataIntegrityProof(proof, 'ecdsa-sd-2023');
-          // Since we are not sending proof options, we only do a positive test
+          assertDataIntegrityProof(proof);
+          // We only do a positive test
         });
       it('Let proof.proofValue be a base64-url-encoded ' +
         'Multibase value of the proofBytes.',
@@ -77,8 +79,9 @@ describe('Algorithms - Base Proof Transformation (ecdsa-sd-2023)', function() {
       const [issuer] = endpoints;
       let securedCredential;
       before(async function() {
+        const mandatoryPointers = ['/credentialSubject/name'];
         securedCredential = await secureCredential(
-          {issuer, vc: generateCredential()});
+          {issuer, vc: generateCredential(), mandatoryPointers});
       });
       beforeEach(setupRow);
       it('The transformation options MUST contain a type identifier for the ' +
@@ -99,7 +102,14 @@ describe('Algorithms - Base Proof Transformation (ecdsa-sd-2023)', function() {
         'options, such as a JSON-LD document loader.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#transformation-ecdsa-sd-2023';
-        this.skip();
+        // Send an issuance request without mandatoryPointers
+        const securedCredentialNoPointers = await secureCredential(
+          {issuer, vc: generateCredential()});
+        const proof = proofExists(securedCredentialNoPointers);
+        const decodedProof =
+          await inspectSdProofValue(proof);
+        should.exist(decodedProof.mandatoryPointers,
+          'Expected mandatoryPointers to be included in the proofValue.');
       });
       it('Whenever this algorithm encodes strings, it MUST use UTF-8 encoding.',
         async function() {
@@ -112,7 +122,11 @@ describe('Algorithms - Base Proof Transformation (ecdsa-sd-2023)', function() {
         'or 32 bytes.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#transformation-ecdsa-sd-2023';
-        this.skip();
+        const proof = proofExists(securedCredential);
+        const decodedProof = await inspectSdProofValue(proof);
+        decodedProof.hmacKey.length.should.equal(32,
+          'Expected HMAC key to be the same length as the digest size.'
+        );
       });
     });
   }
@@ -126,8 +140,9 @@ describe('Algorithms - Base Proof Configuration (ecdsa-sd-2023)', function() {
       const [issuer] = endpoints;
       let securedCredential;
       before(async function() {
+        const mandatoryPointers = ['/credentialSubject/name'];
         securedCredential = await secureCredential(
-          {issuer, vc: generateCredential()});
+          {issuer, vc: generateCredential(), mandatoryPointers});
       });
       it('The proof options MUST contain a type identifier for the ' +
         'cryptographic suite (type) and MUST contain a cryptosuite ' +
@@ -174,8 +189,9 @@ describe('Algorithms - Base Proof Serialization (ecdsa-sd-2023)', function() {
       const [issuer] = endpoints;
       let securedCredential;
       before(async function() {
+        const mandatoryPointers = ['/credentialSubject/name'];
         securedCredential = await secureCredential(
-          {issuer, vc: generateCredential()});
+          {issuer, vc: generateCredential(), mandatoryPointers});
       });
       beforeEach(setupRow);
       it('The proof options MUST contain a type identifier for the ' +
