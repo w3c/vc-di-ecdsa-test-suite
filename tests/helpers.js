@@ -6,10 +6,15 @@ import * as bs58 from 'base58-universal';
 import * as bs64 from 'base64url-universal';
 import * as didKey from '@digitalbazaar/did-method-key';
 import * as EcdsaMultikey from '@digitalbazaar/ecdsa-multikey';
+import {base64url} from 'multiformats/bases/base64';
+import {bases} from 'multiformats/basics';
 import {CachedResolver} from '@digitalbazaar/did-io';
+import cbor from 'cbor';
 import chai from 'chai';
+import {CID} from 'multiformats/cid';
 import {createRequire} from 'node:module';
 import {contexts as credContexts} from '@digitalbazaar/credentials-context';
+import {expect} from 'chai';
 import {isUtf8} from 'node:buffer';
 import {JsonLdDocumentLoader} from 'jsonld-document-loader';
 import {klona} from 'klona';
@@ -346,4 +351,24 @@ export async function multikeyFromVerificationMethod(
     // Do nothing on error
   }
   return null;
+}
+
+export async function inspectSdProofValue(proof) {
+  const proofValue = proof.proofValue;
+  expect(proof.proofValue.startsWith('u')).to.be.true;
+  const cborProof = bases.base64url.decode(proofValue);
+  const decodedProof = await cbor.decodeFirst(cborProof, (error, obj) => {
+    return obj;
+  });
+  const decodedProofValues = decodedProof.value;
+  decodedProofValues.length.should.equal(5,
+    'Expected decoded proof value to be of length 5.'
+  );
+  return {
+    baseSignature: decodedProofValues[0],
+    publicKey: decodedProofValues[1],
+    hmacKey: decodedProofValues[2],
+    signatures: decodedProofValues[3],
+    mandatoryPointers: decodedProofValues[4]
+  };
 }
