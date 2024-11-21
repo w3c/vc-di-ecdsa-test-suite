@@ -6,10 +6,13 @@ import * as bs58 from 'base58-universal';
 import * as bs64 from 'base64url-universal';
 import * as didKey from '@digitalbazaar/did-method-key';
 import * as EcdsaMultikey from '@digitalbazaar/ecdsa-multikey';
+import {bases} from 'multiformats/basics';
 import {CachedResolver} from '@digitalbazaar/did-io';
+import cbor from 'cbor';
 import chai from 'chai';
 import {createRequire} from 'node:module';
 import {contexts as credContexts} from '@digitalbazaar/credentials-context';
+import {expect} from 'chai';
 import {isUtf8} from 'node:buffer';
 import {JsonLdDocumentLoader} from 'jsonld-document-loader';
 import {klona} from 'klona';
@@ -343,4 +346,50 @@ export async function multikeyFromVerificationMethod(
     // Do nothing on error
   }
   return null;
+}
+
+export async function inspectSdBaseProofValue(proof) {
+  const proofValue = proof.proofValue;
+  expect(proof.proofValue.startsWith('u')).to.be.true;
+  const cborProof = bases.base64url.decode(proofValue);
+  const decodedProof = await cbor.decodeFirst(cborProof, (error, obj) => {
+    return obj;
+  });
+  const decodedProofValues = decodedProof.value;
+  decodedProofValues.length.should.equal(5,
+    'Expected decoded proof value to be of length 5.'
+  );
+  return {
+    baseSignature: decodedProofValues[0],
+    publicKey: decodedProofValues[1],
+    hmacKey: decodedProofValues[2],
+    signatures: decodedProofValues[3],
+    mandatoryPointers: decodedProofValues[4]
+  };
+}
+
+export async function inspectSdDerivedProofValue(proof) {
+  const proofValue = proof.proofValue;
+  expect(proof.proofValue.startsWith('u')).to.be.true;
+  const cborProof = bases.base64url.decode(proofValue);
+  const decodedProof = await cbor.decodeFirst(cborProof, (error, obj) => {
+    return obj;
+  });
+  const decodedProofValues = decodedProof.value;
+  decodedProofValues.length.should.equal(5,
+    'Expected decoded proof value to be of length 5.'
+  );
+  return {
+    baseSignature: decodedProofValues[0],
+    publicKey: decodedProofValues[1],
+    signatures: decodedProofValues[2],
+    labelMap: decodedProofValues[3],
+    mandatoryIndexes: decodedProofValues[4]
+  };
+}
+
+export async function encodeSdDerivedProofValue(decodedPproof) {
+  const cborProof = await cbor.encode(decodedPproof);
+  const proofValue = bases.base64url.encode(cborProof);
+  return proofValue;
 }
