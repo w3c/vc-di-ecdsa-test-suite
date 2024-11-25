@@ -391,8 +391,8 @@ export async function inspectSdDerivedProofValue(proof) {
   };
 }
 
-export async function encodeSdDerivedProofValue(decodedPproof) {
-  const cborProof = await cbor.encode(decodedPproof);
+export async function encodeSdDerivedProofValue(decodedProof) {
+  const cborProof = await cbor.encode(decodedProof);
   const proofValue = bases.base64url.encode(cborProof);
   return proofValue;
 }
