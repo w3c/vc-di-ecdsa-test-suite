@@ -4,6 +4,7 @@
  */
 import {
   assertAllUtf8,
+  assertCryptosuiteProof,
   assertDataIntegrityProof
 } from './assertions.js';
 import {
@@ -98,7 +99,7 @@ describe('Algorithms - Verify Proof (ecdsa-jcs-2019)', function() {
         'Required inputs are an secured data document (map securedDocument). ' +
         'This algorithm returns a verification result.',
       async function() {
-        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#verify-proof-ecdsa-rdfc-2019';
+        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#verify-proof-ecdsa-jcs-2019';
         for(const curve of verifier.settings.supportedEcdsaKeyTypes) {
           // Send a valid VC and an invalid VC to the verifier
           // Check for success/error on response
@@ -139,13 +140,12 @@ describe('Algorithms - Transformation (ecdsa-jcs-2019)', function() {
         should.exist(proof.cryptosuite,
           'Expected a cryptosuite identifier on the proof.');
       });
-      it('Whenever this algorithm encodes strings, ' +
-        'it MUST use UTF-8 encoding.',
-      async function() {
-        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#transformation-ecdsa-jcs-2019';
-        const proof = proofExists(securedCredential);
-        assertAllUtf8(proof);
-      });
+      it('Whenever this algorithm encodes strings, it MUST use UTF-8 encoding.',
+        async function() {
+          this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#transformation-ecdsa-jcs-2019';
+          const proof = proofExists(securedCredential);
+          assertAllUtf8(proof);
+        });
       it('If options.type is not set to the string DataIntegrityProof or ' +
         'options.cryptosuite is not set to the string ecdsa-jcs-2019, ' +
         'an error MUST be raised and SHOULD convey an error type ' +
@@ -153,14 +153,7 @@ describe('Algorithms - Transformation (ecdsa-jcs-2019)', function() {
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#transformation-ecdsa-jcs-2019';
         const proof = proofExists(securedCredential);
-        should.exist(proof.type,
-          'Expected a type identifier on the proof.');
-        should.exist(proof.cryptosuite,
-          'Expected a cryptosuite identifier on the proof.');
-        proof.type.should.equal('DataIntegrityProof',
-          'Expected DataIntegrityProof type.');
-        proof.cryptosuite.should.equal('ecdsa-jcs-2019',
-          'Expected ecdsa-jcs-2019 cryptosuite.');
+        assertCryptosuiteProof(proof, 'ecdsa-jcs-2019');
       });
     });
   }
@@ -196,14 +189,7 @@ describe('Algorithms - Proof Configuration (ecdsa-jcs-2019)', function() {
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-jcs-2019';
         const proof = proofExists(securedCredential);
-        should.exist(proof.type,
-          'Expected a type identifier on the proof.');
-        should.exist(proof.cryptosuite,
-          'Expected a cryptosuite identifier on the proof.');
-        proof.type.should.equal('DataIntegrityProof',
-          'Expected DataIntegrityProof type.');
-        proof.cryptosuite.should.equal('ecdsa-jcs-2019',
-          'Expected ecdsa-jcs-2019 cryptosuite.');
+        assertCryptosuiteProof(proof, 'ecdsa-jcs-2019');
       });
       it('If proofConfig.created is set and if the value is not a ' +
         'valid [XMLSCHEMA11-2] datetime, an error MUST be raised and ' +

@@ -205,6 +205,17 @@ export function assertAllUtf8(proof) {
   }
 }
 
+export function assertCryptosuiteProof(proof, cryptosuite) {
+  should.exist(proof.type,
+    'Expected a type on the proof.');
+  proof.type.should.equal('DataIntegrityProof',
+    'Expected DataIntegrityProof type.');
+  should.exist(proof.cryptosuite,
+    'Expected a cryptosuite identifier on the proof.');
+  proof.cryptosuite.should.equal(cryptosuite,
+    `Expected {cryptosuite} cryptosuite.`);
+}
+
 export function assertDataIntegrityProof(proof) {
   if(proof?.id) {
   }
