@@ -71,11 +71,11 @@ export const secureCredential = async ({
   }
   const {data, result, error} = await issuer.post({json: body});
   if(!result || !result.ok) {
-    console.warn(
-      `initial vc creation failed for ${(result || error)?.requestUrl}`,
-      error,
-      JSON.stringify(data, null, 2)
-    );
+    // console.warn(
+    //   `initial vc creation failed for ${(result || error)?.requestUrl}`,
+    //   error,
+    //   JSON.stringify(data, null, 2)
+    // );
     return null;
   }
   return data;
@@ -93,11 +93,11 @@ export const createDisclosedVc = async ({
     }
   });
   if(!result || !result.ok) {
-    console.warn(
-      `derived vc creation failed for ${(result || error)?.requestUrl}`,
-      error,
-      JSON.stringify(data, null, 2)
-    );
+    // console.warn(
+    //   `derived vc creation failed for ${(result || error)?.requestUrl}`,
+    //   error,
+    //   JSON.stringify(data, null, 2)
+    // );
   }
   return {disclosedCredential: data};
 };
@@ -389,6 +389,12 @@ export async function inspectSdDerivedProofValue(proof) {
     labelMap: decodedProofValues[3],
     mandatoryIndexes: decodedProofValues[4]
   };
+}
+
+export async function encodeSdBaseProofValue(decodedProof) {
+  const cborProof = await cbor.encode(decodedProof);
+  const proofValue = bases.base64url.encode(cborProof);
+  return proofValue;
 }
 
 export async function encodeSdDerivedProofValue(decodedProof) {
