@@ -71,11 +71,11 @@ export const secureCredential = async ({
   }
   const {data, result, error} = await issuer.post({json: body});
   if(!result || !result.ok) {
-    // console.warn(
-    //   `initial vc creation failed for ${(result || error)?.requestUrl}`,
-    //   error,
-    //   JSON.stringify(data, null, 2)
-    // );
+    console.warn(
+      `initial vc creation failed for ${(result || error)?.requestUrl}`,
+      error,
+      JSON.stringify(data, null, 2)
+    );
     return null;
   }
   return data;
@@ -93,11 +93,11 @@ export const createDisclosedVc = async ({
     }
   });
   if(!result || !result.ok) {
-    // console.warn(
-    //   `derived vc creation failed for ${(result || error)?.requestUrl}`,
-    //   error,
-    //   JSON.stringify(data, null, 2)
-    // );
+    console.warn(
+      `derived vc creation failed for ${(result || error)?.requestUrl}`,
+      error,
+      JSON.stringify(data, null, 2)
+    );
   }
   return {disclosedCredential: data};
 };
