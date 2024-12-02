@@ -18,9 +18,6 @@ import {
 import chai from 'chai';
 import {ecdsaSdVectors} from './vectors.js';
 import {endpoints} from 'vc-test-suite-implementations';
-import {
-  shouldHaveHeaderBytes
-} from './assertions.js';
 
 const should = chai.should();
 
@@ -49,29 +46,7 @@ describe('Functions - Selective Disclosure', function() {
   for(const [columnId, {endpoints}] of issuers) {
     describe(columnId, function() {
       const [issuer] = endpoints;
-      let securedCredential;
-      before(async function() {
-        securedCredential = await secureCredential(
-          {issuer, vc: generateCredential()});
-      });
       beforeEach(setupRow);
-      // 3.4.11 createInitialSelection
-      it('All non-blank node identifiers in the path of ' +
-        'any JSON Pointer MUST be included in the selection, ' +
-        'this includes any root document identifier.',
-      async function() {
-        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#selective-disclosure-functions';
-        const proof = proofExists(securedCredential);
-        proof;
-      });
-      // 3.4.11 createInitialSelection
-      it('The selection MUST include all types in the ' +
-        'path of any JSON Pointer, including any root document type.',
-      async function() {
-        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#selective-disclosure-functions';
-        const proof = proofExists(securedCredential);
-        proof;
-      });
       // 3.4.12 selectPaths
       it('Set value to parentValue.path. If value is now undefined, ' +
         'an error MUST be raised and SHOULD convey an error type of ' +
