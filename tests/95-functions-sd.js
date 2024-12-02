@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 import {
+  createDisclosedVc,
   encodeSdDerivedProofValue,
   generateCredential,
   inspectSdBaseProofValue,
@@ -17,11 +18,8 @@ import {
 import chai from 'chai';
 import {ecdsaSdVectors} from './vectors.js';
 import {endpoints} from 'vc-test-suite-implementations';
-import {expect} from 'chai';
 import {
-//   assertAllUtf8,
-//   assertCryptosuiteProof,
-//   assertDataIntegrityProof
+  shouldHaveHeaderBytes
 } from './assertions.js';
 
 const should = chai.should();
@@ -33,6 +31,11 @@ const cryptosuites = [
 const {match: issuers} = endpoints.filterByTag({
   tags: cryptosuites,
   property: 'issuers'
+});
+
+const {match: holders} = endpoints.filterByTag({
+  tags: cryptosuites,
+  property: 'vcHolders'
 });
 
 const {match: verifiers} = endpoints.filterByTag({
@@ -94,8 +97,10 @@ describe('Functions - ecdsa-sd-2023', function() {
   for(const [columnId, {endpoints}] of issuers) {
     describe(columnId, function() {
       const [issuer] = endpoints;
+      const [holder] = holders.get(columnId).endpoints;
       const [verifier] = verifiers.get(columnId).endpoints;
       let securedCredential;
+      let disclosedCredential;
       let validDerivedProof;
       before(async function() {
         securedCredential = await secureCredential(
@@ -109,9 +114,11 @@ describe('Functions - ecdsa-sd-2023', function() {
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#selective-disclosure-functions';
         const proof = proofExists(securedCredential);
-        proof;
-        // const decodedProof =
-        //     await inspectSdBaseProofValue(proof);
+        const decodedProof =
+            await inspectSdBaseProofValue(proof);
+        should.exist(decodedProof,
+          'Implementation must not use CBOR tagging.'
+        );
       });
       // 3.5.3 parseBaseProofValue
       it('If the proofValue string does not start with u, ' +
@@ -123,7 +130,20 @@ describe('Functions - ecdsa-sd-2023', function() {
         const proof = proofExists(securedCredential);
         should.exist(proof.proofValue,
           'Expected proof to have proofValue.');
-        expect(proof.proofValue.startsWith('u')).to.be.true;
+
+        // Create negative fixture
+        const invalidBaseCredential = structuredClone(securedCredential);
+        invalidBaseCredential.proof.proofValue =
+          invalidBaseCredential.proof.proofValue.slice(1);
+        ({disclosedCredential} = await createDisclosedVc(
+          {
+            selectivePointers: ['/credentialSubject/id'],
+            signedCredential: invalidBaseCredential,
+            vcHolder: holder
+          }));
+        should.not.exist(disclosedCredential?.proof,
+          'Derive endpoint should reject proof without multibase indicator.'
+        );
       });
       // 3.5.3 parseBaseProofValue
       it('If the decodedProofValue does not start with the ' +
@@ -135,16 +155,38 @@ describe('Functions - ecdsa-sd-2023', function() {
         const proof = proofExists(securedCredential);
         should.exist(proof.proofValue,
           'Expected proof to have proofValue.');
-        expect(proof.proofValue.startsWith('u2V0')).to.be.true;
+
+        // Create negative fixture
+        const invalidBaseCredential = structuredClone(securedCredential);
+        invalidBaseCredential.proof.proofValue =
+          invalidBaseCredential.proof.proofValue.slice(0, 1) +
+          invalidBaseCredential.proof.proofValue.slice(4);
+        ({disclosedCredential} = await createDisclosedVc(
+          {
+            selectivePointers: ['/credentialSubject/id'],
+            signedCredential: invalidBaseCredential,
+            vcHolder: holder
+          }));
+        should.not.exist(disclosedCredential?.proof,
+          'Derive endpoint should reject proof without header.'
+        );
       });
       // 3.5.7 serializeDerivedProofValue
       it('CBOR-encode components per [RFC8949] where CBOR ' +
         'tagging MUST NOT be used on any of the components.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#selective-disclosure-functions';
-        // this.test.cell.skipMessage =
-        //   'No implementation endpoint creating a derived proof provided.';
-        this.skip();
+        ({disclosedCredential} = await createDisclosedVc(
+          {
+            selectivePointers: ['/credentialSubject/id'],
+            signedCredential: securedCredential,
+            vcHolder: holder
+          }));
+        const decodedDerivedProofValue =
+          await inspectSdDerivedProofValue(disclosedCredential.proof);
+        should.exist(decodedDerivedProofValue,
+          'Implementation must not use CBOR tagging.'
+        );
       });
       // 3.5.8 parseDerivedProofValue
       it('If the proofValue string does not start with u, ' +
@@ -154,6 +196,7 @@ describe('Functions - ecdsa-sd-2023', function() {
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#selective-disclosure-functions';
         await verifySuccess(verifier, validDerivedProof);
+
         // Clone a valid proof and slice the multibase header
         const invalidDerivedProof =
           structuredClone(validDerivedProof);
