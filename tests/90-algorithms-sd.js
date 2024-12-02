@@ -107,12 +107,14 @@ describe('Algorithms - Base Proof Transformation (ecdsa-sd-2023)', function() {
         'options, such as a JSON-LD document loader.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#transformation-ecdsa-sd-2023';
+
         // Send an issuance request without mandatoryPointers
         const securedCredentialNoPointers = await secureCredential(
           {issuer, vc: generateCredential()});
         const proof = proofExists(securedCredentialNoPointers);
         const decodedProof =
           await inspectSdBaseProofValue(proof);
+        // Ensure default mandatoryPointers are injected by application
         should.exist(decodedProof.mandatoryPointers,
           'Expected mandatoryPointers to be included in the proofValue.');
       });
@@ -225,9 +227,6 @@ describe('Algorithms - Verify Derived Proof (ecdsa-sd-2023)', function() {
         'signature count does not match the non-mandatory message count.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-serialization-ecdsa-sd-2023';
-
-        // const validBaseProof = structuredClone(ecdsaSdVectors.baseProof);
-        // await verifySuccess(verifier, validBaseProof);
 
         const validDerivedProof = structuredClone(ecdsaSdVectors.derivedProof);
         await verifySuccess(verifier, validDerivedProof);
