@@ -9,6 +9,7 @@
   },
   "scripts": {
     "test": "mocha tests/ --reporter @digitalbazaar/mocha-w3c-interop-reporter --reporter-options abstract=\"$PWD/config/abstract.hbs\",reportDir=\"$PWD/reports\",respec=\"$PWD/config/respec.json\",suiteLog='./suite.log',templateData=\"$PWD/reports/index.json\",title=\"Data Integrity ECDSA Cryptosuites Interoperability Report\" --timeout 15000 --preserve-symlinks",
+    "test-allure": "npx mocha tests/ -R allure-mocha -O 'resultsDir=allure-results'",
     "fetch-vc-di-ecdsa-test-vectors": "if [ ! -e tests/input/vc-di-ecdsa ]; then git clone --depth 1 https://github.com/w3c/vc-di-ecdsa.git tests/input/vc-di-ecdsa; fi",
     "lint": "eslint .",
     "postinstall": "npm run fetch-vc-di-ecdsa-test-vectors"
@@ -58,20 +59,21 @@
     "chai": "^4.3.7",
     "chai-string": "^1.5.0",
     "data-integrity-test-suite-assertion": "github:w3c-ccg/data-integrity-test-suite-assertion",
-    "jsonld-document-loader": "^2.2.0",
     "json-canon": "^1.0.1",
+    "jsonld-document-loader": "^2.2.0",
     "klona": "^2.0.6",
     "multibase": "^4.0.6",
     "multiformats": "^13.3.1",
-    "mocha": "^10.2.0",
     "uuid": "^9.0.0",
     "varint": "^6.0.0",
     "vc-test-suite-implementations": "github:w3c/vc-test-suite-implementations"
   },
   "devDependencies": {
+    "allure-mocha": "^3.0.6",
     "eslint": "^8.52.0",
     "eslint-config-digitalbazaar": "^5.0.1",
     "eslint-plugin-jsdoc": "^46.8.2",
-    "eslint-plugin-unicorn": "^48.0.1"
+    "eslint-plugin-unicorn": "^48.0.1",
+    "mocha": "^11.0.1"
   }
 }
