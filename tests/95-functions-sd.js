@@ -72,8 +72,16 @@ describe('Functions - ecdsa-sd-2023', function() {
   for(const [columnId, {endpoints}] of issuers) {
     describe(columnId, function() {
       const [issuer] = endpoints;
-      const [holder] = holders.get(columnId).endpoints;
-      const [verifier] = verifiers.get(columnId).endpoints;
+      let holder = null;
+      if(holders.get(columnId)) {
+        [holder] = holders.get(columnId)?.endpoints;
+      } else {
+      }
+      let verifier = null;
+      if(verifiers.get(columnId)) {
+        [verifier] = verifiers.get(columnId)?.endpoints;
+      } else {
+      }
       let securedCredential;
       let disclosedCredential;
       let validDerivedProof;
@@ -102,23 +110,26 @@ describe('Functions - ecdsa-sd-2023', function() {
         'PROOF_VERIFICATION_ERROR.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#selective-disclosure-functions';
-        const proof = proofExists(securedCredential);
-        should.exist(proof.proofValue,
-          'Expected proof to have proofValue.');
-
-        // Create negative fixture
-        const invalidBaseCredential = structuredClone(securedCredential);
-        invalidBaseCredential.proof.proofValue =
-          invalidBaseCredential.proof.proofValue.slice(1);
-        ({disclosedCredential} = await createDisclosedVc(
-          {
-            selectivePointers: ['/credentialSubject/id'],
-            signedCredential: invalidBaseCredential,
-            vcHolder: holder
-          }));
-        should.not.exist(disclosedCredential?.proof,
-          'Derive endpoint should reject proof without multibase indicator.'
-        );
+        if(holder) {
+          const proof = proofExists(securedCredential);
+          should.exist(proof.proofValue,
+            'Expected proof to have proofValue.');
+          // Create negative fixture
+          const invalidBaseCredential = structuredClone(securedCredential);
+          invalidBaseCredential.proof.proofValue =
+            invalidBaseCredential.proof.proofValue.slice(1);
+          ({disclosedCredential} = await createDisclosedVc(
+            {
+              selectivePointers: ['/credentialSubject/id'],
+              signedCredential: invalidBaseCredential,
+              vcHolder: holder
+            }));
+          should.not.exist(disclosedCredential?.proof,
+            'Derive endpoint should reject proof without multibase indicator.'
+          );
+        } else {
+          this.skip();
+        }
       });
       // 3.5.3 parseBaseProofValue
       it('If the decodedProofValue does not start with the ' +
@@ -127,41 +138,48 @@ describe('Functions - ecdsa-sd-2023', function() {
         'convey an error type of PROOF_VERIFICATION_ERROR.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#selective-disclosure-functions';
-        const proof = proofExists(securedCredential);
-        should.exist(proof.proofValue,
-          'Expected proof to have proofValue.');
-
-        // Create negative fixture
-        const invalidBaseCredential = structuredClone(securedCredential);
-        invalidBaseCredential.proof.proofValue =
-          invalidBaseCredential.proof.proofValue.slice(0, 1) +
-          invalidBaseCredential.proof.proofValue.slice(4);
-        ({disclosedCredential} = await createDisclosedVc(
-          {
-            selectivePointers: ['/credentialSubject/id'],
-            signedCredential: invalidBaseCredential,
-            vcHolder: holder
-          }));
-        should.not.exist(disclosedCredential?.proof,
-          'Derive endpoint should reject proof without header.'
-        );
+        if(holder) {
+          const proof = proofExists(securedCredential);
+          should.exist(proof.proofValue,
+            'Expected proof to have proofValue.');
+          // Create negative fixture
+          const invalidBaseCredential = structuredClone(securedCredential);
+          invalidBaseCredential.proof.proofValue =
+            invalidBaseCredential.proof.proofValue.slice(0, 1) +
+            invalidBaseCredential.proof.proofValue.slice(4);
+          ({disclosedCredential} = await createDisclosedVc(
+            {
+              selectivePointers: ['/credentialSubject/id'],
+              signedCredential: invalidBaseCredential,
+              vcHolder: holder
+            }));
+          should.not.exist(disclosedCredential?.proof,
+            'Derive endpoint should reject proof without header.'
+          );
+        } else {
+          this.skip();
+        }
       });
       // 3.5.7 serializeDerivedProofValue
       it('CBOR-encode components per [RFC8949] where CBOR ' +
         'tagging MUST NOT be used on any of the components.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#selective-disclosure-functions';
-        ({disclosedCredential} = await createDisclosedVc(
-          {
-            selectivePointers: ['/credentialSubject/id'],
-            signedCredential: securedCredential,
-            vcHolder: holder
-          }));
-        const decodedDerivedProofValue =
-          await inspectSdDerivedProofValue(disclosedCredential.proof);
-        should.exist(decodedDerivedProofValue,
-          'Implementation must not use CBOR tagging.'
-        );
+        if(holder) {
+          ({disclosedCredential} = await createDisclosedVc(
+            {
+              selectivePointers: ['/credentialSubject/id'],
+              signedCredential: securedCredential,
+              vcHolder: holder
+            }));
+          const decodedDerivedProofValue =
+            await inspectSdDerivedProofValue(disclosedCredential.proof);
+          should.exist(decodedDerivedProofValue,
+            'Implementation must not use CBOR tagging.'
+          );
+        } else {
+          this.skip();
+        }
       });
       // 3.5.8 parseDerivedProofValue
       it('If the proofValue string does not start with u, ' +
@@ -170,14 +188,17 @@ describe('Functions - ecdsa-sd-2023', function() {
         'error type of PROOF_VERIFICATION_ERROR.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#selective-disclosure-functions';
-        await verifySuccess(verifier, validDerivedProof);
-
-        // Clone a valid proof and slice the multibase header
-        const invalidDerivedProof =
-          structuredClone(validDerivedProof);
-        invalidDerivedProof.proof.proofValue =
-          invalidDerivedProof.proof.proofValue.slice(1);
-        await verifyError(verifier, invalidDerivedProof);
+        if(verifier) {
+          await verifySuccess(verifier, validDerivedProof);
+          // Clone a valid proof and slice the multibase header
+          const invalidDerivedProof =
+            structuredClone(validDerivedProof);
+          invalidDerivedProof.proof.proofValue =
+            invalidDerivedProof.proof.proofValue.slice(1);
+          await verifyError(verifier, invalidDerivedProof);
+        } else {
+          this.skip();
+        }
       });
       // 3.5.8 parseDerivedProofValue
       it('If the decodedProofValue does not start with the ECDSA-SD ' +
@@ -186,14 +207,18 @@ describe('Functions - ecdsa-sd-2023', function() {
         'type of PROOF_VERIFICATION_ERROR.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#selective-disclosure-functions';
-        await verifySuccess(verifier, validDerivedProof);
-        // Clone a valid proof and slice the ECDSA-SD disclosure proof header
-        const invalidDerivedProof =
-          structuredClone(validDerivedProof);
-        invalidDerivedProof.proof.proofValue =
-          invalidDerivedProof.proof.proofValue.slice(0, 1) +
-          invalidDerivedProof.proof.proofValue.slice(4);
-        await verifyError(verifier, invalidDerivedProof);
+        if(verifier) {
+          await verifySuccess(verifier, validDerivedProof);
+          // Clone a valid proof and slice the ECDSA-SD disclosure proof header
+          const invalidDerivedProof =
+            structuredClone(validDerivedProof);
+          invalidDerivedProof.proof.proofValue =
+            invalidDerivedProof.proof.proofValue.slice(0, 1) +
+            invalidDerivedProof.proof.proofValue.slice(4);
+          await verifyError(verifier, invalidDerivedProof);
+        } else {
+          this.skip();
+        }
       });
       // 3.5.8 parseDerivedProofValue
       it('Initialize components to an array that is the result of ' +
@@ -207,27 +232,31 @@ describe('Functions - ecdsa-sd-2023', function() {
         'PROOF_VERIFICATION_ERROR.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#selective-disclosure-functions';
-        const validDerivedProofValue =
-          await inspectSdDerivedProofValue(validDerivedProof.proof);
+        if(verifier) {
+          const validDerivedProofValue =
+            await inspectSdDerivedProofValue(validDerivedProof.proof);
 
-        // Create invalid bodies for negative tests
-        let invalidDerivedProof = structuredClone(validDerivedProof);
-        const invalidDerivedProofValue =
-          structuredClone(validDerivedProofValue);
+          // Create invalid bodies for negative tests
+          let invalidDerivedProof = structuredClone(validDerivedProof);
+          const invalidDerivedProofValue =
+            structuredClone(validDerivedProofValue);
 
-        // add a non bytearray element in the labelMap array
-        invalidDerivedProof = structuredClone(validDerivedProof);
-        invalidDerivedProofValue.labelMap.push = 'not a bytearray';
-        invalidDerivedProof.proof =
-          encodeSdDerivedProofValue(invalidDerivedProof);
-        await verifyError(verifier, invalidDerivedProof);
+          // add a non bytearray element in the labelMap array
+          invalidDerivedProof = structuredClone(validDerivedProof);
+          invalidDerivedProofValue.labelMap.push = 'not a bytearray';
+          invalidDerivedProof.proof =
+            encodeSdDerivedProofValue(invalidDerivedProof);
+          await verifyError(verifier, invalidDerivedProof);
 
-        // replace an integer with a string in the mandatoryIndexes array
-        invalidDerivedProof = structuredClone(validDerivedProof);
-        invalidDerivedProofValue.mandatoryIndexes[0] = '0';
-        invalidDerivedProof.proof =
-          encodeSdDerivedProofValue(invalidDerivedProof);
-        await verifyError(verifier, invalidDerivedProof);
+          // replace an integer with a string in the mandatoryIndexes array
+          invalidDerivedProof = structuredClone(validDerivedProof);
+          invalidDerivedProofValue.mandatoryIndexes[0] = '0';
+          invalidDerivedProof.proof =
+            encodeSdDerivedProofValue(invalidDerivedProof);
+          await verifyError(verifier, invalidDerivedProof);
+        } else {
+          this.skip();
+        }
       });
     });
   }
