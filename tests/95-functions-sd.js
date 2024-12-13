@@ -154,7 +154,7 @@ describe('Functions - ecdsa-sd-2023', function() {
               vcHolder: holder
             }));
           should.not.exist(disclosedCredential?.proof,
-            'Derived endpoint should reject proof without header.'
+            'Derive endpoint should reject proof without header.'
           );
         } else {
           this.skip();
