@@ -6,12 +6,7 @@ import * as base58 from 'base58-universal';
 import * as EcdsaMultikey from '@digitalbazaar/ecdsa-multikey';
 import * as rdfCanonize from 'rdf-canonize';
 import crypto from 'crypto';
-// import {DataIntegrityProof} from '@digitalbazaar/data-integrity';
-// import {cryptosuite as ecdsaRdfc2019Cryptosuite} from
-//   '@digitalbazaar/ecdsa-rdfc-2019-cryptosuite';
-// import jsigs from 'jsonld-signatures';
 import jsonld from 'jsonld';
-// const {purposes: {AssertionProofPurpose}} = jsigs;
 import {loader} from './documentLoader.js';
 
 const documentLoader = loader.build();
@@ -19,7 +14,7 @@ const publicKeyMultibase = 'zDnaekGZTbQBerwcehBSXLqAg6s55hVEBms1zFy89VHXtJSa9';
 const secretKeyMultibase = 'z42tqZ5smVag3DtDhjY9YfVwTMyVHW6SCHJi2ZMrD23DGYS3';
 const controller = `did:key:${publicKeyMultibase}`;
 
-function generateProofId() {
+export function generateProofId() {
   return `urn:uuid:${crypto.randomUUID()}`;
 }
 
@@ -40,11 +35,6 @@ const keyPair = await EcdsaMultikey.from({
   secretKeyMultibase
 });
 
-// // create suite
-// const suite = new DataIntegrityProof({
-//   signer: keyPair.signer(), cryptosuite: ecdsaRdfc2019Cryptosuite
-// });
-
 // create the unsigned credential
 const unsignedCredential = {
   '@context': ['https://www.w3.org/ns/credentials/v2'],
@@ -58,12 +48,6 @@ export async function createVc() {
 }
 
 export async function addProof(credential, previousProof = null) {
-  // const unsecuredDocument = structuredClone(unsignedCredential);
-  // const signedDocument = await jsigs.sign(credential, {
-  //   suite,
-  //   purpose: new AssertionProofPurpose(),
-  //   documentLoader
-  // });
   const proofSet = credential?.proof || [];
   const unsecuredDocument = structuredClone(credential);
   delete unsecuredDocument.proof;
@@ -92,15 +76,15 @@ export async function createProof(unsecuredDocument, options) {
 
   const proofConfig = await canonize(options);
   const proofConfigHash =
-    crypto.createHash('sha256').update(proofConfig).digest();
+    crypto.createHash('sha256').update(proofConfig).digest('hex');
 
   const transformedData = await canonize(unsecuredDocument);
   const transformedDataHash =
-    crypto.createHash('sha256').update(transformedData).digest();
+    crypto.createHash('sha256').update(transformedData).digest('hex');
 
-  const hashData = Buffer.concat([proofConfigHash, transformedDataHash]);
-
-  const proofbytes = await keyPair.signer().sign({data: hashData});
+  const hashData = proofConfigHash + transformedDataHash;
+  const proofbytes = await keyPair.signer().sign(
+    {data: Uint8Array.from(Buffer.from(hashData, 'hex'))});
 
   proof.proofValue = `z${base58.encode(proofbytes)}`;
 
@@ -111,7 +95,6 @@ async function canonize(input) {
   const options = {
     algorithm: 'RDFC-1.0',
     base: null,
-    // format: 'application/n-quads',
     documentLoader,
     safe: true,
     skipExpansion: false,
@@ -120,5 +103,7 @@ async function canonize(input) {
     messageDigestAlgorithm: 'SHA-256',
   };
   const dataset = await jsonld.toRDF(input, options);
+  delete options.produceGeneralizedRdf;
+  options.format = 'application/n-quads';
   return rdfCanonize.canonize(dataset, options);
 }

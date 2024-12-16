@@ -14,6 +14,15 @@ loader.addStatic(
 );
 
 loader.addStatic(
+  'https://www.w3.org/ns/credentials/examples/v2',
+  {
+    '@context': {
+      '@vocab': 'https://www.w3.org/ns/credentials/examples#'
+    }
+  }
+);
+
+loader.addStatic(
   dataIntegrityContext.constants.CONTEXT_URL,
   dataIntegrityContext.contexts.get(dataIntegrityContext.constants.CONTEXT_URL)
 );
