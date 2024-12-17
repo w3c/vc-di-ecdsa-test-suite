@@ -125,7 +125,7 @@ describe('Functions - ecdsa-sd-2023', function() {
               vcHolder: holder
             }));
           should.not.exist(disclosedCredential?.proof,
-            'Derive endpoint should reject proof without multibase indicator.'
+            '"Derive" endpoint should reject proof without multibase indicator.'
           );
         } else {
           this.skip();
