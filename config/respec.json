@@ -13,6 +13,10 @@
     { "name": "Tashi D. Gyeltshen", "url": "https://github.com/jsAssassin",
       "company": "Digital Bazaar, Inc.", "companyURL": "https://digitalbazaar.com/" },
     { "name": "Patrick St. Louis", "url": "https://github.com/PatStLouis",
-      "company": "OpSecId", "companyURL": "https://github.com/OpSecId" }
+      "company": "OpSecId", "companyURL": "https://github.com/OpSecId" },
+    { "name": "Greg Bernstein", "url": "https://github.com/wind4greg",
+      "company": "Grotto Networking", "companyURL": "https://www.grotto-networking.com/"},
+    { "name": "Tyler Minard", "url": "https://github.com/tminard",
+      "company": "Digital Bazaar, Inc.", "companyURL": "https://digitalbazaar.com/" }
   ]
 }
