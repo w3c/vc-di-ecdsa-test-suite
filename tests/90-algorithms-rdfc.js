@@ -74,6 +74,7 @@ describe('Algorithms - Create Proof (ecdsa-rdfc-2019)', function() {
 
 describe('Algorithms - Verify Proof (ecdsa-rdfc-2019)', function() {
   setupReportableTestSuite(this);
+  this.implemented = [...verifiers.keys()];
   for(const [columnId, {endpoints}] of verifiers) {
     describe(columnId, function() {
       const [verifier] = endpoints;
