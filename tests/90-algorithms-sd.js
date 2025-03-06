@@ -4,7 +4,7 @@
  */
 import {
   assertAllUtf8,
-  // assertCryptosuiteProof,
+  assertCryptosuiteProof,
   assertDataIntegrityProof
 } from './assertions.js';
 import {
@@ -12,7 +12,7 @@ import {
   generateCredential,
   inspectSdBaseProofValue,
   inspectSdDerivedProofValue,
-  // isValidDatetime,
+  isValidDatetime,
   proofExists,
   secureCredential,
   setupReportableTestSuite,
@@ -139,56 +139,56 @@ describe('Algorithms - Base Proof Transformation (ecdsa-sd-2023)', function() {
   }
 });
 
-// TODO, these tests are not appearing in the report so commenting out
-// describe('Algorithms - Base Proof Configuration (ecdsa-sd-2023)',
-// function() {
-//   setupReportableTestSuite(this);
-//   this.implemented = [...issuers.keys()];
-//   for(const [columnId, {endpoints}] of issuers) {
-//     describe(columnId, function() {
-//       const [issuer] = endpoints;
-//       let securedCredential;
-//       before(async function() {
-//         const mandatoryPointers = ['/credentialSubject/name'];
-//         securedCredential = await secureCredential(
-//           {issuer, vc: generateCredential(), mandatoryPointers});
-//       });
-//       it('The proof options MUST contain a type identifier for the ' +
-//         'cryptographic suite (type) and MUST contain a cryptosuite ' +
-//         'identifier (cryptosuite).',
-//       async function() {
-//         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-sd-2023';
-//         const proof = proofExists(securedCredential);
-//         should.exist(proof.type,
-//           'Expected a type identifier on the proof.');
-//         should.exist(proof.cryptosuite,
-//           'Expected a cryptosuite identifier on the proof.');
-//       });
-//       it('If proofConfig.type is not set to DataIntegrityProof and/or ' +
-//         'proofConfig.cryptosuite is not set to ecdsa-sd-2023, ' +
-//         'an error MUST be raised and SHOULD convey an error type of ' +
-//         'PROOF_GENERATION_ERROR.',
-//       async function() {
-//         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-sd-2023';
-//         const proof = proofExists(securedCredential);
-//         assertCryptosuiteProof(proof, 'ecdsa-sd-2023');
-//       });
-//       it('If proofConfig.created is set and if the value is not a ' +
-//         'valid [XMLSCHEMA11-2] datetime, an error MUST be raised and ' +
-//         'SHOULD convey an error type of PROOF_GENERATION_ERROR.',
-//       async function() {
-//         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-sd-2023';
-//         const proof = proofExists(securedCredential);
-//         if(proof?.created) {
-//           isValidDatetime(proof.created).should.equal(
-//             true,
-//             'Expected created value to be a valid datetime string.'
-//           );
-//         }
-//       });
-//     });
-//   }
-// });
+describe('Algorithms - Base Proof Configuration',
+  function() {
+    setupReportableTestSuite(this);
+    this.implemented = [...issuers.keys()];
+    for(const [columnId, {endpoints}] of issuers) {
+      describe(columnId, function() {
+        const [issuer] = endpoints;
+        let securedCredential;
+        before(async function() {
+          const mandatoryPointers = ['/credentialSubject/name'];
+          securedCredential = await secureCredential(
+            {issuer, vc: generateCredential(), mandatoryPointers});
+        });
+        beforeEach(setupRow);
+        it('The proof options MUST contain a type identifier for the ' +
+        'cryptographic suite (type) and MUST contain a cryptosuite ' +
+        'identifier (cryptosuite).',
+        async function() {
+          this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-sd-2023';
+          const proof = proofExists(securedCredential);
+          should.exist(proof.type,
+            'Expected a type identifier on the proof.');
+          should.exist(proof.cryptosuite,
+            'Expected a cryptosuite identifier on the proof.');
+        });
+        it('If proofConfig.type is not set to DataIntegrityProof and/or ' +
+        'proofConfig.cryptosuite is not set to ecdsa-sd-2023, ' +
+        'an error MUST be raised and SHOULD convey an error type of ' +
+        'PROOF_GENERATION_ERROR.',
+        async function() {
+          this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-sd-2023';
+          const proof = proofExists(securedCredential);
+          assertCryptosuiteProof(proof, 'ecdsa-sd-2023');
+        });
+        it('If proofConfig.created is set and if the value is not a ' +
+        'valid [XMLSCHEMA11-2] datetime, an error MUST be raised and ' +
+        'SHOULD convey an error type of PROOF_GENERATION_ERROR.',
+        async function() {
+          this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-sd-2023';
+          const proof = proofExists(securedCredential);
+          if(proof?.created) {
+            isValidDatetime(proof.created).should.equal(
+              true,
+              'Expected created value to be a valid datetime string.'
+            );
+          }
+        });
+      });
+    }
+  });
 
 describe('Algorithms - Base Proof Serialization (ecdsa-sd-2023)', function() {
   setupReportableTestSuite(this);
