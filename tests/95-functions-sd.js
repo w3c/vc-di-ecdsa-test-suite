@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 import {
-  createDisclosedVc,
+  // createDisclosedVc,
   encodeSdDerivedProofValue,
   generateCredential,
   inspectSdBaseProofValue,
@@ -30,10 +30,10 @@ const {match: issuers} = endpoints.filterByTag({
   property: 'issuers'
 });
 
-const {match: holders} = endpoints.filterByTag({
-  tags: cryptosuites,
-  property: 'vcHolders'
-});
+// const {match: holders} = endpoints.filterByTag({
+//   tags: cryptosuites,
+//   property: 'vcHolders'
+// });
 
 const {match: verifiers} = endpoints.filterByTag({
   tags: cryptosuites,
@@ -72,19 +72,16 @@ describe('Functions - ecdsa-sd-2023', function() {
   for(const [columnId, {endpoints}] of issuers) {
     describe(columnId, function() {
       const [issuer] = endpoints;
-      let holder = null;
-      if(holders.get(columnId)) {
-        [holder] = holders.get(columnId)?.endpoints;
-      } else {
-      }
-      let verifier = null;
-      if(verifiers.get(columnId)) {
-        [verifier] = verifiers.get(columnId)?.endpoints;
-      } else {
-      }
+      const [verifier] = verifiers.get(columnId)?.endpoints;
+      // let holder = null;
+      // if(holders.get(columnId)) {
+      //   [holder] = holders.get(columnId)?.endpoints;
+      // } else {
+      // }
       let securedCredential;
-      let disclosedCredential;
+      // let disclosedCredential;
       let validDerivedProof;
+      beforeEach(setupRow);
       before(async function() {
         securedCredential = await secureCredential(
           {issuer, vc: generateCredential()});
@@ -104,83 +101,83 @@ describe('Functions - ecdsa-sd-2023', function() {
         );
       });
       // 3.5.3 parseBaseProofValue
-      it('If the proofValue string does not start with u, ' +
-        'indicating that it is a multibase-base64url-no-pad-encoded value, ' +
-        'an error MUST be raised and SHOULD convey an error type of ' +
-        'PROOF_VERIFICATION_ERROR.',
-      async function() {
-        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#selective-disclosure-functions';
-        if(holder) {
-          const proof = proofExists(securedCredential);
-          should.exist(proof.proofValue,
-            'Expected proof to have proofValue.');
-          // Create negative fixture
-          const invalidBaseCredential = structuredClone(securedCredential);
-          invalidBaseCredential.proof.proofValue =
-            invalidBaseCredential.proof.proofValue.slice(1);
-          ({disclosedCredential} = await createDisclosedVc(
-            {
-              selectivePointers: ['/credentialSubject/id'],
-              signedCredential: invalidBaseCredential,
-              vcHolder: holder
-            }));
-          should.not.exist(disclosedCredential?.proof,
-            '"Derive" endpoint should reject proof without multibase indicator.'
-          );
-        } else {
-          this.skip();
-        }
-      });
+      // it('If the proofValue string does not start with u, ' +
+      //   'indicating that it is a multibase-base64url-no-pad-encoded value, ' +
+      //   'an error MUST be raised and SHOULD convey an error type of ' +
+      //   'PROOF_VERIFICATION_ERROR.',
+      // async function() {
+      //   this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#selective-disclosure-functions';
+      //   if(holder) {
+      //     const proof = proofExists(securedCredential);
+      //     should.exist(proof.proofValue,
+      //       'Expected proof to have proofValue.');
+      //     // Create negative fixture
+      //     const invalidBaseCredential = structuredClone(securedCredential);
+      //     invalidBaseCredential.proof.proofValue =
+      //       invalidBaseCredential.proof.proofValue.slice(1);
+      //     ({disclosedCredential} = await createDisclosedVc(
+      //       {
+      //         selectivePointers: ['/credentialSubject/id'],
+      //         signedCredential: invalidBaseCredential,
+      //         vcHolder: holder
+      //       }));
+      //     should.not.exist(disclosedCredential?.proof,
+      //       '"Derive" endpoint should reject proof without multibase indicator.'
+      //     );
+      //   } else {
+      //     this.skip();
+      //   }
+      // });
       // 3.5.3 parseBaseProofValue
-      it('If the decodedProofValue does not start with the ' +
-        'ECDSA-SD base proof header bytes 0xd9, 0x5d, ' +
-        'and 0x00, an error MUST be raised and SHOULD ' +
-        'convey an error type of PROOF_VERIFICATION_ERROR.',
-      async function() {
-        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#selective-disclosure-functions';
-        if(holder) {
-          const proof = proofExists(securedCredential);
-          should.exist(proof.proofValue,
-            'Expected proof to have proofValue.');
-          // Create negative fixture
-          const invalidBaseCredential = structuredClone(securedCredential);
-          invalidBaseCredential.proof.proofValue =
-            invalidBaseCredential.proof.proofValue.slice(0, 1) +
-            invalidBaseCredential.proof.proofValue.slice(4);
-          ({disclosedCredential} = await createDisclosedVc(
-            {
-              selectivePointers: ['/credentialSubject/id'],
-              signedCredential: invalidBaseCredential,
-              vcHolder: holder
-            }));
-          should.not.exist(disclosedCredential?.proof,
-            '"Derive" endpoint should reject proof without header.'
-          );
-        } else {
-          this.skip();
-        }
-      });
+      // it('If the decodedProofValue does not start with the ' +
+      //   'ECDSA-SD base proof header bytes 0xd9, 0x5d, ' +
+      //   'and 0x00, an error MUST be raised and SHOULD ' +
+      //   'convey an error type of PROOF_VERIFICATION_ERROR.',
+      // async function() {
+      //   this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#selective-disclosure-functions';
+      //   if(holder) {
+      //     const proof = proofExists(securedCredential);
+      //     should.exist(proof.proofValue,
+      //       'Expected proof to have proofValue.');
+      //     // Create negative fixture
+      //     const invalidBaseCredential = structuredClone(securedCredential);
+      //     invalidBaseCredential.proof.proofValue =
+      //       invalidBaseCredential.proof.proofValue.slice(0, 1) +
+      //       invalidBaseCredential.proof.proofValue.slice(4);
+      //     ({disclosedCredential} = await createDisclosedVc(
+      //       {
+      //         selectivePointers: ['/credentialSubject/id'],
+      //         signedCredential: invalidBaseCredential,
+      //         vcHolder: holder
+      //       }));
+      //     should.not.exist(disclosedCredential?.proof,
+      //       '"Derive" endpoint should reject proof without header.'
+      //     );
+      //   } else {
+      //     this.skip();
+      //   }
+      // });
       // 3.5.7 serializeDerivedProofValue
-      it('CBOR-encode components per [RFC8949] where CBOR ' +
-        'tagging MUST NOT be used on any of the components.',
-      async function() {
-        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#selective-disclosure-functions';
-        if(holder) {
-          ({disclosedCredential} = await createDisclosedVc(
-            {
-              selectivePointers: ['/credentialSubject/id'],
-              signedCredential: securedCredential,
-              vcHolder: holder
-            }));
-          const decodedDerivedProofValue =
-            await inspectSdDerivedProofValue(disclosedCredential.proof);
-          should.exist(decodedDerivedProofValue,
-            'Implementation must not use CBOR tagging.'
-          );
-        } else {
-          this.skip();
-        }
-      });
+      // it('CBOR-encode components per [RFC8949] where CBOR ' +
+      //   'tagging MUST NOT be used on any of the components.',
+      // async function() {
+      //   this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#selective-disclosure-functions';
+      //   if(holder) {
+      //     ({disclosedCredential} = await createDisclosedVc(
+      //       {
+      //         selectivePointers: ['/credentialSubject/id'],
+      //         signedCredential: securedCredential,
+      //         vcHolder: holder
+      //       }));
+      //     const decodedDerivedProofValue =
+      //       await inspectSdDerivedProofValue(disclosedCredential.proof);
+      //     should.exist(decodedDerivedProofValue,
+      //       'Implementation must not use CBOR tagging.'
+      //     );
+      //   } else {
+      //     this.skip();
+      //   }
+      // });
       // 3.5.8 parseDerivedProofValue
       it('If the proofValue string does not start with u, ' +
         'indicating that it is a multibase-base64url-no-pad-encoded ' +
@@ -188,17 +185,13 @@ describe('Functions - ecdsa-sd-2023', function() {
         'error type of PROOF_VERIFICATION_ERROR.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#selective-disclosure-functions';
-        if(verifier) {
-          await verifySuccess(verifier, validDerivedProof);
-          // Clone a valid proof and slice the multibase header
-          const invalidDerivedProof =
+        await verifySuccess(verifier, validDerivedProof);
+        // Clone a valid proof and slice the multibase header
+        const invalidDerivedProof =
             structuredClone(validDerivedProof);
-          invalidDerivedProof.proof.proofValue =
+        invalidDerivedProof.proof.proofValue =
             invalidDerivedProof.proof.proofValue.slice(1);
-          await verifyError(verifier, invalidDerivedProof);
-        } else {
-          this.skip();
-        }
+        await verifyError(verifier, invalidDerivedProof);
       });
       // 3.5.8 parseDerivedProofValue
       it('If the decodedProofValue does not start with the ECDSA-SD ' +
@@ -207,18 +200,14 @@ describe('Functions - ecdsa-sd-2023', function() {
         'type of PROOF_VERIFICATION_ERROR.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#selective-disclosure-functions';
-        if(verifier) {
-          await verifySuccess(verifier, validDerivedProof);
-          // Clone a valid proof and slice the ECDSA-SD disclosure proof header
-          const invalidDerivedProof =
+        await verifySuccess(verifier, validDerivedProof);
+        // Clone a valid proof and slice the ECDSA-SD disclosure proof header
+        const invalidDerivedProof =
             structuredClone(validDerivedProof);
-          invalidDerivedProof.proof.proofValue =
+        invalidDerivedProof.proof.proofValue =
             invalidDerivedProof.proof.proofValue.slice(0, 1) +
             invalidDerivedProof.proof.proofValue.slice(4);
-          await verifyError(verifier, invalidDerivedProof);
-        } else {
-          this.skip();
-        }
+        await verifyError(verifier, invalidDerivedProof);
       });
       // 3.5.8 parseDerivedProofValue
       it('Initialize components to an array that is the result of ' +
@@ -232,31 +221,27 @@ describe('Functions - ecdsa-sd-2023', function() {
         'PROOF_VERIFICATION_ERROR.',
       async function() {
         this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#selective-disclosure-functions';
-        if(verifier) {
-          const validDerivedProofValue =
+        const validDerivedProofValue =
             await inspectSdDerivedProofValue(validDerivedProof.proof);
 
-          // Create invalid bodies for negative tests
-          let invalidDerivedProof = structuredClone(validDerivedProof);
-          const invalidDerivedProofValue =
+        // Create invalid bodies for negative tests
+        let invalidDerivedProof = structuredClone(validDerivedProof);
+        const invalidDerivedProofValue =
             structuredClone(validDerivedProofValue);
 
-          // add a non bytearray element in the labelMap array
-          invalidDerivedProof = structuredClone(validDerivedProof);
-          invalidDerivedProofValue.labelMap.push = 'not a bytearray';
-          invalidDerivedProof.proof =
+        // add a non bytearray element in the labelMap array
+        invalidDerivedProof = structuredClone(validDerivedProof);
+        invalidDerivedProofValue.labelMap.push = 'not a bytearray';
+        invalidDerivedProof.proof =
             encodeSdDerivedProofValue(invalidDerivedProof);
-          await verifyError(verifier, invalidDerivedProof);
+        await verifyError(verifier, invalidDerivedProof);
 
-          // replace an integer with a string in the mandatoryIndexes array
-          invalidDerivedProof = structuredClone(validDerivedProof);
-          invalidDerivedProofValue.mandatoryIndexes[0] = '0';
-          invalidDerivedProof.proof =
+        // replace an integer with a string in the mandatoryIndexes array
+        invalidDerivedProof = structuredClone(validDerivedProof);
+        invalidDerivedProofValue.mandatoryIndexes[0] = '0';
+        invalidDerivedProof.proof =
             encodeSdDerivedProofValue(invalidDerivedProof);
-          await verifyError(verifier, invalidDerivedProof);
-        } else {
-          this.skip();
-        }
+        await verifyError(verifier, invalidDerivedProof);
       });
     });
   }

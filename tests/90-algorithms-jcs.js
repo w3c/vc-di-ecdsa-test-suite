@@ -90,6 +90,7 @@ describe('Algorithms - Create Proof (ecdsa-jcs-2019)', function() {
 
 describe('Algorithms - Verify Proof (ecdsa-jcs-2019)', function() {
   setupReportableTestSuite(this);
+  this.implemented = [...verifiers.keys()];
   for(const [columnId, {endpoints}] of verifiers) {
     describe(columnId, function() {
       const [verifier] = endpoints;
