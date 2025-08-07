@@ -4,6 +4,9 @@
 
 name: Generate Interop Report
 
+permissions:
+  contents: read
+
 on:
   workflow_dispatch:
   push:
