@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 import {
-  // createDisclosedVc,
   encodeSdDerivedProofValue,
   generateCredential,
   inspectSdBaseProofValue,
@@ -100,84 +99,11 @@ describe('Functions - ecdsa-sd-2023', function() {
           'Implementation must not use CBOR tagging.'
         );
       });
-      // 3.5.3 parseBaseProofValue
-      // it('If the proofValue string does not start with u, ' +
-      //   'indicating that it is a multibase-base64url-no-pad-encoded value, ' +
-      //   'an error MUST be raised and SHOULD convey an error type of ' +
-      //   'PROOF_VERIFICATION_ERROR.',
-      // async function() {
-      //   this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#selective-disclosure-functions';
-      //   if(holder) {
-      //     const proof = proofExists(securedCredential);
-      //     should.exist(proof.proofValue,
-      //       'Expected proof to have proofValue.');
-      //     // Create negative fixture
-      //     const invalidBaseCredential = structuredClone(securedCredential);
-      //     invalidBaseCredential.proof.proofValue =
-      //       invalidBaseCredential.proof.proofValue.slice(1);
-      //     ({disclosedCredential} = await createDisclosedVc(
-      //       {
-      //         selectivePointers: ['/credentialSubject/id'],
-      //         signedCredential: invalidBaseCredential,
-      //         vcHolder: holder
-      //       }));
-      //     should.not.exist(disclosedCredential?.proof,
-      //       '"Derive" endpoint should reject proof without multibase indicator.'
-      //     );
-      //   } else {
-      //     this.skip();
-      //   }
-      // });
-      // 3.5.3 parseBaseProofValue
-      // it('If the decodedProofValue does not start with the ' +
-      //   'ECDSA-SD base proof header bytes 0xd9, 0x5d, ' +
-      //   'and 0x00, an error MUST be raised and SHOULD ' +
-      //   'convey an error type of PROOF_VERIFICATION_ERROR.',
-      // async function() {
-      //   this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#selective-disclosure-functions';
-      //   if(holder) {
-      //     const proof = proofExists(securedCredential);
-      //     should.exist(proof.proofValue,
-      //       'Expected proof to have proofValue.');
-      //     // Create negative fixture
-      //     const invalidBaseCredential = structuredClone(securedCredential);
-      //     invalidBaseCredential.proof.proofValue =
-      //       invalidBaseCredential.proof.proofValue.slice(0, 1) +
-      //       invalidBaseCredential.proof.proofValue.slice(4);
-      //     ({disclosedCredential} = await createDisclosedVc(
-      //       {
-      //         selectivePointers: ['/credentialSubject/id'],
-      //         signedCredential: invalidBaseCredential,
-      //         vcHolder: holder
-      //       }));
-      //     should.not.exist(disclosedCredential?.proof,
-      //       '"Derive" endpoint should reject proof without header.'
-      //     );
-      //   } else {
-      //     this.skip();
-      //   }
-      // });
-      // 3.5.7 serializeDerivedProofValue
-      // it('CBOR-encode components per [RFC8949] where CBOR ' +
-      //   'tagging MUST NOT be used on any of the components.',
-      // async function() {
-      //   this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#selective-disclosure-functions';
-      //   if(holder) {
-      //     ({disclosedCredential} = await createDisclosedVc(
-      //       {
-      //         selectivePointers: ['/credentialSubject/id'],
-      //         signedCredential: securedCredential,
-      //         vcHolder: holder
-      //       }));
-      //     const decodedDerivedProofValue =
-      //       await inspectSdDerivedProofValue(disclosedCredential.proof);
-      //     should.exist(decodedDerivedProofValue,
-      //       'Implementation must not use CBOR tagging.'
-      //     );
-      //   } else {
-      //     this.skip();
-      //   }
-      // });
+
+      // 3.5.3 parseBaseProofValue - untestable without special endpoints
+      // 3.5.3 parseBaseProofValue - untestable without special endpoints
+      // 3.5.7 serializeDerivedProofValue - untestable without special endpoints
+
       // 3.5.8 parseDerivedProofValue
       it('If the proofValue string does not start with u, ' +
         'indicating that it is a multibase-base64url-no-pad-encoded ' +
