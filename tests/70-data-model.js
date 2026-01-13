@@ -31,7 +31,7 @@ const {match: issuers} = endpoints.filterByTag({
 });
 
 describe('Data Model - Verification Methods (Multikey)', function() {
-  setupReportableTestSuite(this);
+  setupReportableTestSuite(this, 'Issuer');
   this.implemented = [...issuers.keys()];
   for(const [columnId, {endpoints}] of issuers) {
     describe(columnId, function() {
@@ -74,7 +74,7 @@ describe('Data Model - Verification Methods (Multikey)', function() {
 });
 
 describe('Data Model - Proof Representations', function() {
-  setupReportableTestSuite(this);
+  setupReportableTestSuite(this, 'Issuer');
   this.implemented = [...issuers.keys()];
   for(const [columnId, {endpoints}] of issuers) {
     describe(columnId, function() {

@@ -40,7 +40,7 @@ const {match: verifiers} = endpoints.filterByTag({
 });
 
 describe('Functions - Selective Disclosure', function() {
-  setupReportableTestSuite(this);
+  setupReportableTestSuite(this, 'Issuer');
   this.implemented = [...issuers.keys()];
   for(const [columnId, {endpoints}] of issuers) {
     describe(columnId, function() {
@@ -66,7 +66,7 @@ describe('Functions - Selective Disclosure', function() {
 });
 
 describe('Functions - ecdsa-sd-2023', function() {
-  setupReportableTestSuite(this);
+  setupReportableTestSuite(this, 'Issuer');
   this.implemented = [...issuers.keys()];
   for(const [columnId, {endpoints}] of issuers) {
     describe(columnId, function() {

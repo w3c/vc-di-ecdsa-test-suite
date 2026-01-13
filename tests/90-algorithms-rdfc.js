@@ -39,7 +39,7 @@ const {match: verifiers} = endpoints.filterByTag({
 });
 
 describe('Algorithms - Create Proof (ecdsa-rdfc-2019)', function() {
-  setupReportableTestSuite(this);
+  setupReportableTestSuite(this, 'Issuer');
   this.implemented = [...issuers.keys()];
   for(const [columnId, {endpoints}] of issuers) {
     describe(columnId, function() {
@@ -73,7 +73,7 @@ describe('Algorithms - Create Proof (ecdsa-rdfc-2019)', function() {
 });
 
 describe('Algorithms - Verify Proof (ecdsa-rdfc-2019)', function() {
-  setupReportableTestSuite(this);
+  setupReportableTestSuite(this, 'Verifier');
   this.implemented = [...verifiers.keys()];
   for(const [columnId, {endpoints}] of verifiers) {
     describe(columnId, function() {
@@ -103,7 +103,7 @@ describe('Algorithms - Verify Proof (ecdsa-rdfc-2019)', function() {
 });
 
 describe('Algorithms - Transformation (ecdsa-rdfc-2019)', function() {
-  setupReportableTestSuite(this);
+  setupReportableTestSuite(this, 'Issuer');
   this.implemented = [...issuers.keys()];
   for(const [columnId, {endpoints}] of issuers) {
     describe(columnId, function() {
@@ -145,7 +145,7 @@ describe('Algorithms - Transformation (ecdsa-rdfc-2019)', function() {
 });
 
 describe('Algorithms - Proof Configuration (ecdsa-rdfc-2019)', function() {
-  setupReportableTestSuite(this);
+  setupReportableTestSuite(this, 'Issuer');
   this.implemented = [...issuers.keys()];
   for(const [columnId, {endpoints}] of issuers) {
     describe(columnId, function() {
@@ -194,7 +194,7 @@ describe('Algorithms - Proof Configuration (ecdsa-rdfc-2019)', function() {
 });
 
 describe('Algorithms - Proof Serialization (ecdsa-rdfc-2019)', function() {
-  setupReportableTestSuite(this);
+  setupReportableTestSuite(this, 'Issuer');
   this.implemented = [...issuers.keys()];
   for(const [columnId, {endpoints}] of issuers) {
     describe(columnId, function() {
