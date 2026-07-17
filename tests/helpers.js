@@ -16,8 +16,8 @@ import {expect} from 'chai';
 import {isUtf8} from 'node:buffer';
 import {JsonLdDocumentLoader} from 'jsonld-document-loader';
 import {klona} from 'klona';
+import {randomUUID} from 'node:crypto';
 import {readFileSync} from 'fs';
-import {v4 as uuidv4} from 'uuid';
 
 const should = chai.should();
 
@@ -58,7 +58,7 @@ export const secureCredential = async ({
 }) => {
   const {settings: {id: issuerId, options = {}}} = issuer;
   const credential = klona(vc);
-  credential.id = `urn:uuid:${uuidv4()}`;
+  credential.id = `urn:uuid:${randomUUID()}`;
   credential.issuer = issuerId;
   const vcNumber = Number(vcVersion);
   if(vcNumber >= 1 && vcNumber < 2.0) {
@@ -264,7 +264,7 @@ export function getProofs(issuedVc) {
 export function generateCredential(version = 2) {
   let credential = {
     type: ['VerifiableCredential'],
-    id: `urn:uuid:${uuidv4()}`,
+    id: `urn:uuid:${randomUUID()}`,
     credentialSubject: {id: 'did:example:alice'}
   };
   if(version === 1) {
