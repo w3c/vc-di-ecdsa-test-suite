@@ -140,6 +140,11 @@ require client secrets, please check the implementation manifest within the
 
 ## Usage
 
+Tests always run against the tip of `vc-test-suite-implementations`'s
+`main` branch (see `pretest` in `package.json`); the commit pinned for it
+in `package-lock.json` is a stale snapshot, not what tests actually run
+against.
+
 ```js
 npm i
 ```
