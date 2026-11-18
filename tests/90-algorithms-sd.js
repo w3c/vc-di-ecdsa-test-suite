@@ -56,7 +56,7 @@ describe('Algorithms - Create Base Proof (ecdsa-sd-2023)', function() {
       beforeEach(setupRow);
       it('A data integrity proof (map), or an error, is produced as output.',
         async function() {
-          this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#create-proof-ecdsa-sd-2023';
+          this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#create-base-proof-ecdsa-sd-2023';
           const proof = proofExists(securedCredential);
           assertDataIntegrityProof(proof);
           // We only do a positive test
@@ -64,7 +64,7 @@ describe('Algorithms - Create Base Proof (ecdsa-sd-2023)', function() {
       it('Let proof.proofValue be a base64-url-encoded ' +
         'Multibase value of the proofBytes.',
       async function() {
-        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#create-proof-ecdsa-sd-2023';
+        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#create-base-proof-ecdsa-sd-2023';
         // Shallow multibase test
         // TODO try decoding
         const proof = proofExists(securedCredential);
@@ -93,7 +93,7 @@ describe('Algorithms - Base Proof Transformation (ecdsa-sd-2023)', function() {
         'cryptographic suite (type), a cryptosuite identifier (cryptosuite), ' +
         'and a verification method (verificationMethod).',
       async function() {
-        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-serialization-ecdsa-sd-2023';
+        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#base-proof-transformation-ecdsa-sd-2023';
         const proof = proofExists(securedCredential);
         should.exist(proof.type,
           'Expected a type identifier on the proof.');
@@ -106,7 +106,7 @@ describe('Algorithms - Base Proof Transformation (ecdsa-sd-2023)', function() {
         'JSON pointers (mandatoryPointers) and MAY contain additional ' +
         'options, such as a JSON-LD document loader.',
       async function() {
-        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#transformation-ecdsa-sd-2023';
+        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#base-proof-transformation-ecdsa-sd-2023';
 
         // Send an issuance request without mandatoryPointers
         const securedCredentialNoPointers = await secureCredential(
@@ -120,7 +120,7 @@ describe('Algorithms - Base Proof Transformation (ecdsa-sd-2023)', function() {
       });
       it('Whenever this algorithm encodes strings, it MUST use UTF-8 encoding.',
         async function() {
-          this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#transformation-ecdsa-sd-2023';
+          this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#base-proof-transformation-ecdsa-sd-2023';
           const proof = proofExists(securedCredential);
           assertAllUtf8(proof);
         });
@@ -128,7 +128,7 @@ describe('Algorithms - Base Proof Transformation (ecdsa-sd-2023)', function() {
         'same length as the digest size; for SHA-256, this is 256 bits ' +
         'or 32 bytes.',
       async function() {
-        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#transformation-ecdsa-sd-2023';
+        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#base-proof-transformation-ecdsa-sd-2023';
         const proof = proofExists(securedCredential);
         const decodedProof = await inspectSdBaseProofValue(proof);
         decodedProof.hmacKey.length.should.equal(32,
@@ -157,7 +157,7 @@ describe('Algorithms - Base Proof Configuration',
         'cryptographic suite (type) and MUST contain a cryptosuite ' +
         'identifier (cryptosuite).',
         async function() {
-          this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-sd-2023';
+          this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#base-proof-configuration-ecdsa-sd-2023';
           const proof = proofExists(securedCredential);
           should.exist(proof.type,
             'Expected a type identifier on the proof.');
@@ -169,7 +169,7 @@ describe('Algorithms - Base Proof Configuration',
         'an error MUST be raised and SHOULD convey an error type of ' +
         'PROOF_GENERATION_ERROR.',
         async function() {
-          this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-sd-2023';
+          this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#base-proof-configuration-ecdsa-sd-2023';
           const proof = proofExists(securedCredential);
           assertCryptosuiteProof(proof, 'ecdsa-sd-2023');
         });
@@ -177,7 +177,7 @@ describe('Algorithms - Base Proof Configuration',
         'valid [XMLSCHEMA11-2] datetime, an error MUST be raised and ' +
         'SHOULD convey an error type of PROOF_GENERATION_ERROR.',
         async function() {
-          this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-configuration-ecdsa-sd-2023';
+          this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#base-proof-configuration-ecdsa-sd-2023';
           const proof = proofExists(securedCredential);
           if(proof?.created) {
             isValidDatetime(proof.created).should.equal(
@@ -207,7 +207,7 @@ describe('Algorithms - Base Proof Serialization (ecdsa-sd-2023)', function() {
         'cryptographic suite (type) and MAY contain a cryptosuite identifier ' +
         '(cryptosuite).',
       async function() {
-        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-serialization-ecdsa-sd-2023';
+        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#base-proof-serialization-ecdsa-sd-2023';
         const proof = proofExists(securedCredential);
         should.exist(proof.type,
           'Expected a type identifier on the proof.');
@@ -228,7 +228,7 @@ describe('Algorithms - Verify Derived Proof (ecdsa-sd-2023)', function() {
         'error type of PROOF_VERIFICATION_ERROR, indicating that the ' +
         'signature count does not match the non-mandatory message count.',
       async function() {
-        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#proof-serialization-ecdsa-sd-2023';
+        this.test.link = 'https://www.w3.org/TR/vc-di-ecdsa/#verify-derived-proof-ecdsa-sd-2023';
 
         const validDerivedProof = structuredClone(ecdsaSdVectors.derivedProof);
         await verifySuccess(verifier, validDerivedProof);
